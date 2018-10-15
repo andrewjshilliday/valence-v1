@@ -1,0 +1,69 @@
+#now-playing-wrapper {
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  bottom: 0px;
+  margin-left: 0px;
+  background-color: #1e1e1e
+}
+
+.media-controls {
+  position: relative;
+  top: 15px;
+  left: 60px;
+  right: 60px;
+  width: 130px;
+  height: 65%;
+}
+
+.media-control {
+  color: lightgrey;
+  background-color: #1e1e1e
+}
+
+.now-playing-bar {
+  position: relative;
+  top: 17px;
+  left: 50px;
+  width: calc(100% - 350px);
+  height: 66px;
+  background-color: lightgray;
+}
+
+.now-playing-album-art {
+  position: fixed;
+  padding-top: 5px;
+  height: 56px;
+  width: 56px;
+}
+
+.queue-options {
+  position: relative;
+  padding-top: 15px;
+  height: 56px;
+  width: 56px;
+}
+
+.now-playing-text {
+  position: relative;
+  padding-top: 5px;
+  text-align: center;
+}
+
+.now-playing-progress {
+  position: relative;
+  top: -8px;
+  left: 60px;
+  width: calc(100% - 90px);
+  height: 3px;
+  background-color: grey;
+}
+
+p {
+  font-size: 11pt;
+}
+
+.logo {
+  position: relative;
+  padding-top: 7px;
+}

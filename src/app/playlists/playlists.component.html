@@ -1,0 +1,72 @@
+<div class="container-fluid">
+    <div *ngIf='musicService.playlist'>
+      <div class='row'>
+        <div class='col-11'>
+          <h1>{{musicService.playlist.attributes.name}}</h1>
+          <h4>Updated {{musicService.playlist.attributes.lastModifiedDate | date : 'dd/MM' }}</h4>
+        </div>
+        <div class='col-1 album-options-dropdown'>
+          <a role='button' id='dropdown{{musicService.playlist.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+            <i class="fas fa-ellipsis-h"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item">Play</a>
+            <a class="dropdown-item">Play Next</a>
+            <a class="dropdown-item">Play Later</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item">Add to Library</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item">Like</a>
+            <a class="dropdown-item">Dislike</a>
+          </div>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-4'>
+          <img class="img-fluid card-img-top" [src]='musicService.formatArtworkURL(musicService.playlist.attributes.artwork, 800)' />
+          <br />
+          <h6>{{musicService.playlist.relationships.tracks.data.length}} Songs, {{musicService.playlistDuration | date : 'm'}} Minutes</h6>
+          <p *ngIf='musicService.playlist.attributes.description'>{{musicService.playlist.attributes.description.standard}}</p>
+        </div>
+        <div class='col-8'>
+          <table class='table table-hover'>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Song</th>
+                <th>Time</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor='let track of musicService.playlist.relationships.tracks.data' class='mediarow'>
+                <td (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(track) : musicService.pause()'>
+                  <i *ngIf='!musicService.isItemCurrentlyPlaying(track.id)' class="fas fa-play"></i>
+                  <i *ngIf='musicService.isItemCurrentlyPlaying(track.id)' class="fas fa-pause"></i>
+                </td>
+                <td (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(track) : musicService.pause()'>{{track.attributes.name}}</td>
+                <td (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(track) : musicService.pause()'>{{track.attributes.durationInMillis | date : 'm:ss'}}</td>
+                <td >
+                  <div>
+                    <a role='button' id='dropdown{{track.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                      <i class="fas fa-ellipsis-h"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item">Play</a>
+                      <a class="dropdown-item">Play Next</a>
+                      <a class="dropdown-item">Play Later</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item">Add to Library</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item">Like</a>
+                      <a class="dropdown-item">Dislike</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

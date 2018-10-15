@@ -1,0 +1,28 @@
+p {
+  font-size: 8pt;
+}
+
+.mediarow {
+  cursor: pointer;
+}
+
+.mediarow i {
+  color: #ffffff;
+}
+
+.mediarow:hover i {
+  color: #000000;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.album-options-dropdown {
+  position: relative;
+  top: 37px;
+  left: 12px;
+  max-width: 10px;
+  max-height: 15px;
+  cursor: pointer;
+}

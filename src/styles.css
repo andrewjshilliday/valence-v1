@@ -1,0 +1,59 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~font-awesome/css/font-awesome.min.css";
+
+.scrollbar-style-2::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+.scrollbar-style-2::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+.scrollbar-style-2::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #D62929;
+}
+
+/* .media-artwork {
+	position: absolute; 
+  display: block;
+	z-index: 1;
+}
+
+.media-album {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: relative;
+  top: -20px;
+}
+
+.media-artist {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: relative;
+  top: -30px;
+}
+
+.media-control-button{
+	position: relative;
+	bottom: 130px;
+	left: 10px;
+	color: lightgray;
+	z-index: 2;
+	opacity: 0;
+}
+
+.media-control-button :hover {
+	opacity: 1;
+} */

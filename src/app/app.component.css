@@ -1,0 +1,10 @@
+#page-content-wrapper {
+  position: fixed;
+  overflow-y: auto;
+  top: 50px;
+  left: 250px;
+  right: 0px;
+  bottom: 100px;
+  width: calc(100% - 250px);
+  height: calc(100% - 150px);
+}

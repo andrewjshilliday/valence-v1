@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <h1>Search Results</h1>
+  <div *ngIf='musicService.artists && musicService.artists.length'>
+    <h2>Artists</h2>
+    <div class='row'>
+      <div *ngFor='let artist of musicService.artists' class='col-sm-6 col-md-4 col-lg-3 col-xl-2 card'>
+        <img class="img-fluid" src="../../assets/images/artist-default.png" /><br />
+        <h6 class='card-title'><a [routerLink]="['/artists', artist.id]">{{artist.attributes.name}}</a></h6>
+      </div>
+    </div>
+  </div>
+  <div *ngIf='musicService.albums && musicService.albums.length'>
+    <h2>Albums</h2>
+    <div class='row'>
+      <div *ngFor='let album of musicService.albums' class='col-sm-6 col-md-4 col-lg-3 col-xl-2 card'>
+        <img class="img-fluid card-img-top" [src]='musicService.formatArtworkURL(album.attributes.artwork, 300)' /><br />
+        <h6 class="card-title"><a [routerLink]="['/albums', album.id]">{{album.attributes.name}}</a></h6>
+      </div>
+    </div>
+  </div>
+  <div *ngIf='musicService.songs && musicService.songs.length'>
+    <h2>Songs</h2>
+    <div class='row'>
+      <div *ngFor='let song of musicService.songs' class='col-sm-6 col-md-4 col-lg-3 col-xl-2 card'>
+        <img class="img-fluid card-img-top" [src]='musicService.formatArtworkURL(song.attributes.artwork, 300)' /><br />
+        <h6 class='card-title'>{{song.attributes.name}}</h6>
+      </div>
+    </div>
+  </div>
+  <div *ngIf='musicService.playlists && musicService.playlists.length'>
+    <h2>Playlists</h2>
+    <div class='row'>
+      <div *ngFor='let playlist of musicService.playlists' class='col-sm-6 col-md-4 col-lg-3 col-xl-2 card scrollbar-style-2'>
+        <img class="img-fluid card-img-top" [src]='musicService.formatArtworkURL(playlist.attributes.artwork, 300)' /><br />
+        <h6 class='card-title'>{{playlist.attributes.name}}</h6>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div id="now-playing-wrapper" class="row">
+  <div class="btn-group media-controls" role="group">
+    <button type="button" class="btn btn-primary-transparent media-control" (click)='musicService.playPrevious()'>
+      <i class="fas fa-backward"></i>
+    </button>
+    <button type="button" class="btn btn-primary-transparent media-control" *ngIf="!this.musicService.playing" (click)='musicService.play()'>
+      <i class="fas fa-play"></i>
+    </button>
+    <button type="button" class="btn btn-primary-transparent media-control" *ngIf="this.musicService.playing" (click)='musicService.pause()'>
+      <i class="fas fa-pause"></i>
+    </button>
+    <button type="button" class="btn btn-primary-transparent media-control" (click)='musicService.playNext()'>
+      <i class="fas fa-forward"></i>
+    </button>
+  </div>
+  <div class="container-fluid rounded now-playing-bar">
+    <div *ngIf='musicService.nowPlayingItem' class='row'>
+      <div class='col-1'>
+        <div class='now-playing-album-art rounded'>
+          <a [routerLink]="['/albums', musicService.nowPlayingItem.assets[0].metadata.playlistId]">
+            <img class="img-fluid" [src]='musicService.formatArtworkURL(musicService.nowPlayingItem.attributes.artwork, 100)' />
+          </a>
+        </div>
+      </div>
+      <div class='col-10'>
+        <div class='row now-playing-text justify-content-center'>
+          <p>
+            {{musicService.nowPlayingItem.attributes.name}}<br />
+            <a [routerLink]="['/albums', musicService.nowPlayingItem.assets[0].metadata.playlistId]">{{musicService.nowPlayingItem.albumName}}</a> | 
+            <a [routerLink]="['/artists', musicService.nowPlayingItem.assets[0].metadata.artistId]">{{musicService.nowPlayingItem.artistName}}</a>
+          </p>
+        </div>
+        <div class='row now-playing-progress'></div>
+      </div>
+      <div class='col-1 queue-options'>
+        <i class="fas fa-list-ul fa-2x"></i>
+      </div>
+    </div>
+    <div *ngIf='!musicService.nowPlayingItem' class='row justify-content-center logo'>
+      <i class="fab fa-apple fa-3x"></i>
+    </div>
+  </div>
+</div>
