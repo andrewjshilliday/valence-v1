@@ -26,3 +26,30 @@ p {
   max-height: 15px;
   cursor: pointer;
 }
+
+.track-list {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.album-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.album-text {
+  font-size: 10pt;
+}
+
+.media-status {
+  max-width: 10px;
+}
+
+.time {
+  max-width: 30px;
+}
+
+.media-options {
+  max-width: 10px;
+}

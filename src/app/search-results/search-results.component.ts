@@ -8,7 +8,7 @@ import { MusicService } from '../music.service';
 })
 export class SearchResultsComponent implements OnInit {
 
-  constructor(private musicService: MusicService) {
+  constructor(public musicService: MusicService) {
 	}
 
   ngOnInit() {

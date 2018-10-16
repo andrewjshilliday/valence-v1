@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
+import { textChangeRangeIsUnchanged } from 'typescript';
 
 declare var MusicKit: any;
 import '../assets/musickit.js';
-import { textChangeRangeIsUnchanged } from 'typescript';
 
 @Injectable({
   providedIn: 'root'
@@ -108,7 +108,6 @@ export class MusicService {
     this.recommendations = await this.musicKit.api.recommendations();
     this.recentPlayed = await this.musicKit.api.recentPlayed();
     this.heavyRotation = await this.musicKit.api.historyHeavyRotation();
-    var asd = 0;
   }
 
   async getArtist(id): Promise<any> {
@@ -137,12 +136,15 @@ export class MusicService {
       return;
 
     this.playlist = null;
-    this.playlist = await this.musicKit.api.playlist(id, { include: 'playlists' })
+    this.playlist = await this.musicKit.api.playlist(id, { include: 'playlists' });
 
     for (let track of this.playlist.relationships.tracks.data) {
       this.playlistDuration += track.attributes.durationInMillis;
     }
+  }
 
+  async getPlaylists(id): Promise<any> {
+    this.playlists = await this.musicKit.api.artist(id, { include: 'playlists' });
     var asd = 0;
   }
 

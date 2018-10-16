@@ -11,11 +11,10 @@ import { MusicService } from '../music.service';
 export class PlaylistsComponent implements OnInit {
   playlistSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router, private musicService: MusicService) { }
+  constructor(private route: ActivatedRoute, private router: Router, public musicService: MusicService) { }
 
   ngOnInit() {
     this.playlistSubscription = this.route.params.subscribe(params => { 
-      //const id = +params['id'];
       let id: string = params['id'];
       this.musicService.getPlaylist(id); 
     });

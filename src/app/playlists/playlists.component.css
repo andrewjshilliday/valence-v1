@@ -26,3 +26,38 @@ p {
   max-height: 15px;
   cursor: pointer;
 }
+
+.playlist-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.playlist-text {
+  font-size: 10pt;
+}
+
+.media-status {
+  max-width: 30px;
+}
+
+.song-text {
+  max-width: 200px;
+}
+
+.artist-text {
+  max-width: 100px;
+}
+
+.album-text {
+  max-width: 130px;
+}
+
+.time {
+  max-width: 30px;
+}
+
+.media-options {
+  min-width: 20px;
+  max-width: 20px;
+}

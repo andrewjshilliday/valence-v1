@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 export class AlbumsComponent implements OnInit {
   albumSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router, private musicService: MusicService) { }
+  constructor(private route: ActivatedRoute, private router: Router, public musicService: MusicService) { }
 
   ngOnInit() {
     this.albumSubscription = this.route.params.subscribe(params => { 

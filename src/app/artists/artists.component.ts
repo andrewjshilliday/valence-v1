@@ -11,18 +11,13 @@ import { Subscription } from 'rxjs';
 export class ArtistsComponent implements OnInit {
   artistSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router, private musicService: MusicService) {
-    const param = this.route.snapshot.paramMap.get('id');
-    if (param) {
-      const id = +param;
-      this.musicService.getArtist(id);
-    }
-  }
+  constructor(private route: ActivatedRoute, private router: Router, public musicService: MusicService) { }
 
   ngOnInit() {
     this.artistSubscription = this.route.params.subscribe(params => {
       const id = +params['id'];
       this.musicService.getArtist(id);
+      this.musicService.getPlaylists(id);
     });
   }
 

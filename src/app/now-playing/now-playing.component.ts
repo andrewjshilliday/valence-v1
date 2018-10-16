@@ -11,7 +11,7 @@ import '../../assets/musickit.js';
 })
 export class NowPlayingComponent implements OnInit {
 
-  constructor(private musicService: MusicService) { }
+  constructor(public musicService: MusicService) { }
 
   ngOnInit() {
   }
