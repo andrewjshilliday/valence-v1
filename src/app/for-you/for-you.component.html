@@ -19,7 +19,7 @@
   <div *ngIf='musicService.recentPlayed && musicService.recentPlayed.length'>
     <h2>Recently Played</h2> <!-- Recently Played -->
     <div class='row'>
-      <div *ngFor='let album of musicService.recentPlayed' class='col-sm-6 col-md-4 col-lg-3 col-xl-2 card'>
+      <div *ngFor='let album of musicService.recentPlayed' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'>
         <div class='row media-artwork'>
           <a [routerLink]="['/albums', album.id]"><img class="img-fluid" [src]='musicService.formatArtworkURL(album.attributes.artwork, 500)' /></a>
           <div class='media-control-button'>
@@ -35,7 +35,7 @@
   <div *ngIf='musicService.heavyRotation && musicService.heavyRotation.length'>
     <h2>Heavy Rotation</h2> <!-- Heavy Rotation -->
     <div class='row'>
-      <div *ngFor='let album of musicService.heavyRotation' class='col-sm-6 col-md-4 col-lg-3 col-xl-2 card'>
+      <div *ngFor='let album of musicService.heavyRotation' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'>
         <div class='row media-artwork'>
           <a [routerLink]="['/albums', album.id]"><img class="img-fluid" [src]='musicService.formatArtworkURL(album.attributes.artwork, 500)' /></a>
             <div class='media-control-button'>
@@ -51,7 +51,7 @@
   <div *ngIf='musicService.recommendations && musicService.recommendations.length && musicService.recommendations[1]'>
     <h2>{{musicService.recommendations[1].attributes.title.stringForDisplay}}</h2> <!-- Today's Playlists -->
     <div class='row'>
-      <div *ngFor='let playlist of musicService.recommendations[1].relationships.contents.data' class='col-sm-6 col-md-4 col-xl-3 card'>
+      <div *ngFor='let playlist of musicService.recommendations[1].relationships.contents.data' class='col-sm-6 col-md-4 col-xl-3'>
         <a [routerLink]="['/playlists', playlist.id]"><img class="img-fluid" [src]='musicService.formatArtworkURL(playlist.attributes.artwork, 800)' /></a>
         <div class='media-control-button'>
           <i class="fas fa-play-circle fa-2x" aria-hidden="true"></i>
@@ -66,7 +66,7 @@
     <div *ngFor='let recommendation of musicService.recommendations[2].relationships.recommendations.data'>
       <h4>{{recommendation.attributes.reason.stringForDisplay}}</h4>
       <div class='row'>
-        <div *ngFor='let album of recommendation.relationships.contents.data' class='col-sm-6 col-md-4 col-lg-3 col-xl-2 card'>
+        <div *ngFor='let album of recommendation.relationships.contents.data' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'>
           <div class='row media-artwork'>
             <a [routerLink]="['/albums', album.id]"><img class="img-fluid" [src]='musicService.formatArtworkURL(album.attributes.artwork, 500)' /></a>
               <div class='media-control-button'>
@@ -83,7 +83,7 @@
   <div *ngIf='musicService.recommendations && musicService.recommendations.length && musicService.recommendations[3]'>
     <h2>{{musicService.recommendations[3].attributes.title.stringForDisplay}}</h2> <!-- Artist Spotlight Playlists -->
     <div class='row'>
-      <div *ngFor='let playlist of musicService.recommendations[3].relationships.contents.data' class='col-sm-6 col-md-4 col-xl-3 card'>
+      <div *ngFor='let playlist of musicService.recommendations[3].relationships.contents.data' class='col-sm-6 col-md-4 col-xl-3'>
         <a [routerLink]="['/playlists', playlist.id]"><img class="img-fluid" [src]='musicService.formatArtworkURL(playlist.attributes.artwork, 800)' /></a>
         <div class='media-control-button'>
           <i class="fas fa-play-circle fa-2x" aria-hidden="true"></i>
@@ -96,7 +96,7 @@
   <div *ngIf='musicService.recommendations && musicService.recommendations.length && musicService.recommendations[4]'>
     <h2>{{musicService.recommendations[4].attributes.title.stringForDisplay}}</h2> <!-- New Releases -->
     <div class='row'>
-      <div *ngFor='let album of musicService.recommendations[4].relationships.contents.data' class='col-sm-6 col-md-4 col-lg-3 col-xl-2 card'>
+      <div *ngFor='let album of musicService.recommendations[4].relationships.contents.data' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'>
         <div class='row media-artwork'>
           <a [routerLink]="['/albums', album.id]"><img class="img-fluid" [src]='musicService.formatArtworkURL(album.attributes.artwork, 500)' /></a>
             <div class='media-control-button'>
