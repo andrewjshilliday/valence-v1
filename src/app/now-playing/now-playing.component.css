@@ -67,3 +67,12 @@ p {
   position: relative;
   padding-top: 7px;
 }
+
+.track-time {
+  position: relative;
+}
+
+.bottom-align-text {
+  position: absolute;
+  bottom: 0;
+}

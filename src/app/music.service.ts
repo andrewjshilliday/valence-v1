@@ -51,14 +51,25 @@ export class MusicService {
     await this.musicKit.unauthorize();
   }
 
-  async playItem(item): Promise<any> {
+  async playItem(item, startIndex = 0): Promise<any> {
     const playParams = item.attributes.playParams;
 
     await this.musicKit.setQueue({
       [playParams.kind]: playParams.id
     });
 
+    if (startIndex !== 0)
+      await this.musicKit.changeToMediaAtIndex(startIndex);
+
     this.play();
+  }
+
+  queueNext (item) {
+    this.musicKit.player.queue.prepend({ items: item });
+  }
+
+  queueLater (item) {
+    this.musicKit.player.queue.append({ items: item });
   }
 
   async play(): Promise<any> {

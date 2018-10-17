@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ForYouComponent } from './for-you/for-you.component';
@@ -13,6 +14,8 @@ import { NowPlayingComponent } from './now-playing/now-playing.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { PlaylistsComponent } from './playlists/playlists.component';
+import { MinutesSecondsPipe } from './shared/minutes-seconds.pipe';
+import { HoursMinutesPipe } from './shared/hours-minutes.pipe';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,8 @@ import { PlaylistsComponent } from './playlists/playlists.component';
     LibraryComponent,
     TopBarComponent,
     PlaylistsComponent,
+    MinutesSecondsPipe,
+    HoursMinutesPipe,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +46,7 @@ import { PlaylistsComponent } from './playlists/playlists.component';
       { path: 'playlists/:id', component: PlaylistsComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

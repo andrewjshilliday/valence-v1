@@ -4,7 +4,7 @@
       <div class='col-4'>
         <img class="img-fluid card-img-top" [src]='musicService.formatArtworkURL(musicService.album.attributes.artwork, 800)' />
         <br />
-        <h6>{{musicService.album.attributes.trackCount}} Songs, {{musicService.albumDuration | date : 'm'}} Minutes</h6>
+        <h6>{{musicService.album.attributes.trackCount}} Songs, {{(musicService.albumDuration / 1000 / 60) | hoursMinutes}}</h6>
         <p *ngIf='musicService.album.attributes.editorialNotes'>{{musicService.album.attributes.editorialNotes.standard}}</p>
       </div>
       <div class='col-8'>
@@ -29,7 +29,7 @@
             </div>
           </div>
         </div>
-        <div class='row track-list'>
+        <div class='row'>
           <table class='table table-hover album-text'>
             <thead>
               <tr>
@@ -41,12 +41,12 @@
             </thead>
             <tbody>
               <tr *ngFor='let track of musicService.album.relationships.tracks.data' class='mediarow'>
-                <td class='media-status' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(track) : musicService.pause()'>
+                <td class='media-status' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(musicService.album, musicService.album.relationships.tracks.data.indexOf(track)) : musicService.pause()'>
                   <i *ngIf='!musicService.isItemCurrentlyPlaying(track.id)' class="fas fa-play"></i>
                   <i *ngIf='musicService.isItemCurrentlyPlaying(track.id)' class="fas fa-pause"></i>
                 </td>
-                <td class='text-truncate' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(track) : musicService.pause()'>{{track.attributes.name}}</td>
-                <td class='time text-right' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(track) : musicService.pause()'>{{track.attributes.durationInMillis | date : 'm:ss'}}</td>
+                <td class='text-truncate' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(musicService.album, musicService.album.relationships.tracks.data.indexOf(track)) : musicService.pause()'>{{track.attributes.name}}</td>
+                <td class='time text-right' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(musicService.album, musicService.album.relationships.tracks.data.indexOf(track)) : musicService.pause()'>{{track.attributes.durationInMillis | date : 'm:ss'}}</td>
                 <td class='media-options'>
                   <div>
                     <a role='button' id='dropdown{{track.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>

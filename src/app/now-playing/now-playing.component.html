@@ -24,11 +24,19 @@
       </div>
       <div class='col-10'>
         <div class='row now-playing-text justify-content-center'>
-          <p>
-            {{musicService.nowPlayingItem.attributes.name}}<br />
-            <a [routerLink]="['/albums', musicService.nowPlayingItem.assets[0].metadata.playlistId]">{{musicService.nowPlayingItem.albumName}}</a> | 
-            <a [routerLink]="['/artists', musicService.nowPlayingItem.assets[0].metadata.artistId]">{{musicService.nowPlayingItem.artistName}}</a>
-          </p>
+          <div class='col-1'>
+            {{musicService.musicKit.player.currentPlaybackTime | minutesSeconds}}
+          </div>
+          <div class='col-10'>
+            <p>
+              {{musicService.nowPlayingItem.attributes.name}}<br />
+              <a [routerLink]="['/albums', musicService.nowPlayingItem.assets[0].metadata.playlistId]">{{musicService.nowPlayingItem.albumName}}</a> | 
+              <a [routerLink]="['/artists', musicService.nowPlayingItem.assets[0].metadata.artistId]">{{musicService.nowPlayingItem.artistName}}</a>
+            </p>
+          </div>
+          <div class='col-1'>
+            {{musicService.musicKit.player.currentPlaybackTimeRemaining | minutesSeconds}}
+          </div>
         </div>
         <div class='row now-playing-progress'></div>
       </div>

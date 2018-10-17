@@ -4,7 +4,7 @@
       <div class='col-4'>
         <img class="img-fluid card-img-top" [src]='musicService.formatArtworkURL(musicService.playlist.attributes.artwork, 800)' />
         <br />
-        <h6>{{musicService.playlist.relationships.tracks.data.length}} Songs, {{musicService.playlistDuration | date : 'm'}} Minutes</h6>
+        <h6>{{musicService.playlist.relationships.tracks.data.length}} Songs, {{(musicService.playlistDuration / 1000 / 60) | hoursMinutes}}</h6>
         <p *ngIf='musicService.playlist.attributes.description'>{{musicService.playlist.attributes.description.standard}}</p>
       </div>
       <div class='col-8'>
@@ -42,11 +42,11 @@
           </thead>
           <tbody>
             <tr *ngFor='let track of musicService.playlist.relationships.tracks.data' class='mediarow'>
-              <td class='media-status' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(track) : musicService.pause()'>
+              <td class='media-status' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(musicService.playlist, musicService.playlist.relationships.tracks.data.indexOf(track)) : musicService.pause()'>
                 <i *ngIf='!musicService.isItemCurrentlyPlaying(track.id)' class="fas fa-play"></i>
                 <i *ngIf='musicService.isItemCurrentlyPlaying(track.id)' class="fas fa-pause"></i>
               </td>
-              <td class='song-text text-truncate' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(track) : musicService.pause()'>{{track.attributes.name}}</td>
+              <td class='song-text text-truncate' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(musicService.playlist, musicService.playlist.relationships.tracks.data.indexOf(track)) : musicService.pause()'>{{track.attributes.name}}</td>
               <td class='artist-text text-truncate'>{{track.attributes.artistName}}</td>
               <td class='album-text text-truncate'>{{track.attributes.albumName}}</td>
               <td class='time text-right'>{{track.attributes.durationInMillis | date : 'm:ss'}}</td>
