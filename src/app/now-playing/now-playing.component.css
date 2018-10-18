@@ -51,7 +51,6 @@
 }
 
 .queue-options {
-  /* position: relative; */
   padding: 15px 0px 15px 20px;
   height: 56px;
   width: 56px;
@@ -70,7 +69,6 @@
   left: 60px;
   width: calc(100% - 90px);
   height: 3px;
-  /* background-color: grey; */
 }
 
 .track-progress {

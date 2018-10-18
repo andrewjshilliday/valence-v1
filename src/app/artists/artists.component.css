@@ -7,20 +7,6 @@
   overflow-y: hidden;
 }
 
-/* .card {
-  float: left;
-  padding-left: .75rem;
-  padding-right: .75rem;
-  padding-top: 0;
-  padding-bottom: 0;
-  border: 0;
-  flex-grow: 0;
-  flex-shrink: 0;
-} */
-
-/* .media-div {
-} */
-
 .media-album {
   overflow: hidden;
   white-space: nowrap;

@@ -7,7 +7,7 @@
           <div class='col-8'>
             <span class='text-muted'>{{musicService.album.attributes.trackCount}} Songs, {{(musicService.albumDuration / 1000 / 60) | hoursMinutes}}</span>
           </div>
-          <div class='col-4' style="display:inline">
+          <div class='col-4'>
             <span class='text-muted float-right pointer-hover'><a (click)='musicService.playItem(musicService.album, 0, true)'>Shuffle <i class="fas fa-random fa-xs"></i></a></span>
           </div>
         </div>
