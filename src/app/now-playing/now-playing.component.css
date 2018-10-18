@@ -10,38 +10,52 @@
 .media-controls {
   position: relative;
   top: 15px;
-  left: 60px;
-  right: 60px;
-  width: 130px;
-  height: 65%;
+  top: 15px;
+  width: 250px;
+  text-align: center;
 }
 
-.media-control {
+.track-controls {
+  display: inline-block;
+}
+
+.media-control-icon {
   color: lightgrey;
-  background-color: #1e1e1e
+  background-color: #1e1e1e;
+}
+
+.volume-icon {
+  padding: 18px 0px;
+  color: lightgrey;
+  background-color: #1e1e1e;
+}
+
+.volume-slider {
+  left: -10px;
 }
 
 .now-playing-bar {
   position: relative;
   top: 17px;
-  left: 50px;
-  width: calc(100% - 350px);
+  left: 25px;
+  width: calc(100% - 300px);
   height: 66px;
   background-color: lightgray;
 }
 
 .now-playing-album-art {
-  position: fixed;
-  padding-top: 5px;
+  padding: 5px 0px;
   height: 56px;
   width: 56px;
+  float: right;
 }
 
 .queue-options {
-  position: relative;
-  padding-top: 15px;
+  /* position: relative; */
+  padding: 15px 0px 15px 20px;
   height: 56px;
   width: 56px;
+  float: left;
 }
 
 .now-playing-text {
@@ -52,11 +66,15 @@
 
 .now-playing-progress {
   position: relative;
-  top: -8px;
+  top: -32px;
   left: 60px;
   width: calc(100% - 90px);
   height: 3px;
-  background-color: grey;
+  /* background-color: grey; */
+}
+
+.track-progress {
+  width: 100%;
 }
 
 p {
@@ -75,4 +93,9 @@ p {
 .bottom-align-text {
   position: absolute;
   bottom: 0;
+}
+
+.no-padding {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }

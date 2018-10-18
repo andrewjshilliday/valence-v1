@@ -10,10 +10,19 @@ import '../../assets/musickit.js';
   styleUrls: ['./now-playing.component.css']
 })
 export class NowPlayingComponent implements OnInit {
+  seeking: boolean = false;
 
   constructor(public musicService: MusicService) { }
 
   ngOnInit() {
   }
 
+  async seekToTime(time: number) {
+    if (this.seeking === true)
+      return;
+
+    this.seeking = true;
+    await this.musicService.musicKit.player.seekToTime(time);
+    this.seeking = false;
+  }
 }

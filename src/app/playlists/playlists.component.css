@@ -61,3 +61,11 @@ p {
   min-width: 20px;
   max-width: 20px;
 }
+
+span {
+  font-size: 10pt;
+}
+
+.pointer-hover :hover {
+  cursor: pointer;
+}

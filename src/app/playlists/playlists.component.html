@@ -2,25 +2,33 @@
   <div *ngIf='musicService.playlist'>
     <div class='row pt-3'>
       <div class='col-4'>
-        <img class="img-fluid card-img-top" [src]='musicService.formatArtworkURL(musicService.playlist.attributes.artwork, 800)' />
-        <br />
-        <h6>{{musicService.playlist.relationships.tracks.data.length}} Songs, {{(musicService.playlistDuration / 1000 / 60) | hoursMinutes}}</h6>
+        <img class="img-fluid card-img-top rounded" [src]='musicService.formatArtworkURL(musicService.playlist.attributes.artwork, 800)' />
+        <div class='row'>
+          <div class='col-8'>
+            <span class='text-muted'>{{musicService.playlist.relationships.tracks.data.length}} Songs, {{(musicService.playlistDuration / 1000 / 60) | hoursMinutes}}</span>
+          </div>
+          <div class='col-4'>
+            <span class='text-muted float-right pointer-hover'><a (click)='musicService.playItem(musicService.playlist, 0, true)'>Shuffle <i class="fas fa-random fa-xs"></i></a></span>
+          </div>
+        </div>
+        <hr />
         <p *ngIf='musicService.playlist.attributes.description'>{{musicService.playlist.attributes.description.standard}}</p>
       </div>
       <div class='col-8'>
         <div class='row'>
           <div class='col-11'>
             <h4>{{musicService.playlist.attributes.name}}</h4>
-            <h5>Updated {{musicService.playlist.attributes.lastModifiedDate | date : 'dd/MM' }}</h5>
+            <h5>Updated {{musicService.playlist.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
           </div>
           <div class='col-1 album-options-dropdown'>
             <a role='button' id='dropdown{{musicService.playlist.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
               <i class="fas fa-ellipsis-h"></i>
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item">Play</a>
-              <a class="dropdown-item">Play Next</a>
-              <a class="dropdown-item">Play Later</a>
+              <a class="dropdown-item" (click)='musicService.playItem(musicService.playlist)'>Play</a>
+              <a class="dropdown-item" (click)='musicService.playItem(musicService.playlist, 0, true)'>Shuffle</a>
+              <a class="dropdown-item" (click)='musicService.queueNext(musicService.playlist)'>Play Next</a>
+              <a class="dropdown-item" (click)='musicService.queueLater(musicService.playlist)'>Play Later</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item">Add to Library</a>
               <div class="dropdown-divider"></div>
@@ -56,9 +64,9 @@
                     <i class="fas fa-ellipsis-h"></i>
                   </a>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item">Play</a>
-                    <a class="dropdown-item">Play Next</a>
-                    <a class="dropdown-item">Play Later</a>
+                    <a class="dropdown-item" (click)='musicService.playItem(track)'>Play</a>
+                    <a class="dropdown-item" (click)='musicService.queueNext(track)'>Play Next</a>
+                    <a class="dropdown-item" (click)='musicService.playItem(track)'>Play Later</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item">Add to Library</a>
                     <div class="dropdown-divider"></div>

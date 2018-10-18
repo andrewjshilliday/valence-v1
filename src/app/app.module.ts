@@ -16,6 +16,7 @@ import { TopBarComponent } from './top-bar/top-bar.component';
 import { PlaylistsComponent } from './playlists/playlists.component';
 import { MinutesSecondsPipe } from './shared/minutes-seconds.pipe';
 import { HoursMinutesPipe } from './shared/hours-minutes.pipe';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { HoursMinutesPipe } from './shared/hours-minutes.pipe';
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]),
     BrowserAnimationsModule,
+    MatSliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

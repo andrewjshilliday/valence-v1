@@ -51,8 +51,9 @@ export class MusicService {
     await this.musicKit.unauthorize();
   }
 
-  async playItem(item, startIndex = 0): Promise<any> {
+  async playItem(item, startIndex: number = 0, shuffle: boolean = false): Promise<any> {
     const playParams = item.attributes.playParams;
+    this.musicKit.player.shuffleMode = 0;
 
     await this.musicKit.setQueue({
       [playParams.kind]: playParams.id
@@ -61,11 +62,14 @@ export class MusicService {
     if (startIndex !== 0)
       await this.musicKit.changeToMediaAtIndex(startIndex);
 
+    if (shuffle === true)
+      this.musicKit.player.shuffleMode = 1;
+
     this.play();
   }
 
   queueNext (item) {
-    this.musicKit.player.queue.prepend({ items: item });
+    this.musicKit.player.queue.prepend(item);
   }
 
   queueLater (item) {
@@ -87,6 +91,10 @@ export class MusicService {
 
   async playPrevious(): Promise<any> {
     await this.musicKit.player.skipToPreviousItem();
+  }
+
+  setVolume(volume: number) {
+    this.musicKit.player.volume = volume;
   }
 
   async search(query: string): Promise<any> {
@@ -156,7 +164,6 @@ export class MusicService {
 
   async getPlaylists(id): Promise<any> {
     this.playlists = await this.musicKit.api.artist(id, { include: 'playlists' });
-    var asd = 0;
   }
 
   formatArtworkURL(url: string, size: number): string {

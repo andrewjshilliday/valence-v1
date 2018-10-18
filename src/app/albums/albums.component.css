@@ -53,3 +53,15 @@ p {
 .media-options {
   max-width: 10px;
 }
+
+span {
+  font-size: 10pt;
+}
+
+.pointer-hover {
+  padding-top: 3px;
+}
+
+.pointer-hover :hover {
+  cursor: pointer;
+}

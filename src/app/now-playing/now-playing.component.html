@@ -1,21 +1,28 @@
 <div id="now-playing-wrapper" class="row">
-  <div class="btn-group media-controls" role="group">
-    <button type="button" class="btn btn-primary-transparent media-control" (click)='musicService.playPrevious()'>
-      <i class="fas fa-backward"></i>
-    </button>
-    <button type="button" class="btn btn-primary-transparent media-control" *ngIf="!this.musicService.playing" (click)='musicService.play()'>
-      <i class="fas fa-play"></i>
-    </button>
-    <button type="button" class="btn btn-primary-transparent media-control" *ngIf="this.musicService.playing" (click)='musicService.pause()'>
-      <i class="fas fa-pause"></i>
-    </button>
-    <button type="button" class="btn btn-primary-transparent media-control" (click)='musicService.playNext()'>
-      <i class="fas fa-forward"></i>
-    </button>
+  <div class='media-controls'>
+    <div class="row btn-group track-controls" role="group">
+      <button type="button" class="btn btn-primary-transparent media-control-icon" (click)='musicService.playPrevious()'>
+        <i class="fas fa-backward"></i>
+      </button>
+      <button type="button" class="btn btn-primary-transparent media-control-icon" *ngIf="!this.musicService.playing" (click)='musicService.play()'>
+        <i class="fas fa-play"></i>
+      </button>
+      <button type="button" class="btn btn-primary-transparent media-control-icon" *ngIf="this.musicService.playing" (click)='musicService.pause()'>
+        <i class="fas fa-pause"></i>
+      </button>
+      <button type="button" class="btn btn-primary-transparent media-control-icon" (click)='musicService.playNext()'>
+        <i class="fas fa-forward"></i>
+      </button>
+    </div>
+    <div class='row'>
+      <div class='col-3 volume-icon align-bottom'><i class="fas fa-volume-down fa-xs float-right"></i></div>
+      <div class='col-6'><mat-slider class='volume-slider' [max]="1.0" [min]="0.0" [step]="0.01" [value]="musicService.musicKit.player.volume" (input)="musicService.setVolume($event.value)"></mat-slider></div>
+      <div class='col-3 volume-icon align-bottom'><i class="fas fa-volume-up fa-xs float-left"></i></div>
+    </div>
   </div>
-  <div class="container-fluid rounded now-playing-bar">
+  <div class="rounded now-playing-bar">
     <div *ngIf='musicService.nowPlayingItem' class='row'>
-      <div class='col-1'>
+      <div class='col-1 no-padding'>
         <div class='now-playing-album-art rounded'>
           <a [routerLink]="['/albums', musicService.nowPlayingItem.assets[0].metadata.playlistId]">
             <img class="img-fluid" [src]='musicService.formatArtworkURL(musicService.nowPlayingItem.attributes.artwork, 100)' />
@@ -25,7 +32,7 @@
       <div class='col-10'>
         <div class='row now-playing-text justify-content-center'>
           <div class='col-1'>
-            {{musicService.musicKit.player.currentPlaybackTime | minutesSeconds}}
+            <span>{{musicService.musicKit.player.currentPlaybackTime | minutesSeconds}}</span>
           </div>
           <div class='col-10'>
             <p>
@@ -35,17 +42,39 @@
             </p>
           </div>
           <div class='col-1'>
-            {{musicService.musicKit.player.currentPlaybackTimeRemaining | minutesSeconds}}
+            <span>{{musicService.musicKit.player.currentPlaybackTimeRemaining | minutesSeconds}}</span>
           </div>
         </div>
-        <div class='row now-playing-progress'></div>
+        <div class='row now-playing-progress'>
+          <mat-slider class='track-progress' [max]="musicService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="musicService.musicKit.player.currentPlaybackTime" [disabled]='false' (change)="seekToTime($event.value)"></mat-slider>
+        </div>
       </div>
-      <div class='col-1 queue-options'>
-        <i class="fas fa-list-ul fa-2x float-right"></i>
+      <div class='col-1 no-padding'>
+        <div class='queue-options'>
+          <i class="fas fa-list-ul fa-2x" data-toggle="modal" data-target="#queueModal"></i>
+        </div>
       </div>
     </div>
     <div *ngIf='!musicService.nowPlayingItem' class='row justify-content-center logo'>
       <i class="fab fa-apple fa-3x"></i>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="queueModal" tabindex="-1" role="dialog" aria-labelledby="queueModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Queue</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer"></div>
     </div>
   </div>
 </div>
