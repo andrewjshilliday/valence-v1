@@ -1,17 +1,61 @@
+.loading-spinner {
+  top: 32vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.media-artwork {
+  position: relative;
+}
+
+.media-control-button {
+  display: none;
+  position: absolute;
+	color: lightgray;
+  bottom: 5%;
+  left: 5%;
+}
+
+.media-artwork:hover .media-control-button {
+	display: block;
+}
+
 p {
   font-size: 9pt;
 }
 
-.mediarow {
+span {
+  font-size: 10pt;
+}
+
+.mediarow:hover {
   cursor: pointer;
 }
 
-.mediarow i {
-  color: #ffffff;
+.mediarow span {
+  display: block;
 }
 
-.mediarow:hover i {
-  color: #000000;
+.mediarow:hover span {
+  display: none;
+}
+
+.mediarow .media-icon {
+  display: none;
+  transform: translate(20%, 20%);
+}
+
+.mediarow:hover .media-icon {
+  display: block;
+}
+
+.mediarow .now-playing-icon {
+  display: block;
+  transform: translate(20%, 20%);
+}
+
+.mediarow:hover .now-playing-icon {
+  display: none;
 }
 
 .dropdown {
@@ -20,8 +64,8 @@ p {
 
 .album-options-dropdown {
   position: relative;
-  top: 37px;
-  left: 12px;
+  top: 20px;
+  right: 5px;
   max-width: 10px;
   max-height: 15px;
   cursor: pointer;
@@ -43,25 +87,25 @@ p {
 }
 
 .media-status {
-  max-width: 10px;
+  min-width: 20px;
+  max-width: 20px;
 }
 
 .time {
+  min-width: 30px;
   max-width: 30px;
 }
 
 .media-options {
-  max-width: 10px;
+  min-width: 20px;
+  max-width: 20px;
+  transform: translate(-10%, -10%);
 }
 
-span {
-  font-size: 10pt;
-}
-
-.pointer-hover {
+.shuffle-label {
   padding-top: 3px;
 }
 
-.pointer-hover :hover {
+.shuffle-label :hover {
   cursor: pointer;
 }

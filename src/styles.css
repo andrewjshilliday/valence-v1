@@ -23,39 +23,5 @@
 	background-color: #D62929;
 }
 
-/* .media-artwork {
-	position: absolute; 
-  display: block;
-	z-index: 1;
-}
-
-.media-album {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  position: relative;
-  top: -20px;
-}
-
-.media-artist {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  position: relative;
-  top: -30px;
-}
-
-.media-control-button{
-	position: relative;
-	bottom: 130px;
-	left: 10px;
-	color: lightgray;
-	z-index: 2;
-	opacity: 0;
-}
-
-.media-control-button :hover {
-	opacity: 1;
-} */
 html, body { height: 100%; }
 body { margin: 0; font-family: 'Roboto', sans-serif; }

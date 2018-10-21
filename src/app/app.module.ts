@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router'
+import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -14,9 +14,12 @@ import { NowPlayingComponent } from './now-playing/now-playing.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { PlaylistsComponent } from './playlists/playlists.component';
-import { MinutesSecondsPipe } from './shared/minutes-seconds.pipe';
-import { HoursMinutesPipe } from './shared/hours-minutes.pipe';
-import { MatSliderModule } from '@angular/material/slider';
+import { MediaItemViewComponent } from './media-item-view/media-item-view.component';
+import { MinutesSecondsPipe } from './pipes/minutes-seconds.pipe';
+import { HoursMinutesPipe } from './pipes/hours-minutes.pipe';
+import { AlbumFilterPipe } from './pipes/album-filter.pipe';
+import { SearchResultsGuard } from './search-results/search-results.guard';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -31,24 +34,26 @@ import { MatSliderModule } from '@angular/material/slider';
     LibraryComponent,
     TopBarComponent,
     PlaylistsComponent,
+    MediaItemViewComponent,
     MinutesSecondsPipe,
     HoursMinutesPipe,
+    AlbumFilterPipe,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    BrowserAnimationsModule,
+    MaterialModule,
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
       { path: 'foryou', component: ForYouComponent },
       { path: 'library', component: LibraryComponent },
-      { path: 'searchresults', component: SearchResultsComponent },
+      { path: 'searchresults', canActivate: [SearchResultsGuard], component: SearchResultsComponent },
       { path: 'artists/:id', component: ArtistsComponent },
       { path: 'albums/:id', component: AlbumsComponent },
       { path: 'playlists/:id', component: PlaylistsComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]),
-    BrowserAnimationsModule,
-    MatSliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

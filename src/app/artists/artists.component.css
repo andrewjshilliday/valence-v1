@@ -1,3 +1,9 @@
+.loading-spinner {
+  top: 32vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .row{
   align-items: stretch;
   display: flex;
@@ -5,45 +11,4 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
-}
-
-.media-album {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  width: 114%;
-  padding: 0px 10px;
-  font-size: 11pt;
-}
-
-.media-artist {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding: 0px 10px;
-  font-size: 11pt;
-}
-
-.media-artwork {
-  position: relative;
-  display: inline-block;
-  padding: 0px 10px;
-}
-
-.media-control-button {
-  display: none;
-  position: absolute;
-	color: lightgray;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  /* transform: translate(-50%, -50%); */
-}
-
-/* .media-artwork :hover img {
-  
-} */
-
-.media-artwork :hover .media-control-button {
-	display: block;
 }

@@ -8,10 +8,18 @@ import { MusicService } from '../music.service';
 })
 export class ForYouComponent implements OnInit {
 
+  loading: boolean;
+
   constructor(public musicService: MusicService) { }
 
   ngOnInit() {
-    this.musicService.getRecommenations();
+    this.loadRecommenations();
+  }
+
+  async loadRecommenations() {
+    this.loading = true;
+    await this.musicService.getRecommenations();
+    this.loading = false;
   }
 
 }

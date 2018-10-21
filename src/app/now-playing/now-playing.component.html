@@ -1,18 +1,11 @@
 <div id="now-playing-wrapper" class="row">
   <div class='media-controls'>
-    <div class="row btn-group track-controls" role="group">
-      <button type="button" class="btn btn-primary-transparent media-control-icon" (click)='musicService.playPrevious()'>
-        <i class="fas fa-backward"></i>
-      </button>
-      <button type="button" class="btn btn-primary-transparent media-control-icon" *ngIf="!this.musicService.playing" (click)='musicService.play()'>
-        <i class="fas fa-play"></i>
-      </button>
-      <button type="button" class="btn btn-primary-transparent media-control-icon" *ngIf="this.musicService.playing" (click)='musicService.pause()'>
-        <i class="fas fa-pause"></i>
-      </button>
-      <button type="button" class="btn btn-primary-transparent media-control-icon" (click)='musicService.playNext()'>
-        <i class="fas fa-forward"></i>
-      </button>
+    <div class="row btn-group" role="group">
+      <i class="fas fa-backward media-control-icon" (click)='musicService.playPrevious()'></i>
+      <i class="fas fa-play media-control-icon" *ngIf="!this.musicService.playing && !this.musicService.playbackLoading" (click)='musicService.play()'></i>
+      <i class="fas fa-pause media-control-icon" *ngIf="this.musicService.playing && !this.musicService.playbackLoading" (click)='musicService.pause()'></i>
+      <mat-spinner *ngIf="this.musicService.playbackLoading" class="spinner" [diameter]="25" (click)='musicService.stop()'></mat-spinner>
+      <i class="fas fa-forward media-control-icon" (click)='musicService.playNext()'></i>
     </div>
     <div class='row'>
       <div class='col-3 volume-icon align-bottom'><i class="fas fa-volume-down fa-xs float-right"></i></div>
@@ -25,7 +18,7 @@
       <div class='col-1 no-padding'>
         <div class='now-playing-album-art rounded'>
           <a [routerLink]="['/albums', musicService.nowPlayingItem.assets[0].metadata.playlistId]">
-            <img class="img-fluid" [src]='musicService.formatArtworkURL(musicService.nowPlayingItem.attributes.artwork, 100)' />
+            <img class="img-fluid rounded" [src]='musicService.formatArtworkURL(musicService.nowPlayingItem.attributes.artwork, 100)' />
           </a>
         </div>
       </div>
@@ -46,12 +39,13 @@
           </div>
         </div>
         <div class='row now-playing-progress'>
-          <mat-slider class='track-progress' [max]="musicService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="musicService.musicKit.player.currentPlaybackTime" [disabled]='false' (change)="seekToTime($event.value)"></mat-slider>
+          <mat-slider class='track-progress' [max]="musicService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="musicService.musicKit.player.currentPlaybackTime" (change)="seekToTime($event.value)"></mat-slider>
         </div>
       </div>
       <div class='col-1 no-padding'>
         <div class='queue-options'>
-          <i class="fas fa-list-ul fa-2x" data-toggle="modal" data-target="#queueModal"></i>
+          <!-- <i class="fas fa-list-ul fa-3x" data-toggle="modal" data-target="#queueModal"></i> -->
+          <i class="material-icons now-playing-queue" data-toggle="modal" data-target="#queueModal">queue_music</i>
         </div>
       </div>
     </div>
@@ -65,14 +59,75 @@
 <div class="modal" id="queueModal" tabindex="-1" role="dialog" aria-labelledby="queueModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <!-- <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Queue</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-      <div class="modal-body">
-        ...
+      </div> -->
+      <div class="modal-body queue">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-queue-tab" data-toggle="tab" href="#nav-queue" role="tab" aria-controls="nav-queue" aria-selected="true">Queue</a>
+            <a class="nav-item nav-link" id="nav-history-tab" data-toggle="tab" href="#nav-history" role="tab" aria-controls="nav-history" aria-selected="false">History</a>
+            <a class="nav-item nav-link" id="nav-lyrics-tab" data-toggle="tab" href="#nav-lyrics" role="tab" aria-controls="nav-lyrics" aria-selected="false">Lyrics</a>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-queue" role="tabpanel" aria-labelledby="nav-queue-tab">
+            <table *ngIf="musicService && musicService.queue" class="table table-hover">
+              <tbody>
+                <tr *ngFor="let item of musicService.queue" class="queue-row">
+                  <td (click)="musicService.musicKit.changeToMediaAtIndex(musicService.musicKit.player.queue.items.indexOf(item))">
+                    <img class="queue-artwork" [src]="musicService.formatArtworkURL(item.artwork, 50)" />
+                  </td>
+                  <td class="queue-text text-truncate" (click)="musicService.musicKit.changeToMediaAtIndex(musicService.musicKit.player.queue.items.indexOf(item))">
+                    {{item.title}}<br />
+                    {{item.albumName}} - {{item.artistName}}
+                  </td>
+                  <td>
+                    <a role='button' id='dropdown{{item.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                      <i class="fas fa-ellipsis-h queue-options"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item">Add to Library</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item">Like</a>
+                      <a class="dropdown-item">Dislike</a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane fade" id="nav-history" role="tabpanel" aria-labelledby="nav-history-tab">
+            <table *ngIf="musicService && musicService.history && musicService.history.length" class="table table-hover">
+              <tbody>
+                <tr *ngFor="let item of musicService.history.slice().reverse()" class="queue-row">
+                  <td>
+                    <img class="queue-artwork" [src]="musicService.formatArtworkURL(item.artwork, 50)" />
+                  </td>
+                  <td class="queue-text">
+                    {{item.title}}<br />
+                    {{item.albumName}} - {{item.artistName}}
+                  </td>
+                  <td>
+                    <a role='button' id='dropdown{{item.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                      <i class="fas fa-ellipsis-h queue-options"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item">Add to Library</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item">Like</a>
+                      <a class="dropdown-item">Dislike</a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane fade" id="nav-lyrics" role="tabpanel" aria-labelledby="nav-lyrics-tab">...</div>
+        </div>
       </div>
       <div class="modal-footer"></div>
     </div>

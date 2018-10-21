@@ -7,14 +7,15 @@ import { MusicService } from '../music.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  musicKit: any;
 
   constructor(public musicService: MusicService) { }
 
   ngOnInit() {
   }
 
-  setVolume(volume: number) {
-    this.musicService.musicKit.player.volume = volume;
+  async playStation() {
+    const station = await this.musicService.musicKit.api.station('ra.'.concat('1435351497'));
+    this.musicService.playItem(station);
   }
+
 }

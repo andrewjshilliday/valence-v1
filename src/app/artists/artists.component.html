@@ -1,35 +1,38 @@
 <div class="container-fluid">
-  <div *ngIf='musicService.artist'>
-    <h1>{{musicService.artist.attributes.name}}</h1>
-    <p></p>
+
+  <div *ngIf="this.loading">
+    <mat-spinner class="loading-spinner"></mat-spinner>
   </div>
-  <div *ngIf='musicService.artist && musicService.artist.relationships.albums.data && musicService.artist.relationships.albums.data.length'>
-    <h2>Albums</h2>
-    <div class='row'>
-      <div *ngFor='let album of musicService.artist.relationships.albums.data' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'>
-        <div class='row media-artwork'>
-          <a [routerLink]="['/albums', album.id]"><img class="img-fluid" [src]='musicService.formatArtworkURL(album.attributes.artwork, 300)' /></a>
-          <div class='media-control-button'>
-            <i class="fas fa-play-circle fa-2x" aria-hidden="true"></i>
-          </div>
-        </div>
-        <div class='row media-album'><a [routerLink]="['/albums', album.id]" title='{{album.attributes.name}}'>{{album.attributes.name}}</a></div>
-        <div class='row media-artist'>{{album.attributes.artistName}}</div>
+
+  <div *ngIf="!this.loading">
+    <div *ngIf='musicService.artist'>
+      <h1>{{musicService.artist.attributes.name}}</h1>
+      <p></p>
+    </div>
+
+    <div *ngIf='musicService.artist && musicService.artist.relationships.albums.data && musicService.artist.relationships.albums.data.length && (musicService.artist.relationships.albums.data | albumFilter : "albums").length'>
+      <h2>Albums</h2>
+      <div class='row'>
+        <app-media-item-view *ngFor='let item of musicService.artist.relationships.albums.data | albumFilter : "albums"' [item]='item' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'></app-media-item-view>
+      </div>
+      <hr />
+    </div>
+
+    <div *ngIf='musicService.artist && musicService.artist.relationships.albums.data && musicService.artist.relationships.albums.data.length && (musicService.artist.relationships.albums.data | albumFilter : "singles").length'>
+      <h2>Singles</h2>
+      <div class='row'>
+        <app-media-item-view *ngFor='let item of musicService.artist.relationships.albums.data | albumFilter : "singles"' [item]='item' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'></app-media-item-view>
+      </div>
+      <hr />
+    </div>
+
+    <div *ngIf='musicService.playlists && musicService.playlists.relationships.playlists.data && musicService.playlists.relationships.playlists.data.length'>
+      <h2>Artist Playlists</h2>
+      <div class='row'>
+        <app-media-item-view *ngFor='let item of musicService.playlists.relationships.playlists.data' [item]='item' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'></app-media-item-view>
       </div>
     </div>
+
   </div>
-  <div *ngIf='musicService.playlists && musicService.playlists.relationships.playlists.data && musicService.playlists.relationships.playlists.data.length'>
-    <h2>Artist Playlists</h2>
-    <div class='row'>
-      <div *ngFor='let playlist of musicService.playlists.relationships.playlists.data' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'>
-        <div class='row media-artwork'>
-          <a [routerLink]="['/playlists', playlist.id]"><img class="img-fluid" [src]='musicService.formatArtworkURL(playlist.attributes.artwork, 300)' /></a>
-          <div class='media-control-button'>
-            <i class="fas fa-play-circle fa-2x" aria-hidden="true"></i>
-          </div>
-        </div>
-        <div class='row media-album'><a [routerLink]="['/playlists', playlist.id]" title='{{playlist.attributes.name}}'>{{playlist.attributes.name}}</a></div>
-      </div>
-    </div>
-  </div>
+
 </div>
