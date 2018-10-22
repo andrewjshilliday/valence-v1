@@ -1,6 +1,6 @@
 #page-content-wrapper {
   position: fixed;
-  overflow-y: auto;
+  overflow-y: scroll;
   top: 50px;
   left: 250px;
   right: 0px;

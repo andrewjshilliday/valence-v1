@@ -32,6 +32,8 @@ export class MusicService {
   queue: Array<any>;
   history: Array<any> = [];
 
+  recommendationsDate: number;
+
   constructor() {
     MusicKit.configure({
       developerToken: Tokens.appleMusicDevToken,
@@ -170,8 +172,9 @@ export class MusicService {
   }
 
   async getRecommenations(): Promise<any> {
-    if (!this.recommendations) {
+    if (!this.recommendations || (Date.now() - this.recommendationsDate) > 60 * 60 * 1000) {
       this.recommendations = await this.musicKit.api.recommendations();
+      this.recommendationsDate = Date.now();
     }
 
     if (!this.recentPlayed) {

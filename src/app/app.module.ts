@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ForYouComponent } from './for-you/for-you.component';
@@ -19,7 +20,7 @@ import { MinutesSecondsPipe } from './pipes/minutes-seconds.pipe';
 import { HoursMinutesPipe } from './pipes/hours-minutes.pipe';
 import { AlbumFilterPipe } from './pipes/album-filter.pipe';
 import { SearchResultsGuard } from './search-results/search-results.guard';
-import { MaterialModule } from './material.module';
+import { LazyLoadImageDirective } from './lazy-load-image/lazy-load-image.directive';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { MaterialModule } from './material.module';
     MinutesSecondsPipe,
     HoursMinutesPipe,
     AlbumFilterPipe,
+    LazyLoadImageDirective,
   ],
   imports: [
     BrowserModule,

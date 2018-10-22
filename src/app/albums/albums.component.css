@@ -87,8 +87,11 @@ span {
 }
 
 .media-status {
-  min-width: 20px;
-  max-width: 20px;
+  width: 40px;
+}
+
+.song-text {
+  max-width: 300px;
 }
 
 .time {
@@ -97,8 +100,7 @@ span {
 }
 
 .media-options {
-  min-width: 20px;
-  max-width: 20px;
+  width: 40px;
   transform: translate(-10%, -10%);
 }
 

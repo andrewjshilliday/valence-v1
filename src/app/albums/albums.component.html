@@ -55,7 +55,7 @@
               <thead>
                 <tr>
                   <th class='media-status'></th>
-                  <th>Song</th>
+                  <th class='song-text'>Song</th>
                   <th class='time text-right'>Time</th>
                   <th class='media-options'></th>
                 </tr>
@@ -68,7 +68,7 @@
                     <i *ngIf='musicService.isItemCurrentlyPlaying(track.id)' class="fas fa-pause media-icon"></i>
                     <i *ngIf='musicService.isItemCurrentlyPlaying(track.id)' class="fas fa-volume-up now-playing-icon"></i>
                   </td>
-                  <td class='text-truncate' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(musicService.album, musicService.album.relationships.tracks.data.indexOf(track)) : musicService.pause()'>{{track.attributes.name}}</td>
+                  <td class='song-text text-truncate' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(musicService.album, musicService.album.relationships.tracks.data.indexOf(track)) : musicService.pause()'>{{track.attributes.name}}</td>
                   <td class='time text-right' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(musicService.album, musicService.album.relationships.tracks.data.indexOf(track)) : musicService.pause()'>{{track.attributes.durationInMillis | date : 'm:ss'}}</td>
                   <td class='media-options'>
                     <div class="media-icon">
