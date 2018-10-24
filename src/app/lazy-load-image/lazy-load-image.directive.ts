@@ -12,15 +12,6 @@ export class LazyLoadImageDirective implements OnInit, OnDestroy {
     this.rootElement = element.nativeElement;
   }
 
-  init() {
-    this.registerIntersectionObserver();
-
-    this.observeDOMChanges(this.rootElement, () => {
-      const images = this.getImages(this.rootElement);
-      images.forEach((image: HTMLElement) => this.intersectionObserver.observe(image));
-    });
-  }
-
   ngOnInit() {
     this.ngZone.runOutsideAngular(() => this.init());
   }
@@ -31,29 +22,27 @@ export class LazyLoadImageDirective implements OnInit, OnDestroy {
     }
   }
 
+  init() {
+    this.registerIntersectionObserver();
+    this.observeDOMChanges(this.rootElement, () => {
+      const images = this.rootElement.querySelectorAll('img[data-src]');
+      images.forEach((image: HTMLElement) => this.intersectionObserver.observe(image));
+    });
+  }
+
   registerIntersectionObserver() {
     this.intersectionObserver = new IntersectionObserver(images => images.forEach(image => this.onIntersectionChange(image)));
-    return this.intersectionObserver;
   }
 
   observeDOMChanges(rootElement: HTMLElement, onChange: Function) {
     const observer = new MutationObserver(mutations => onChange(mutations));
-    const observerConfig = { attributes: true, characterData: true, childList: true, subtree: true };
-    observer.observe(rootElement, observerConfig);
-    onChange();
-    return observer;
-  }
-
-  getImages(pageNode: HTMLElement) {
-    return Array.from(pageNode.querySelectorAll('img[data-src]'));
+    observer.observe(rootElement, { childList: true, subtree: true });
   }
 
   onIntersectionChange(image: any) {
-    if (!image.isIntersecting) {
-      return;
+    if (image.isIntersecting) {
+      this.onImageAppearsInViewport(image.target);
     }
-
-    this.onImageAppearsInViewport(image.target);
   }
 
   onImageAppearsInViewport(image: any) {

@@ -15,6 +15,7 @@ export class MusicService {
   nowPlayingItem: any;
   lastSearchQuery = '';
   playbackLoading: boolean;
+  playbackLoadingTimeout: any;
   playbackError: boolean;
 
   artists: any;
@@ -27,11 +28,11 @@ export class MusicService {
   recommendations: any;
   recentPlayed: any;
   heavyRotation: any;
-  albumDuration: number;
-  playlistDuration: number;
   queue: Array<any>;
   history: Array<any> = [];
 
+  albumDuration: number;
+  playlistDuration: number;
   recommendationsDate: number;
 
   constructor() {
@@ -97,7 +98,9 @@ export class MusicService {
       return;
     }
 
-    await this.musicKit.player.play();
+    try {
+      await this.musicKit.player.play();
+    } catch { /* ignore errors here for now */ }
   }
 
   async pause(): Promise<any> {
@@ -105,7 +108,9 @@ export class MusicService {
       return;
     }
 
-    await this.musicKit.player.pause();
+    try {
+      await this.musicKit.player.pause();
+    } catch { /* ignore errors here for now */ }
   }
 
   async playNext(): Promise<any> {
@@ -113,7 +118,9 @@ export class MusicService {
       return;
     }
 
-    await this.musicKit.player.skipToNextItem();
+    try {
+      await this.musicKit.player.skipToNextItem();
+    } catch { /* ignore errors here for now */ }
   }
 
   async playPrevious(): Promise<any> {
@@ -121,11 +128,15 @@ export class MusicService {
       return;
     }
 
-    await this.musicKit.player.skipToPreviousItem();
+    try {
+      await this.musicKit.player.skipToPreviousItem();
+    } catch { /* ignore errors here for now */ }
   }
 
   async stop(): Promise<any> {
-    await this.musicKit.player.stop();
+    try {
+      await this.musicKit.player.stop();
+    } catch { /* ignore errors here for now */ }
   }
 
   async signin(): Promise<any> {
@@ -217,7 +228,7 @@ export class MusicService {
 
     this.playlist = null;
     this.playlistDuration = 0;
-    this.playlist = await this.musicKit.api.playlist(id, { include: 'playlists' });
+    this.playlist = await this.musicKit.api.playlist(id, { include: 'playlists,artists,albums' });
 
     for (const track of this.playlist.relationships.tracks.data) {
       this.playlistDuration += track.attributes.durationInMillis;
@@ -266,6 +277,12 @@ export class MusicService {
     }
   }
 
+  async recoverPlaybackState(): Promise<any> {
+    const musicKit = MusicKit.getInstance();
+    await musicKit.player.stop();
+    await musicKit.player.play();
+  }
+
   mediaItemDidChange(event) {
     if (this.nowPlayingItem) {
       if (!this.history.length || this.nowPlayingItem.id !== this.history[this.history.length - 1].songId) {
@@ -283,6 +300,18 @@ export class MusicService {
   playbackStateDidChange(event) {
     this.playing = event.state === 2;
     this.playbackLoading = event.state === 1 || event.state === 8;
+
+    window.clearTimeout(this.playbackLoadingTimeout);
+
+    if (this.playbackLoading) {
+      this.playbackLoadingTimeout = window.setTimeout(async function() {
+        try {
+          const musicKit = MusicKit.getInstance();
+          await musicKit.player.stop();
+          await musicKit.player.play();
+        } catch { /* ignore errors here for now */ }
+      }, 2500);
+    }
   }
 
   authorizationStatusDidChange(event) {
