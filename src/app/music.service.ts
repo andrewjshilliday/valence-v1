@@ -151,60 +151,20 @@ export class MusicService {
     this.musicKit.player.volume = volume;
   }
 
-  async search(query: string): Promise<any> {
-    if (query === '' || query === this.lastSearchQuery) {
-      return;
-    }
-
-    this.artists = null;
-    this.albums = null;
-    this.songs = null;
-    this.playlists = null;
-
-    const results = await this.musicKit.api.search(query, { types: 'artists,albums,songs,playlists', limit: 20 });
-
-    if (results.artists != null) {
-      this.artists = results.artists.data;
-    }
-
-    if (results.albums != null) {
-      this.albums = results.albums.data;
-    }
-
-    if (results.songs != null) {
-      this.songs = results.songs.data;
-    }
-
-    if (results.playlists != null) {
-      this.playlists = results.playlists.data;
-    }
-
-    this.lastSearchQuery = query;
-  }
-
-  async getRecommenations(): Promise<any> {
-    if (!this.recommendations || (Date.now() - this.recommendationsDate) > 60 * 60 * 1000) {
-      this.recommendations = await this.musicKit.api.recommendations();
-      this.recommendationsDate = Date.now();
-    }
-
-    if (!this.recentPlayed) {
-      this.recentPlayed = await this.musicKit.api.recentPlayed();
-    }
-
-    if (!this.heavyRotation) {
-      this.heavyRotation = await this.musicKit.api.historyHeavyRotation();
-    }
-  }
-
   async getArtist(id): Promise<any> {
     if (this.artist && this.artist.id === id) {
       return;
     }
 
+    const isLibraryResource = id.startsWith('r.');
     this.artist = null;
     this.album = null;
-    this.artist = await this.musicKit.api.artist(id, { include: 'albums' });
+
+    if (isLibraryResource) {
+      this.artist = await this.musicKit.api.library.artist(id, { include: 'albums,playlists,tracks' });
+    } else {
+      this.artist = await this.musicKit.api.artist(id, { include: 'albums' });
+    }
   }
 
   async getAlbum(id): Promise<any> {
@@ -212,9 +172,15 @@ export class MusicService {
       return;
     }
 
+    const isLibraryResource = id.startsWith('l.');
     this.album = null;
     this.albumDuration = 0;
-    this.album = await this.musicKit.api.album(id, { include: 'songs' });
+
+    if (isLibraryResource) {
+      this.album = await this.musicKit.api.library.album(id, { include: 'artists' });
+    } else {
+      this.album = await this.musicKit.api.album(id, { include: 'songs' });
+    }
 
     for (const track of this.album.relationships.tracks.data) {
       this.albumDuration += track.attributes.durationInMillis;
@@ -226,9 +192,15 @@ export class MusicService {
       return;
     }
 
+    const isLibraryResource = id.startsWith('p.');
     this.playlist = null;
     this.playlistDuration = 0;
-    this.playlist = await this.musicKit.api.playlist(id, { include: 'playlists,artists,albums' });
+
+    if (isLibraryResource) {
+      this.playlist = await this.musicKit.api.library.playlist(id, { include: 'tracks' });
+    } else {
+      this.playlist = await this.musicKit.api.playlist(id, { include: 'playlists,artists,albums' });
+    }
 
     for (const track of this.playlist.relationships.tracks.data) {
       this.playlistDuration += track.attributes.durationInMillis;
@@ -277,12 +249,6 @@ export class MusicService {
     }
   }
 
-  async recoverPlaybackState(): Promise<any> {
-    const musicKit = MusicKit.getInstance();
-    await musicKit.player.stop();
-    await musicKit.player.play();
-  }
-
   mediaItemDidChange(event) {
     if (this.nowPlayingItem) {
       if (!this.history.length || this.nowPlayingItem.id !== this.history[this.history.length - 1].songId) {
@@ -310,7 +276,7 @@ export class MusicService {
           await musicKit.player.stop();
           await musicKit.player.play();
         } catch { /* ignore errors here for now */ }
-      }, 2500);
+      }, 5000);
     }
   }
 

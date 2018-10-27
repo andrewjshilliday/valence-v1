@@ -1,0 +1,5 @@
+<h2>{{title}}</h2>
+<div class="row">
+  <app-media-item-view *ngFor="let item of items" [item]="item" class="col-sm-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
+</div>
+<hr *ngIf="divider" />

@@ -1,0 +1,125 @@
+<div *ngIf="showHeader" class='row'>
+  <div *ngIf="collection.type === 'albums'" class='col-11'>
+    <h4>{{collection.attributes.name}}</h4>
+    <h5 *ngIf='collection.relationships.artists.data && collection.relationships.artists.data.length'><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a> | {{collection.attributes.genreNames[0]}}</h5>
+    <h5 *ngIf='collection.relationships.artists.data && !collection.relationships.artists.data.length'>{{collection.attributes.artistName}} | {{collection.attributes.genreNames[0]}}</h5>
+  </div>
+  <div *ngIf="collection.type === 'library-albums'" class='col-11'>
+      <h4>{{collection.attributes.name}}</h4>
+      <h5 *ngIf='collection.relationships.artists.data && collection.relationships.artists.data.length'><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a></h5>
+      <h5 *ngIf='collection.relationships.artists.data && !collection.relationships.artists.data.length'>{{collection.attributes.artistName}}</h5>
+    </div>
+  <div *ngIf="collection.type.includes('playlists')" class='col-11'>
+    <h4>{{collection.attributes.name}}</h4>
+    <h5>Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
+  </div>
+  <div class='col-1 collection-options-dropdown'>
+    <a role='button' id='dropdown{{collection.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+      <i class="fas fa-ellipsis-h"></i>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" (click)='musicService.playItem(collection)'>Play</a>
+      <a class="dropdown-item" (click)='musicService.playItem(collection, 0, true)'>Shuffle</a>
+      <a class="dropdown-item" (click)='musicService.queueNext(collection)'>Play Next</a>
+      <a class="dropdown-item" (click)='musicService.queueLater(collection)'>Play Later</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item">Add to Library</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item">Like</a>
+      <a class="dropdown-item">Dislike</a>
+    </div>
+  </div>
+</div>
+
+<table class='table table-hover collection-text' appLazyLoadImage>
+
+  <thead>
+    <tr>
+      <th class='media-status'></th>
+      <th class='item-text'>Song</th>
+      <th *ngIf="showArtistAlbum" class='artist-text'>Artist</th>
+      <th *ngIf="showArtistAlbum" class='album-text'>Album</th>
+      <th class='time text-right'>Time</th>
+      <th class='media-options'></th>
+    </tr>
+  </thead>
+
+  <tbody *ngIf="collection && collection.relationships && collection.relationships.tracks"> <!-- collection is album/playlist -->
+    <tr *ngFor='let item of collection.relationships.tracks.data' class='mediarow'>
+      <td class='media-status' (click)='!musicService.isItemCurrentlyPlaying(item.id) ? musicService.playItem(collection, collection.relationships.tracks.data.indexOf(item)) : musicService.pause()'>
+        <span *ngIf='!musicService.isItemCurrentlyPlaying(item.id) && !showArtwork' class="text-center text-muted">{{collection.relationships.tracks.data.indexOf(item) + 1}}</span>
+        <i *ngIf='!musicService.isItemCurrentlyPlaying(item.id)' class="fas fa-play media-icon"></i>
+        <i *ngIf='musicService.isItemCurrentlyPlaying(item.id)' class="fas fa-pause media-icon"></i>
+        <i *ngIf='musicService.isItemCurrentlyPlaying(item.id)' class="fas fa-volume-up now-playing-icon"></i>
+        <img *ngIf='showArtwork' class="img-fluid" [attr.data-src]="musicService.formatArtworkURL(item.attributes.artwork, 50)" src="././assets/images/placeholder.png" />
+      </td>
+      <td class='item-text text-truncate' (click)='!musicService.isItemCurrentlyPlaying(item.id) ? musicService.playItem(collection, collection.relationships.tracks.data.indexOf(item)) : musicService.pause()'>{{item.attributes.name}}</td>
+      <td *ngIf="showArtistAlbum" class='artist-text text-truncate'>
+        <a *ngIf="itemRelationships && itemRelationships[collection.relationships.tracks.data.indexOf(item)]" [routerLink]="['/artists', itemRelationships[collection.relationships.tracks.data.indexOf(item)][1]]">{{item.attributes.artistName}}</a>
+        <a *ngIf="!itemRelationships || !itemRelationships[collection.relationships.tracks.data.indexOf(item)]">{{item.attributes.artistName}}</a>
+      </td>
+      <td *ngIf="showArtistAlbum" class='album-text text-truncate'>
+        <a *ngIf="itemRelationships && itemRelationships[collection.relationships.tracks.data.indexOf(item)]" [routerLink]="['/albums', itemRelationships[collection.relationships.tracks.data.indexOf(item)][2]]">{{item.attributes.albumName}}</a>
+        <a *ngIf="!itemRelationships || !itemRelationships[collection.relationships.tracks.data.indexOf(item)]">{{item.attributes.albumName}}</a>
+      </td>
+      <td class='time text-right'>{{item.attributes.durationInMillis | date : 'm:ss'}}</td>
+      <td class='media-options'>
+        <div class="media-icon">
+          <a role='button' id='dropdown{{item.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+            <i class="fas fa-ellipsis-h"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" (click)='musicService.playItem(item)'>Play</a>
+            <a class="dropdown-item" (click)='musicService.queueNext(item)'>Play Next</a>
+            <a class="dropdown-item" (click)='musicService.playItem(item)'>Play Later</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item">Add to Library</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item">Like</a>
+            <a class="dropdown-item">Dislike</a>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="collection && (!collection.relationships || !collection.relationships.tracks)"> <!-- collection is individual tracks -->
+    <tr *ngFor='let item of collection' class='mediarow'>
+      <td class='media-status' (click)='!musicService.isItemCurrentlyPlaying(item.id) ? musicService.playItem(collection, collection.indexOf(item)) : musicService.pause()'>
+        <span *ngIf='!musicService.isItemCurrentlyPlaying(item.id) && !showArtwork' class="text-center text-muted">{{collection.indexOf(item) + 1}}</span>
+        <i *ngIf='!musicService.isItemCurrentlyPlaying(item.id)' class="fas fa-play media-icon"></i>
+        <i *ngIf='musicService.isItemCurrentlyPlaying(item.id)' class="fas fa-pause media-icon"></i>
+        <i *ngIf='musicService.isItemCurrentlyPlaying(item.id)' class="fas fa-volume-up now-playing-icon"></i>
+        <img *ngIf='showArtwork' class="img-fluid" [attr.data-src]="musicService.formatArtworkURL(item.attributes.artwork, 50)" src="././assets/images/placeholder.png" />
+      </td>
+      <td class='item-text text-truncate' (click)='!musicService.isItemCurrentlyPlaying(item.id) ? musicService.playItem(collection, collection.indexOf(item)) : musicService.pause()'>{{item.attributes.name}}</td>
+      <td *ngIf="showArtistAlbum" class='artist-text text-truncate'>
+        <a *ngIf="itemRelationships && itemRelationships[collection.indexOf(item)]" [routerLink]="['/artists', itemRelationships[collection.indexOf(item)][1]]">{{item.attributes.artistName}}</a>
+        <a *ngIf="!itemRelationships || !itemRelationships[collection.indexOf(item)]">{{item.attributes.artistName}}</a>
+      </td>
+      <td *ngIf="showArtistAlbum" class='album-text text-truncate'>
+        <a *ngIf="itemRelationships && itemRelationships[collection.indexOf(item)]" [routerLink]="['/albums', itemRelationships[collection.relationships.tracks.data.indexOf(item)][2]]">{{item.attributes.albumName}}</a>
+        <a *ngIf="!itemRelationships || !itemRelationships[collection.indexOf(item)]">{{item.attributes.albumName}}</a>
+      </td>
+      <td class='time text-right'>{{item.attributes.durationInMillis | date : 'm:ss'}}</td>
+      <td class='media-options'>
+        <div class="media-icon">
+          <a role='button' id='dropdown{{item.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+            <i class="fas fa-ellipsis-h"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" (click)='musicService.playItem(item)'>Play</a>
+            <a class="dropdown-item" (click)='musicService.queueNext(item)'>Play Next</a>
+            <a class="dropdown-item" (click)='musicService.playItem(item)'>Play Later</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item">Add to Library</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item">Like</a>
+            <a class="dropdown-item">Dislike</a>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+
+</table>

@@ -5,31 +5,44 @@
   </div>
 
   <div *ngIf="!this.loading">
-    <div *ngIf='musicService.artist'>
+    <div *ngIf="musicService.artist">
       <h1>{{musicService.artist.attributes.name}}</h1>
-      <p></p>
     </div>
 
-    <div *ngIf='musicService.artist && musicService.artist.relationships.albums.data && musicService.artist.relationships.albums.data.length && (musicService.artist.relationships.albums.data | albumFilter : "albums").length'>
+    <div class="row">
+      <div *ngIf="musicService.artist && musicService.artist.relationships.albums.data && musicService.artist.relationships.albums.data | albumFilter : 'latestRelease'" class="col-3">
+        <h3>Latest Release</h3>
+        <app-media-item-view [item]="musicService.artist.relationships.albums.data | albumFilter : 'latestRelease'"></app-media-item-view>
+      </div>
+      <div *ngIf="musicService.artist && musicService.artist.relationships.albums.data && musicService.artist.relationships.albums.data | albumFilter : 'upcomingRelease'" class="col-3">
+        <h3>Upcoming Release</h3>
+        <app-media-item-view [item]="musicService.artist.relationships.albums.data | albumFilter : 'upcomingRelease'"></app-media-item-view>
+      </div>
+    </div>
+
+    <hr />
+
+    <div *ngIf="musicService.artist && musicService.artist.relationships.albums.data && (musicService.artist.relationships.albums.data | albumFilter : 'albums').length">
+      <!-- <app-media-item-collection-row [items]="musicService.artist.relationships.albums.data | albumFilter : 'albums'" [title]="Albums" [divider]=true></app-media-item-collection-row> -->
       <h2>Albums</h2>
-      <div class='row'>
-        <app-media-item-view *ngFor='let item of musicService.artist.relationships.albums.data | albumFilter : "albums"' [item]='item' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'></app-media-item-view>
+      <div class="row">
+        <app-media-item-view *ngFor="let item of musicService.artist.relationships.albums.data | albumFilter : 'albums'" [item]="item" class="col-sm-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
       </div>
       <hr />
     </div>
 
-    <div *ngIf='musicService.artist && musicService.artist.relationships.albums.data && musicService.artist.relationships.albums.data.length && (musicService.artist.relationships.albums.data | albumFilter : "singles").length'>
+    <div *ngIf="musicService.artist && musicService.artist.relationships.albums.data && (musicService.artist.relationships.albums.data | albumFilter : 'singles').length">
       <h2>Singles</h2>
-      <div class='row'>
-        <app-media-item-view *ngFor='let item of musicService.artist.relationships.albums.data | albumFilter : "singles"' [item]='item' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'></app-media-item-view>
+      <div class="row">
+        <app-media-item-view *ngFor="let item of musicService.artist.relationships.albums.data | albumFilter : 'singles'" [item]="item" class="col-sm-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
       </div>
       <hr />
     </div>
 
-    <div *ngIf='musicService.playlists && musicService.playlists.relationships.playlists.data && musicService.playlists.relationships.playlists.data.length'>
+    <div *ngIf="musicService.playlists && musicService.playlists.relationships.playlists.data && musicService.playlists.relationships.playlists.data.length">
       <h2>Artist Playlists</h2>
-      <div class='row'>
-        <app-media-item-view *ngFor='let item of musicService.playlists.relationships.playlists.data' [item]='item' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'></app-media-item-view>
+      <div class="row">
+        <app-media-item-view *ngFor="let item of musicService.playlists.relationships.playlists.data" [item]="item" class="col-sm-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
       </div>
     </div>
 

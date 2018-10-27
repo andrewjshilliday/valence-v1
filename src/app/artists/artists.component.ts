@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MusicService } from '../music.service';
+import { isAwaitExpression } from 'typescript';
 
 @Component({
   selector: 'app-artists',
@@ -12,12 +13,13 @@ export class ArtistsComponent implements OnInit, OnDestroy {
 
   artistSubscription: Subscription;
   loading: boolean;
+  tracks: any;
 
   constructor(private route: ActivatedRoute, private router: Router, public musicService: MusicService) { }
 
   ngOnInit() {
     this.artistSubscription = this.route.params.subscribe(params => {
-      this.loadArtist(+params['id']);
+      this.loadArtist(params['id']);
     });
   }
 

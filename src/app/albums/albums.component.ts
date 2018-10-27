@@ -12,12 +12,13 @@ export class AlbumsComponent implements OnInit, OnDestroy {
 
   albumSubscription: Subscription;
   loading: boolean;
+  artistAlbums: any;
 
   constructor(private route: ActivatedRoute, private router: Router, public musicService: MusicService) { }
 
   ngOnInit() {
     this.albumSubscription = this.route.params.subscribe(params => {
-      this.loadAlbum(+params['id']);
+      this.loadAlbum(params['id']);
     });
   }
 
@@ -29,6 +30,12 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     this.loading = true;
     await this.musicService.getAlbum(id);
     this.loading = false;
+    /* this.getArtistAlbums(); */
+  }
+
+  async getArtistAlbums() {
+    // tslint:disable-next-line:max-line-length
+    this.artistAlbums = await this.musicService.musicKit.api.artist(this.musicService.album.relationships.artists.data[0].id, { include: 'albums' });
   }
 
 }

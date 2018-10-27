@@ -27,77 +27,20 @@
           <p *ngIf='musicService.album.attributes.editorialNotes && !musicService.album.attributes.editorialNotes.standard'>{{musicService.album.attributes.editorialNotes.short}}</p>
         </div>
         <div class='col-8'>
-          <div class='row'>
-            <div class='col-11 album-title'>
-              <h4>{{musicService.album.attributes.name}}</h4>
-              <h5 *ngIf='musicService.album.relationships.artists.data && musicService.album.relationships.artists.data.length'><a [routerLink]="['/artists', musicService.album.relationships.artists.data[0].id]">{{musicService.album.attributes.artistName}}</a> | {{musicService.album.attributes.genreNames[0]}}</h5>
-              <h5 *ngIf='musicService.album.relationships.artists.data && !musicService.album.relationships.artists.data.length'>{{musicService.album.attributes.artistName}} | {{musicService.album.attributes.genreNames[0]}}</h5>
-            </div>
-            <div class='col-1 album-options-dropdown'>
-              <a role='button' id='dropdown{{musicService.album.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                <i class="fas fa-ellipsis-h"></i>
-              </a>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" (click)='musicService.playItem(musicService.album)'>Play</a>
-                <a class="dropdown-item" (click)='musicService.playItem(musicService.album, 0, true)'>Shuffle</a>
-                <a class="dropdown-item" (click)='musicService.queueNext(musicService.album)'>Play Next</a>
-                <a class="dropdown-item" (click)='musicService.queueLater(musicService.album)'>Play Later</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item">Add to Library</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item">Like</a>
-                <a class="dropdown-item">Dislike</a>
-              </div>
-            </div>
-          </div>
-          <div class='row'>
-            <table class='table table-hover album-text'>
-              <thead>
-                <tr>
-                  <th class='media-status'></th>
-                  <th class='song-text'>Song</th>
-                  <th class='time text-right'>Time</th>
-                  <th class='media-options'></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor='let track of musicService.album.relationships.tracks.data' class='mediarow'>
-                  <td class='media-status' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(musicService.album, musicService.album.relationships.tracks.data.indexOf(track)) : musicService.pause()'>
-                    <span *ngIf='!musicService.isItemCurrentlyPlaying(track.id)' class="text-center text-muted">{{track.attributes.trackNumber}}</span>
-                    <i *ngIf='!musicService.isItemCurrentlyPlaying(track.id)' class="fas fa-play media-icon"></i>
-                    <i *ngIf='musicService.isItemCurrentlyPlaying(track.id)' class="fas fa-pause media-icon"></i>
-                    <i *ngIf='musicService.isItemCurrentlyPlaying(track.id)' class="fas fa-volume-up now-playing-icon"></i>
-                  </td>
-                  <td class='song-text text-truncate' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(musicService.album, musicService.album.relationships.tracks.data.indexOf(track)) : musicService.pause()'>{{track.attributes.name}}</td>
-                  <td class='time text-right' (click)='!musicService.isItemCurrentlyPlaying(track.id) ? musicService.playItem(musicService.album, musicService.album.relationships.tracks.data.indexOf(track)) : musicService.pause()'>{{track.attributes.durationInMillis | date : 'm:ss'}}</td>
-                  <td class='media-options'>
-                    <div class="media-icon">
-                      <a role='button' id='dropdown{{track.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                        <i class="fas fa-ellipsis-h"></i>
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" (click)='musicService.playItem(track)'>Play</a>
-                        <a class="dropdown-item" (click)='musicService.queueNext(track)'>Play Next</a>
-                        <a class="dropdown-item" (click)='musicService.queueLater(track)'>Play Later</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item">Add to Library</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item">Like</a>
-                        <a class="dropdown-item">Dislike</a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div *ngIf='musicService.album' class='row'>
+          <app-media-item-collection-list [collection]="musicService.album" [showHeader]=true></app-media-item-collection-list>
+          <div *ngIf="musicService.album && !musicService.album.type.includes('library')" class='row'>
             <p class="text-muted">
               Released: {{musicService.album.attributes.releaseDate | date : 'fullDate'}} <br />
               {{musicService.album.attributes.recordLabel}} | {{musicService.album.attributes.copyright}}
             </p>
           </div>
         </div>
+        <!-- <div *ngIf="this.artistAlbums && this.artistAlbums.relationships.albums.data" class="row">
+          <h4>More by {{musicService.album.attributes.artistName}}</h4>
+          <div class='row'>
+            <app-media-item-view *ngFor='let item of this.artistAlbums.relationships.albums.data' [item]='item' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'></app-media-item-view>
+          </div>
+        </div> -->
       </div>
     </div>
   </div>

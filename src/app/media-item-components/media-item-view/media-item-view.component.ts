@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MusicService } from '../music.service';
+import { MusicService } from '../../music.service';
 
 @Component({
   selector: 'app-media-item-view',

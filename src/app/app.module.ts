@@ -15,7 +15,9 @@ import { NowPlayingComponent } from './now-playing/now-playing.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { PlaylistsComponent } from './playlists/playlists.component';
-import { MediaItemViewComponent } from './media-item-view/media-item-view.component';
+import { MediaItemViewComponent } from './media-item-components/media-item-view/media-item-view.component';
+import { MediaItemCollectionListComponent } from './/media-item-components/media-item-collection-list/media-item-collection-list.component';
+import { MediaItemCollectionRowComponent } from './media-item-components/media-item-collection-row/media-item-collection-row.component';
 import { MinutesSecondsPipe } from './pipes/minutes-seconds.pipe';
 import { HoursMinutesPipe } from './pipes/hours-minutes.pipe';
 import { AlbumFilterPipe } from './pipes/album-filter.pipe';
@@ -36,6 +38,8 @@ import { LazyLoadImageDirective } from './lazy-load-image/lazy-load-image.direct
     TopBarComponent,
     PlaylistsComponent,
     MediaItemViewComponent,
+    MediaItemCollectionListComponent,
+    MediaItemCollectionRowComponent,
     MinutesSecondsPipe,
     HoursMinutesPipe,
     AlbumFilterPipe,
@@ -49,11 +53,15 @@ import { LazyLoadImageDirective } from './lazy-load-image/lazy-load-image.direct
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
       { path: 'foryou', component: ForYouComponent },
-      { path: 'library', component: LibraryComponent },
       { path: 'searchresults', canActivate: [SearchResultsGuard], component: SearchResultsComponent },
       { path: 'artists/:id', component: ArtistsComponent },
       { path: 'albums/:id', component: AlbumsComponent },
       { path: 'playlists/:id', component: PlaylistsComponent },
+      { path: 'library', redirectTo: 'library/recently-added', pathMatch: 'full' },
+      { path: 'library/:type', component: LibraryComponent },
+      { path: 'library/artists/:id', component: ArtistsComponent },
+      { path: 'library/albums/:id', component: AlbumsComponent },
+      { path: 'library/playlists/:id', component: PlaylistsComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]),
   ],

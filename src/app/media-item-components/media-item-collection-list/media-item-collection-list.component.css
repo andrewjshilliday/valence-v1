@@ -1,0 +1,94 @@
+.mediarow:hover {
+  cursor: pointer;
+}
+
+.mediarow span {
+  display: block;
+}
+
+.mediarow:hover span {
+  display: none;
+}
+
+.mediarow img {
+  display: block;
+  position: relative;
+  margin-left: 1px;
+  transform: scale(2.6);
+}
+
+.mediarow:hover img {
+  display: none;
+}
+
+.mediarow .media-icon {
+  display: none;
+  position: absolute;
+  transform: translate(20%, 20%);
+}
+
+.mediarow:hover .media-icon {
+  display: block;
+}
+
+.mediarow .now-playing-icon {
+  display: block;
+  transform: translate(20%, 20%);
+}
+
+.mediarow:hover .now-playing-icon {
+  display: none;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.collection-options-dropdown {
+  position: relative;
+  top: 20px;
+  right: 5px;
+  max-width: 10px;
+  max-height: 15px;
+  cursor: pointer;
+}
+
+.collection-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.collection-text {
+  font-size: 10pt;
+}
+
+.media-status {
+  width: 40px;
+}
+
+.item-text {
+  max-width: 170px;
+}
+
+.artist-text {
+  max-width: 90px;
+}
+
+.album-text {
+  max-width: 110px;
+}
+
+.time {
+  max-width: 30px;
+}
+
+.media-options {
+  width: 40px;
+  transform: translate(-10%, -10%);
+}
+
+.track-list {
+  height: calc(100vh - 235px);
+  overflow-y: scroll;
+}

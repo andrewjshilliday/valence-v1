@@ -27,8 +27,39 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   async loadSearchResults(term) {
     this.loading = true;
-    await this.musicService.search(term);
+    await this.search(term);
     this.loading = false;
+  }
+
+  async search(query: string): Promise<any> {
+    if (query === '' || query === this.musicService.lastSearchQuery) {
+      return;
+    }
+
+    this.musicService.artists = null;
+    this.musicService.albums = null;
+    this.musicService.songs = null;
+    this.musicService.playlists = null;
+
+    const results = await this.musicService.musicKit.api.search(query, { types: 'artists,albums,songs,playlists', limit: 20 });
+
+    if (results.artists != null) {
+      this.musicService.artists = results.artists.data;
+    }
+
+    if (results.albums != null) {
+      this.musicService.albums = results.albums.data;
+    }
+
+    if (results.songs != null) {
+      this.musicService.songs = results.songs.data;
+    }
+
+    if (results.playlists != null) {
+      this.musicService.playlists = results.playlists.data;
+    }
+
+    this.musicService.lastSearchQuery = query;
   }
 
 }

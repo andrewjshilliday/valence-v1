@@ -28,80 +28,9 @@ span {
   font-size: 10pt;
 }
 
-.mediarow:hover {
-  cursor: pointer;
-}
-
-.mediarow span {
-  display: block;
-}
-
-.mediarow:hover span {
-  display: none;
-}
-
-.mediarow .media-icon {
-  display: none;
-  transform: translate(20%, 20%);
-}
-
-.mediarow:hover .media-icon {
-  display: block;
-}
-
-.mediarow .now-playing-icon {
-  display: block;
-  transform: translate(20%, 20%);
-}
-
-.mediarow:hover .now-playing-icon {
-  display: none;
-}
-
-.dropdown {
-  position: relative;
-}
-
-.album-options-dropdown {
-  position: relative;
-  top: 20px;
-  right: 5px;
-  max-width: 10px;
-  max-height: 15px;
-  cursor: pointer;
-}
-
 .track-list {
   height: calc(100vh - 235px);
   overflow-y: auto;
-}
-
-.album-title {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.album-text {
-  font-size: 10pt;
-}
-
-.media-status {
-  width: 40px;
-}
-
-.song-text {
-  max-width: 300px;
-}
-
-.time {
-  min-width: 30px;
-  max-width: 30px;
-}
-
-.media-options {
-  width: 40px;
-  transform: translate(-10%, -10%);
 }
 
 .shuffle-label {

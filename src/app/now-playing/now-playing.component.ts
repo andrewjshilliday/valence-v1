@@ -14,9 +14,11 @@ export class NowPlayingComponent implements OnInit {
   }
 
   async seekToTime(time: number) {
-    if (this.musicService.playbackLoading === true) {
+    /* if (this.musicService.playbackLoading === true) {
       return;
-    }
+    } */
+
+    /* if (!this.musicService.player) */
 
     await this.musicService.musicKit.player.seekToTime(time);
   }
