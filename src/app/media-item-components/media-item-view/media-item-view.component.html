@@ -6,8 +6,15 @@
       <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="musicService.playItem(item)"></i>
     </div>
   </div>
-  <div class="row media-album"><a [routerLink]="['/albums', item.id]" title="{{item.attributes.name}}">{{item.attributes.name}}</a></div>
-  <div class="row media-artist">{{item.attributes.artistName}}</div>
+  <div class="row">
+    <div class="media-album text-truncate" [ngClass]="!item.attributes.contentRating && item.attributes.contentRating !== 'explicit' ? 'col-12' : 'col-10'">
+      <a [routerLink]="['/albums', item.id]" title="{{item.attributes.name}}">{{item.attributes.name}}</a>
+    </div>
+    <div *ngIf="item.attributes.contentRating && item.attributes.contentRating === 'explicit'" class="col-2 explicit text-muted">
+      <i class="material-icons explicit-icon float-right">explicit</i>
+    </div>
+  </div>
+  <div class="row media-artist"><span class="text-truncate">{{item.attributes.artistName}}</span></div>
 </div>
 
 <div *ngIf="item.type.includes('playlists')" appLazyLoadImage>
@@ -18,7 +25,7 @@
       <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="musicService.playItem(item)"></i>
     </div>
   </div>
-  <div class='row media-album'><a [routerLink]="['/playlists', item.id]" title="{{item.attributes.name}}">{{item.attributes.name}}</a></div>
+  <div class='row media-album'><a [routerLink]="['/playlists', item.id]" class="text-truncate" title="{{item.attributes.name}}">{{item.attributes.name}}</a></div>
 </div>
 
 <div *ngIf="item.type.includes('artists')" appLazyLoadImage>
@@ -29,7 +36,7 @@
       <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="musicService.playItem(item)"></i>
     </div>
   </div>
-  <div class="row media-artist"><a [routerLink]="['/artists', item.id]" title="{{item.attributes.name}}">{{item.attributes.name}}</a></div>
+  <div class="row media-artist text-truncate"><a [routerLink]="['/artists', item.id]" title="{{item.attributes.name}}">{{item.attributes.name}}</a></div>
 </div>
 
 <div *ngIf="item.type.includes('songs')" appLazyLoadImage>
@@ -40,7 +47,7 @@
       <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="musicService.playItem(item)"></i>
     </div>
   </div>
-  <div class="row media-album">{{item.attributes.name}}</div>
-  <div class="row media-album">{{item.attributes.albumName}}</div>
-  <div class="row media-artist">{{item.attributes.artistName}}</div>
+  <div class="row media-album"><span class="text-truncate">{{item.attributes.name}}</span></div>
+  <div class="row media-album"><span class="text-truncate">{{item.attributes.albumName}}</span></div>
+  <div class="row media-artist"><span class="text-truncate">{{item.attributes.artistName}}</span></div>
 </div>

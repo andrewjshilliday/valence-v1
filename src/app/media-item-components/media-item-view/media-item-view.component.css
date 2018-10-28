@@ -1,18 +1,10 @@
 .media-album {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  width: 114%;
-  padding: 0px 10px;
   font-size: 11pt;
+  margin: 0 -3px;
 }
 
 .media-artist {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  width: 114%;
-  padding: 0px 10px;
+  padding: 0px 12px;
   font-size: 11pt;
 }
 
@@ -32,4 +24,13 @@
 
 .media-artwork:hover .media-control-button {
 	display: block;
+}
+
+.explicit {
+  padding: 0;
+}
+
+.explicit-icon {
+  transform: scale(0.7);
+  margin-bottom: -5px;
 }

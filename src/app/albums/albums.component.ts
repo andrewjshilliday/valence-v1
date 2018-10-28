@@ -30,7 +30,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     this.loading = true;
     await this.musicService.getAlbum(id);
     this.loading = false;
-    /* this.getArtistAlbums(); */
+    this.getArtistAlbums();
   }
 
   async getArtistAlbums() {

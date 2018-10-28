@@ -42,7 +42,7 @@
 .now-playing-bar {
   position: relative;
   top: 17px;
-  left: 25px;
+  left: 35px;
   width: calc(100% - 300px);
   height: 66px;
   background-color: lightgray;
@@ -99,9 +99,20 @@ p {
   position: relative;
 }
 
-.bottom-align-text {
+.track-time span {
   position: absolute;
   bottom: 0;
+  right: 20px;
+}
+
+.shuffle-icon {
+  position: relative;
+  left: 27px;
+}
+
+.repeat-icon {
+  position: relative;
+  left: 23px;
 }
 
 .no-padding {

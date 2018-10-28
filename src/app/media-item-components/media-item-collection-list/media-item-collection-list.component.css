@@ -88,6 +88,13 @@
   transform: translate(-10%, -10%);
 }
 
+.explicit-icon {
+  transform: scale(0.7);
+  vertical-align: middle;
+  margin-top: -5px;
+  margin-bottom: -5px;
+}
+
 .track-list {
   height: calc(100vh - 235px);
   overflow-y: scroll;
