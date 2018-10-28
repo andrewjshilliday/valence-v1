@@ -14,7 +14,7 @@
     </div>
   </div>
   <div *ngIf='musicService.nowPlayingItem' class="rounded now-playing-bar row">
-    <div class='col-1 no-padding'>
+    <div class='col-1'>
       <div class='now-playing-album-art rounded'>
         <a [routerLink]="['/albums', musicService.nowPlayingItem.assets[0].metadata.playlistId]">
           <img class="img-fluid rounded" [src]='musicService.formatArtworkURL(musicService.nowPlayingItem.attributes.artwork, 100)' />
@@ -23,11 +23,11 @@
     </div>
     <div class='col-10'>
       <div class='row now-playing-text justify-content-center'>
-        <div class='col-1 track-time'>
+        <div class='col-1'>
           <div class="row shuffle-icon" [ngClass]="musicService.musicKit.player.shuffleMode === 0 ? 'text-muted' : ''">
             <i class="fas fa-random" (click)="toggleShuffle()"></i>
           </div>
-          <div class="row"><span>{{musicService.musicKit.player.currentPlaybackTime | minutesSeconds}}</span></div>
+          <div class="row current-time"><span>{{musicService.musicKit.player.currentPlaybackTime | minutesSeconds}}</span></div>
         </div>
         <div class='col-10 text-truncate'>
           <p>
@@ -36,18 +36,18 @@
             <a [routerLink]="['/artists', musicService.nowPlayingItem.assets[0].metadata.artistId]">{{musicService.nowPlayingItem.artistName}}</a>
           </p>
         </div>
-        <div class='col-1 track-time'>
+        <div class='col-1'>
           <div class="row repeat-icon" [ngClass]="musicService.musicKit.player.repeatMode === 0 ? 'text-muted' : ''">
             <i class="fas fa-redo" (click)="toggleRepeat()"></i>
           </div>
-          <div class="row"><span>{{musicService.musicKit.player.currentPlaybackTimeRemaining | minutesSeconds}}</span></div>
+          <div class="row remaining-time"><span>{{musicService.musicKit.player.currentPlaybackTimeRemaining | minutesSeconds}}</span></div>
         </div>
       </div>
       <div class='row now-playing-progress'>
         <mat-slider class='track-progress' [max]="musicService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="musicService.musicKit.player.currentPlaybackTime" (change)="seekToTime($event.value)"></mat-slider>
       </div>
     </div>
-    <div class='col-1 no-padding'>
+    <div class='col-1'>
       <div class='queue-options'>
         <i class="material-icons now-playing-queue" data-toggle="modal" data-target="#queueModal">queue_music</i>
       </div>

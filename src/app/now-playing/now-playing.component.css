@@ -52,13 +52,12 @@
   padding: 5px 0px;
   height: 56px;
   width: 56px;
-  float: right;
 }
 
 .now-playing-queue {
-  position: relative;
+  position: absolute;
   top: 19px;
-  left: 15px;
+  right: 25px;
   transform: scale(2);
 }
 
@@ -95,24 +94,26 @@ p {
   padding-top: 7px;
 }
 
-.track-time {
-  position: relative;
+.current-time span {
+  position: absolute;
+  top: 35px;
+  left: 5px;
 }
 
-.track-time span {
+.remaining-time span {
   position: absolute;
-  bottom: 0;
-  right: 20px;
+  top: 35px;
+  right: 5px;
 }
 
 .shuffle-icon {
-  position: relative;
-  left: 27px;
+  position: absolute;
+  left: 25px;
 }
 
 .repeat-icon {
-  position: relative;
-  left: 23px;
+  position: absolute;
+  right: 25px;
 }
 
 .no-padding {
