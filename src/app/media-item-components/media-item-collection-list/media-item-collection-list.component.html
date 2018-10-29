@@ -1,16 +1,16 @@
 <div *ngIf="showHeader" class='row'>
   <div *ngIf="collection.type === 'albums'" class='col-11'>
-    <h4>{{collection.attributes.name}}</h4>
+    <h4 class="text-truncate">{{collection.attributes.name}}</h4>
     <h5 *ngIf='collection.relationships.artists.data && collection.relationships.artists.data.length'><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a> | {{collection.attributes.genreNames[0]}}</h5>
     <h5 *ngIf='collection.relationships.artists.data && !collection.relationships.artists.data.length'>{{collection.attributes.artistName}} | {{collection.attributes.genreNames[0]}}</h5>
   </div>
   <div *ngIf="collection.type === 'library-albums'" class='col-11'>
-      <h4>{{collection.attributes.name}}</h4>
-      <h5 *ngIf='collection.relationships.artists.data && collection.relationships.artists.data.length'><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a></h5>
-      <h5 *ngIf='collection.relationships.artists.data && !collection.relationships.artists.data.length'>{{collection.attributes.artistName}}</h5>
-    </div>
+    <h4 class="text-truncate">{{collection.attributes.name}}</h4>
+    <h5 *ngIf='collection.relationships.artists.data && collection.relationships.artists.data.length'><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a></h5>
+    <h5 *ngIf='collection.relationships.artists.data && !collection.relationships.artists.data.length'>{{collection.attributes.artistName}}</h5>
+  </div>
   <div *ngIf="collection.type.includes('playlists')" class='col-11'>
-    <h4>{{collection.attributes.name}}</h4>
+    <h4 class="text-truncate">{{collection.attributes.name}}</h4>
     <h5>Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
   </div>
   <div class='col-1 collection-options-dropdown'>

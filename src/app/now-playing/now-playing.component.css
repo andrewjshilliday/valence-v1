@@ -74,8 +74,6 @@
 .now-playing-progress {
   position: relative;
   top: -32px;
-  left: 60px;
-  width: calc(100% - 90px);
   height: 0px;
 }
 
@@ -96,24 +94,26 @@ p {
 
 .current-time span {
   position: absolute;
-  top: 35px;
-  left: 5px;
+  top: 40px;
+  left: 84px;
 }
 
 .remaining-time span {
   position: absolute;
-  top: 35px;
-  right: 5px;
+  top: 40px;
+  right: 84px;
 }
 
 .shuffle-icon {
   position: absolute;
-  left: 25px;
+  left: 100px;
+  top: 5px;
 }
 
 .repeat-icon {
   position: absolute;
-  right: 25px;
+  right: 100px;
+  top: 5px;
 }
 
 .no-padding {
@@ -156,4 +156,13 @@ p {
 td {
   padding-top: 5px;
   padding-bottom: 0;
+}
+
+.nav-pills .nav-link.active, .nav-pills .nav-link.active:hover,.nav-pills .nav-link.active:focus {
+  background-color: #454545;
+  color:white; 
+}
+
+.nav-pills .nav-link, .nav-pills {
+  color:#454545; 
 }

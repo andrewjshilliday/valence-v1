@@ -253,7 +253,7 @@ export class MusicService {
     if (this.nowPlayingItem) {
       if (!this.history.length || this.nowPlayingItem.id !== this.history[this.history.length - 1].songId) {
         if (this.history.length === 10) {
-          this.history.pop();
+          this.history.shift();
         }
 
         this.history.push(this.nowPlayingItem);

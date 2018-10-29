@@ -46,8 +46,7 @@
 
 .collection-options-dropdown {
   position: relative;
-  top: 20px;
-  right: 5px;
+  transform: translate(-20%, 10%);
   max-width: 10px;
   max-height: 15px;
   cursor: pointer;
@@ -80,7 +79,7 @@
 }
 
 .time {
-  max-width: 30px;
+  width: 35px;
 }
 
 .media-options {
