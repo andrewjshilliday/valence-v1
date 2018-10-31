@@ -9,7 +9,6 @@ import { MusicService } from 'src/app/music.service';
 export class MediaItemCollectionRowComponent implements OnInit {
 
   @Input() items: any;
-  @Input() title: string;
   @Input() divider: boolean;
 
   constructor(public musicService: MusicService) { }

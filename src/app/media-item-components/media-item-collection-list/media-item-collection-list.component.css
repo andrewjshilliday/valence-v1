@@ -1,3 +1,51 @@
+@media (min-width: 1086px) {
+  .expanded {
+    display: contents;
+  }
+
+  .minimised {
+    display: none;
+  }
+}
+
+@media (max-width: 1085px) {
+  .expanded {
+    display: none;
+  }
+
+  .minimised {
+    display: contents;
+  }
+
+  .header {
+    margin: 0px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .header p {
+    font-size: 9pt;
+  }
+  
+  .header span {
+    font-size: 10pt;
+  }
+
+  .header span i {
+    padding-right: 5px;
+  }
+
+  .header span:hover {
+    cursor: pointer;
+  }
+
+  .description {
+    height: 0;
+    padding-bottom: 35%;
+    overflow-y: hidden;
+  }
+}
+
 .mediarow:hover {
   cursor: pointer;
 }

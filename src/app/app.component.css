@@ -1,10 +1,25 @@
-#page-content-wrapper {
-  position: fixed;
-  overflow-y: scroll;
-  top: 50px;
-  left: 250px;
-  right: 0px;
-  bottom: 100px;
-  width: calc(100% - 250px);
-  height: calc(100% - 150px);
+@media (max-width: 1085px) {
+  #page-content-wrapper {
+    position: fixed;
+    overflow-y: scroll;
+    top: 50px;
+    left: 70px;
+    right: 0px;
+    bottom: 100px;
+    width: calc(100% - 70px);
+    height: calc(100% - 150px);
+  }
+}
+
+@media (min-width: 1086px) {
+  #page-content-wrapper {
+    position: fixed;
+    overflow-y: scroll;
+    top: 50px;
+    left: 250px;
+    right: 0px;
+    bottom: 100px;
+    width: calc(100% - 250px);
+    height: calc(100% - 150px);
+  }
 }

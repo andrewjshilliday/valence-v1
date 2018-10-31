@@ -10,11 +10,11 @@
     </div>
 
     <div class="row">
-      <div *ngIf="musicService.artist && musicService.artist.relationships.albums.data && musicService.artist.relationships.albums.data | albumFilter : 'latestRelease'" class="col-3">
+      <div *ngIf="musicService.artist && musicService.artist.relationships.albums.data && musicService.artist.relationships.albums.data | albumFilter : 'latestRelease'" class="col-sm-6 col-md-3">
         <h3 class="text-truncate" title="Latest Release">Latest Release</h3>
         <app-media-item-view [item]="musicService.artist.relationships.albums.data | albumFilter : 'latestRelease'"></app-media-item-view>
       </div>
-      <div *ngIf="musicService.artist && musicService.artist.relationships.albums.data && musicService.artist.relationships.albums.data | albumFilter : 'upcomingRelease'" class="col-3">
+      <div *ngIf="musicService.artist && musicService.artist.relationships.albums.data && musicService.artist.relationships.albums.data | albumFilter : 'upcomingRelease'" class="col-sm-6 col-md-3">
         <h3 class="text-truncate" title="Upcoming Release">Upcoming Release</h3>
         <app-media-item-view [item]="musicService.artist.relationships.albums.data | albumFilter : 'upcomingRelease'"></app-media-item-view>
       </div>

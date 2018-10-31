@@ -1,26 +1,46 @@
-#sidebar-wrapper {
-  margin-left: -250px;
-  left: 250px;
-  width: 250px;
+@media (min-width: 1086px) {
+  .sidenav {
+    position: absolute;
+    width: 250px;
+    background-color: #454545;
+  }
+
+  .expanded {
+    display: block;
+  }
+
+  .minimised {
+    display: none;
+  }
+}
+
+@media (max-width: 1085px) {
+  .sidenav {
+    position: absolute;
+    width: 70px;
+    background-color: #454545;
+  }
+
+  .expanded {
+    display: none;
+  }
+
+  .minimised {
+    display: block;
+  }
+}
+
+.mat-sidenav-transition .mat-sidenav-backdrop.mat-sidenav-shown {
   background: #454545;
-  position: fixed;
-  top: 50px;
-  bottom: 100px;
-  overflow-y: auto;
-  z-index: 1000;
 }
 
 .sidebar-nav {
-  position: absolute;
-  width: 250px;
-  top: 0;
-  margin: 0;
   padding: 0;
   list-style: none
 }
 
 .sidebar-nav li {
-  text-indent: 20px;
+  text-indent: 5px;
   line-height: 40px;
 }
 
@@ -30,7 +50,12 @@
   color: #999999;
 }
 
+.sidebar-nav li a i {
+  padding-right: 10px;
+}
+
 .sidebar-nav li a:hover {
+  cursor: pointer;
   text-decoration: none;
   color: #fff;
   background: rgba(255, 255, 255, 0.2);
@@ -38,23 +63,4 @@
 
 .sidebar-nav li a:active, .sidebar-nav li a:focus {
   text-decoration: none;
-}
-
-.sidebar-nav>.sidebar-brand {
-  height: 65px;
-  font-size: 18px;
-  line-height: 60px;
-}
-
-.sidebar-nav>.sidebar-brand a {
-  color: #999999;
-}
-
-.sidebar-nav>.sidebar-brand a:hover {
-  color: #fff;
-  background: none;
-}
-
-.btn-primary-transparent {
-  background-color: transparent;
 }

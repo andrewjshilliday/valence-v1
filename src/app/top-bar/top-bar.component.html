@@ -1,25 +1,5 @@
 <div id="top-bar-wrapper" class='row'>
-  <div class="col">
+  <div>
     <a [routerLink]="['/home']"><img class="logo" src="./assets/images/apple_music_logo.png" /></a>
-  </div>
-  <div class="col d-flex justify-content-end">
-    <button class="btn mr-2 mt-2 mb-2" *ngIf="musicService.authorized">
-      <i class="fas fa-user-circle"></i>
-    </button>
-    <button class="btn mr-2 mt-2 mb-2" *ngIf="!musicService.authorized" (click)='musicService.signin()'>
-      <i class="fas fa-sign-in-alt"></i> Sign In
-    </button>
-    <button class="btn mr-2 mt-2 mb-2" *ngIf="musicService.authorized" (click)='musicService.signout()'>
-      <i class="fas fa-sign-out-alt"></i> Sign Out
-    </button>
-    <!-- <a *ngIf="musicService.authorized" role='button' id='account'>
-      <i class="fas fa-user-circle" style="color:lightgrey"></i>
-    </a>
-    <a *ngIf="!musicService.authorized" role='button' id='signin' (click)='musicService.signin()'>
-      <i class="fas fa-sign-in-alt" style="color:lightgrey"> Sign In </i>
-    </a>
-    <a *ngIf="musicService.authorized" role='button' id='signout' (click)='musicService.signout()'>
-      <i class="fas fa-sign-out-alt" style="color:lightgrey"> Sign Out </i>
-    </a> -->
   </div>
 </div>

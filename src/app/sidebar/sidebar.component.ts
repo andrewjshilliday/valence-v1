@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { MusicService } from '../music.service';
-import { SearchResultsComponent } from '../search-results/search-results.component';
 
 @Component({
   selector: 'app-sidebar',

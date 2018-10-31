@@ -1,3 +1,23 @@
+@media (min-width: 1086px) {
+  .expanded {
+    display: block;
+  }
+
+  .minimised {
+    display: none;
+  }
+}
+
+@media (max-width: 1085px) {
+  .expanded {
+    display: none;
+  }
+
+  .minimised {
+    display: block;
+  }
+}
+
 .loading-spinner {
   top: 32vh;
   left: 50%;
