@@ -73,10 +73,15 @@
             </div>
           </div>
         </div>
-        <span class='text-muted'>{{collection.attributes.trackCount}} Songs, {{(musicService.albumDuration / 1000 / 60) | hoursMinutes}}</span>
-        <div class="description">
-        <p *ngIf='collection.attributes.editorialNotes && collection.attributes.editorialNotes.standard'>{{collection.attributes.editorialNotes.standard}}</p>
-        <p *ngIf='collection.attributes.editorialNotes && !collection.attributes.editorialNotes.standard'>{{collection.attributes.editorialNotes.short}}</p>
+        <span *ngIf="collection.type.includes('albums')" class='text-muted'>{{collection.attributes.trackCount}} Songs, {{(musicService.albumDuration / 1000 / 60) | hoursMinutes}}</span>
+        <span *ngIf="collection.type.includes('playlists')" class='text-muted'>{{collection.relationships.tracks.data.length}} Songs, {{(musicService.playlistDuration / 1000 / 60) | hoursMinutes}}</span>
+        <div *ngIf="collection.type.includes('albums')" class="description">
+          <p *ngIf='collection.attributes.editorialNotes && collection.attributes.editorialNotes.standard'>{{collection.attributes.editorialNotes.standard}}</p>
+          <p *ngIf='collection.attributes.editorialNotes && !collection.attributes.editorialNotes.standard'>{{collection.attributes.editorialNotes.short}}</p>
+        </div>
+        <div *ngIf="collection.type.includes('playlists')" class="description">
+          <p *ngIf='collection.attributes.description && collection.attributes.description.standard'>{{collection.attributes.description.standard}}</p>
+          <p *ngIf='collection.attributes.description && !collection.attributes.description.standard'>{{collection.attributes.description.short}}</p>
         </div>
       </div>
     </div>

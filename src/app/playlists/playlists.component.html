@@ -24,9 +24,9 @@
                 <span class='text-muted float-right shuffle-label'><a (click)='musicService.playItem(musicService.playlist, 0, true)'>Shuffle <i class="fas fa-random fa-xs"></i></a></span>
               </div>
             </div>
-            <hr *ngIf='musicService.playlist.attributes.editorialNotes' />
-            <p *ngIf='musicService.playlist.attributes.editorialNotes && musicService.playlist.attributes.editorialNotes.standard'>{{musicService.playlist.attributes.editorialNotes.standard}}</p>
-            <p *ngIf='musicService.playlist.attributes.editorialNotes && !musicService.playlist.attributes.editorialNotes.standard'>{{musicService.playlist.attributes.editorialNotes.short}}</p>
+            <hr *ngIf='musicService.playlist.attributes.description' />
+            <p *ngIf='musicService.playlist.attributes.description && musicService.playlist.attributes.description.standard'>{{musicService.playlist.attributes.description.standard}}</p>
+            <p *ngIf='musicService.playlist.attributes.description && !musicService.playlist.attributes.description.standard'>{{musicService.playlist.attributes.description.short}}</p>
           </div>
           <div class='col-8'>
             <app-media-item-collection-list [collection]="musicService.playlist" [showHeader]=true [showArtistAlbum]=true [itemRelationships]="trackRelationships"></app-media-item-collection-list>

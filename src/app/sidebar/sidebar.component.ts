@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { MusicService } from '../music.service';
 
 @Component({

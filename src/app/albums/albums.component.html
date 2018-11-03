@@ -37,12 +37,19 @@
               </p>
             </div>
           </div>
-          <!-- <app-media-item-collection-row *ngIf="artistAlbums && artistAlbums.relationships.albums.data" [items]="artistAlbums.relationships.albums.data" [title]="More"></app-media-item-collection-row> -->
+          <div *ngIf="artistAlbums && artistAlbums.relationships.albums.data" class="container-fluid">
+            <h2>More by {{artistAlbums.attributes.name}}</h2>
+            <app-media-item-collection-row *ngIf="artistAlbums && artistAlbums.relationships.albums.data" [items]="artistAlbums.relationships.albums.data" [title]="More"></app-media-item-collection-row>
+          </div>
         </div>
       </div>
 
       <div class="minimised">
         <app-media-item-collection-list [collection]="musicService.album" [showHeader]=true></app-media-item-collection-list>
+        <div *ngIf="artistAlbums && artistAlbums.relationships.albums.data" class="container-fluid">
+          <h3>More by {{artistAlbums.attributes.name}}</h3>
+          <app-media-item-collection-row [items]="artistAlbums.relationships.albums.data"></app-media-item-collection-row>
+        </div>
       </div>
       
     </div>

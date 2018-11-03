@@ -1,5 +1,32 @@
-<h2 *ngIf="title">{{title}}</h2>
-<div class="row">
-  <app-media-item-view *ngFor="let item of items" [item]="item" class="col-sm-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
+<div *ngIf="!todaysAlbums" class="media-item-group">
+  <div id="scrollbar" class="container-fluid row">
+    <app-media-item-view *ngFor="let item of items" [item]="item" [ngClass]="size === 2 ? 'col-sm-6 col-md-4 col-lg-3' : 'col-sm-6 col-md-4 col-lg-3 col-xl-2'"></app-media-item-view>
+  </div>
 </div>
+
+<div *ngIf="todaysAlbums" class="media-item-group">
+  <div id="scrollbar" class="container-fluid row">
+    <div *ngFor='let item of items' class="col-sm-12 col-md-6 col-lg-4">
+      <h5 class="text-truncate">{{item.attributes.reason.stringForDisplay}}</h5>
+      <div class='row'>
+        <div *ngIf="item.relationships.contents.data[0]" class="col-6">
+          <app-media-item-view [item]='item.relationships.contents.data[0]'></app-media-item-view>
+        </div>
+        <div *ngIf="item.relationships.contents.data[1]" class="col-6">
+          <app-media-item-view [item]='item.relationships.contents.data[1]'></app-media-item-view>
+        </div>
+      </div>
+      <div class='row'>
+        <div *ngIf="item.relationships.contents.data[2]" class="col-6">
+          <app-media-item-view [item]='item.relationships.contents.data[2]'></app-media-item-view>
+        </div>
+        <div *ngIf="item.relationships.contents.data[3]" class="col-6">
+          <app-media-item-view [item]='item.relationships.contents.data[3]'></app-media-item-view>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <hr *ngIf="divider" />
+<br *ngIf="!divider" />

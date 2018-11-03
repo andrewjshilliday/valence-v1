@@ -7,38 +7,24 @@
 
   <div *ngIf='!this.loading'>
 
-    <div *ngIf='musicService.artists && musicService.artists.length'>
+    <div *ngIf="musicService.artists && musicService.artists.length">
       <h2>Artists</h2>
-      <div class='row'>
-        <app-media-item-view *ngFor='let item of musicService.artists' [item]='item' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'></app-media-item-view>
-      </div>
+      <app-media-item-collection-row [items]="musicService.artists" [divider]=true></app-media-item-collection-row>
     </div>
 
-    <hr />
-
-    <div *ngIf='musicService.albums && musicService.albums.length'>
+    <div *ngIf="musicService.albums && musicService.albums.length">
       <h2>Albums</h2>
-      <div class='row'>
-        <app-media-item-view *ngFor='let item of musicService.albums' [item]='item' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'></app-media-item-view>
-      </div>
+      <app-media-item-collection-row [items]="musicService.albums" [divider]=true></app-media-item-collection-row>
     </div>
 
-    <hr />
-
-    <div *ngIf='musicService.songs && musicService.songs.length'>
+    <div *ngIf="musicService.songs && musicService.songs.length">
       <h2>Songs</h2>
-      <div class='row'>
-        <app-media-item-view *ngFor='let item of musicService.songs' [item]='item' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'></app-media-item-view>
-      </div>
+      <app-media-item-collection-row [items]="musicService.songs" [divider]=true></app-media-item-collection-row>
     </div>
 
-    <hr />
-
-    <div *ngIf='musicService.playlists && musicService.playlists.length'>
+    <div *ngIf="musicService.playlists && musicService.playlists.length">
       <h2>Playlists</h2>
-      <div class='row'>
-        <app-media-item-view *ngFor='let item of musicService.playlists' [item]='item' class='col-sm-6 col-md-4 col-lg-3 col-xl-2'></app-media-item-view>
-      </div>
+      <app-media-item-collection-row [items]="musicService.playlists"></app-media-item-collection-row>
     </div>
 
   </div>
