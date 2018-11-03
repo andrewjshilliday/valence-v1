@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MusicService } from '../music.service';
-import { isAwaitExpression } from 'typescript';
 
 @Component({
   selector: 'app-artists',
