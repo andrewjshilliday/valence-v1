@@ -39,7 +39,7 @@
           </div>
           <div *ngIf="artistAlbums && artistAlbums.relationships.albums.data" class="container-fluid">
             <h2>More by {{artistAlbums.attributes.name}}</h2>
-            <app-media-item-collection-row *ngIf="artistAlbums && artistAlbums.relationships.albums.data" [items]="artistAlbums.relationships.albums.data" [title]="More"></app-media-item-collection-row>
+            <app-media-item-collection-row *ngIf="artistAlbums && artistAlbums.relationships.albums.data" [items]="artistAlbums.relationships.albums.data"></app-media-item-collection-row>
           </div>
         </div>
       </div>

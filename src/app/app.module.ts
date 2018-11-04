@@ -53,7 +53,7 @@ import { LazyLoadImageDirective } from './lazy-load-image/lazy-load-image.direct
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
       { path: 'foryou', component: ForYouComponent },
-      { path: 'searchresults', canActivate: [SearchResultsGuard], component: SearchResultsComponent },
+      { path: 'searchresults', component: SearchResultsComponent },
       { path: 'artists/:id', component: ArtistsComponent },
       { path: 'albums/:id', component: AlbumsComponent },
       { path: 'playlists/:id', component: PlaylistsComponent },

@@ -9,6 +9,7 @@ import { MusicService } from '../../music.service';
 export class MediaItemViewComponent implements OnInit {
 
   @Input() item: any;
+  @Input() itemRelationships: any;
 
   constructor(public musicService: MusicService) { }
 

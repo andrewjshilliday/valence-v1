@@ -4,11 +4,8 @@
   transform: translate(-50%, -50%);
 }
 
-.row{
-  align-items: stretch;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
+.artist-background {
+  background-image: url(../../assets/images/artist_background_placeholder.jpg);
+  background-position: center;
+  background-size: 100%;
 }

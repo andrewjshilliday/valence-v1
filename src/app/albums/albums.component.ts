@@ -34,8 +34,9 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   }
 
   async getArtistAlbums() {
-    // tslint:disable-next-line:max-line-length
-    this.artistAlbums = await this.musicService.musicKit.api.artist(this.musicService.album.relationships.artists.data[0].id, { include: 'albums' });
+    this.artistAlbums = await this.musicService.musicKit.api.artist(
+      this.musicService.album.relationships.artists.data[0].id, { include: 'albums' }
+    );
   }
 
 }

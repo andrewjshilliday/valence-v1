@@ -12,6 +12,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
 
   artistSubscription: Subscription;
   loading: boolean;
+  albums: Array<any>;
   tracks: any;
 
   constructor(private route: ActivatedRoute, private router: Router, public musicService: MusicService) { }
@@ -31,6 +32,29 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     await this.musicService.getArtist(id);
     await this.musicService.getPlaylists(id);
     this.loading = false;
+
+    this.albums = this.musicService.artist.relationships.albums.data.filter(item => !item.attributes.isSingle);
+  }
+
+  reorderAlbums(event) {
+    switch (event.currentTarget.selectedIndex) {
+      case 0: {
+        this.albums = this.musicService.artist.relationships.albums.data.filter(item => !item.attributes.isSingle);
+        break;
+      }
+      case 1: {
+        this.albums = this.albums.sort(
+          (a, b) => new Date(a.attributes.releaseDate).getTime() - new Date(b.attributes.releaseDate).getTime()
+        );
+        break;
+      }
+      case 2: {
+        this.albums = this.albums.sort(
+          (a, b) => new Date(b.attributes.releaseDate).getTime() - new Date(a.attributes.releaseDate).getTime()
+        );
+        break;
+      }
+    }
   }
 
 }

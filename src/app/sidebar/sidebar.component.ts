@@ -9,6 +9,8 @@ import { MusicService } from '../music.service';
 })
 export class SidebarComponent implements OnInit {
 
+  searchHints: any;
+
   constructor(private router: Router, public musicService: MusicService) { }
 
   ngOnInit() {
@@ -16,6 +18,12 @@ export class SidebarComponent implements OnInit {
 
   search(term: string) {
     this.router.navigate(['/searchresults'], { queryParams: { term: term } });
+  }
+
+  async getSearchHints(term: string) {
+    if (term !== '') {
+      this.searchHints = await this.musicService.musicKit.api.searchHints(term);
+    }
   }
 
 }

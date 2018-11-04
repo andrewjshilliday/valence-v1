@@ -13,7 +13,7 @@
     </div>
     <div *ngIf="collection.type.includes('playlists')" class='col-11'>
       <h4 class="text-truncate">{{collection.attributes.name}}</h4>
-      <h5>Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
+      <h5>{{collection.attributes.curatorName}} | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
     </div>
     <div class='col-1 collection-options-dropdown'>
       <a role='button' id='dropdown{{collection.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
@@ -25,7 +25,7 @@
         <a class="dropdown-item" (click)='musicService.queueNext(collection)'>Play Next</a>
         <a class="dropdown-item" (click)='musicService.queueLater(collection)'>Play Later</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item">Add to Library</a>
+        <a class="dropdown-item" (click)="musicService.addToLibrary(collection)">Add to Library</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item">Like</a>
         <a class="dropdown-item">Dislike</a>
@@ -54,7 +54,7 @@
           </div>
           <div *ngIf="collection.type.includes('playlists')" class='col-10'>
             <h4 class="text-truncate">{{collection.attributes.name}}</h4>
-            <h5>Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
+            <h5>{{collection.attributes.curatorName}} | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
           </div>
           <div class='col-2 collection-options-dropdown'>
             <a role='button' id='dropdown{{collection.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
@@ -110,7 +110,7 @@
         <i *ngIf='musicService.isItemCurrentlyPlaying(item.id)' class="fas fa-pause media-icon"></i>
         <i *ngIf='musicService.isItemCurrentlyPlaying(item.id)' class="fas fa-volume-up now-playing-icon"></i>
       </td>
-      <td class='item-text' (click)='!musicService.isItemCurrentlyPlaying(item.id) ? musicService.playItem(collection, collection.relationships.tracks.data.indexOf(item)) : musicService.pause()'>
+      <td class="item-text" (click)="!musicService.isItemCurrentlyPlaying(item.id) ? musicService.playItem(collection, collection.relationships.tracks.data.indexOf(item)) : musicService.pause()" title="{{item.attributes.name}}">
         <div class="row">
           <div class="text-truncate" [ngClass]="!item.attributes.contentRating && item.attributes.contentRating !== 'explicit' ? 'col-12' : (showArtistAlbum ? 'col-10' : 'col-11')">
             {{item.attributes.name}}
@@ -120,11 +120,11 @@
           </div>
         </div>
       </td>
-      <td *ngIf="showArtistAlbum" class='artist-text text-truncate'>
+      <td *ngIf="showArtistAlbum" class='artist-text text-truncate' title="{{item.attributes.artistName}}">
         <a *ngIf="itemRelationships && itemRelationships[collection.relationships.tracks.data.indexOf(item)]" [routerLink]="['/artists', itemRelationships[collection.relationships.tracks.data.indexOf(item)][1]]">{{item.attributes.artistName}}</a>
         <a *ngIf="!itemRelationships || !itemRelationships[collection.relationships.tracks.data.indexOf(item)]">{{item.attributes.artistName}}</a>
       </td>
-      <td *ngIf="showArtistAlbum" class='album-text text-truncate'>
+      <td *ngIf="showArtistAlbum" class='album-text text-truncate' title="{{item.attributes.albumName}}">
         <a *ngIf="itemRelationships && itemRelationships[collection.relationships.tracks.data.indexOf(item)]" [routerLink]="['/albums', itemRelationships[collection.relationships.tracks.data.indexOf(item)][2]]">{{item.attributes.albumName}}</a>
         <a *ngIf="!itemRelationships || !itemRelationships[collection.relationships.tracks.data.indexOf(item)]">{{item.attributes.albumName}}</a>
       </td>
@@ -158,7 +158,7 @@
         <i *ngIf='musicService.isItemCurrentlyPlaying(item.id)' class="fas fa-pause media-icon"></i>
         <i *ngIf='musicService.isItemCurrentlyPlaying(item.id)' class="fas fa-volume-up now-playing-icon"></i>
       </td>
-      <td class='item-text text-truncate' (click)='!musicService.isItemCurrentlyPlaying(item.id) ? musicService.playItem(collection, collection.indexOf(item)) : musicService.pause()'>
+      <td class="item-text text-truncate" (click)="!musicService.isItemCurrentlyPlaying(item.id) ? musicService.playItem(collection, collection.indexOf(item)) : musicService.pause()" title="{{item.attributes.name}}">
         <div class="row">
           <div class="text-truncate" [ngClass]="!item.attributes.contentRating && item.attributes.contentRating !== 'explicit' ? 'col-12' : (showArtistAlbum ? 'col-10' : 'col-11')">
             {{item.attributes.name}}
@@ -168,11 +168,11 @@
           </div>
         </div>
       </td>
-      <td *ngIf="showArtistAlbum" class='artist-text text-truncate'>
+      <td *ngIf="showArtistAlbum" class='artist-text text-truncate' title="{{item.attributes.artistName}}">
         <a *ngIf="itemRelationships && itemRelationships[collection.indexOf(item)]" [routerLink]="['/artists', itemRelationships[collection.indexOf(item)][1]]">{{item.attributes.artistName}}</a>
         <a *ngIf="!itemRelationships || !itemRelationships[collection.indexOf(item)]">{{item.attributes.artistName}}</a>
       </td>
-      <td *ngIf="showArtistAlbum" class='album-text text-truncate'>
+      <td *ngIf="showArtistAlbum" class='album-text text-truncate' title="{{item.attributes.albumName}}">
         <a *ngIf="itemRelationships && itemRelationships[collection.indexOf(item)]" [routerLink]="['/albums', itemRelationships[collection.relationships.tracks.data.indexOf(item)][2]]">{{item.attributes.albumName}}</a>
         <a *ngIf="!itemRelationships || !itemRelationships[collection.indexOf(item)]">{{item.attributes.albumName}}</a>
       </td>

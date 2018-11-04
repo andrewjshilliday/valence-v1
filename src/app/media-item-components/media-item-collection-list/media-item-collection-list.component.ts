@@ -13,10 +13,12 @@ export class MediaItemCollectionListComponent implements OnInit {
   @Input() showArtistAlbum: boolean;
   @Input() showArtwork: boolean;
   @Input() itemRelationships: any;
+  todaysDate: Date;
 
   constructor(public musicService: MusicService) { }
 
   ngOnInit() {
+    this.todaysDate = new Date();
   }
 
 }

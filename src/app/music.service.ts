@@ -3,6 +3,7 @@ import { Tokens } from './tokens';
 
 declare var MusicKit: any;
 import '../assets/musickit.js';
+import { getLocaleDateFormat } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class MusicService {
   authorized = false;
   playing = false;
   nowPlayingItem: any;
-  lastSearchQuery = '';
+  lastSearchTerm = '';
   playbackLoading: boolean;
   playbackLoadingTimeout: any;
   playbackError: boolean;
@@ -98,9 +99,7 @@ export class MusicService {
       return;
     }
 
-    try {
-      await this.musicKit.player.play();
-    } catch { /* ignore errors here for now */ }
+    await this.musicKit.player.play();
   }
 
   async pause(): Promise<any> {
@@ -108,35 +107,19 @@ export class MusicService {
       return;
     }
 
-    try {
-      await this.musicKit.player.pause();
-    } catch { /* ignore errors here for now */ }
+    await this.musicKit.player.pause();
   }
 
   async playNext(): Promise<any> {
-    if (this.playbackLoading === true) {
-      return;
-    }
-
-    try {
-      await this.musicKit.player.skipToNextItem();
-    } catch { /* ignore errors here for now */ }
+    await this.musicKit.player.skipToNextItem();
   }
 
   async playPrevious(): Promise<any> {
-    if (this.playbackLoading === true) {
-      return;
-    }
-
-    try {
-      await this.musicKit.player.skipToPreviousItem();
-    } catch { /* ignore errors here for now */ }
+    await this.musicKit.player.skipToPreviousItem();
   }
 
   async stop(): Promise<any> {
-    try {
-      await this.musicKit.player.stop();
-    } catch { /* ignore errors here for now */ }
+    await this.musicKit.player.stop();
   }
 
   async signin(): Promise<any> {
@@ -199,7 +182,7 @@ export class MusicService {
     if (isLibraryResource) {
       this.playlist = await this.musicKit.api.library.playlist(id, { include: 'tracks' });
     } else {
-      this.playlist = await this.musicKit.api.playlist(id, { include: 'playlists,artists,albums' });
+      this.playlist = await this.musicKit.api.playlist(id, { include: 'curators' });
     }
 
     for (const track of this.playlist.relationships.tracks.data) {
@@ -209,6 +192,11 @@ export class MusicService {
 
   async getPlaylists(id): Promise<any> {
     this.playlists = await this.musicKit.api.artist(id, { include: 'playlists' });
+  }
+
+  async addToLibrary(item: any) {
+    await this.musicKit.api.addToLibrary({ [item.type]: [item.id] });
+    alert('Successfully added ' + item.attributes.name + ' to your library');
   }
 
   formatArtworkURL(url: string, size: number): string {
@@ -271,11 +259,9 @@ export class MusicService {
 
     if (this.playbackLoading) {
       this.playbackLoadingTimeout = window.setTimeout(async function() {
-        try {
-          const musicKit = MusicKit.getInstance();
-          await musicKit.player.stop();
-          await musicKit.player.play();
-        } catch { /* ignore errors here for now */ }
+        const musicKit = MusicKit.getInstance();
+        await musicKit.player.stop();
+        await musicKit.player.play();
       }, 5000);
     }
   }

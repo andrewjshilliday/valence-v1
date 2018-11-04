@@ -4,11 +4,6 @@
   transform: translate(-50%, -50%);
 }
 
-.row{
-  align-items: stretch;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
+input::-webkit-calendar-picker-indicator {
+  display: none;
 }
