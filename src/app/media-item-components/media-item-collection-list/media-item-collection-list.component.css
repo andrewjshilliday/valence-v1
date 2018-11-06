@@ -101,9 +101,7 @@
 }
 
 .collection-title {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  padding-bottom: 2px;
 }
 
 .collection-text {
@@ -111,7 +109,7 @@
 }
 
 .media-status {
-  width: 40px;
+  width: 46px;
 }
 
 .item-text {

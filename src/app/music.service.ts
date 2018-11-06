@@ -3,7 +3,6 @@ import { Tokens } from './tokens';
 
 declare var MusicKit: any;
 import '../assets/musickit.js';
-import { getLocaleDateFormat } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +13,7 @@ export class MusicService {
   authorized = false;
   playing = false;
   nowPlayingItem: any;
+  nowPlayingPlaylist: any;
   lastSearchTerm = '';
   playbackLoading: boolean;
   playbackLoadingTimeout: any;
@@ -47,6 +47,7 @@ export class MusicService {
 
     this.musicKit = MusicKit.getInstance();
     this.authorized = this.musicKit.isAuthorized;
+    this.musicKit.player.repeatMode = 2;
 
     this.musicKit.addEventListener(MusicKit.Events.mediaItemDidChange, this.mediaItemDidChange.bind(this));
     this.musicKit.addEventListener(MusicKit.Events.playbackStateDidChange, this.playbackStateDidChange.bind(this));
@@ -83,6 +84,12 @@ export class MusicService {
       this.musicKit.player.shuffleMode = 1;
     }
 
+    if (item.type.includes('playlists')) {
+      this.nowPlayingPlaylist = item;
+    } else {
+      this.nowPlayingPlaylist = null;
+    }
+
     this.play();
   }
 
@@ -115,7 +122,11 @@ export class MusicService {
   }
 
   async playPrevious(): Promise<any> {
-    await this.musicKit.player.skipToPreviousItem();
+    if (this.musicKit.player.currentPlaybackTime < 11) {
+      await this.musicKit.player.skipToPreviousItem();
+    } else {
+      await this.musicKit.player.seekToTime(0);
+    }
   }
 
   async stop(): Promise<any> {

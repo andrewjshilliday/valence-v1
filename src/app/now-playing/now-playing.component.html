@@ -20,8 +20,13 @@
           <img class="img-fluid rounded" [src]='musicService.formatArtworkURL(musicService.nowPlayingItem.attributes.artwork, 100)' />
         </a>
       </div>
+      <div *ngIf="musicService.nowPlayingPlaylist" class="now-playing-playlist rounded">
+        <a [routerLink]="['/playlists', musicService.nowPlayingPlaylist.id]">
+          <img class="img-fluid rounded" [src]='musicService.formatArtworkURL(musicService.nowPlayingPlaylist.attributes.artwork, 100)' />
+        </a>
+      </div>
       <div>
-        <div class="row shuffle-icon" [ngClass]="musicService.musicKit.player.shuffleMode === 0 ? 'text-muted' : ''">
+        <div class="row shuffle-icon" [ngClass]="musicService.musicKit.player.shuffleMode === 0 ? 'text-muted' : ''" title="shuffle">
           <i class="fas fa-random" (click)="toggleShuffle()"></i>
         </div>
         <div class="row current-time"><span>{{musicService.musicKit.player.currentPlaybackTime | minutesSeconds}}</span></div>
@@ -43,7 +48,7 @@
     </div>
     <div class='col-2'>
       <div>
-        <div class="row repeat-icon" [ngClass]="musicService.musicKit.player.repeatMode === 0 ? 'text-muted' : ''">
+        <div class="row repeat-icon" [ngClass]="musicService.musicKit.player.repeatMode === 0 ? 'text-muted' : ''" title="repeat">
           <i class="fas fa-redo" (click)="toggleRepeat()"></i>
         </div>
         <div class="row remaining-time"><span>{{musicService.musicKit.player.currentPlaybackTimeRemaining | minutesSeconds}}</span></div>

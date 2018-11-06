@@ -1,5 +1,5 @@
 <div *ngIf="!todaysAlbums" class="media-item-group">
-  <div id="scrollbar" class="container-fluid row">
+  <div class="container-fluid row scrollbar">
     <app-media-item-view *ngFor="let item of items" [item]="item" 
       [ngClass]="size === 2 ? 'col-6 col-md-4 col-lg-3' : 'col-6 col-md-4 col-lg-3 col-xl-2'"
       [itemRelationships]="collectionRelationships ? collectionRelationships[items.indexOf(item)] : null">
@@ -8,7 +8,7 @@
 </div>
 
 <div *ngIf="todaysAlbums" class="media-item-group">
-  <div id="scrollbar" class="container-fluid row">
+  <div class="container-fluid row scrollbar">
     <div *ngFor="let item of items" class="col-12 col-md-6 col-lg-4">
       <h5 class="text-truncate" title="{{item.attributes.reason.stringForDisplay}}">{{item.attributes.reason.stringForDisplay}}</h5>
       <div class="row">

@@ -7,9 +7,11 @@ import { MaterialModule } from './material/material.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ForYouComponent } from './for-you/for-you.component';
+import { BrowseComponent } from './browse/browse.component';
 import { LibraryComponent } from './library/library.component';
 import { AlbumsComponent } from './albums/albums.component';
 import { ArtistsComponent } from './artists/artists.component';
+import { CuratorsComponent } from './curators/curators.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NowPlayingComponent } from './now-playing/now-playing.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
@@ -30,10 +32,12 @@ import { LazyLoadImageDirective } from './lazy-load-image/lazy-load-image.direct
     HomeComponent,
     AlbumsComponent,
     ArtistsComponent,
+    CuratorsComponent,
     SidebarComponent,
     NowPlayingComponent,
     SearchResultsComponent,
     ForYouComponent,
+    BrowseComponent,
     LibraryComponent,
     TopBarComponent,
     PlaylistsComponent,
@@ -53,10 +57,12 @@ import { LazyLoadImageDirective } from './lazy-load-image/lazy-load-image.direct
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
       { path: 'foryou', component: ForYouComponent },
+      { path: 'browse', component: BrowseComponent },
       { path: 'searchresults', component: SearchResultsComponent },
       { path: 'artists/:id', component: ArtistsComponent },
       { path: 'albums/:id', component: AlbumsComponent },
       { path: 'playlists/:id', component: PlaylistsComponent },
+      { path: 'curators/:type/:id', component: CuratorsComponent },
       { path: 'library', redirectTo: 'library/recently-added', pathMatch: 'full' },
       { path: 'library/:type', component: LibraryComponent },
       { path: 'library/artists/:id', component: ArtistsComponent },

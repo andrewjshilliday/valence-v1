@@ -60,9 +60,24 @@
 }
 
 .now-playing-album-art {
+  position: relative;
   padding: 5px 0px;
   height: 56px;
   width: 56px;
+  z-index: 1;
+}
+
+.now-playing-playlist {
+  position: absolute;
+  height: 52px;
+  width: 52px;
+  top: 7px;
+  left: 12px;
+  z-index: 0;
+}
+
+.now-playing-playlist:hover {
+  z-index: 2;
 }
 
 .now-playing-queue {

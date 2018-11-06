@@ -26,6 +26,10 @@
 	display: block;
 }
 
+.link-text-light {
+  color: skyblue;
+}
+
 .explicit {
   padding: 0;
 }

@@ -1,0 +1,5 @@
+.loading-spinner {
+  top: 25vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

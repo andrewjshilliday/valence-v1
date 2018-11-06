@@ -1,11 +1,10 @@
 .loading-spinner {
-  top: 32vh;
+  top: 25vh;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.artist-background {
-  background-image: url(../../assets/images/artist_background_placeholder.jpg);
+.curator-background {
   background-color: rgba(0, 0, 0, 0.5);
   background-blend-mode: darken;
   background-position: center;
