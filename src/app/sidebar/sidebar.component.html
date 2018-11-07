@@ -26,8 +26,8 @@
     <ul class="sidebar-nav minimised">
       <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/searchresults']" [queryParams]="{term: ''}"><i class="fas fa-search"></i></a></li>
       <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/home']"><i class="fas fa-home"></i></a></li>
-      <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/browse']"><i class="far fa-clone"></i></a></li>
       <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/foryou']"><i class="fas fa-user"></i></a></li>
+      <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/browse']"><i class="far fa-clone"></i></a></li>
       <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/library']"><i class="fas fa-align-left"></i></a></li>
       <li *ngIf="!musicService.authorized" class="authentication"><a class="nav-link" (click)="musicService.signin()"><i class="fas fa-sign-in-alt"></i></a></li>
       <li *ngIf="musicService.authorized" class="authentication"><a class="nav-link" (click)="musicService.signout()"><i class="fas fa-sign-out-alt"></i></a></li>
@@ -36,11 +36,11 @@
     <ul class="sidebar-nav mobile">
       <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/searchresults']" [queryParams]="{term: ''}"><i class="fas fa-search"></i></a></li>
       <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/home']"><i class="fas fa-home"></i></a></li>
-      <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/browse']"><i class="far fa-clone"></i></a></li>
       <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/foryou']"><i class="fas fa-user"></i></a></li>
+      <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/browse']"><i class="far fa-clone"></i></a></li>
       <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/library']"><i class="fas fa-align-left"></i></a></li>
-      <li *ngIf="!musicService.authorized"><a class="nav-link" (click)="musicService.signin()"><i class="fas fa-sign-in-alt"></i></a></li>
-      <li *ngIf="musicService.authorized"><a class="nav-link" (click)="musicService.signout()"><i class="fas fa-sign-out-alt"></i></a></li>
+      <li *ngIf="!musicService.authorized" class="float-right"><a class="nav-link" (click)="musicService.signin()"><i class="fas fa-sign-in-alt"></i></a></li>
+      <li *ngIf="musicService.authorized" class="float-right"><a class="nav-link" (click)="musicService.signout()"><i class="fas fa-sign-out-alt"></i></a></li>
     </ul>
 
   </mat-sidenav>
