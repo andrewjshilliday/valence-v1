@@ -11,12 +11,6 @@ export class BrowseComponent implements OnInit {
 
   loading: boolean;
 
-  top100: any;
-  featuredPlaylists: any;
-  aListPlaylists: any;
-  appleCurators: any;
-  curators: any;
-
   constructor(public musicService: MusicService) { }
 
   ngOnInit() {
@@ -33,24 +27,35 @@ export class BrowseComponent implements OnInit {
   }
 
   async loadtop100() {
-    this.top100 = await this.musicService.musicKit.api.playlists(Constants.top100Ids);
+    if (!this.musicService.top100) {
+      this.musicService.top100 = await this.musicService.musicKit.api.playlists(Constants.top100Ids);
+    }
   }
 
   async loadFeaturedPlaylists() {
-    this.featuredPlaylists = await this.musicService.musicKit.api.playlists(Constants.featuredPlaylistsIds);
+    if (!this.musicService.featuredPlaylists) {
+      this.musicService.featuredPlaylists = await this.musicService.musicKit.api.playlists(Constants.featuredPlaylistsIds);
+    }
+
     this.loading = false;
   }
 
   async loadAppleCurators() {
-    this.appleCurators = await this.musicService.musicKit.api.appleCurators(Constants.appleCuratorsIds);
+    if (!this.musicService.appleCurators) {
+      this.musicService.appleCurators = await this.musicService.musicKit.api.appleCurators(Constants.appleCuratorsIds);
+    }
   }
 
   async loadCurators() {
-    this.curators = await this.musicService.musicKit.api.curators(Constants.curatorsIds);
+    if (!this.musicService.curators) {
+      this.musicService.curators = await this.musicService.musicKit.api.curators(Constants.curatorsIds);
+    }
   }
 
   async loadAListPlaylists() {
-    this.aListPlaylists = await this.musicService.musicKit.api.playlists(Constants.aListPlaylistsIds);
+    if (!this.musicService.aListPlaylists) {
+      this.musicService.aListPlaylists = await this.musicService.musicKit.api.playlists(Constants.aListPlaylistsIds);
+    }
   }
 
 }

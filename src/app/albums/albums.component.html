@@ -8,10 +8,10 @@
     <div *ngIf="musicService.album">
 
       <div class="expanded">
-        <div class='row pt-3'>
+        <div class='row pt-3' appLazyLoadImage>
           <div class='col-4'>
             <div class="media-artwork">
-              <img class="img-fluid card-img-top rounded" [src]='musicService.formatArtworkURL(musicService.album.attributes.artwork, 800)' />
+              <img class="img-fluid card-img-top rounded" [attr.data-src]="musicService.formatArtworkURL(musicService.album.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
               <div class='media-control-button'>
                 <i class="fas fa-play-circle fa-3x" aria-hidden="true" (click)="musicService.playItem(musicService.album)"></i>
               </div>
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div *ngIf="artistAlbums && artistAlbums.relationships.albums.data" class="container-fluid">
-            <h2>More by {{artistAlbums.attributes.name}}</h2>
+            <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{artistAlbums.attributes.name}}</a></h4>
             <app-media-item-collection-row *ngIf="artistAlbums && artistAlbums.relationships.albums.data" [items]="artistAlbums.relationships.albums.data"></app-media-item-collection-row>
           </div>
         </div>
@@ -47,7 +47,7 @@
       <div class="minimised">
         <app-media-item-collection-list [collection]="musicService.album" [showHeader]=true></app-media-item-collection-list>
         <div *ngIf="artistAlbums && artistAlbums.relationships.albums.data" class="container-fluid">
-          <h4>More by {{artistAlbums.attributes.name}}</h4>
+          <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{artistAlbums.attributes.name}}</a></h4>
           <app-media-item-collection-row [items]="artistAlbums.relationships.albums.data"></app-media-item-collection-row>
         </div>
       </div>

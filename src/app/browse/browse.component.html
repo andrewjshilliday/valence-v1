@@ -7,29 +7,29 @@
 
   <div *ngIf='!this.loading'>
 
-    <div *ngIf="appleCurators">
+    <div *ngIf="musicService.appleCurators">
       <h2>Apple Curators</h2>
-      <app-media-item-collection-row [items]="appleCurators"  [size]="2" [divider]=true></app-media-item-collection-row>
+      <app-media-item-collection-row [items]="musicService.appleCurators" [size]="2" [divider]=true></app-media-item-collection-row>
     </div>
 
-    <div *ngIf="featuredPlaylists">
+    <div *ngIf="musicService.featuredPlaylists">
       <h2>Featured Playlists</h2>
-      <app-media-item-collection-row [items]="featuredPlaylists" [divider]=true></app-media-item-collection-row>
+      <app-media-item-collection-row [items]="musicService.featuredPlaylists" [divider]=true></app-media-item-collection-row>
     </div>
 
-    <div *ngIf="top100">
+    <div *ngIf="musicService.top100">
       <h2>Top 100</h2>
-      <app-media-item-collection-row [items]="top100" [divider]=true></app-media-item-collection-row>
+      <app-media-item-collection-row [items]="musicService.top100" [divider]=true></app-media-item-collection-row>
     </div>
 
-    <div *ngIf="aListPlaylists">
+    <div *ngIf="musicService.aListPlaylists">
       <h2>The A-List</h2>
-      <app-media-item-collection-row [items]="aListPlaylists" [size]="2" [divider]=true></app-media-item-collection-row>
+      <app-media-item-collection-row [items]="musicService.aListPlaylists" [size]="2" [divider]=true></app-media-item-collection-row>
     </div>
 
-    <div *ngIf="curators">
+    <div *ngIf="musicService.curators">
       <h2>Curators</h2>
-      <app-media-item-collection-row [items]="curators"></app-media-item-collection-row>
+      <app-media-item-collection-row [items]="musicService.curators"></app-media-item-collection-row>
     </div>
 
   </div>

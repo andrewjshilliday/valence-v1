@@ -27,8 +27,11 @@ export class Constants {
 
   static featuredPlaylistsIds: Array<string> = [
     'pl.f4d106fed2bd41149aaacabb233eb5eb', /* todays-hits */
+    'pl.567c541f63414e798be5cf214e155557', /* today-at-apple */
     'pl.4589a0c55c9e462e9d3cb17964f5bda6', /* mellow-days */
     'pl.725376c1e6b14915b7e27a919db39c52', /* easy-hits */
+    'pl.03cac344bd5641cfb59d39626f62d098', /* headliners */
+    'pl.299001f6c528460797ea61bac6522a81', /* guitar-throwback */
     'pl.f19f6b5be8474fe789e36a6242f6113e', /* new-fire */
     'pl.0d4aee5424c74d29ad15252eeb43d3b1', /* feeling-happy */
     'pl.91bb14d8ee10414e8fda8fb71f56db03', /* friday-feeling */
@@ -63,6 +66,7 @@ export class Constants {
     'pl.a9faca07cf8f47e19f1819b0f5a2e765', /* the-a-list-blues */
     'pl.0b593f1142b84a50a2c1e7088b3fb683', /* the-a-list-alternative */
     'pl.5ee8333dbe944d9f9151e97d92d1ead9', /* the-a-list-pop */
+    'pl.58c2477d86ea46db997048afd159d01d', /* a-list-hard-rock */
     'pl.abe8ba42278f4ef490e3a9fc5ec8e8c5', /* the-a-list-hip-hop */
     'pl.07405f59596b402385451fa14695eec4', /* the-a-list-jazz */
     'pl.b7ae3e0a28e84c5c96c4284b6a6c70af', /* the-a-list-r-b */
@@ -76,6 +80,9 @@ export class Constants {
     'pl.48229b41bbfc47d7af39dae8e8b5276e', /* the-a-list-k-pop */
     'pl.e75fb4f0f6f649a89f7c28ef4cc0442f', /* the-a-list-reggae */
     'pl.8e78f32951a4462f9f4d369c006bc97d', /* the-a-list-singer-songwriter */
+    'pl.19886d42a5cf41fcbcd277b519dd9e6a', /* a-list-uk */
+    'pl.d60caf02fcce4d7e9788fe01243b7c2c', /* a-list-bollywood */
+    'pl.fecfa8a26ea44ad581d4fe501892c8ff', /* a-list-christian */
   ];
 
   static curatorsIds: Array<string> = [

@@ -5,28 +5,28 @@
   </div>
 
   <div *ngIf="!this.loading">
-    <div *ngIf='musicService.playlist'>
+    <div *ngIf="musicService.playlist">
 
       <div class="expanded">
-        <div class='row pt-3'>
-          <div class='col-4'>
+        <div class="row pt-3" appLazyLoadImage>
+          <div class="col-4">
             <div class="media-artwork">
-              <img class="img-fluid card-img-top rounded" [src]='musicService.formatArtworkURL(musicService.playlist.attributes.artwork, 800)' />
-              <div class='media-control-button'>
+              <img class="img-fluid card-img-top rounded" [attr.data-src]="musicService.formatArtworkURL(musicService.playlist.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
+              <div class="media-control-button">
                 <i class="fas fa-play-circle fa-3x" aria-hidden="true" (click)="musicService.playItem(musicService.playlist)"></i>
               </div>
             </div>
-            <div class='row'>
-              <div class='col-8'>
-                <span class='text-muted'>{{musicService.playlist.relationships.tracks.data.length}} Songs, {{(musicService.playlistDuration / 1000 / 60) | hoursMinutes}}</span>
+            <div class="row">
+              <div class="col-8">
+                <span class="text-muted">{{musicService.playlist.relationships.tracks.data.length}} Songs, {{(musicService.playlistDuration / 1000 / 60) | hoursMinutes}}</span>
               </div>
-              <div class='col-4'>
-                <span class='text-muted float-right shuffle-label'><a (click)='musicService.playItem(musicService.playlist, 0, true)'>Shuffle <i class="fas fa-random fa-xs"></i></a></span>
+              <div class="col-4">
+                <span class="text-muted float-right shuffle-label"><a (click)="musicService.playItem(musicService.playlist, 0, true)">Shuffle <i class="fas fa-random fa-xs"></i></a></span>
               </div>
             </div>
-            <hr *ngIf='musicService.playlist.attributes.description' />
-            <p *ngIf='musicService.playlist.attributes.description && musicService.playlist.attributes.description.standard'>{{musicService.playlist.attributes.description.standard}}</p>
-            <p *ngIf='musicService.playlist.attributes.description && !musicService.playlist.attributes.description.standard'>{{musicService.playlist.attributes.description.short}}</p>
+            <hr *ngIf="musicService.playlist.attributes.description" />
+            <p *ngIf="musicService.playlist.attributes.description && musicService.playlist.attributes.description.standard">{{musicService.playlist.attributes.description.standard}}</p>
+            <p *ngIf="musicService.playlist.attributes.description && !musicService.playlist.attributes.description.standard">{{musicService.playlist.attributes.description.short}}</p>
           </div>
           <div class='col-8'>
             <app-media-item-collection-list [collection]="musicService.playlist" [showHeader]=true [showArtistAlbum]=true [itemRelationships]="trackRelationships"></app-media-item-collection-list>

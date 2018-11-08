@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Tokens } from './tokens';
 
 declare var MusicKit: any;
-import '../assets/musickit.js';
+/* import '../assets/musickit.js'; */
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,6 @@ export class MusicService {
   lastSearchTerm = '';
   playbackLoading: boolean;
   playbackLoadingTimeout: any;
-  playbackPausedTimeout: any;
   playbackError: boolean;
 
   artists: any;
@@ -27,11 +26,18 @@ export class MusicService {
   songs: any;
   playlists: any;
   playlist: any;
+  queue: Array<any>;
+  history: Array<any> = [];
+
   recommendations: any;
   recentPlayed: any;
   heavyRotation: any;
-  queue: Array<any>;
-  history: Array<any> = [];
+
+  top100: any;
+  featuredPlaylists: any;
+  aListPlaylists: any;
+  appleCurators: any;
+  curators: any;
 
   albumDuration: number;
   playlistDuration: number;
@@ -268,7 +274,6 @@ export class MusicService {
     this.playbackLoading = event.state === 1 || event.state === 8;
 
     window.clearTimeout(this.playbackLoadingTimeout);
-    window.clearTimeout(this.playbackPausedTimeout);
 
     if (this.playbackLoading) {
       this.playbackLoadingTimeout = window.setTimeout(async function() {
@@ -276,14 +281,6 @@ export class MusicService {
         await musicKit.player.stop();
         await musicKit.player.play();
       }, 5000);
-    }
-
-    if (event.state === 3) {
-      this.playbackPausedTimeout = window.setTimeout(async function() {
-        const musickit = MusicKit.getInstance();
-        await musickit.player.play();
-        await musickit.player.pause();
-      }, 1000 * 60 * 5);
     }
   }
 
