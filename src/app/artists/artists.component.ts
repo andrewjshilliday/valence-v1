@@ -36,7 +36,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.albums = this.musicService.artist.relationships.albums.data.filter(item => !item.attributes.isSingle);
   }
 
-  reorderAlbums(event) {
+  sortAlbums(event) {
     switch (event.currentTarget.selectedIndex) {
       case 0: {
         this.albums = this.musicService.artist.relationships.albums.data.filter(item => !item.attributes.isSingle);

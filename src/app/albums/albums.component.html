@@ -18,7 +18,7 @@
             </div>
             <div class='row'>
               <div class='col-8'>
-                <span class='text-muted'>{{musicService.album.attributes.trackCount}} Songs, {{(musicService.albumDuration / 1000 / 60) | hoursMinutes}}</span>
+                <span class='text-muted'>{{musicService.album.attributes.trackCount}} Songs, {{(albumDuration / 1000 / 60) | hoursMinutes}}</span>
               </div>
               <div class='col-4'>
                 <span class='text-muted float-right shuffle-label'><a (click)='musicService.playItem(musicService.album, 0, true)'>Shuffle <i class="fas fa-random fa-xs"></i></a></span>
@@ -37,10 +37,11 @@
               </p>
             </div>
           </div>
-          <div *ngIf="artistAlbums && artistAlbums.relationships.albums.data" class="container-fluid">
-            <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{artistAlbums.attributes.name}}</a></h4>
-            <app-media-item-collection-row *ngIf="artistAlbums && artistAlbums.relationships.albums.data" [items]="artistAlbums.relationships.albums.data"></app-media-item-collection-row>
-          </div>
+        </div>
+        <hr />
+        <div *ngIf="artistAlbums && artistAlbums.relationships.albums.data" class="container-fluid">
+          <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{artistAlbums.attributes.name}}</a></h4>
+          <app-media-item-collection-row *ngIf="artistAlbums && artistAlbums.relationships.albums.data" [items]="artistAlbums.relationships.albums.data"></app-media-item-collection-row>
         </div>
       </div>
 

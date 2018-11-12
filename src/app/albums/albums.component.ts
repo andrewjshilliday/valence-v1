@@ -12,6 +12,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
 
   albumSubscription: Subscription;
   loading: boolean;
+  albumDuration = 0;
   artistAlbums: any;
 
   constructor(private route: ActivatedRoute, private router: Router, public musicService: MusicService) { }
@@ -31,6 +32,10 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     await this.musicService.getAlbum(id);
     this.loading = false;
     this.getArtistAlbums();
+
+    for (const item of this.musicService.album.relationships.tracks.data) {
+      this.albumDuration += item.attributes.durationInMillis;
+    }
   }
 
   async getArtistAlbums() {

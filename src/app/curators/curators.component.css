@@ -1,14 +1,13 @@
 .loading-spinner {
-  top: 25vh;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 32vh;
+  margin: 0 auto;
 }
 
 .curator-background {
+  position: relative;
   background-color: rgba(0, 0, 0, 0.5);
   background-blend-mode: darken;
   background-position: center;
-  background-size: 100%;
 }
 
 .editorial-notes-short {
@@ -28,9 +27,17 @@
   text-align: center;
 }
 
-.load-more:hover {
+.load-more a:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+
+.load-more-spinner {
+  margin: 0 auto;
+}
+
+.filters span {
+  padding-right: 5px;
 }
 
 .scrollbar::-webkit-scrollbar-track

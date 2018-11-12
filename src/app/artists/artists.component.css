@@ -1,7 +1,6 @@
 .loading-spinner {
   top: 32vh;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 0 auto;
 }
 
 .artist-background {

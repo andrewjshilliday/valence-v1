@@ -28,6 +28,7 @@
   #page-content-wrapper {
     position: fixed;
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     top: 50px;
     left: 0px;
     width: 100%;

@@ -4,8 +4,6 @@ import { Subscription } from 'rxjs';
 import { MusicService } from '../music.service';
 import { Utils } from '../utils/utils';
 
-declare var $: any;
-
 @Component({
   selector: 'app-curators',
   templateUrl: './curators.component.html',
@@ -20,8 +18,11 @@ export class CuratorsComponent implements OnInit {
   @Input() featuredPlaylistId: any;
   featuredPlaylist: any;
 
+  filters: Array<string> = [ 'All', 'Essentials', 'Next Steps', 'Deep Cuts', 'Influences', 'Inspired' ];
+
   nextPlaylistsUrl: string;
-  getNextPlaylists: boolean;
+  getNextPlaylists = true;
+  loadingPlaylists: boolean;
 
   constructor(private route: ActivatedRoute, private router: Router, public musicService: MusicService) { }
 
@@ -44,7 +45,8 @@ export class CuratorsComponent implements OnInit {
 
     if (this.curator.relationships.playlists.next) {
       this.getNextPlaylists = true;
-      this.loadPlaylists(this.curator.relationships.playlists.next);
+      this.nextPlaylistsUrl = this.curator.relationships.playlists.next;
+      this.loadPlaylists();
     }
 
     if (this.curator.type === 'apple-curators') {
@@ -60,32 +62,35 @@ export class CuratorsComponent implements OnInit {
     this.loading = false;
   }
 
-  async loadPlaylists(url: string): Promise<any> {
-    this.nextPlaylistsUrl = url;
+  async loadPlaylists(): Promise<any> {
+    this.loadingPlaylists = true;
 
-    if (this.getNextPlaylists) {
-      const playlists = await fetch('https://api.music.apple.com' + url, { headers: Utils.appleApiHeaders() }).then(res => res.json());
+    if (this.getNextPlaylists && this.nextPlaylistsUrl) {
+      this.getNextPlaylists = false;
 
-      if (playlists && playlists.data && playlists.data.length) {
+      const playlists = await fetch('https://api.music.apple.com' + this.nextPlaylistsUrl,
+        { headers: Utils.appleApiHeaders() }).then(res => res.json());
+
+      if (playlists && playlists.data && playlists.data) {
         for (const playlist of playlists.data) {
           this.curatorPlaylists.push(playlist);
         }
 
-        if (playlists.next) {
-          this.nextPlaylistsUrl = playlists.next;
-          this.loadPlaylists(playlists.next);
-        } else {
-          this.nextPlaylistsUrl = null;
+        this.nextPlaylistsUrl = playlists.next;
+
+        if (this.nextPlaylistsUrl) {
+          if (Number(this.nextPlaylistsUrl.substring(this.nextPlaylistsUrl.indexOf('=') + 1, this.nextPlaylistsUrl.length)) % 30 !== 0) {
+            this.getNextPlaylists = true;
+            this.loadPlaylists();
+            return;
+          }
         }
       }
 
-      this.getNextPlaylists = false;
+      this.getNextPlaylists = true;
     }
-  }
 
-  loadNextPlaylists() {
-    this.getNextPlaylists = true;
-    this.loadPlaylists(this.nextPlaylistsUrl);
+    this.loadingPlaylists = false;
   }
 
   getAppleFeaturedPlaylist() {

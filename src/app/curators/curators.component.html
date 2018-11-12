@@ -24,19 +24,24 @@
 
       <hr />
 
-      <!-- <div *ngIf="curator.attributes.editorialNotes && curator.attributes.editorialNotes.standard">
-        <div class="editorial-notes scrollbar"><span>{{curator.attributes.editorialNotes.standard}}</span></div>
-        <hr />
-      </div> -->
-
       <div *ngIf="curatorPlaylists" class="container-fluid">
         <div class="row">
-          <app-media-item-view *ngFor="let item of curatorPlaylists" [item]="item" class="col-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
+          <div class="col-12 filters">
+            <select class="float-right" [(ngModel)]="selectedFilter">
+              <option *ngFor="let filter of filters" [ngValue]="filter">{{filter}}</option>
+            </select>
+            <span class="float-right">Filter Playlists:</span>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <app-media-item-view *ngFor="let item of curatorPlaylists | playlistFilter: selectedFilter" [item]="item" class="col-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
         </div>
         
         <div *ngIf="nextPlaylistsUrl" class="row load-more">
           <br />
-          <a (click)="loadNextPlaylists()">Load More</a>
+          <a *ngIf="!loadingPlaylists" (click)="loadPlaylists()">Load More</a>
+          <mat-spinner *ngIf="loadingPlaylists" class="load-more-spinner" [diameter]="24"></mat-spinner>
         </div>
       </div>
     </div>

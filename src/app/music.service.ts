@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Tokens } from './tokens';
+import { Utils } from './utils/utils';
 
 declare var MusicKit: any;
-/* import '../assets/musickit.js'; */
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,6 @@ export class MusicService {
   lastSearchTerm = '';
   playbackLoading: boolean;
   playbackLoadingTimeout: any;
-  playbackError: boolean;
 
   artists: any;
   artist: any;
@@ -39,8 +38,6 @@ export class MusicService {
   appleCurators: any;
   curators: any;
 
-  albumDuration: number;
-  playlistDuration: number;
   recommendationsDate: number;
 
   constructor() {
@@ -175,16 +172,11 @@ export class MusicService {
 
     const isLibraryResource = id.startsWith('l.');
     this.album = null;
-    this.albumDuration = 0;
 
     if (isLibraryResource) {
       this.album = await this.musicKit.api.library.album(id, { include: 'artists' });
     } else {
       this.album = await this.musicKit.api.album(id, { include: 'songs' });
-    }
-
-    for (const track of this.album.relationships.tracks.data) {
-      this.albumDuration += track.attributes.durationInMillis;
     }
   }
 
@@ -195,16 +187,11 @@ export class MusicService {
 
     const isLibraryResource = id.startsWith('p.');
     this.playlist = null;
-    this.playlistDuration = 0;
 
     if (isLibraryResource) {
       this.playlist = await this.musicKit.api.library.playlist(id, { include: 'tracks' });
     } else {
       this.playlist = await this.musicKit.api.playlist(id, { include: 'curators' });
-    }
-
-    for (const track of this.playlist.relationships.tracks.data) {
-      this.playlistDuration += track.attributes.durationInMillis;
     }
   }
 
@@ -215,6 +202,38 @@ export class MusicService {
   async addToLibrary(item: any) {
     await this.musicKit.api.addToLibrary({ [item.type]: [item.id] });
     alert('Successfully added ' + item.attributes.name + ' to your library');
+  }
+
+  addRating(item: any, rating: number) {
+    fetch(`https://api.music.apple.com/v1/me/ratings/songs/${item.id}`, {
+      method: 'PUT',
+      headers: Utils.appleApiHeaders(),
+      body: JSON.stringify({
+        type: 'rating',
+        attributes: {
+          value: rating
+        }
+      })
+    }).then(res => {
+      if (res.status === 200) {
+        alert('Rating added for ' + item.attributes.name);
+      } else {
+        alert('Error adding rating for ' + item.attributes.name);
+      }
+    });
+  }
+
+  removeRating(item: any) {
+    fetch(`https://api.music.apple.com/v1/me/ratings/songs/${item.id}`, {
+      method: 'DELETE',
+      headers: Utils.appleApiHeaders(),
+    }).then(res => {
+      if (res.status === 204) {
+        alert('Rating removed for ' + item.attributes.name);
+      } else {
+        alert('Error removing rating for ' + item.attributes.name);
+      }
+    });
   }
 
   formatArtworkURL(url: string, size: number): string {
@@ -301,7 +320,9 @@ export class MusicService {
   }
 
   mediaPlaybackError(event) {
-    const error = event;
+    if (event.errorCode === 'DEVICE_LIMIT') {
+      this.stop();
+    }
   }
 
 }

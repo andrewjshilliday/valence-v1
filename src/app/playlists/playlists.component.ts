@@ -12,6 +12,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
   playlistSubscription: Subscription;
   loading: boolean;
+  playlistDuration = 0;
   trackRelationships: Array<any>;
 
   constructor(private route: ActivatedRoute, private router: Router, public musicService: MusicService) { }
@@ -31,6 +32,10 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     await this.musicService.getPlaylist(id);
     this.loading = false;
     this.getTrackRelationships();
+
+    for (const item of this.musicService.playlist.relationships.tracks.data) {
+      this.playlistDuration += item.attributes.durationInMillis;
+    }
   }
 
   async getTrackRelationships() {

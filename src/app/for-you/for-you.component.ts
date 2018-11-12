@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MusicService } from '../music.service';
+import { Utils } from '../utils/utils';
 
 @Component({
   selector: 'app-for-you',
@@ -45,12 +46,30 @@ export class ForYouComponent implements OnInit {
       this.musicService.recommendationsDate = Date.now();
     }
 
-    if (!this.musicService.recentPlayed) {
-      this.musicService.recentPlayed = await this.musicService.musicKit.api.recentPlayed();
+    this.musicService.recentPlayed = await this.musicService.musicKit.api.recentPlayed();
+
+    if (this.musicService.recentPlayed.length === 10) {
+      const next = await fetch('https://api.music.apple.com/v1/me/recent/played?offset=10',
+        {headers: Utils.appleApiHeaders() }).then(res => res.json());
+
+      if (next && next.data && next.data.length) {
+        for (const item of next.data) {
+          this.musicService.recentPlayed.push(item);
+        }
+      }
     }
 
-    if (!this.musicService.heavyRotation) {
-      this.musicService.heavyRotation = await this.musicService.musicKit.api.historyHeavyRotation();
+    this.musicService.heavyRotation = await this.musicService.musicKit.api.historyHeavyRotation();
+
+    if (this.musicService.heavyRotation.length === 10) {
+      const next = await fetch('https://api.music.apple.com/v1/me/me/history/heavy-rotation?offset=10',
+        { headers: Utils.appleApiHeaders() }).then(res => res.json());
+
+      if (next && next.data && next.data.length) {
+        for (const item of next.data) {
+          this.musicService.recentPlayed.push(item);
+        }
+      }
     }
   }
 

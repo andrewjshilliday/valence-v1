@@ -23,6 +23,7 @@ import { MediaItemCollectionRowComponent } from './media-item-components/media-i
 import { MinutesSecondsPipe } from './pipes/minutes-seconds.pipe';
 import { HoursMinutesPipe } from './pipes/hours-minutes.pipe';
 import { AlbumFilterPipe } from './pipes/album-filter.pipe';
+import { PlaylistFilterPipe } from './pipes/playlist-filter.pipe';
 import { SearchResultsGuard } from './search-results/search-results.guard';
 import { LazyLoadImageDirective } from './lazy-load-image/lazy-load-image.directive';
 
@@ -47,6 +48,7 @@ import { LazyLoadImageDirective } from './lazy-load-image/lazy-load-image.direct
     MinutesSecondsPipe,
     HoursMinutesPipe,
     AlbumFilterPipe,
+    PlaylistFilterPipe,
     LazyLoadImageDirective,
   ],
   imports: [
