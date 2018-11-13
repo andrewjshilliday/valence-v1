@@ -1,10 +1,6 @@
 @media (min-width: 1086px) {
   #page-content-wrapper {
-    position: fixed;
-    overflow-y: scroll;
-    top: 50px;
     left: 250px;
-    right: 0px;
     bottom: 100px;
     width: calc(100% - 250px);
     height: calc(100% - 150px);
@@ -13,11 +9,7 @@
 
 @media (min-width: 607px) and (max-width: 1085px) {
   #page-content-wrapper {
-    position: fixed;
-    overflow-y: scroll;
-    top: 50px;
     left: 70px;
-    right: 0px;
     bottom: 100px;
     width: calc(100% - 70px);
     height: calc(100% - 150px);
@@ -26,14 +18,18 @@
 
 @media (max-width: 606px) {
   #page-content-wrapper {
-    position: fixed;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    top: 50px;
     left: 0px;
     width: 100%;
     height: calc(100% - 200px);
   }
+}
+
+#page-content-wrapper {
+  position: fixed;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  top: 50px;
+  right: 0px;
 }
 
 .scrollbar::-webkit-scrollbar-track

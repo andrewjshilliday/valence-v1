@@ -214,12 +214,6 @@ export class MusicService {
           value: rating
         }
       })
-    }).then(res => {
-      if (res.status === 200) {
-        alert('Rating added for ' + item.attributes.name);
-      } else {
-        alert('Error adding rating for ' + item.attributes.name);
-      }
     });
   }
 
@@ -227,12 +221,6 @@ export class MusicService {
     fetch(`https://api.music.apple.com/v1/me/ratings/songs/${item.id}`, {
       method: 'DELETE',
       headers: Utils.appleApiHeaders(),
-    }).then(res => {
-      if (res.status === 204) {
-        alert('Rating removed for ' + item.attributes.name);
-      } else {
-        alert('Error removing rating for ' + item.attributes.name);
-      }
     });
   }
 

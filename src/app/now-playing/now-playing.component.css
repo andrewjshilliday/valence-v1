@@ -1,23 +1,21 @@
 @media (min-width: 607px) {
   #now-playing-wrapper {
-    position: fixed;
-    width: 100%;
-    height: 100px;
     bottom: 0px;
-    margin-left: 0px;
-    background-color: #1e1e1e
   }
 }
 
 @media (max-width: 606px) {
   #now-playing-wrapper {
-    position: fixed;
-    width: 100%;
-    height: 100px;
     bottom: 50px;
-    margin-left: 0px;
-    background-color: #1e1e1e
   }
+}
+
+#now-playing-wrapper { 
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  margin-left: 0px;
+  background-color: #1e1e1e
 }
 
 .media-controls {
@@ -97,9 +95,17 @@
   text-align: center;
 }
 
+.now-playing-text span {
+  font-size: 11pt;
+}
+
+.now-playing-text a {
+  color: black;
+}
+
 .now-playing-progress {
   position: relative;
-  top: -32px;
+  top: -16px;
   height: 0px;
 }
 
@@ -107,10 +113,6 @@
   width: 100%;
   height: 0px;
   padding: 0;
-}
-
-p {
-  font-size: 11pt;
 }
 
 .logo {

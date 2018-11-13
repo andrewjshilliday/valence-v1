@@ -33,14 +33,12 @@
       </div>
     </div>
     <div class='col-8'>
-      <div class='row now-playing-text justify-content-center'>
-        <div class='text-truncate'>
-          <p>
-            {{musicService.nowPlayingItem.attributes.name}}<br />
-            <a [routerLink]="['/albums', musicService.nowPlayingItem.assets[0].metadata.playlistId]">{{musicService.nowPlayingItem.albumName}}</a> | 
-            <a [routerLink]="['/artists', musicService.nowPlayingItem.assets[0].metadata.artistId]">{{musicService.nowPlayingItem.artistName}}</a>
-          </p>
-        </div>
+      <div class='row now-playing-text text-truncate justify-content-center'>
+        <span>
+          {{musicService.nowPlayingItem.attributes.name}}<br />
+          <a [routerLink]="['/albums', musicService.nowPlayingItem.assets[0].metadata.playlistId]">{{musicService.nowPlayingItem.albumName}}</a> | 
+          <a [routerLink]="['/artists', musicService.nowPlayingItem.assets[0].metadata.artistId]">{{musicService.nowPlayingItem.artistName}}</a>
+      </span>
       </div>
       <div class='row now-playing-progress'>
         <mat-slider class='track-progress' [max]="musicService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="musicService.musicKit.player.currentPlaybackTime" (change)="seekToTime($event.value)"></mat-slider>

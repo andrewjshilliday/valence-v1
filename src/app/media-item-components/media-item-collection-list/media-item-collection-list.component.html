@@ -129,11 +129,11 @@
       </td>
       <td class='time text-right'>{{item.attributes.durationInMillis | date : 'm:ss'}}</td>
       <td class='media-options'>
-        <div class="media-icon">
-          <a class="media-icon" role='button' id='dropdown{{item.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+        <div>
+          <a class="media-options-dropdown-icon" role='button' id='dropdown{{item.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
             <i class="fas fa-ellipsis-h"></i>
           </a>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="dropdown-menu media-options-dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" (click)='musicService.playItem(item)'>Play</a>
             <a class="dropdown-item" (click)='musicService.queueNext(item)'>Play Next</a>
             <a class="dropdown-item" (click)='musicService.playItem(item)'>Play Later</a>
@@ -180,7 +180,7 @@
       <td class='time text-right'>{{item.attributes.durationInMillis | date : 'm:ss'}}</td>
       <td class='media-options'>
         <div class="media-icon">
-          <a role='button' id='dropdown{{item.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+          <a class="media-options-icon" role='button' id='dropdown{{item.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
             <i class="fas fa-ellipsis-h"></i>
           </a>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
