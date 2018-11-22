@@ -71,6 +71,17 @@ export class ForYouComponent implements OnInit {
         }
       }
     }
+
+    if (this.musicService.recommendations[4].next) {
+      const next = await fetch('https://api.music.apple.com' + this.musicService.recommendations[4].next,
+        { headers: Utils.appleApiHeaders() }).then(res => res.json());
+
+      if (next && next.data && next.data.length) {
+        for (const item of next.data[0].relationships.contents.data) {
+          this.musicService.recommendations[4].relationships.contents.data.push(item);
+        }
+      }
+    }
   }
 
   async getItemRelationships(collection: any, type: string) {

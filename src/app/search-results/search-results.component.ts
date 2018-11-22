@@ -101,7 +101,12 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
           for (const result of results) {
             if (item.id === result.id) {
-              trackRelationships.push([item.id, result.relationships.artists.data[0].id]);
+              if (result.relationships.artists.data && result.relationships.artists.data.length) {
+                trackRelationships.push([item.id, result.relationships.artists.data[0].id]);
+              } else {
+                trackRelationships.push([item.id, null]);
+              }
+
               itemFound = true;
               break;
             }

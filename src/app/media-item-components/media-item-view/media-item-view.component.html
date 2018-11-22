@@ -15,8 +15,8 @@
     </div>
   </div>
   <div class="row media-artist">
-    <span *ngIf="!itemRelationships" class="text-truncate" [ngClass]="light ? 'text-light' : ''" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</span>
-    <a *ngIf="itemRelationships" [routerLink]="['/artists', itemRelationships[1]]" class="text-truncate" [ngClass]="light ? 'link-text-light' : ''" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</a>
+    <span *ngIf="!itemRelationships || !itemRelationships[1]" class="text-truncate" [ngClass]="light ? 'text-light' : ''" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</span>
+    <a *ngIf="itemRelationships && itemRelationships[1]" [routerLink]="['/artists', itemRelationships[1]]" class="text-truncate" [ngClass]="light ? 'link-text-light' : ''" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</a>
   </div>
 </div>
 
@@ -44,9 +44,6 @@
   <div class="row media-artwork">
     <a *ngIf="!item.type.includes('library')" [routerLink]="['/artists', item.id]"><img class="img-fluid rounded" src="././assets/images/placeholder.png" /></a>
     <a *ngIf="item.type.includes('library')" [routerLink]="['/artists', item.id]"><img class="img-fluid rounded" src="././assets/images/placeholder.png" /></a>
-    <div class="media-control-button">
-      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="musicService.playItem(item)"></i>
-    </div>
   </div>
   <div class="row media-artist">
     <a [routerLink]="['/artists', item.id]" class="text-truncate" title="{{item.attributes.name}}">{{item.attributes.name}}</a>

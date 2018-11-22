@@ -1,29 +1,32 @@
-<div *ngIf="showHeader" class='row'>
+<div *ngIf="showHeader" class="row">
 
   <div class="expanded">
-    <div *ngIf="collection.type === 'albums'" class='col-11'>
+    <div *ngIf="collection.type === 'albums'" class="col-11">
       <h4 class="text-truncate collection-title">{{collection.attributes.name}}</h4>
-      <h5 *ngIf='collection.relationships.artists.data && collection.relationships.artists.data.length'><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a> | {{collection.attributes.genreNames[0]}}</h5>
-      <h5 *ngIf='collection.relationships.artists.data && !collection.relationships.artists.data.length'>{{collection.attributes.artistName}} | {{collection.attributes.genreNames[0]}}</h5>
+      <h5 *ngIf="collection.relationships.artists.data && collection.relationships.artists.data.length"><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a> | {{collection.attributes.genreNames[0]}}</h5>
+      <h5 *ngIf="collection.relationships.artists.data && !collection.relationships.artists.data.length">{{collection.attributes.artistName}} | {{collection.attributes.genreNames[0]}}</h5>
     </div>
-    <div *ngIf="collection.type === 'library-albums'" class='col-11'>
+    <div *ngIf="collection.type === 'library-albums'" class="col-11">
       <h4 class="text-truncate collection-title">{{collection.attributes.name}}</h4>
-      <h5 *ngIf='collection.relationships.artists.data && collection.relationships.artists.data.length'><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a></h5>
-      <h5 *ngIf='collection.relationships.artists.data && !collection.relationships.artists.data.length'>{{collection.attributes.artistName}}</h5>
+      <h5 *ngIf="collection.relationships.artists.data && collection.relationships.artists.data.length"><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a></h5>
+      <h5 *ngIf="collection.relationships.artists.data && !collection.relationships.artists.data.length">{{collection.attributes.artistName}}</h5>
     </div>
     <div *ngIf="collection.type.includes('playlists')" class='col-11'>
       <h4 class="text-truncate collection-title">{{collection.attributes.name}}</h4>
-      <h5>{{collection.attributes.curatorName}} | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
+      <h5 *ngIf="collection.relationships.curator.data && collection.relationships.curator.data.length && collection.relationships.curator.data[0].type === 'apple-curators'"><a [routerLink]="['/curators', 'apple', collection.relationships.curator.data[0].id]">{{collection.attributes.curatorName}}</a> | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
+      <h5 *ngIf="collection.relationships.curator.data && collection.relationships.curator.data.length && collection.relationships.curator.data[0].type === 'curators'"><a [routerLink]="['/curators', 'user', collection.relationships.curator.data[0].id]">{{collection.attributes.curatorName}}</a> | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
+      <h5 *ngIf="collection.relationships.curator.data && collection.relationships.curator.data.length && collection.relationships.curator.data[0].type === 'artists'"><a [routerLink]="['/artists', collection.relationships.curator.data[0].id]">{{collection.attributes.curatorName}}</a> | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
+      <h5 *ngIf="collection.relationships.curator.data && !collection.relationships.curator.data.length">{{collection.attributes.curatorName}} | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
     </div>
-    <div class='col-1 collection-options-dropdown'>
-      <a role='button' id='dropdown{{collection.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+    <div class="col-1 collection-options-dropdown">
+      <a role="button" id="dropdown{{collection.id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-ellipsis-h"></i>
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" (click)='musicService.playItem(collection)'>Play</a>
-        <a class="dropdown-item" (click)='musicService.playItem(collection, 0, true)'>Shuffle</a>
-        <a class="dropdown-item" (click)='musicService.queueNext(collection)'>Play Next</a>
-        <a class="dropdown-item" (click)='musicService.queueLater(collection)'>Play Later</a>
+        <a class="dropdown-item" (click)="musicService.playItem(collection)">Play</a>
+        <a class="dropdown-item" (click)="musicService.playItem(collection, 0, true)">Shuffle</a>
+        <a class="dropdown-item" (click)="musicService.queueNext(collection)">Play Next</a>
+        <a class="dropdown-item" (click)="musicService.queueLater(collection)">Play Later</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" (click)="musicService.addToLibrary(collection)">Add to Library</a>
         <div class="dropdown-divider"></div>

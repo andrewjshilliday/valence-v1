@@ -1,11 +1,11 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, Input } from '@angular/core';
 
 @Pipe({
   name: 'albumFilter'
 })
 export class AlbumFilterPipe implements PipeTransform {
 
-  transform(items: any, args?: string): any {
+  transform(items: any, args?: string, removeId: string = null): any {
     if (!items || !args) {
       return items;
     }
@@ -15,7 +15,7 @@ export class AlbumFilterPipe implements PipeTransform {
     }
 
     if (args === 'singles') {
-      return items.filter(item => item.attributes.isSingle === true);
+      return items.filter(item => item.attributes.isSingle);
     }
 
     if (args === 'releaseDateAsc') {
@@ -33,6 +33,10 @@ export class AlbumFilterPipe implements PipeTransform {
 
     if (args === 'upcomingRelease') {
       return items.filter(item => new Date(item.attributes.releaseDate).getTime() > Date.now())[0];
+    }
+
+    if (args === 'removeAlbum' && removeId) {
+      return items.filter(item => !item.id.match(removeId));
     }
   }
 

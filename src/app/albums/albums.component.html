@@ -38,18 +38,18 @@
             </div>
           </div>
         </div>
-        <hr />
-        <div *ngIf="artistAlbums && artistAlbums.relationships.albums.data" class="container-fluid">
+        <div *ngIf="artistAlbums && (artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicService.album.id).length" class="container-fluid">
+          <hr />
           <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{artistAlbums.attributes.name}}</a></h4>
-          <app-media-item-collection-row *ngIf="artistAlbums && artistAlbums.relationships.albums.data" [items]="artistAlbums.relationships.albums.data"></app-media-item-collection-row>
+          <app-media-item-collection-row [items]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicService.album.id"></app-media-item-collection-row>
         </div>
       </div>
 
       <div class="minimised">
         <app-media-item-collection-list [collection]="musicService.album" [showHeader]=true></app-media-item-collection-list>
-        <div *ngIf="artistAlbums && artistAlbums.relationships.albums.data" class="container-fluid">
+        <div *ngIf="artistAlbums && (artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicService.album.id).length" class="container-fluid">
           <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{artistAlbums.attributes.name}}</a></h4>
-          <app-media-item-collection-row [items]="artistAlbums.relationships.albums.data"></app-media-item-collection-row>
+          <app-media-item-collection-row [items]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicService.album.id"></app-media-item-collection-row>
         </div>
       </div>
       
