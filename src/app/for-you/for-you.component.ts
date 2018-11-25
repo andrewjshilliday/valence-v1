@@ -123,7 +123,6 @@ export class ForYouComponent implements OnInit {
           for (const item of recommendation.relationships.contents.data) {
             itemIdArray.push(item.id);
           }
-          /* itemIdArray.concat(recommendation.relationships.contents.data.map(i => i.id)); */
         }
 
         results = await this.musicService.musicKit.api.albums(itemIdArray, { include: 'artists' });

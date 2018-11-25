@@ -41,6 +41,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     if (this.musicService.songs) {
       this.songRelationships = await this.getItemRelationships(this.musicService.songs, 'songs');
     }
+
+    if (this.musicService.artists) {
+      const promises = this.musicService.artists.map(this.getArtwork.bind(this));
+      await Promise.all(promises);
+    }
   }
 
   async search(term: string): Promise<any> {
@@ -132,6 +137,12 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     }
 
     return trackRelationships;
+  }
+
+  async getArtwork(artist: any) {
+    if (!artist.attributes.artworkUrl) {
+      artist.attributes.artworkUrl = await this.musicService.getArtistArtwork(artist.attributes.url);
+    }
   }
 
 }

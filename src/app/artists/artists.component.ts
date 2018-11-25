@@ -13,7 +13,13 @@ export class ArtistsComponent implements OnInit, OnDestroy {
   artistSubscription: Subscription;
   loading: boolean;
   albums: Array<any>;
-  tracks: any;
+  singles: Array<any>;
+  liveAlbums: Array<any>;
+  compilations: Array<any>;
+  topSongs: any;
+  artistImage: string;
+  artistInfo: any;
+  relatedArtists: any;
 
   constructor(private route: ActivatedRoute, private router: Router, public musicService: MusicService) { }
 
@@ -31,8 +37,10 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.loading = true;
     await this.musicService.getArtist(id);
     await this.musicService.getPlaylists(id);
+    await this.getArtistInfo();
     this.loading = false;
 
+    this.getRelatedArtists();
     this.albums = this.musicService.artist.relationships.albums.data.filter(item => !item.attributes.isSingle);
   }
 
@@ -54,6 +62,52 @@ export class ArtistsComponent implements OnInit, OnDestroy {
         );
         break;
       }
+    }
+  }
+
+  async getArtistInfo() {
+    const url = this.musicService.artist.attributes.url.split('/');
+    const name = url[url.length - 2];
+
+    const info = await fetch(`https://musicservicev1.herokuapp.com/artists/` +
+      `${this.musicService.musicKit.storefrontId}/${name}/${this.musicService.artist.id}`)
+      .then(res => res.json());
+    info.description = JSON.parse(info.description);
+
+    this.artistImage = info.imageUrl;
+    this.artistInfo = info.description.data;
+
+    const included = info.description.included;
+    let topSongs: any;
+
+    for (const item of included) {
+      if (item.id.match(this.musicService.artist.id + '/topSongs')) {
+        topSongs = item;
+        break;
+      }
+    }
+
+    const itemIdArray = topSongs.relationships.content.data.map(i => i.id);
+    this.topSongs = await this.musicService.musicKit.api.songs(itemIdArray, {include: 'albums'});
+  }
+
+  async getRelatedArtists() {
+    if (!this.artistInfo) {
+      if (!this.artistInfo.relationships.artistContemporaries.data || !this.artistInfo.relationships.artistContemporaries.data.length) {
+        return;
+      }
+    }
+
+    const itemIdArray = this.artistInfo.relationships.artistContemporaries.data.map(i => i.id);
+    this.relatedArtists = await this.musicService.musicKit.api.artists(itemIdArray);
+
+    const promises = this.relatedArtists.map(this.getArtwork.bind(this));
+    await Promise.all(promises);
+  }
+
+  async getArtwork(artist: any) {
+    if (!artist.attributes.artworkUrl) {
+      artist.attributes.artworkUrl = await this.musicService.getArtistArtwork(artist.attributes.url);
     }
   }
 

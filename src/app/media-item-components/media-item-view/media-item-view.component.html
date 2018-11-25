@@ -42,7 +42,8 @@
 
 <div *ngIf="item.type.includes('artists')" appLazyLoadImage>
   <div class="row media-artwork">
-    <a *ngIf="!item.type.includes('library')" [routerLink]="['/artists', item.id]"><img class="img-fluid rounded" src="././assets/images/placeholder.png" /></a>
+    <a *ngIf="!item.type.includes('library') && item.attributes.artworkUrl" [routerLink]="['/artists', item.id]"><img class="img-fluid rounded" [attr.data-src]="item.attributes.artworkUrl" src="././assets/images/placeholder.png" /></a>
+    <a *ngIf="!item.type.includes('library') && !item.attributes.artworkUrl" [routerLink]="['/artists', item.id]"><img class="img-fluid rounded" src="././assets/images/placeholder.png" /></a>
     <a *ngIf="item.type.includes('library')" [routerLink]="['/artists', item.id]"><img class="img-fluid rounded" src="././assets/images/placeholder.png" /></a>
   </div>
   <div class="row media-artist">

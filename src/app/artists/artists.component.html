@@ -6,7 +6,7 @@
 
   <div *ngIf="!this.loading">
     <div *ngIf="musicService.artist">
-      <div class="artist-background container-fluid">
+      <div class="artist-background container-fluid" [ngStyle]="{'background-image': 'url(' + artistImage + ')'}">
         <h1 class="text-truncate text-light">{{musicService.artist.attributes.name}}</h1>
 
         <div class="row container-fluid">
@@ -22,6 +22,11 @@
       </div>
 
       <hr />
+
+      <div *ngIf="topSongs">
+        <h2>Top Songs</h2>
+        <app-media-item-collection-row [items]="topSongs" [divider]=true></app-media-item-collection-row>
+      </div>
 
       <div *ngIf="albums">
         <div class="row">
@@ -45,6 +50,35 @@
       <div *ngIf="musicService.playlists && musicService.playlists.relationships.playlists.data && musicService.playlists.relationships.playlists.data.length">
         <h2>Artist Playlists</h2>
         <app-media-item-collection-row [items]="musicService.playlists.relationships.playlists.data"></app-media-item-collection-row>
+      </div>
+
+      <div *ngIf="artistInfo && artistInfo.attributes.artistBio" class="artist-info">
+        <h2>About {{artistInfo.attributes.name}}</h2>
+        <div class="row">
+          <div class="col-9 artist-bio scrollbar">
+            <p>{{artistInfo.attributes.artistBio}}</p>
+          </div>
+          <div class="col-3 artist-details">
+            <div class="row">
+              <span><b>ORIGIN</b><br />{{artistInfo.attributes.origin}}</span>
+            </div>
+            <br />
+            <div class="row">
+              <span *ngIf="artistInfo.attributes.isGroup"><b>FORMED</b><br />{{artistInfo.attributes.bornOrFormedDate | date : longDate}}</span>
+              <span *ngIf="!artistInfo.attributes.isGroup"><b>BORN</b><br />{{artistInfo.attributes.bornOrFormedDate | date : longDate}}</span>
+            </div>
+            <br />
+            <div class="row">
+              <span><b>GENRE</b><br />{{musicService.artist.attributes.genreNames[0]}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="relatedArtists">
+        <br />
+        <h2>Related Artists</h2>
+        <app-media-item-collection-row [items]="relatedArtists"></app-media-item-collection-row>
       </div>
 
     </div>

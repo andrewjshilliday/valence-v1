@@ -228,6 +228,18 @@ export class MusicService {
     return MusicKit.formatArtworkURL(url, size, size);
   }
 
+  async getArtistArtwork(url: any): Promise<string> {
+    url = url.split('/');
+    const id = url[url.length - 1];
+    const name = url[url.length - 2];
+    const storefront = url[url.length - 4];
+
+    const info = await fetch(`https://musicservicev1.herokuapp.com/artists/image/${storefront}/${name}/${id}`)
+      .then(res => res.json());
+
+    return info.imageUrl;
+  }
+
   isItemCurrentlyPlaying(id: number): boolean {
     if (this.musicKit.player.nowPlayingItem === null) {
       return false;
