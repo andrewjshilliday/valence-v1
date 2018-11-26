@@ -28,23 +28,52 @@
         <app-media-item-collection-row [items]="topSongs" [divider]=true></app-media-item-collection-row>
       </div>
 
-      <div *ngIf="albums">
+      <div *ngIf="albums && albums.length">
         <div class="row">
           <div class="col-6"><h2>Albums</h2></div>
-          <div class="col-6">
-            <select class="float-right" (change)="sortAlbums($event)">
-              <option value="recommended">Recommended</option>
-              <option value="release-date-asc">Release Date (oldest first)</option>
-              <option value="release-date-desc">Release Date (newest first)</option>
+          <div *ngIf="albums.length > 1" class="col-6">
+            <select class="float-right" [(ngModel)]="sortAlbums">
+              <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
             </select>
           </div>
         </div>
-        <app-media-item-collection-row [items]="albums" [divider]=true></app-media-item-collection-row>
+        <app-media-item-collection-row [items]="sortItems(albums, sortAlbums)" [divider]=true></app-media-item-collection-row>
       </div>
 
-      <div *ngIf="musicService.artist && musicService.artist.relationships.albums.data && (musicService.artist.relationships.albums.data | albumFilter : 'singles').length">
-        <h2>Singles</h2>
-        <app-media-item-collection-row [items]="musicService.artist.relationships.albums.data | albumFilter : 'singles'" [divider]=true></app-media-item-collection-row>
+      <div *ngIf="singles && singles.length">
+        <div class="row">
+          <div class="col-6"><h2>EPs & Singles</h2></div>
+          <div *ngIf="singles.length > 1" class="col-6">
+            <select class="float-right" [(ngModel)]="sortSingles">
+              <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
+            </select>
+          </div>
+        </div>
+        <app-media-item-collection-row [items]="sortItems(singles, sortSingles)" [divider]=true></app-media-item-collection-row>
+      </div>
+
+      <div *ngIf="liveAlbums && liveAlbums.length">
+        <div class="row">
+          <div class="col-6"><h2>Live Albums</h2></div>
+          <div *ngIf="liveAlbums.length > 1" class="col-6">
+            <select class="float-right" [(ngModel)]="sortLiveAlbums">
+              <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
+            </select>
+          </div>
+        </div>
+        <app-media-item-collection-row [items]="sortItems(liveAlbums, sortLiveAlbums)" [divider]=true></app-media-item-collection-row>
+      </div>
+
+      <div *ngIf="compilations && compilations.length">
+        <div class="row">
+          <div class="col-6"><h2>Compilation Albums</h2></div>
+          <div *ngIf="compilations.length > 1" class="col-6">
+            <select class="float-right" [(ngModel)]="sortCompilations">
+              <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
+            </select>
+          </div>
+        </div>
+        <app-media-item-collection-row [items]="sortItems(compilations, sortCompilations)" [divider]=true></app-media-item-collection-row>
       </div>
 
       <div *ngIf="musicService.playlists && musicService.playlists.relationships.playlists.data && musicService.playlists.relationships.playlists.data.length">
@@ -60,7 +89,8 @@
           </div>
           <div class="col-3 artist-details">
             <div class="row">
-              <span><b>ORIGIN</b><br />{{artistInfo.attributes.origin}}</span>
+              <span *ngIf="artistInfo.attributes.isGroup"><b>ORIGIN</b><br />{{artistInfo.attributes.origin}}</span>
+              <span *ngIf="!artistInfo.attributes.isGroup"><b>HOMETOWN</b><br />{{artistInfo.attributes.origin}}</span>
             </div>
             <br />
             <div class="row">
@@ -76,7 +106,7 @@
       </div>
 
       <div *ngIf="relatedArtists">
-        <br />
+        <br *ngIf="artistInfo && artistInfo.attributes.artistBio" />
         <h2>Related Artists</h2>
         <app-media-item-collection-row [items]="relatedArtists"></app-media-item-collection-row>
       </div>

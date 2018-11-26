@@ -25,8 +25,10 @@
               </div>
             </div>
             <hr *ngIf="musicService.playlist.attributes.description" />
-            <p *ngIf="musicService.playlist.attributes.description && musicService.playlist.attributes.description.standard">{{musicService.playlist.attributes.description.standard}}</p>
-            <p *ngIf="musicService.playlist.attributes.description && !musicService.playlist.attributes.description.standard">{{musicService.playlist.attributes.description.short}}</p>
+            <div class="editorial-notes scrollbar" [ngStyle]="{'max-height': 260 + (musicService.playlist.relationships.tracks.data.length > 11 ? ((musicService.playlist.relationships.tracks.data.length - 11) * 40) : 0) + 'px'}">
+              <p *ngIf="musicService.playlist.attributes.description && musicService.playlist.attributes.description.standard">{{musicService.playlist.attributes.description.standard}}</p>
+              <p *ngIf="musicService.playlist.attributes.description && !musicService.playlist.attributes.description.standard">{{musicService.playlist.attributes.description.short}}</p>
+            </div>
           </div>
           <div class='col-8'>
             <app-media-item-collection-list [collection]="musicService.playlist" [showHeader]=true [showArtistAlbum]=true [itemRelationships]="trackRelationships"></app-media-item-collection-list>

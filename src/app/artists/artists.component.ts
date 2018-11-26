@@ -21,6 +21,16 @@ export class ArtistsComponent implements OnInit, OnDestroy {
   artistInfo: any;
   relatedArtists: any;
 
+  sortOptions = [
+    ['recommended', 'Recommended'],
+    ['releaseDateAsc', 'Release Date (oldest first)'],
+    ['releaseDateDesc', 'Release Date (newest first)']
+  ];
+  sortAlbums = 'recommended';
+  sortSingles = 'recommended';
+  sortLiveAlbums = 'recommended';
+  sortCompilations = 'recommended';
+
   constructor(private route: ActivatedRoute, private router: Router, public musicService: MusicService) { }
 
   ngOnInit() {
@@ -41,26 +51,24 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.loading = false;
 
     this.getRelatedArtists();
-    this.albums = this.musicService.artist.relationships.albums.data.filter(item => !item.attributes.isSingle);
   }
 
-  sortAlbums(event) {
-    switch (event.currentTarget.selectedIndex) {
-      case 0: {
-        this.albums = this.musicService.artist.relationships.albums.data.filter(item => !item.attributes.isSingle);
-        break;
+  sortItems(items: any, sort: string) {
+    const sortItems = Object.assign([], items);
+
+    switch (sort) {
+      case 'recommended': {
+        return sortItems;
       }
-      case 1: {
-        this.albums = this.albums.sort(
+      case 'releaseDateAsc': {
+        return sortItems.sort(
           (a, b) => new Date(a.attributes.releaseDate).getTime() - new Date(b.attributes.releaseDate).getTime()
         );
-        break;
       }
-      case 2: {
-        this.albums = this.albums.sort(
+      case 'releaseDateDesc': {
+        return sortItems.sort(
           (a, b) => new Date(b.attributes.releaseDate).getTime() - new Date(a.attributes.releaseDate).getTime()
         );
-        break;
       }
     }
   }
@@ -79,23 +87,70 @@ export class ArtistsComponent implements OnInit, OnDestroy {
 
     const included = info.description.included;
     let topSongs: any;
+    let albumsIds: any;
+    let singlesIds: any;
+    let liveAlbumsIds: any;
+    let compilationsIds: any;
 
     for (const item of included) {
       if (item.id.match(this.musicService.artist.id + '/topSongs')) {
-        topSongs = item;
+        topSongs = item.relationships.content.data.map(i => i.id);
+        continue;
+      }
+      if (item.id.match(this.musicService.artist.id + '/fullAlbums')) {
+        albumsIds = item.relationships.content.data.map(i => i.id);
+        continue;
+      }
+      if (item.id.match(this.musicService.artist.id + '/singleAlbums')) {
+        singlesIds = item.relationships.content.data.map(i => i.id);
+        continue;
+      }
+      if (item.id.match(this.musicService.artist.id + '/liveAlbums')) {
+        liveAlbumsIds = item.relationships.content.data.map(i => i.id);
+        continue;
+      }
+      if (item.id.match(this.musicService.artist.id + '/compilationAlbums')) {
+        compilationsIds = item.relationships.content.data.map(i => i.id);
+        continue;
+      }
+      if (topSongs && albumsIds && singlesIds && liveAlbumsIds && compilationsIds) {
         break;
       }
     }
 
-    const itemIdArray = topSongs.relationships.content.data.map(i => i.id);
-    this.topSongs = await this.musicService.musicKit.api.songs(itemIdArray, {include: 'albums'});
+    this.albums = [];
+    this.singles = [];
+    this.liveAlbums = [];
+    this.compilations = [];
+
+    for (const item of this.musicService.artist.relationships.albums.data) {
+      if (albumsIds && albumsIds.indexOf(item.id) > -1) {
+        this.albums.push(item);
+        continue;
+      }
+      if (singlesIds && singlesIds.indexOf(item.id) > -1) {
+        this.singles.push(item);
+        continue;
+      }
+      if (liveAlbumsIds && liveAlbumsIds.indexOf(item.id) > -1) {
+        this.liveAlbums.push(item);
+        continue;
+      }
+      if (compilationsIds && compilationsIds.indexOf(item.id) > -1) {
+        this.compilations.push(item);
+        continue;
+      }
+    }
+
+    this.topSongs = await this.musicService.musicKit.api.songs(topSongs, {include: 'albums'});
   }
 
   async getRelatedArtists() {
-    if (!this.artistInfo) {
-      if (!this.artistInfo.relationships.artistContemporaries.data || !this.artistInfo.relationships.artistContemporaries.data.length) {
-        return;
-      }
+    this.relatedArtists = null;
+
+    if (!this.artistInfo || !this.artistInfo.relationships.artistContemporaries ||
+      !this.artistInfo.relationships.artistContemporaries.data || !this.artistInfo.relationships.artistContemporaries.data.length) {
+      return;
     }
 
     const itemIdArray = this.artistInfo.relationships.artistContemporaries.data.map(i => i.id);

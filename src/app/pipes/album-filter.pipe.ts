@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform, Input } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'albumFilter'
@@ -6,7 +6,7 @@ import { Pipe, PipeTransform, Input } from '@angular/core';
 export class AlbumFilterPipe implements PipeTransform {
 
   transform(items: any, args?: string, removeId: string = null): any {
-    if (!items || !args) {
+    if (!items || !args || args === '') {
       return items;
     }
 
