@@ -59,4 +59,25 @@ export class MediaItemCollectionListComponent implements OnInit {
     return 0;
   }
 
+  addRating(item: any, oldRating: number, newRating: number) {
+    this.musicService.addRating(item, newRating);
+
+    const currentRatings = this.collectionRatings.data.map(r => r.id);
+
+    if (currentRatings.indexOf(item.id) === -1) {
+      const rating = {
+        id: item.id,
+        type: 'ratings',
+        href: `/v1/me/ratings/songs/${item.id}`,
+        attributes: {
+          value: newRating
+        }
+      };
+
+      this.collectionRatings.data.push(rating);
+    } else {
+      this.collectionRatings.data[currentRatings.indexOf(item.id)].attributes.value = newRating;
+    }
+  }
+
 }

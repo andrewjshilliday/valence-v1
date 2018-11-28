@@ -94,7 +94,7 @@
             </div>
             <br />
             <div class="row">
-              <span *ngIf="artistInfo.attributes.isGroup"><b>FORMED</b><br />{{artistInfo.attributes.bornOrFormedDate | date : longDate}}</span>
+              <span *ngIf="artistInfo.attributes.isGroup"><b>FORMED</b><br />{{artistInfo.attributes.bornOrFormedDate}}</span>
               <span *ngIf="!artistInfo.attributes.isGroup"><b>BORN</b><br />{{artistInfo.attributes.bornOrFormedDate | date : longDate}}</span>
             </div>
             <br />

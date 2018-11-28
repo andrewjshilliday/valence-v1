@@ -205,23 +205,23 @@ export class MusicService {
   }
 
   addRating(item: any, rating: number) {
-    fetch(`https://api.music.apple.com/v1/me/ratings/songs/${item.id}`, {
-      method: 'PUT',
-      headers: Utils.appleApiHeaders(),
-      body: JSON.stringify({
-        type: 'rating',
-        attributes: {
-          value: rating
-        }
-      })
-    });
-  }
-
-  removeRating(item: any) {
-    fetch(`https://api.music.apple.com/v1/me/ratings/songs/${item.id}`, {
-      method: 'DELETE',
-      headers: Utils.appleApiHeaders(),
-    });
+    if (rating !== 0) {
+      fetch(`https://api.music.apple.com/v1/me/ratings/songs/${item.id}`, {
+        method: 'PUT',
+        headers: Utils.appleApiHeaders(),
+        body: JSON.stringify({
+          type: 'rating',
+          attributes: {
+            value: rating
+          }
+        })
+      });
+    } else {
+      fetch(`https://api.music.apple.com/v1/me/ratings/songs/${item.id}`, {
+        method: 'DELETE',
+        headers: Utils.appleApiHeaders(),
+      });
+    }
   }
 
   formatArtworkURL(url: string, size: number): string {

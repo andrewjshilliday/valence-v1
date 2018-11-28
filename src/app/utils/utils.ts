@@ -5,7 +5,7 @@ export class Utils {
   static getArtistArtwork(url: string) {
   }
 
-  public static appleApiHeaders () {
+  public static appleApiHeaders() {
     return new Headers({
       Authorization: 'Bearer ' + MusicKit.getInstance().developerToken,
       Accept: 'application/json',

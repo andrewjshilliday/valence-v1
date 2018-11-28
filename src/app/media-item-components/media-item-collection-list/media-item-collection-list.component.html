@@ -39,7 +39,8 @@
   <div class="minimised">
     <div class="row header">
       <div class="col-4">
-        <img class="img-fluid card-img-top rounded" [src]='musicService.formatArtworkURL(collection.attributes.artwork, 800)' />
+        <img *ngIf="collection.attributes.artwork" class="img-fluid card-img-top rounded" [attr.data-src]="musicService.formatArtworkURL(collection.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
+        <img *ngIf="!collection.attributes.artwork" class="img-fluid card-img-top rounded" src="././assets/images/placeholder.png" />
         <span><a (click)='musicService.playItem(collection, 0)'><i class="fas fa-play fa-xs"></i>Play</a></span><br />
         <span><a (click)='musicService.playItem(collection, 0, true)'><i class="fas fa-random fa-xs"></i>Shuffle</a></span>
       </div>
@@ -71,9 +72,9 @@
               <div class="dropdown-divider"></div>
               <a class="dropdown-item">Add to Library</a>
               <div class="dropdown-divider"></div>
-              <a *ngIf="getItemRating(item) !== 1" class="dropdown-item" (click)="musicService.addRating(item, 1)">Like</a>
-              <a *ngIf="getItemRating(item) !== -1" class="dropdown-item" (click)="musicService.addRating(item, -1)">Dislike</a>
-              <a *ngIf="getItemRating(item) !== 0" class="dropdown-item" (click)="musicService.removeRating(item)">Remove Rating</a>
+              <a *ngIf="getItemRating(item) !== 1" class="dropdown-item" (click)="addRating(item, getItemRating(item), 1)">Like</a>
+              <a *ngIf="getItemRating(item) !== -1" class="dropdown-item" (click)="addRating(item, getItemRating(item), -1)">Dislike</a>
+              <a *ngIf="getItemRating(item) !== 0" class="dropdown-item" (click)="addRating(item, getItemRating(item), 0)">Remove Rating</a>
             </div>
           </div>
         </div>
@@ -143,12 +144,12 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item">Add to Library</a>
             <div class="dropdown-divider"></div>
-            <a *ngIf="getItemRating(item) !== 1" class="dropdown-item" (click)="musicService.addRating(item, 1)">Like</a>
-            <a *ngIf="getItemRating(item) !== -1" class="dropdown-item" (click)="musicService.addRating(item, -1)">Dislike</a>
-            <a *ngIf="getItemRating(item) !== 0" class="dropdown-item" (click)="musicService.removeRating(item)">Remove Rating</a>
+            <a *ngIf="getItemRating(item) !== 1" class="dropdown-item" (click)="addRating(item, getItemRating(item), 1)">Like</a>
+            <a *ngIf="getItemRating(item) !== -1" class="dropdown-item" (click)="addRating(item, getItemRating(item), -1)">Dislike</a>
+            <a *ngIf="getItemRating(item) !== 0" class="dropdown-item" (click)="addRating(item, getItemRating(item), 0)">Remove Rating</a>
           </div>
         </div>
-        <i *ngIf="getItemRating(item)" class="fas fa-heart rating"></i>
+        <i *ngIf="getItemRating(item) === 1" class="fas fa-heart rating"></i>
       </td>
     </tr>
   </tbody>
