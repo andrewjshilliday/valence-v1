@@ -35,6 +35,11 @@
             <app-media-item-collection-list [collection]="musicService.playlist" [showHeader]=true [showArtistAlbum]=true [itemRelationships]="trackRelationships"></app-media-item-collection-list>
           </div>
         </div>
+        <div *ngIf="artists">
+          <hr />
+          <h4>Featured Artists</h4>
+          <app-media-item-collection-row [items]="artists"></app-media-item-collection-row>
+        </div>
       </div>
 
       <div class="minimised">

@@ -25,7 +25,8 @@
 
       <div *ngIf="topSongs">
         <h2>Top Songs</h2>
-        <app-media-item-collection-row [items]="topSongs" [divider]=true></app-media-item-collection-row>
+        <app-media-item-collection-grid [collection]="topSongs" [numRows]=3></app-media-item-collection-grid>
+        <!-- <app-media-item-collection-row [items]="topSongs" [divider]=true></app-media-item-collection-row> -->
       </div>
 
       <div *ngIf="albums && albums.length">

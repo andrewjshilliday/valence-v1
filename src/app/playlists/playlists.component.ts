@@ -14,6 +14,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   loading: boolean;
   playlistDuration: number;
   trackRelationships: Array<any>;
+  artists: any;
 
   constructor(private route: ActivatedRoute, private router: Router, public musicService: MusicService) { }
 
@@ -47,6 +48,18 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
     for (const item of results) {
       this.trackRelationships.push([item.id, item.relationships.artists.data[0].id, item.relationships.albums.data[0].id]);
+    }
+
+    const artistIdArray = results.map(r => r.relationships.artists.data[0].id);
+    this.artists = await this.musicService.musicKit.api.artists(artistIdArray);
+
+    const promises = this.artists.map(this.getArtwork.bind(this));
+    await Promise.all(promises);
+  }
+
+  async getArtwork(artist: any) {
+    if (!artist.attributes.artworkUrl) {
+      artist.attributes.artworkUrl = await this.musicService.getArtistArtwork(artist.attributes.url);
     }
   }
 

@@ -18,12 +18,14 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { PlaylistsComponent } from './playlists/playlists.component';
 import { MediaItemViewComponent } from './media-item-components/media-item-view/media-item-view.component';
-import { MediaItemCollectionListComponent } from './/media-item-components/media-item-collection-list/media-item-collection-list.component';
+import { MediaItemCollectionListComponent } from './media-item-components/media-item-collection-list/media-item-collection-list.component';
 import { MediaItemCollectionRowComponent } from './media-item-components/media-item-collection-row/media-item-collection-row.component';
+import { MediaItemCollectionGridComponent } from './media-item-components/media-item-collection-grid/media-item-collection-grid.component';
 import { MinutesSecondsPipe } from './pipes/minutes-seconds.pipe';
 import { HoursMinutesPipe } from './pipes/hours-minutes.pipe';
 import { AlbumFilterPipe } from './pipes/album-filter.pipe';
 import { PlaylistFilterPipe } from './pipes/playlist-filter.pipe';
+import { RoundPipe } from './pipes/round.pipe';
 import { SearchResultsGuard } from './search-results/search-results.guard';
 import { LazyLoadImageDirective } from './lazy-load-image/lazy-load-image.directive';
 
@@ -45,10 +47,12 @@ import { LazyLoadImageDirective } from './lazy-load-image/lazy-load-image.direct
     MediaItemViewComponent,
     MediaItemCollectionListComponent,
     MediaItemCollectionRowComponent,
+    MediaItemCollectionGridComponent,
     MinutesSecondsPipe,
     HoursMinutesPipe,
     AlbumFilterPipe,
     PlaylistFilterPipe,
+    RoundPipe,
     LazyLoadImageDirective,
   ],
   imports: [

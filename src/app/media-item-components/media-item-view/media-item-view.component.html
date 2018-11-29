@@ -61,7 +61,7 @@
 <div *ngIf="item.type.includes('songs')" appLazyLoadImage>
   <div *ngIf="item.attributes.artwork" class="row media-artwork">
     <img *ngIf="!itemRelationships" class="img-fluid rounded" [attr.data-src]="musicService.formatArtworkURL(item.attributes.artwork, 300)" src="././assets/images/placeholder.png" />
-    <a *ngIf="itemRelationships" [routerLink]="['/albums', itemRelationships[2]]"><img class="img-fluid" [src]="musicService.formatArtworkURL(item.attributes.artwork, 300)" src="././assets/images/placeholder.png" /></a>
+    <a *ngIf="itemRelationships" [routerLink]="['/albums', itemRelationships[2]]"><img class="img-fluid rounded" [src]="musicService.formatArtworkURL(item.attributes.artwork, 300)" src="././assets/images/placeholder.png" /></a>
     <div class="media-control-button">
       <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="musicService.playItem(item)"></i>
     </div>

@@ -1,0 +1,20 @@
+<div class="container-fluid row media-item-grid scrollbar" appLazyLoadImage>
+  <div *ngFor="let column of columns" class="col-4 column">
+    <div *ngFor="let row of rows" class="media-item">
+      <div *ngIf="collection[(column * numRows) + row]" class="row">
+        <div class="col-3 media-artwork">
+          <img class="img-fluid rounded" [attr.data-src]="musicService.formatArtworkURL(collection[(column * numRows) + row].attributes.artwork, 50)" src="././assets/images/placeholder.png" />
+          <div class="media-control-button">
+            <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="musicService.playItem(collection[(column * numRows) + row])"></i>
+          </div>
+        </div>
+        <div class="col-9 text-truncate media-item-info">
+          <span title="{{collection[(column * numRows) + row].attributes.name}}">{{collection[(column * numRows) + row].attributes.name}}</span><br />
+          <span title="{{collection[(column * numRows) + row].attributes.albumName}}">{{collection[(column * numRows) + row].attributes.albumName}}</span>
+        </div>
+      </div>
+      <hr *ngIf="row !== rows[rows.length - 1] && collection[(column * numRows) + row] && collection[(column * numRows) + row] !== collection[collection.length - 1]" />
+    </div>
+  </div>
+</div>
+<hr />
