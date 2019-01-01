@@ -8,9 +8,8 @@ import { MusicService } from 'src/app/music.service';
 })
 export class MediaItemCollectionRowComponent implements OnInit {
 
-  @Input() items: any;
+  @Input() collection: any;
   @Input() size: number;
-  @Input() collectionRelationships: any;
   @Input() divider: boolean;
   @Input() todaysAlbums: boolean;
 

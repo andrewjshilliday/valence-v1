@@ -13,7 +13,6 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   playlistSubscription: Subscription;
   loading: boolean;
   playlistDuration: number;
-  trackRelationships: Array<any>;
   artists: any;
 
   constructor(private route: ActivatedRoute, private router: Router, public musicService: MusicService) { }
@@ -44,14 +43,29 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   async getTrackRelationships() {
     const songIdArray = this.musicService.playlist.relationships.tracks.data.map(i => i.id);
     const results = await this.musicService.musicKit.api.songs(songIdArray, { include: 'artists,albums' });
-    this.trackRelationships = [];
 
-    for (const item of results) {
-      this.trackRelationships.push([item.id, item.relationships.artists.data[0].id, item.relationships.albums.data[0].id]);
+    for (const item of this.musicService.playlist.relationships.tracks.data) {
+      for (const result of results) {
+        if (item.id === result.id) {
+          item.relationships = result.relationships;
+          break;
+        }
+      }
     }
 
-    const artistIdArray = results.map(r => r.relationships.artists.data[0].id);
-    this.artists = await this.musicService.musicKit.api.artists(artistIdArray);
+    let offset = 0;
+    this.artists = [];
+    const artistIdArray = Array.from(new Set(results.map(r => r.relationships.artists.data[0].id)));
+
+    while (artistIdArray[offset]) {
+      const artists = await this.musicService.musicKit.api.artists(artistIdArray.slice(offset, offset + 30));
+
+      for (const artist of artists) {
+        this.artists.push(artist);
+      }
+
+      offset = offset + 30;
+    }
 
     const promises = this.artists.map(this.getArtwork.bind(this));
     await Promise.all(promises);

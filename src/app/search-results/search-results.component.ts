@@ -14,8 +14,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   loading: boolean;
   searchTerm = '';
   searchHints: any;
-  albumRelationships: any;
-  songRelationships: any;
 
   constructor(private route: ActivatedRoute, private router: Router, public musicService: MusicService) { }
 
@@ -36,10 +34,13 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     this.loading = false;
 
     if (this.musicService.albums) {
-      this.albumRelationships = await this.getItemRelationships(this.musicService.albums, 'albums');
+      this.getItemRelationships(this.musicService.albums, 'albums');
     }
     if (this.musicService.songs) {
-      this.songRelationships = await this.getItemRelationships(this.musicService.songs, 'songs');
+      this.getItemRelationships(this.musicService.songs, 'songs');
+    }
+    if (this.musicService.playlists) {
+      this.getItemRelationships(this.musicService.playlists, 'playlists');
     }
 
     if (this.musicService.artists) {
@@ -92,8 +93,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   async getItemRelationships(collection: any, type: string) {
     let itemIdArray: any;
     let results: any;
-    const trackRelationships = [];
-    let itemFound: boolean;
 
     switch (type) {
       case 'albums': {
@@ -102,25 +101,30 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         results = await this.musicService.musicKit.api.albums(itemIdArray, { include: 'artists' });
 
         for (const item of collection) {
-          itemFound = false;
-
           for (const result of results) {
             if (item.id === result.id) {
-              if (result.relationships.artists.data && result.relationships.artists.data.length) {
-                trackRelationships.push([item.id, result.relationships.artists.data[0].id]);
-              } else {
-                trackRelationships.push([item.id, null]);
-              }
-
-              itemFound = true;
+              item.relationships = result.relationships;
               break;
             }
           }
+        }
 
-          if (itemFound) {
-            continue;
-          } else {
-            trackRelationships.push([item.id, null]);
+        break;
+      }
+      case 'playlists': {
+        itemIdArray = collection.map(i => i.id);
+        results = await this.musicService.musicKit.api.playlists(itemIdArray, { include: 'curators' });
+
+        for (const item of collection) {
+          let index = 0;
+
+          for (const result of results) {
+            if (item.id === result.id && result.relationships.curator.data.length) {
+              collection[index].relationships = result.relationships;
+              break;
+            }
+
+            index++;
           }
         }
 
@@ -130,13 +134,18 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         itemIdArray = collection.map(i => i.id);
         results = await this.musicService.musicKit.api.songs(itemIdArray, { include: 'artists,albums' });
 
-        for (const item of results) {
-          trackRelationships.push([item.id, item.relationships.artists.data[0].id, item.relationships.albums.data[0].id]);
+        for (const item of collection) {
+          for (const result of results) {
+            if (item.id === result.id) {
+              item.relationships = result.relationships;
+              break;
+            }
+          }
         }
+
+        break;
       }
     }
-
-    return trackRelationships;
   }
 
   async getArtwork(artist: any) {

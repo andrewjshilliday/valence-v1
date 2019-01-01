@@ -28,6 +28,7 @@
   max-height: 250px;
   overflow-y: auto;
   padding-left: 30px;
+  white-space: pre-wrap;
 }
 
 .artist-details {

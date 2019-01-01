@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Tokens } from './tokens';
 import { Utils } from './utils/utils';
+import { environment } from '../environments/environment';
 
 declare var MusicKit: any;
 
@@ -32,6 +33,7 @@ export class MusicService {
   recentPlayed: any;
   heavyRotation: any;
 
+  mostPlayed: any;
   top100: any;
   featuredPlaylists: any;
   aListPlaylists: any;
@@ -234,7 +236,7 @@ export class MusicService {
     const name = url[url.length - 2];
     const storefront = url[url.length - 4];
 
-    const info = await fetch(`https://musicservicev1.herokuapp.com/artists/image/${storefront}/${name}/${id}`)
+    const info = await fetch(environment.musicServiceApi + `artists/image/${storefront}/${name}/${id}`)
       .then(res => res.json());
 
     return info.imageUrl;

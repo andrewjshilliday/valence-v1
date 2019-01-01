@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MusicService } from '../music.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-artists',
@@ -77,7 +78,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     const url = this.musicService.artist.attributes.url.split('/');
     const name = url[url.length - 2];
 
-    const info = await fetch(`https://musicservicev1.herokuapp.com/artists/` +
+    const info = await fetch(environment.musicServiceApi + 'artists/' +
       `${this.musicService.musicKit.storefrontId}/${name}/${this.musicService.artist.id}`)
       .then(res => res.json());
     info.description = JSON.parse(info.description);
@@ -142,7 +143,9 @@ export class ArtistsComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.topSongs = await this.musicService.musicKit.api.songs(topSongs, {include: 'albums'});
+    if (topSongs) {
+      this.topSongs = await this.musicService.musicKit.api.songs(topSongs, {include: 'albums'});
+    }
   }
 
   async getRelatedArtists() {

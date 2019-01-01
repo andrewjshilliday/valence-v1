@@ -9,11 +9,11 @@ import { MusicService } from 'src/app/music.service';
 export class MediaItemCollectionGridComponent implements OnInit {
 
   @Input() collection: any;
-  @Input() collectionRelationships: any;
   @Input() numRows: number;
+  @Input() showArtist: boolean;
+  @Input() divider: boolean;
   columns: Array<number>;
   rows: Array<number>;
-
 
   constructor(public musicService: MusicService) { }
 

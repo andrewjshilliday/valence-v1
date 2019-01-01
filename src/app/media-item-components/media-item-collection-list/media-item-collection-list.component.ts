@@ -13,17 +13,13 @@ export class MediaItemCollectionListComponent implements OnInit {
   @Input() showHeader: boolean;
   @Input() showArtistAlbum: boolean;
   @Input() showArtwork: boolean;
-  @Input() itemRelationships: any;
 
   collectionRatings: any;
-  todaysDate: Date;
   collectionDuration = 0;
 
   constructor(public musicService: MusicService) { }
 
   ngOnInit() {
-    this.todaysDate = new Date();
-
     for (const item of this.collection.relationships.tracks.data) {
       this.collectionDuration += item.attributes.durationInMillis;
     }

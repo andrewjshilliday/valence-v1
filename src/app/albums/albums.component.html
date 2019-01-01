@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class='col-8'>
-            <app-media-item-collection-list [collection]="musicService.album" [showHeader]=true></app-media-item-collection-list>
+            <app-media-item-collection-list [collection]="musicService.album" [showHeader]=true [showArtistAlbum]="musicService.album.attributes.artistName === 'Various Artists'"></app-media-item-collection-list>
             <div *ngIf="musicService.album && !musicService.album.type.includes('library')" class='row'>
               <p class="text-muted">
                 Released: {{musicService.album.attributes.releaseDate | date : 'fullDate'}} <br />
@@ -43,7 +43,11 @@
         <div *ngIf="artistAlbums && (artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicService.album.id).length">
           <hr />
           <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{artistAlbums.attributes.name}}</a></h4>
-          <app-media-item-collection-row [items]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicService.album.id"></app-media-item-collection-row>
+          <app-media-item-collection-row [collection]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicService.album.id" [divider]="relatedAlbums && relatedAlbums.length"></app-media-item-collection-row>
+        </div>
+        <div *ngIf="relatedAlbums && relatedAlbums.length">
+          <h4>You Might Also Like</h4>
+          <app-media-item-collection-row [collection]="relatedAlbums"></app-media-item-collection-row>
         </div>
       </div>
 
@@ -51,7 +55,11 @@
         <app-media-item-collection-list [collection]="musicService.album" [showHeader]=true></app-media-item-collection-list>
         <div *ngIf="artistAlbums && (artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicService.album.id).length">
           <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{artistAlbums.attributes.name}}</a></h4>
-          <app-media-item-collection-row [items]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicService.album.id"></app-media-item-collection-row>
+          <app-media-item-collection-row [collection]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicService.album.id" [divider]="relatedAlbums && relatedAlbums.length"></app-media-item-collection-row>
+        </div>
+        <div *ngIf="relatedAlbums && relatedAlbums.length">
+          <h4>You May Also Like</h4>
+          <app-media-item-collection-row [collection]="relatedAlbums"></app-media-item-collection-row>
         </div>
       </div>
       

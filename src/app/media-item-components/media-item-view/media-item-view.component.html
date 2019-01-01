@@ -15,8 +15,8 @@
     </div>
   </div>
   <div class="row media-artist">
-    <span *ngIf="!itemRelationships || !itemRelationships[1]" class="text-truncate" [ngClass]="light ? 'text-light' : ''" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</span>
-    <a *ngIf="itemRelationships && itemRelationships[1]" [routerLink]="['/artists', itemRelationships[1]]" class="text-truncate" [ngClass]="light ? 'link-text-light' : ''" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</a>
+    <span *ngIf="!item.relationships || !item.relationships.artists.data[0]" class="text-truncate" [ngClass]="light ? 'text-light' : ''" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</span>
+    <a *ngIf="item.relationships && item.relationships.artists.data[0]" [routerLink]="['/artists', item.relationships.artists.data[0].id]" class="text-truncate" [ngClass]="light ? 'link-text-light' : ''" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</a>
   </div>
 </div>
 
@@ -60,23 +60,23 @@
 
 <div *ngIf="item.type.includes('songs')" appLazyLoadImage>
   <div *ngIf="item.attributes.artwork" class="row media-artwork">
-    <img *ngIf="!itemRelationships" class="img-fluid rounded" [attr.data-src]="musicService.formatArtworkURL(item.attributes.artwork, 300)" src="././assets/images/placeholder.png" />
-    <a *ngIf="itemRelationships" [routerLink]="['/albums', itemRelationships[2]]"><img class="img-fluid rounded" [src]="musicService.formatArtworkURL(item.attributes.artwork, 300)" src="././assets/images/placeholder.png" /></a>
+    <img *ngIf="!item.relationships || !item.relationships.albums" class="img-fluid rounded" [attr.data-src]="musicService.formatArtworkURL(item.attributes.artwork, 300)" src="././assets/images/placeholder.png" />
+    <a *ngIf="item.relationships && item.relationships.albums" [routerLink]="['/albums', item.relationships.albums.data[0].id]"><img class="img-fluid rounded" [src]="musicService.formatArtworkURL(item.attributes.artwork, 300)" src="././assets/images/placeholder.png" /></a>
     <div class="media-control-button">
       <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="musicService.playItem(item)"></i>
     </div>
   </div>
   <div class="row media-album">
-    <span *ngIf="!itemRelationships" class="text-truncate" title="{{item.attributes.name}}">{{item.attributes.name}}</span>
-    <a *ngIf="itemRelationships" class="text-truncate" [routerLink]="['/albums', itemRelationships[2]]" title="{{item.attributes.name}}">{{item.attributes.name}}</a>
+    <span *ngIf="!item.relationships || !item.relationships.albums" class="text-truncate" title="{{item.attributes.name}}">{{item.attributes.name}}</span>
+    <a *ngIf="item.relationships && item.relationships.albums" class="text-truncate" [routerLink]="['/albums', item.relationships.albums.data[0].id]" title="{{item.attributes.name}}">{{item.attributes.name}}</a>
   </div>
   <div class="row media-album">
-    <span *ngIf="!itemRelationships" class="text-truncate" title="{{item.attributes.albumName}}">{{item.attributes.albumName}}</span>
-    <a *ngIf="itemRelationships" class="text-truncate" [routerLink]="['/albums', itemRelationships[2]]" title="{{item.attributes.albumName}}">{{item.attributes.albumName}}</a>
+    <span *ngIf="!item.relationships || !item.relationships.albums" class="text-truncate" title="{{item.attributes.albumName}}">{{item.attributes.albumName}}</span>
+    <a *ngIf="item.relationships && item.relationships.albums" class="text-truncate" [routerLink]="['/albums', item.relationships.albums.data[0].id]" title="{{item.attributes.albumName}}">{{item.attributes.albumName}}</a>
   </div>
   <div class="row media-artist">
-    <span *ngIf="!itemRelationships" class="text-truncate" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</span>
-    <a *ngIf="itemRelationships" class="text-truncate" [routerLink]="['/artists', itemRelationships[1]]" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</a>
+    <span *ngIf="!item.relationships || !item.relationships.artists" class="text-truncate" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</span>
+    <a *ngIf="item.relationships && item.relationships.artists" class="text-truncate" [routerLink]="['/artists', item.relationships.artists.data[0].id]" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</a>
   </div>
 </div>
 

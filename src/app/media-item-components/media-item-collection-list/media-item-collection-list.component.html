@@ -38,7 +38,7 @@
   
   <div class="minimised">
     <div class="row header">
-      <div class="col-4">
+      <div class="col-4" appLazyLoadImage>
         <img *ngIf="collection.attributes.artwork" class="img-fluid card-img-top rounded" [attr.data-src]="musicService.formatArtworkURL(collection.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
         <img *ngIf="!collection.attributes.artwork" class="img-fluid card-img-top rounded" src="././assets/images/placeholder.png" />
         <span><a (click)='musicService.playItem(collection, 0)'><i class="fas fa-play fa-xs"></i>Play</a></span><br />
@@ -124,12 +124,12 @@
         </div>
       </td>
       <td *ngIf="showArtistAlbum" class='artist-text text-truncate' title="{{item.attributes.artistName}}">
-        <a *ngIf="itemRelationships && itemRelationships[collection.relationships.tracks.data.indexOf(item)]" [routerLink]="['/artists', itemRelationships[collection.relationships.tracks.data.indexOf(item)][1]]">{{item.attributes.artistName}}</a>
-        <span *ngIf="!itemRelationships || !itemRelationships[collection.relationships.tracks.data.indexOf(item)]">{{item.attributes.artistName}}</span>
+        <a *ngIf="item.relationships" [routerLink]="['/artists', item.relationships.artists.data[0].id]">{{item.attributes.artistName}}</a>
+        <span *ngIf="!item.relationships">{{item.attributes.artistName}}</span>
       </td>
       <td *ngIf="showArtistAlbum" class='album-text text-truncate' title="{{item.attributes.albumName}}">
-        <a *ngIf="itemRelationships && itemRelationships[collection.relationships.tracks.data.indexOf(item)]" [routerLink]="['/albums', itemRelationships[collection.relationships.tracks.data.indexOf(item)][2]]">{{item.attributes.albumName}}</a>
-        <span *ngIf="!itemRelationships || !itemRelationships[collection.relationships.tracks.data.indexOf(item)]">{{item.attributes.albumName}}</span>
+        <a *ngIf="item.relationships" [routerLink]="['/albums', item.relationships.albums.data[0].id]">{{item.attributes.albumName}}</a>
+        <span *ngIf="!item.relationships">{{item.attributes.albumName}}</span>
       </td>
       <td class='time text-right'>{{item.attributes.durationInMillis | date : 'm:ss'}}</td>
       <td class='media-options'>
@@ -174,12 +174,12 @@
         </div>
       </td>
       <td *ngIf="showArtistAlbum" class='artist-text text-truncate' title="{{item.attributes.artistName}}">
-        <a *ngIf="itemRelationships && itemRelationships[collection.indexOf(item)]" [routerLink]="['/artists', itemRelationships[collection.indexOf(item)][1]]">{{item.attributes.artistName}}</a>
-        <span *ngIf="!itemRelationships || !itemRelationships[collection.indexOf(item)]">{{item.attributes.artistName}}</span>
+        <a *ngIf="item.relationships" [routerLink]="['/artists', item.relationships.artists.data[0].id]">{{item.attributes.artistName}}</a>
+        <span *ngIf="!item.relationships">{{item.attributes.artistName}}</span>
       </td>
       <td *ngIf="showArtistAlbum" class='album-text text-truncate' title="{{item.attributes.albumName}}">
-        <a *ngIf="itemRelationships && itemRelationships[collection.indexOf(item)]" [routerLink]="['/albums', itemRelationships[collection.relationships.tracks.data.indexOf(item)][2]]">{{item.attributes.albumName}}</a>
-        <span *ngIf="!itemRelationships || !itemRelationships[collection.indexOf(item)]">{{item.attributes.albumName}}</span>
+        <a *ngIf="item.relationships" [routerLink]="['/albums', item.relationships.albums.data[0].id]">{{item.attributes.albumName}}</a>
+        <span *ngIf="!item.relationships">{{item.attributes.albumName}}</span>
       </td>
       <td class='time text-right'>{{item.attributes.durationInMillis | date : 'm:ss'}}</td>
       <td class='media-options'>

@@ -41,6 +41,7 @@
 
 .editorial-notes {
   overflow-y: auto;
+  white-space: pre-wrap;
 }
 
 p {

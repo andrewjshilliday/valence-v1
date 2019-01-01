@@ -10,10 +10,6 @@ import { Utils } from '../utils/utils';
 export class ForYouComponent implements OnInit {
 
   loading: boolean;
-  recentPlayedRelationships: any;
-  heavyRotationRelationships: any;
-  todaysAlbumsRelationships: any;
-  newReleasesRelationships: any;
 
   constructor(public musicService: MusicService) { }
 
@@ -26,18 +22,12 @@ export class ForYouComponent implements OnInit {
     await this.getRecommenations();
     this.loading = false;
 
-    this.recentPlayedRelationships = await this.getItemRelationships(
-      this.musicService.recentPlayed, 'albums'
-    );
-    this.heavyRotationRelationships = await this.getItemRelationships(
-      this.musicService.heavyRotation, 'albums'
-    );
-    this.todaysAlbumsRelationships = await this.getItemRelationships(
-      this.musicService.recommendations[2].relationships.recommendations.data, 'todaysAlbums'
-    );
-    this.newReleasesRelationships = await this.getItemRelationships(
-      this.musicService.recommendations[4].relationships.contents.data, 'albums'
-    );
+    this.getItemRelationships(this.musicService.recentPlayed, 'albums');
+    this.getItemRelationships(this.musicService.heavyRotation, 'albums');
+    this.getItemRelationships(this.musicService.recommendations[2].relationships.recommendations.data, 'todaysAlbums');
+    this.getItemRelationships(this.musicService.recommendations[4].relationships.contents.data, 'albums');
+    this.getItemRelationships(this.musicService.recommendations[1].relationships.contents.data, 'playlists');
+    this.getItemRelationships(this.musicService.recommendations[3].relationships.contents.data, 'playlists');
   }
 
   async getRecommenations(): Promise<any> {
@@ -87,8 +77,6 @@ export class ForYouComponent implements OnInit {
   async getItemRelationships(collection: any, type: string) {
     let itemIdArray: any;
     let results: any;
-    const trackRelationships = [];
-    let itemFound: boolean;
 
     switch (type) {
       case 'albums': {
@@ -97,20 +85,15 @@ export class ForYouComponent implements OnInit {
         results = await this.musicService.musicKit.api.albums(itemIdArray, { include: 'artists' });
 
         for (const item of collection) {
-          itemFound = false;
+          let index = 0;
 
           for (const result of results) {
-            if (item.id === result.id) {
-              trackRelationships.push([item.id, result.relationships.artists.data[0].id]);
-              itemFound = true;
+            if (item.id === result.id && result.relationships.artists.data.length) {
+              collection[index].relationships = result.relationships;
               break;
             }
-          }
 
-          if (itemFound) {
-            continue;
-          } else {
-            trackRelationships.push([item.id, null]);
+            index++;
           }
         }
 
@@ -127,15 +110,39 @@ export class ForYouComponent implements OnInit {
 
         results = await this.musicService.musicKit.api.albums(itemIdArray, { include: 'artists' });
 
-        for (const item of results) {
-          trackRelationships.push([item.id, item.relationships.artists.data[0].id]);
+        for (const recommendation of collection) {
+          for (const item of recommendation.relationships.contents.data) {
+            for (const result of results) {
+              if (item.id === result.id) {
+                item.relationships = result.relationships;
+                continue;
+              }
+            }
+          }
+        }
+
+        break;
+      }
+      case 'playlists': {
+        itemIdArray = collection.map(i => i.id);
+        results = await this.musicService.musicKit.api.playlists(itemIdArray, { include: 'curators' });
+
+        for (const item of collection) {
+          let index = 0;
+
+          for (const result of results) {
+            if (item.id === result.id && result.relationships.curator.data.length) {
+              collection[index].relationships = result.relationships;
+              break;
+            }
+
+            index++;
+          }
         }
 
         break;
       }
     }
-
-    return trackRelationships;
   }
 
 }

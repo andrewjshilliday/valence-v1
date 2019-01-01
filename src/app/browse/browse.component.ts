@@ -19,11 +19,22 @@ export class BrowseComponent implements OnInit {
 
   loadBrowse() {
     this.loading = true;
+    this.loadMostPlayed();
     this.loadtop100();
     this.loadFeaturedPlaylists();
     this.loadAppleCurators();
     this.loadCurators();
     this.loadAListPlaylists();
+  }
+
+  async loadMostPlayed() {
+    if (!this.musicService.mostPlayed) {
+      this.musicService.mostPlayed = await this.musicService.musicKit.api.charts(null, { types: 'albums,playlists,songs' });
+    }
+
+    this.getItemRelationships(this.musicService.mostPlayed.albums[0].data, 'albums');
+    this.getItemRelationships(this.musicService.mostPlayed.playlists[0].data, 'playlists');
+    this.getItemRelationships(this.musicService.mostPlayed.songs[0].data, 'songs');
   }
 
   async loadtop100() {
@@ -55,6 +66,67 @@ export class BrowseComponent implements OnInit {
   async loadAListPlaylists() {
     if (!this.musicService.aListPlaylists) {
       this.musicService.aListPlaylists = await this.musicService.musicKit.api.playlists(Constants.aListPlaylistsIds);
+    }
+  }
+
+  async getItemRelationships(collection: any, type: string) {
+    let itemIdArray: any;
+    let results: any;
+
+    switch (type) {
+      case 'albums': {
+        itemIdArray = collection.map(i => i.id);
+        results = await this.musicService.musicKit.api.albums(itemIdArray, { include: 'artists' });
+
+        for (const item of collection) {
+          let index = 0;
+
+          for (const result of results) {
+            if (item.id === result.id && result.relationships.artists.data.length) {
+              collection[index].relationships = result.relationships;
+              break;
+            }
+
+            index++;
+          }
+        }
+
+        break;
+      }
+      case 'playlists': {
+        itemIdArray = collection.map(i => i.id);
+        results = await this.musicService.musicKit.api.playlists(itemIdArray, { include: 'curators' });
+
+        for (const item of collection) {
+          let index = 0;
+
+          for (const result of results) {
+            if (item.id === result.id && result.relationships.curator.data.length) {
+              collection[index].relationships = result.relationships;
+              break;
+            }
+
+            index++;
+          }
+        }
+
+        break;
+      }
+      case 'songs': {
+        itemIdArray = collection.map(i => i.id);
+        results = await this.musicService.musicKit.api.songs(itemIdArray, { include: 'artists,albums' });
+
+        for (const item of collection) {
+          for (const result of results) {
+            if (item.id === result.id) {
+              item.relationships = result.relationships;
+              break;
+            }
+          }
+        }
+
+        break;
+      }
     }
   }
 

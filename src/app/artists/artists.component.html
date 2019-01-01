@@ -25,8 +25,8 @@
 
       <div *ngIf="topSongs">
         <h2>Top Songs</h2>
-        <app-media-item-collection-grid [collection]="topSongs" [numRows]=3></app-media-item-collection-grid>
-        <!-- <app-media-item-collection-row [items]="topSongs" [divider]=true></app-media-item-collection-row> -->
+        <app-media-item-collection-grid [collection]="topSongs" [numRows]=3 [divider]=true></app-media-item-collection-grid>
+        <!-- <app-media-item-collection-row [collection]="topSongs" [divider]=true></app-media-item-collection-row> -->
       </div>
 
       <div *ngIf="albums && albums.length">
@@ -38,7 +38,7 @@
             </select>
           </div>
         </div>
-        <app-media-item-collection-row [items]="sortItems(albums, sortAlbums)" [divider]=true></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="sortItems(albums, sortAlbums)" [divider]=true></app-media-item-collection-row>
       </div>
 
       <div *ngIf="singles && singles.length">
@@ -50,7 +50,7 @@
             </select>
           </div>
         </div>
-        <app-media-item-collection-row [items]="sortItems(singles, sortSingles)" [divider]=true></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="sortItems(singles, sortSingles)" [divider]=true></app-media-item-collection-row>
       </div>
 
       <div *ngIf="liveAlbums && liveAlbums.length">
@@ -62,7 +62,7 @@
             </select>
           </div>
         </div>
-        <app-media-item-collection-row [items]="sortItems(liveAlbums, sortLiveAlbums)" [divider]=true></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="sortItems(liveAlbums, sortLiveAlbums)" [divider]=true></app-media-item-collection-row>
       </div>
 
       <div *ngIf="compilations && compilations.length">
@@ -74,12 +74,12 @@
             </select>
           </div>
         </div>
-        <app-media-item-collection-row [items]="sortItems(compilations, sortCompilations)" [divider]=true></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="sortItems(compilations, sortCompilations)" [divider]=true></app-media-item-collection-row>
       </div>
 
       <div *ngIf="musicService.playlists && musicService.playlists.relationships.playlists.data && musicService.playlists.relationships.playlists.data.length">
         <h2>Artist Playlists</h2>
-        <app-media-item-collection-row [items]="musicService.playlists.relationships.playlists.data"></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="musicService.playlists.relationships.playlists.data"></app-media-item-collection-row>
       </div>
 
       <div *ngIf="artistInfo && artistInfo.attributes.artistBio" class="artist-info">
@@ -109,7 +109,7 @@
       <div *ngIf="relatedArtists">
         <br *ngIf="artistInfo && artistInfo.attributes.artistBio" />
         <h2>Related Artists</h2>
-        <app-media-item-collection-row [items]="relatedArtists"></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="relatedArtists"></app-media-item-collection-row>
       </div>
 
     </div>
