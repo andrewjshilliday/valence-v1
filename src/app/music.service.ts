@@ -297,10 +297,15 @@ export class MusicService {
     window.clearTimeout(this.playbackLoadingTimeout);
 
     if (this.playbackLoading) {
+      const currentPlaybackTime = this.musicKit.player.currentPlaybackTime;
+
       this.playbackLoadingTimeout = window.setTimeout(async function() {
         const musicKit = MusicKit.getInstance();
         await musicKit.player.stop();
-        await musicKit.player.play();
+
+        if (currentPlaybackTime <= 10) {
+          await musicKit.player.play();
+        }
       }, 5000);
     }
   }
