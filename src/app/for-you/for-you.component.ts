@@ -84,12 +84,12 @@ export class ForYouComponent implements OnInit {
         itemIdArray = albums.map(i => i.id);
         results = await this.musicService.musicKit.api.albums(itemIdArray, { include: 'artists' });
 
-        for (const item of collection) {
+        for (const item of albums) {
           let index = 0;
 
           for (const result of results) {
             if (item.id === result.id && result.relationships.artists.data.length) {
-              collection[index].relationships = result.relationships;
+              albums[index].relationships = result.relationships;
               break;
             }
 
