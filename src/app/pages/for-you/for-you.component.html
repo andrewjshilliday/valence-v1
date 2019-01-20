@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <h1>For You</h1>
+
+  <div *ngIf="this.loading">
+    <mat-spinner class="loading-spinner"></mat-spinner>
+  </div>
+
+  <div *ngIf='!this.loading'>
+
+    <div *ngIf="musicPlayerService.recommendations && musicPlayerService.recommendations.length && musicPlayerService.recommendations[0]">
+      <h2>{{musicPlayerService.recommendations[0].attributes.title.stringForDisplay}}</h2> <!-- Personalized Mixes -->
+      <app-media-item-collection-row [collection]="musicPlayerService.recommendations[0].relationships.contents.data" [size]="2" [divider]=true></app-media-item-collection-row>
+    </div>
+
+    <div *ngIf="musicPlayerService.recentPlayed && musicPlayerService.recentPlayed.length">
+      <h2>Recently Played</h2> <!-- Recently Played -->
+      <app-media-item-collection-row [collection]="musicPlayerService.recentPlayed" [divider]=true></app-media-item-collection-row>
+    </div>
+
+    <div *ngIf="musicPlayerService.heavyRotation && musicPlayerService.heavyRotation.length">
+      <h2>Heavy Rotation</h2> <!-- Heavy Rotation -->
+      <app-media-item-collection-row [collection]="musicPlayerService.heavyRotation" [divider]=true></app-media-item-collection-row>
+    </div>
+
+    <div *ngIf="musicPlayerService.recommendations && musicPlayerService.recommendations.length && musicPlayerService.recommendations[1]">
+      <h2>{{musicPlayerService.recommendations[1].attributes.title.stringForDisplay}}</h2> <!-- Today's Playlists -->
+      <app-media-item-collection-row [collection]="musicPlayerService.recommendations[1].relationships.contents.data" [size]="2" [divider]=true></app-media-item-collection-row>
+    </div>
+
+    <div *ngIf="musicPlayerService.recommendations && musicPlayerService.recommendations.length && musicPlayerService.recommendations[2]">
+      <h2>{{musicPlayerService.recommendations[2].attributes.title.stringForDisplay}}</h2> <!-- Today's Albums -->
+      <app-media-item-collection-row [collection]="musicPlayerService.recommendations[2].relationships.recommendations.data" [divider]=true [todaysAlbums]=true></app-media-item-collection-row>
+    </div>
+
+    <div *ngIf="musicPlayerService.recommendations && musicPlayerService.recommendations.length && musicPlayerService.recommendations[3]">
+      <h2>{{musicPlayerService.recommendations[3].attributes.title.stringForDisplay}}</h2> <!-- Artist Spotlight Playlists -->
+      <app-media-item-collection-row [collection]="musicPlayerService.recommendations[3].relationships.contents.data" [size]="2" [divider]=true></app-media-item-collection-row>
+    </div>
+
+    <div *ngIf="musicPlayerService.recommendations && musicPlayerService.recommendations.length && musicPlayerService.recommendations[4]">
+      <h2>{{musicPlayerService.recommendations[4].attributes.title.stringForDisplay}}</h2> <!-- New Releases -->
+      <app-media-item-collection-row [collection]="musicPlayerService.recommendations[4].relationships.contents.data"></app-media-item-collection-row>
+    </div>
+
+  </div>
+</div>

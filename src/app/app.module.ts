@@ -2,69 +2,39 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material/material.module';
+import { PlayerModule } from './player/player.module';
+import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { ForYouComponent } from './for-you/for-you.component';
-import { BrowseComponent } from './browse/browse.component';
-import { LibraryComponent } from './library/library.component';
-import { AlbumsComponent } from './albums/albums.component';
-import { ArtistsComponent } from './artists/artists.component';
-import { CuratorsComponent } from './curators/curators.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { NowPlayingComponent } from './now-playing/now-playing.component';
-import { SearchResultsComponent } from './search-results/search-results.component';
-import { TopBarComponent } from './top-bar/top-bar.component';
-import { PlaylistsComponent } from './playlists/playlists.component';
-import { MediaItemViewComponent } from './media-item-components/media-item-view/media-item-view.component';
-import { MediaItemCollectionListComponent } from './media-item-components/media-item-collection-list/media-item-collection-list.component';
-import { MediaItemCollectionRowComponent } from './media-item-components/media-item-collection-row/media-item-collection-row.component';
-import { MediaItemCollectionGridComponent } from './media-item-components/media-item-collection-grid/media-item-collection-grid.component';
-import { MinutesSecondsPipe } from './pipes/minutes-seconds.pipe';
-import { HoursMinutesPipe } from './pipes/hours-minutes.pipe';
-import { AlbumFilterPipe } from './pipes/album-filter.pipe';
-import { PlaylistFilterPipe } from './pipes/playlist-filter.pipe';
-import { RoundPipe } from './pipes/round.pipe';
-import { SearchResultsGuard } from './search-results/search-results.guard';
-import { LazyLoadImageDirective } from './lazy-load-image/lazy-load-image.directive';
+import { BrowseComponent } from './pages/browse/browse.component';
+import { ForYouComponent } from './pages/for-you/for-you.component';
+import { LibraryComponent } from './pages/library/library.component';
+import { SearchComponent } from './pages/search/search.component';
+import { ArtistsComponent } from './pages/artists/artists.component';
+import { AlbumsComponent } from './pages/albums/albums.component';
+import { PlaylistsComponent } from './pages/playlists/playlists.component';
+import { CuratorsComponent } from './pages/curators/curators.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    AlbumsComponent,
-    ArtistsComponent,
-    CuratorsComponent,
-    SidebarComponent,
-    NowPlayingComponent,
-    SearchResultsComponent,
-    ForYouComponent,
     BrowseComponent,
+    ForYouComponent,
     LibraryComponent,
-    TopBarComponent,
+    SearchComponent,
+    ArtistsComponent,
+    AlbumsComponent,
     PlaylistsComponent,
-    MediaItemViewComponent,
-    MediaItemCollectionListComponent,
-    MediaItemCollectionRowComponent,
-    MediaItemCollectionGridComponent,
-    MinutesSecondsPipe,
-    HoursMinutesPipe,
-    AlbumFilterPipe,
-    PlaylistFilterPipe,
-    RoundPipe,
-    LazyLoadImageDirective,
+    CuratorsComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    BrowserAnimationsModule,
-    MaterialModule,
+    PlayerModule,
+    SharedModule,
     RouterModule.forRoot([
-      { path: 'home', component: HomeComponent },
-      { path: 'foryou', component: ForYouComponent },
       { path: 'browse', component: BrowseComponent },
-      { path: 'searchresults', component: SearchResultsComponent },
+      { path: 'foryou', component: ForYouComponent },
+      { path: 'search', component: SearchComponent },
       { path: 'artists/:id', component: ArtistsComponent },
       { path: 'albums/:id', component: AlbumsComponent },
       { path: 'playlists/:id', component: PlaylistsComponent },
@@ -74,7 +44,8 @@ import { LazyLoadImageDirective } from './lazy-load-image/lazy-load-image.direct
       { path: 'library/artists/:id', component: ArtistsComponent },
       { path: 'library/albums/:id', component: AlbumsComponent },
       { path: 'library/playlists/:id', component: PlaylistsComponent },
-      { path: '', redirectTo: 'home', pathMatch: 'full' }
+      { path: '', redirectTo: 'browse', pathMatch: 'full' },
+      { path: '**', redirectTo: 'browse', pathMatch: 'full' }
     ]),
   ],
   providers: [],

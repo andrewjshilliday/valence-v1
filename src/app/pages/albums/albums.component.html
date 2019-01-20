@@ -1,0 +1,69 @@
+<div class="container-fluid">
+
+  <div *ngIf="this.loading">
+    <mat-spinner class="loading-spinner"></mat-spinner>
+  </div>
+
+  <div *ngIf="!this.loading">
+    <div *ngIf="musicPlayerService.album">
+
+      <div class="expanded">
+        <div class='row pt-3' appLazyLoadImage>
+          <div class='col-4'>
+            <div class="media-artwork">
+              <img class="img-fluid card-img-top rounded" [attr.data-src]="musicPlayerService.formatArtworkURL(musicPlayerService.album.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
+              <div class='media-control-button'>
+                <i class="fas fa-play-circle fa-3x" aria-hidden="true" (click)="musicPlayerService.playItem(musicPlayerService.album)"></i>
+              </div>
+            </div>
+            <div class='row'>
+              <div class='col-8'>
+                <span class='text-muted'>{{musicPlayerService.album.attributes.trackCount}} Songs, {{(albumDuration / 1000 / 60) | hoursMinutes}}</span>
+              </div>
+              <div class='col-4'>
+                <span class='text-muted float-right shuffle-label'><a (click)='musicPlayerService.playItem(musicPlayerService.album, 0, true)'>Shuffle <i class="fas fa-random fa-xs"></i></a></span>
+              </div>
+            </div>
+            <hr *ngIf='musicPlayerService.album.attributes.editorialNotes' />
+            <div class="editorial-notes scrollbar" [ngStyle]="{'max-height': 260 + (musicPlayerService.album.attributes.trackCount > 11 ? ((musicPlayerService.album.attributes.trackCount - 11) * 40) : 0) + 'px'}">
+              <p *ngIf='musicPlayerService.album.attributes.editorialNotes && musicPlayerService.album.attributes.editorialNotes.standard'>{{musicPlayerService.album.attributes.editorialNotes.standard}}</p>
+              <p *ngIf='musicPlayerService.album.attributes.editorialNotes && !musicPlayerService.album.attributes.editorialNotes.standard'>{{musicPlayerService.album.attributes.editorialNotes.short}}</p>
+            </div>
+          </div>
+          <div class='col-8'>
+            <app-media-item-collection-list [collection]="musicPlayerService.album" [ratings]="ratings" [popularity]="popularity" [showHeader]=true [showArtist]="musicPlayerService.album.attributes.artistName === 'Various Artists'"></app-media-item-collection-list>
+            <div *ngIf="musicPlayerService.album && !musicPlayerService.album.type.includes('library')" class='row'>
+              <p class="text-muted">
+                Released: {{musicPlayerService.album.attributes.releaseDate | date : 'fullDate'}} <br />
+                {{musicPlayerService.album.attributes.recordLabel}} | {{musicPlayerService.album.attributes.copyright}}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="artistAlbums && (artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicPlayerService.album.id).length">
+          <hr />
+          <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{artistAlbums.attributes.name}}</a></h4>
+          <app-media-item-collection-row [collection]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicPlayerService.album.id" [divider]="relatedAlbums && relatedAlbums.length"></app-media-item-collection-row>
+        </div>
+        <div *ngIf="relatedAlbums && relatedAlbums.length">
+          <h4>You Might Also Like</h4>
+          <app-media-item-collection-row [collection]="relatedAlbums"></app-media-item-collection-row>
+        </div>
+      </div>
+
+      <div class="minimised">
+        <app-media-item-collection-list [collection]="musicPlayerService.album" [ratings]="ratings"[showHeader]=true ></app-media-item-collection-list>
+        <div *ngIf="artistAlbums && (artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicPlayerService.album.id).length">
+          <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{artistAlbums.attributes.name}}</a></h4>
+          <app-media-item-collection-row [collection]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicPlayerService.album.id" [divider]="relatedAlbums && relatedAlbums.length"></app-media-item-collection-row>
+        </div>
+        <div *ngIf="relatedAlbums && relatedAlbums.length">
+          <h4>You May Also Like</h4>
+          <app-media-item-collection-row [collection]="relatedAlbums"></app-media-item-collection-row>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <h1>Search Results</h1>
+
+  <div *ngIf="this.loading">
+    <mat-spinner class="loading-spinner"></mat-spinner>
+  </div>
+
+  <div *ngIf="!this.loading">
+
+    <div *ngIf="searchTerm === ''">
+      <div class="input-group">
+        <input type="text" list="searchHints" class="form-control" placeholder="Search" #searchbar (keyup.enter)="search(searchbar.value); searchbar.blur()" (keyup)="getSearchHints(searchbar.value)">
+        <datalist *ngIf="searchHints && searchHints.terms" id="searchHints">
+          <option *ngFor="let searchHint of searchHints.terms" [value]="searchHint">{{searchHint}}</option>
+        </datalist>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" #searchbutton (click)="search(searchbar.value)">
+            <span class="fas fa-search"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="searchTerm !== ''">
+      <div *ngIf="musicPlayerService.searchArtists && musicPlayerService.searchArtists.length">
+        <h2>Artists</h2>
+        <app-media-item-collection-row [collection]="musicPlayerService.searchArtists" [divider]="true"></app-media-item-collection-row>
+      </div>
+
+      <div *ngIf="musicPlayerService.searchAlbums && musicPlayerService.searchAlbums.length">
+        <h2>Albums</h2>
+        <app-media-item-collection-row [collection]="musicPlayerService.searchAlbums" [divider]="true"></app-media-item-collection-row>
+      </div>
+
+      <div *ngIf="musicPlayerService.searchSongs && musicPlayerService.searchSongs.length">
+        <h2>Songs</h2>
+        <app-media-item-collection-grid [collection]="musicPlayerService.searchSongs" [numRows]=3 [showArtist]=true [divider]="true"></app-media-item-collection-grid>
+      </div>
+
+      <div *ngIf="musicPlayerService.searchPlaylists && musicPlayerService.searchPlaylists.length">
+        <h2>Playlists</h2>
+        <app-media-item-collection-row [collection]="musicPlayerService.searchPlaylists"></app-media-item-collection-row>
+      </div>
+    </div>
+
+  </div>
+
+</div>
