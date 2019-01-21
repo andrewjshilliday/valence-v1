@@ -24,66 +24,65 @@
       <hr />
 
       <div *ngIf="topSongs">
-        <h2>Top Songs</h2>
-        <app-media-item-collection-grid [collection]="topSongs" [numRows]=3 [divider]=true></app-media-item-collection-grid>
-        <!-- <app-media-item-collection-row [collection]="topSongs" [divider]=true></app-media-item-collection-row> -->
+        <h3>Top Songs</h3>
+        <app-media-item-collection-grid [collection]="topSongs" [numRows]=3></app-media-item-collection-grid>
       </div>
 
       <div *ngIf="albums && albums.length">
         <div class="row">
-          <div class="col-6"><h2>Albums</h2></div>
+          <div class="col-6"><h3>Albums</h3></div>
           <div *ngIf="albums.length > 1" class="col-6">
             <select class="float-right" [(ngModel)]="sortAlbums">
               <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
             </select>
           </div>
         </div>
-        <app-media-item-collection-row [collection]="sortItems(albums, sortAlbums)" [divider]=true></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="sortItems(albums, sortAlbums)"></app-media-item-collection-row>
       </div>
 
       <div *ngIf="singles && singles.length">
         <div class="row">
-          <div class="col-6"><h2>EPs & Singles</h2></div>
+          <div class="col-6"><h3>EPs & Singles</h3></div>
           <div *ngIf="singles.length > 1" class="col-6">
             <select class="float-right" [(ngModel)]="sortSingles">
               <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
             </select>
           </div>
         </div>
-        <app-media-item-collection-row [collection]="sortItems(singles, sortSingles)" [divider]=true></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="sortItems(singles, sortSingles)"></app-media-item-collection-row>
       </div>
 
       <div *ngIf="liveAlbums && liveAlbums.length">
         <div class="row">
-          <div class="col-6"><h2>Live Albums</h2></div>
+          <div class="col-6"><h3>Live Albums</h3></div>
           <div *ngIf="liveAlbums.length > 1" class="col-6">
             <select class="float-right" [(ngModel)]="sortLiveAlbums">
               <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
             </select>
           </div>
         </div>
-        <app-media-item-collection-row [collection]="sortItems(liveAlbums, sortLiveAlbums)" [divider]=true></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="sortItems(liveAlbums, sortLiveAlbums)"></app-media-item-collection-row>
       </div>
 
       <div *ngIf="compilations && compilations.length">
         <div class="row">
-          <div class="col-6"><h2>Compilation Albums</h2></div>
+          <div class="col-6"><h3>Compilation Albums</h3></div>
           <div *ngIf="compilations.length > 1" class="col-6">
             <select class="float-right" [(ngModel)]="sortCompilations">
               <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
             </select>
           </div>
         </div>
-        <app-media-item-collection-row [collection]="sortItems(compilations, sortCompilations)" [divider]=true></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="sortItems(compilations, sortCompilations)"></app-media-item-collection-row>
       </div>
 
-      <div *ngIf="musicPlayerService.playlists && musicPlayerService.playlists.relationships.playlists.data && musicPlayerService.playlists.relationships.playlists.data.length">
-        <h2>Artist Playlists</h2>
+      <div *ngIf="musicPlayerService.playlists && musicPlayerService.playlists.relationships && musicPlayerService.playlists.relationships.playlists && musicPlayerService.playlists.relationships.playlists.data && musicPlayerService.playlists.relationships.playlists.data.length">
+        <h3>Artist Playlists</h3>
         <app-media-item-collection-row [collection]="musicPlayerService.playlists.relationships.playlists.data"></app-media-item-collection-row>
       </div>
 
       <div *ngIf="artistInfo && artistInfo.attributes.artistBio" class="artist-info">
-        <h2>About {{artistInfo.attributes.name}}</h2>
+        <h3>About {{artistInfo.attributes.name}}</h3>
         <div class="row">
           <div class="col-9 artist-bio scrollbar">
             <p>{{artistInfo.attributes.artistBio}}</p>
@@ -108,7 +107,7 @@
 
       <div *ngIf="relatedArtists">
         <br *ngIf="artistInfo && artistInfo.attributes.artistBio" />
-        <h2>Related Artists</h2>
+        <h3>Related Artists</h3>
         <app-media-item-collection-row [collection]="relatedArtists"></app-media-item-collection-row>
       </div>
 

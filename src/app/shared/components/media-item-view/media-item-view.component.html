@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="media-album text-truncate" [ngClass]="!item.attributes.contentRating && item.attributes.contentRating !== 'explicit' ? 'col-12' : 'col-10'">
+    <div class="col media-album text-truncate">
       <a [routerLink]="['/albums', item.id]" [ngClass]="light ? 'link-text-light' : ''" title="{{item.attributes.name}}">{{item.attributes.name}}</a>
     </div>
     <div *ngIf="item.attributes.contentRating && item.attributes.contentRating === 'explicit'" class="col-2 explicit">

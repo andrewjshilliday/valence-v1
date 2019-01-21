@@ -23,22 +23,22 @@
 
     <div *ngIf="searchTerm !== ''">
       <div *ngIf="musicPlayerService.searchArtists && musicPlayerService.searchArtists.length">
-        <h2>Artists</h2>
-        <app-media-item-collection-row [collection]="musicPlayerService.searchArtists" [divider]="true"></app-media-item-collection-row>
+        <h3>Artists</h3>
+        <app-media-item-collection-row [collection]="musicPlayerService.searchArtists"></app-media-item-collection-row>
       </div>
 
       <div *ngIf="musicPlayerService.searchAlbums && musicPlayerService.searchAlbums.length">
-        <h2>Albums</h2>
-        <app-media-item-collection-row [collection]="musicPlayerService.searchAlbums" [divider]="true"></app-media-item-collection-row>
+        <h3>Albums</h3>
+        <app-media-item-collection-row [collection]="musicPlayerService.searchAlbums"></app-media-item-collection-row>
       </div>
 
       <div *ngIf="musicPlayerService.searchSongs && musicPlayerService.searchSongs.length">
-        <h2>Songs</h2>
-        <app-media-item-collection-grid [collection]="musicPlayerService.searchSongs" [numRows]=3 [showArtist]=true [divider]="true"></app-media-item-collection-grid>
+        <h3>Songs</h3>
+        <app-media-item-collection-grid [collection]="musicPlayerService.searchSongs" [numRows]=3 [showArtist]=true></app-media-item-collection-grid>
       </div>
 
       <div *ngIf="musicPlayerService.searchPlaylists && musicPlayerService.searchPlaylists.length">
-        <h2>Playlists</h2>
+        <h3>Playlists</h3>
         <app-media-item-collection-row [collection]="musicPlayerService.searchPlaylists"></app-media-item-collection-row>
       </div>
     </div>

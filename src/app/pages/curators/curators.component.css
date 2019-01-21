@@ -64,3 +64,8 @@
 	border-radius: 8px;
 	background-color: #919191;
 }
+
+h3 {
+  padding-left: 15px;
+  padding-right: 15px;
+}

@@ -76,6 +76,14 @@ export class ArtistsComponent implements OnInit, OnDestroy {
   }
 
   async getArtistInfo() {
+    if (!this.musicPlayerService.artist.attributes.url) {
+      if (this.musicPlayerService.artist.relationships.albums) {
+        this.albums = this.musicPlayerService.artist.relationships.albums.data;
+      }
+
+      return;
+    }
+
     const url = this.musicPlayerService.artist.attributes.url.split('/');
     const name = url[url.length - 2];
 

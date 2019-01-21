@@ -2,3 +2,8 @@
   top: 25vh;
   margin: 0 auto;
 }
+
+h3 {
+  padding-left: 15px;
+  padding-right: 15px;
+}

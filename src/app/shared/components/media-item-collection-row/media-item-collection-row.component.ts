@@ -10,7 +10,6 @@ export class MediaItemCollectionRowComponent implements OnInit {
 
   @Input() collection: any;
   @Input() size: number;
-  @Input() divider: boolean;
   @Input() todaysAlbums: boolean;
 
   constructor(public musicPlayerService: MusicPlayerService) { }

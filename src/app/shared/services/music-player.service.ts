@@ -240,7 +240,7 @@ export class MusicPlayerService {
   }
 
   mediaPlaybackError(event: any) {
-    if (event.errorCode === 'DEVICE_LIMIT') {
+    if (event.errorCode === 'DEVICE_LIMIT' || event.errorCode === 'STREAM_UPSELL') {
       this.stop();
     }
   }

@@ -68,6 +68,10 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   }
 
   async getAlbumInfo() {
+    if (!this.musicPlayerService.album.attributes.url) {
+      return;
+    }
+
     const url = this.musicPlayerService.album.attributes.url.split('/');
     const name = url[url.length - 2];
 

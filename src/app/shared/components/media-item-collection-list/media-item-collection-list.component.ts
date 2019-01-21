@@ -23,8 +23,10 @@ export class MediaItemCollectionListComponent implements OnInit {
   constructor(public musicPlayerService: MusicPlayerService, public musicApiService: MusicApiService) { }
 
   ngOnInit() {
-    for (const item of this.collection.relationships.tracks.data) {
-      this.collectionDuration += item.attributes.durationInMillis;
+    if (this.collection.relationships && this.collection.relationships.tracks) {
+      for (const item of this.collection.relationships.tracks.data) {
+        this.collectionDuration += item.attributes.durationInMillis;
+      }
     }
   }
 

@@ -64,7 +64,13 @@ export class MusicApiService {
   }
 
   async getPlaylists(id: string): Promise<any> {
-    return await this.musicPlayerService.musicKit.api.artist(id, { include: 'playlists' });
+    const isLibraryResource = id.startsWith('r.');
+
+    if (isLibraryResource) {
+      return await this.musicPlayerService.musicKit.api.library.artist(id, { include: 'playlists' });
+    } else {
+      return await this.musicPlayerService.musicKit.api.artist(id, { include: 'playlists' });
+    }
   }
 
   async getRelatedAlbums(album: any) {
