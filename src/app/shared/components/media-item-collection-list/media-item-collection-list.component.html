@@ -93,33 +93,31 @@
 
 <table class="table table-hover collection-text" appLazyLoadImage>
 
-  <tbody *ngIf="collection && collection.relationships && collection.relationships.tracks"> <!-- collection is album/playlist -->
-    <tr *ngFor="let item of collection.relationships.tracks.data" class="mediarow">
-      <td class="media-status" (click)="!musicPlayerService.isItemCurrentlyPlaying(item.id) ? musicPlayerService.playItem(collection, collection.relationships.tracks.data.indexOf(item)) : musicPlayerService.pause()">
-        <span *ngIf="!musicPlayerService.isItemCurrentlyPlaying(item.id) && !showArtwork && !getPopularity(item.id)" class="item-number text-center text-muted">{{collection.relationships.tracks.data.indexOf(item) + 1}}</span>
+  <tbody>
+    <tr *ngFor="let item of tracks" class="mediarow">
+      <td class="media-status" (click)="!musicPlayerService.isItemCurrentlyPlaying(item.id) ? musicPlayerService.playItem(collection, tracks.indexOf(item)) : musicPlayerService.pause()">
+        <span *ngIf="!musicPlayerService.isItemCurrentlyPlaying(item.id) && !showArtwork && !getPopularity(item.id)" class="item-number text-center text-muted">{{tracks.indexOf(item) + 1}}</span>
         <i *ngIf="!musicPlayerService.isItemCurrentlyPlaying(item.id) && !showArtwork && getPopularity(item.id)" class="fas fa-star item-popularity text-center text-muted"></i>
         <img *ngIf="showArtwork" class="img-fluid" [attr.data-src]="musicPlayerService.formatArtworkURL(item.attributes.artwork, 50)" src="././assets/images/placeholder.png" />
         <i *ngIf="!musicPlayerService.isItemCurrentlyPlaying(item.id)" class="fas fa-play media-icon"></i>
         <i *ngIf="musicPlayerService.isItemCurrentlyPlaying(item.id)" class="fas fa-pause media-icon"></i>
         <i *ngIf="musicPlayerService.isItemCurrentlyPlaying(item.id)" class="fas fa-volume-up now-playing-icon"></i>
       </td>
-      <td class="item-text" (click)="!musicPlayerService.isItemCurrentlyPlaying(item.id) ? musicPlayerService.playItem(collection, collection.relationships.tracks.data.indexOf(item)) : musicPlayerService.pause()" title="{{item.attributes.name}}" [ngStyle]="{'border': collection.relationships.tracks.data[0].id === item.id ? 'none' : ''}">
-        <div class="row">
-          <div class="col text-truncate">
-            <span>{{item.attributes.name}}</span>
-            <i *ngIf="item.attributes.contentRating && item.attributes.contentRating === 'explicit'" class="material-icons explicit-icon pull-right text-muted">explicit</i>
-          </div>
-        </div>
+      <td class="song-name text-truncate" (click)="!musicPlayerService.isItemCurrentlyPlaying(item.id) ? musicPlayerService.playItem(collection, tracks.indexOf(item)) : musicPlayerService.pause()" title="{{item.attributes.name}}" [ngStyle]="{'border': tracks[0].id === item.id ? 'none' : ''}">
+        <span class="song-text" [ngStyle]="{'width': item.attributes.contentRating && item.attributes.contentRating === 'explicit' ? 'calc(100% - 20px)' : ''}">
+          {{item.attributes.name}}
+        </span>
+        <i *ngIf="item.attributes.contentRating && item.attributes.contentRating === 'explicit'" class="material-icons explicit-icon pull-right text-muted">explicit</i>
       </td>
-      <td *ngIf="showArtist" class="artist-text text-truncate" title="{{item.attributes.artistName}}" [ngStyle]="{'border': collection.relationships.tracks.data[0].id === item.id ? 'none' : ''}">
+      <td *ngIf="showArtist" class="artist-name text-truncate" title="{{item.attributes.artistName}}" [ngStyle]="{'border': tracks[0].id === item.id ? 'none' : ''}">
         <a *ngIf="item.relationships" [routerLink]="['/artists', item.relationships.artists.data[0].id]">{{item.attributes.artistName}}</a>
         <span *ngIf="!item.relationships">{{item.attributes.artistName}}</span>
       </td>
-      <td *ngIf="showAlbum" class="album-text text-truncate" title="{{item.attributes.albumName}}" [ngStyle]="{'border': collection.relationships.tracks.data[0].id === item.id ? 'none' : ''}">
+      <td *ngIf="showAlbum" class="album-name text-truncate" title="{{item.attributes.albumName}}" [ngStyle]="{'border': tracks[0].id === item.id ? 'none' : ''}">
         <a *ngIf="item.relationships" [routerLink]="['/albums', item.relationships.albums.data[0].id]">{{item.attributes.albumName}}</a>
         <span *ngIf="!item.relationships">{{item.attributes.albumName}}</span>
       </td>
-      <td class="time text-right" [ngStyle]="{'border': collection.relationships.tracks.data[0].id === item.id ? 'none' : ''}">
+      <td class="time text-right" [ngStyle]="{'border': tracks[0].id === item.id ? 'none' : ''}">
         {{item.attributes.durationInMillis | date : 'm:ss'}}
       </td>
       <td class="media-options">
@@ -140,55 +138,6 @@
           </div>
         </div>
         <i *ngIf="getRating(item) === 1" class="fas fa-heart rating"></i>
-      </td>
-    </tr>
-  </tbody>
-
-  <tbody *ngIf="collection && (!collection.relationships || !collection.relationships.tracks)"> <!-- collection is individual tracks -->
-    <tr *ngFor='let item of collection' class='mediarow'>
-      <td class='media-status' (click)='!musicPlayerService.isItemCurrentlyPlaying(item.id) ? musicPlayerService.playItem(collection, collection.indexOf(item)) : musicPlayerService.pause()'>
-        <span *ngIf='!musicPlayerService.isItemCurrentlyPlaying(item.id) && !showArtwork' class="item-number text-center text-muted">{{collection.indexOf(item) + 1}}</span>
-        <img *ngIf='showArtwork' class="img-fluid" [attr.data-src]="musicPlayerService.formatArtworkURL(item.attributes.artwork, 50)" src="././assets/images/placeholder.png" />
-        <i *ngIf='!musicPlayerService.isItemCurrentlyPlaying(item.id)' class="fas fa-play media-icon"></i>
-        <i *ngIf='musicPlayerService.isItemCurrentlyPlaying(item.id)' class="fas fa-pause media-icon"></i>
-        <i *ngIf='musicPlayerService.isItemCurrentlyPlaying(item.id)' class="fas fa-volume-up now-playing-icon"></i>
-      </td>
-      <td class="item-text text-truncate" (click)="!musicPlayerService.isItemCurrentlyPlaying(item.id) ? musicPlayerService.playItem(collection, collection.indexOf(item)) : musicPlayerService.pause()" title="{{item.attributes.name}}" [ngStyle]="{'border': collection[0].id === item.id ? 'none' : ''}">
-        <div class="row">
-          <div class="col text-truncate">
-            <span>{{item.attributes.name}}</span>
-            <i *ngIf="item.attributes.contentRating && item.attributes.contentRating === 'explicit'" class="material-icons explicit-icon text-muted pull-right">explicit</i>
-          </div>
-        </div>
-      </td>
-      <td *ngIf="showArtist" class='artist-text text-truncate' title="{{item.attributes.artistName}}" [ngStyle]="{'border': collection[0].id === item.id ? 'none' : ''}">
-        <a *ngIf="item.relationships" [routerLink]="['/artists', item.relationships.artists.data[0].id]">{{item.attributes.artistName}}</a>
-        <span *ngIf="!item.relationships">{{item.attributes.artistName}}</span>
-      </td>
-      <td *ngIf="showAlbum" class='album-text text-truncate' title="{{item.attributes.albumName}}" [ngStyle]="{'border': collection[0].id === item.id ? 'none' : ''}">
-        <a *ngIf="item.relationships" [routerLink]="['/albums', item.relationships.albums.data[0].id]">{{item.attributes.albumName}}</a>
-        <span *ngIf="!item.relationships">{{item.attributes.albumName}}</span>
-      </td>
-      <td class="time text-right" [ngStyle]="{'border': collection[0].id === item.id ? 'none' : ''}">
-        {{item.attributes.durationInMillis | date : 'm:ss'}}
-      </td>
-      <td class="media-options">
-        <div class="media-icon">
-          <a class="media-options-icon" role="button" id="dropdown{{item.id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-ellipsis-h"></i>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" (click)='musicPlayerService.playItem(item)'>Play</a>
-            <a class="dropdown-item" (click)='musicPlayerService.queueNext(item)'>Play Next</a>
-            <a class="dropdown-item" (click)='musicPlayerService.playItem(item)'>Play Later</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item">Add to Library</a>
-            <div class="dropdown-divider"></div>
-            <a *ngIf="getRating(item) !== 1" class="dropdown-item" (click)="musicPlayerService.addRating(item, 1)">Love</a>
-            <a *ngIf="getRating(item) !== -1" class="dropdown-item" (click)="musicPlayerService.addRating(item, -1)">Dislike</a>
-            <a *ngIf="getRating(item) !== 0" class="dropdown-item" (click)="musicPlayerService.removeRating(item)">Remove Rating</a>
-          </div>
-        </div>
       </td>
     </tr>
   </tbody>

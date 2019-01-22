@@ -1,3 +1,7 @@
+.media-item-group {
+  padding-bottom: 20px;
+}
+
 .media-item-group > .row {
   position: relative;
   left: 15px;

@@ -17,6 +17,7 @@ export class MediaItemCollectionListComponent implements OnInit {
   @Input() showAlbum: boolean;
   @Input() showArtwork: boolean;
 
+  tracks: any;
   collectionRatings: any;
   collectionDuration = 0;
 
@@ -24,9 +25,13 @@ export class MediaItemCollectionListComponent implements OnInit {
 
   ngOnInit() {
     if (this.collection.relationships && this.collection.relationships.tracks) {
+      this.tracks = this.collection.relationships.tracks.data;
+
       for (const item of this.collection.relationships.tracks.data) {
         this.collectionDuration += item.attributes.durationInMillis;
       }
+    } else {
+      this.tracks = this.collection;
     }
   }
 

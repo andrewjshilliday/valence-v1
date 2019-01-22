@@ -161,31 +161,37 @@
   border: none;
 }
 
-.item-text {
+.song-name {
   max-width: 170px;
 }
 
-.artist-text {
+.song-text {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.artist-name {
   max-width: 90px;
 }
 
-.artist-text span {
+.artist-name span {
   color: grey;
 }
 
-.artist-text a {
+.artist-name a {
   color: black;
 }
 
-.album-text {
+.album-name {
   max-width: 110px;
 }
 
-.album-text span {
+.album-name span {
   color: grey;
 }
 
-.album-text a {
+.album-name a {
   color: black;
 }
 
@@ -203,8 +209,9 @@
 
 .explicit-icon {
   position: relative;
+  top: -1px;
+  width: 20px;
   transform: scale(0.7);
-  top: -2px;
   margin-bottom: -5px;
 }
 
