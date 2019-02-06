@@ -23,7 +23,9 @@ export class ForYouComponent implements OnInit {
     this.loading = false;
 
     this.musicApiService.getRelationships(this.musicPlayerService.recentPlayed, 'albums');
+    this.musicApiService.getRelationships(this.musicPlayerService.recentPlayed, 'playlists');
     this.musicApiService.getRelationships(this.musicPlayerService.heavyRotation, 'albums');
+    this.musicApiService.getRelationships(this.musicPlayerService.heavyRotation, 'playlists');
     this.musicApiService.getRelationships(this.musicPlayerService.recommendations[2].relationships.recommendations.data, 'todaysAlbums');
     this.musicApiService.getRelationships(this.musicPlayerService.recommendations[4].relationships.contents.data, 'albums');
     this.musicApiService.getRelationships(this.musicPlayerService.recommendations[1].relationships.contents.data, 'playlists');

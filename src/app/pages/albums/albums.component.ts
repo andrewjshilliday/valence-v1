@@ -17,7 +17,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   albumDuration: number;
   artistAlbums: any;
   relatedAlbums: any;
-  albumInfo: any;
+  albumData: any;
   ratings: any;
   popularity: any;
 
@@ -75,16 +75,15 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     const url = this.musicPlayerService.album.attributes.url.split('/');
     const name = url[url.length - 2];
 
-    this.albumInfo = await fetch(environment.musicServiceApi + 'albums/' +
+    this.albumData = await fetch(environment.musicServiceApi + 'albums/' +
       `${this.musicPlayerService.musicKit.storefrontId}/${name}/${this.musicPlayerService.album.id}`)
       .then(res => res.json());
-      this.albumInfo.description = JSON.parse(this.albumInfo.description);
 
-    if (!this.albumInfo.description.data.relationships.listenersAlsoBought) {
+    if (!this.albumData.resources.data.relationships.listenersAlsoBought.data) {
       return;
     }
 
-    const relatedAlbumsIds = this.albumInfo.description.data.relationships.listenersAlsoBought.data.map(i => i.id);
+    const relatedAlbumsIds = this.albumData.resources.data.relationships.listenersAlsoBought.data.map(i => i.id);
     this.relatedAlbums = await this.musicPlayerService.musicKit.api.albums(relatedAlbumsIds);
 
     this.getPopulatity();
@@ -101,7 +100,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   async getPopulatity() {
     this.popularity = [];
 
-    for (const item of this.albumInfo.description.included) {
+    for (const item of this.albumData.resources.included) {
       if (item.type === 'product/album/song') {
         if (item.attributes.popularity >= 0.7) {
           this.popularity.push(item.id);

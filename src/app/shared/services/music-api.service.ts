@@ -105,15 +105,20 @@ export class MusicApiService {
 
     switch (type) {
       case 'albums': {
-        itemIdArray = collection.map(i => i.id);
+        itemIdArray = collection.filter(i => i.type === 'albums').map(i => i.id);
+
+        if (!itemIdArray || itemIdArray.length === 0) {
+          return;
+        }
+
         results = await this.musicPlayerService.musicKit.api.albums(itemIdArray, { include: 'artists' });
 
-        for (const item of collection) {
+        for (const item of collection.filter(i => i.type === 'albums')) {
           let index = 0;
 
           for (const result of results) {
             if (item.id === result.id && result.relationships.artists.data.length) {
-              collection[index].relationships = result.relationships;
+              collection.filter(i => i.type === 'albums')[index].relationships = result.relationships;
               break;
             }
 
@@ -148,15 +153,20 @@ export class MusicApiService {
         break;
       }
       case 'playlists': {
-        itemIdArray = collection.map(i => i.id);
+        itemIdArray = collection.filter(i => i.type === 'playlists').map(i => i.id);
+
+        if (!itemIdArray || itemIdArray.length === 0) {
+          return;
+        }
+
         results = await this.musicPlayerService.musicKit.api.playlists(itemIdArray, { include: 'curators' });
 
-        for (const item of collection) {
+        for (const item of collection.filter(i => i.type === 'playlists')) {
           let index = 0;
 
           for (const result of results) {
             if (item.id === result.id && result.relationships.curator.data.length) {
-              collection[index].relationships = result.relationships;
+              collection.filter(i => i.type === 'playlists')[index].relationships = result.relationships;
               break;
             }
 

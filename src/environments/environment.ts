@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  musicServiceApi: 'https://music-service.herokuapp.com/'
+  musicServiceApi: 'http://localhost:10000/'
 };
 
 /*

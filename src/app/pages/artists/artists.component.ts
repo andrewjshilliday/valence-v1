@@ -87,13 +87,12 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     const url = this.musicPlayerService.artist.attributes.url.split('/');
     const name = url[url.length - 2];
 
-    const info = await fetch(environment.musicServiceApi + 'artists/' +
+    const artistData = await fetch(environment.musicServiceApi + 'artists/' +
       `${this.musicPlayerService.musicKit.storefrontId}/${name}/${this.musicPlayerService.artist.id}`)
       .then(res => res.json());
-    info.description = JSON.parse(info.description);
 
-    this.artistImage = info.imageUrl;
-    this.artistInfo = info.description.data;
+    this.artistImage = artistData.imageUrl;
+    this.artistInfo = artistData.resources.data;
 
     let topSongs: any;
     let albumsIds: any;
@@ -101,7 +100,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     let liveAlbumsIds: any;
     let compilationsIds: any;
 
-    for (const item of info.description.included) {
+    for (const item of artistData.resources.included) {
       if (item.id.match(this.musicPlayerService.artist.id + '/topSongs')) {
         topSongs = item.relationships.content.data.map(i => i.id);
         continue;
