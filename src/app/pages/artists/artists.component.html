@@ -76,9 +76,9 @@
         <app-media-item-collection-row [collection]="sortItems(compilations, sortCompilations)"></app-media-item-collection-row>
       </div>
 
-      <div *ngIf="musicPlayerService.playlists && musicPlayerService.playlists.relationships && musicPlayerService.playlists.relationships.playlists && musicPlayerService.playlists.relationships.playlists.data && musicPlayerService.playlists.relationships.playlists.data.length">
+      <div *ngIf="musicPlayerService.playlists && musicPlayerService.playlists.length">
         <h3>Artist Playlists</h3>
-        <app-media-item-collection-row [collection]="musicPlayerService.playlists.relationships.playlists.data"></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="musicPlayerService.playlists"></app-media-item-collection-row>
       </div>
 
       <div *ngIf="artistInfo && artistInfo.attributes.artistBio" class="artist-info">

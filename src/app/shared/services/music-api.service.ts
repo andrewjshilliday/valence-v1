@@ -21,12 +21,25 @@ export class MusicApiService {
     // this.album = null;
 
     if (isLibraryResource) {
-      artist = await this.musicPlayerService.musicKit.api.library.artist(id, { include: 'albums,playlists,tracks' });
+      artist = await this.musicPlayerService.musicKit.api.library.artist(id);
     } else {
-      artist = await this.musicPlayerService.musicKit.api.artist(id, { include: 'albums' });
+      artist = await this.musicPlayerService.musicKit.api.artist(id);
     }
 
     return artist;
+  }
+
+  async getArtistAlbums(id: string, albums?: any): Promise<any> {
+    const isLibraryResource = id.startsWith('r.');
+    albums = null;
+
+    if (isLibraryResource) {
+      albums = await this.musicPlayerService.musicKit.api.library.artist(id, { include: 'albums' });
+    } else {
+      albums = await this.musicPlayerService.musicKit.api.artist(id, { include: 'albums' });
+    }
+
+    return albums;
   }
 
   async getAlbum(id: string, include?: string, album?: any): Promise<any> {
@@ -64,12 +77,17 @@ export class MusicApiService {
   }
 
   async getPlaylists(id: string): Promise<any> {
+    let playlists = null;
     const isLibraryResource = id.startsWith('r.');
 
     if (isLibraryResource) {
       return await this.musicPlayerService.musicKit.api.library.artist(id, { include: 'playlists' });
     } else {
-      return await this.musicPlayerService.musicKit.api.artist(id, { include: 'playlists' });
+      try {
+        playlists = await this.musicPlayerService.musicKit.api.artist(id, { include: 'playlists' });
+      } finally {
+        return playlists;
+      }
     }
   }
 
@@ -193,6 +211,10 @@ export class MusicApiService {
       }
     }
   }
+
+  /* async getAttributes (collection: any) {
+
+  } */
 
   async getRatings(collection: any): Promise<any> {
     let url = 'https://api.music.apple.com/v1/me/ratings/songs?ids=';

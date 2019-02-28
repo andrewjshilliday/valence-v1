@@ -47,9 +47,17 @@ export class ArtistsComponent implements OnInit, OnDestroy {
 
   async loadArtist(id: string) {
     this.loading = true;
+
     this.musicPlayerService.artist = await this.musicApiService.getArtist(id, this.musicPlayerService.artist);
+
+    const itemIdArray = this.musicPlayerService.artist.relationships.albums.data.filter(i => i.type === 'albums').map(i => i.id);
+    this.musicPlayerService.artist.relationships.albums.data =
+      await this.musicPlayerService.musicKit.api.albums(itemIdArray, { include: 'artists' });
+
+    this.musicApiService.getRelationships(this.musicPlayerService.artist.relationships.albums.data, 'albums');
     this.musicPlayerService.playlists = await this.musicApiService.getPlaylists(id);
     await this.getArtistInfo();
+
     this.loading = false;
 
     this.getRelatedArtists();

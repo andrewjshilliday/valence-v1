@@ -17,6 +17,7 @@ export class MusicPlayerService {
   playbackLoadingTimeout: any;
 
   artist: any;
+  albums: any;
   album: any;
   playlists: any;
   playlist: any;

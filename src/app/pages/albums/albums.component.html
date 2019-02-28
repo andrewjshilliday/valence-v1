@@ -42,7 +42,7 @@
         </div>
         <div *ngIf="artistAlbums && (artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicPlayerService.album.id).length">
           <hr />
-          <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{artistAlbums.attributes.name}}</a></h4>
+          <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{musicPlayerService.album.attributes.artistName}}</a></h4>
           <app-media-item-collection-row [collection]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicPlayerService.album.id"></app-media-item-collection-row>
         </div>
         <div *ngIf="relatedAlbums && relatedAlbums.length">
@@ -60,7 +60,7 @@
           </p>
         </div>
         <div *ngIf="artistAlbums && (artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicPlayerService.album.id).length">
-          <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{artistAlbums.attributes.name}}</a></h4>
+          <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{musicPlayerService.album.attributes.artistName}}</a></h4>
           <app-media-item-collection-row [collection]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : musicPlayerService.album.id"></app-media-item-collection-row>
         </div>
         <div *ngIf="relatedAlbums && relatedAlbums.length">

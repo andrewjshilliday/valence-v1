@@ -35,7 +35,9 @@ export class AlbumsComponent implements OnInit, OnDestroy {
 
   async loadAlbum(id: string) {
     this.loading = true;
+
     this.musicPlayerService.album = await this.musicApiService.getAlbum(id, this.musicPlayerService.album);
+
     this.loading = false;
 
     this.artistAlbums = null;
@@ -62,8 +64,13 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   async getArtistAlbums() {
     if (this.musicPlayerService.album.relationships.artists && this.musicPlayerService.album.relationships.artists.data.length) {
       this.artistAlbums = await this.musicPlayerService.musicKit.api.artist(
-        this.musicPlayerService.album.relationships.artists.data[0].id, { include: 'albums' }
-      );
+        this.musicPlayerService.album.relationships.artists.data[0].id);
+
+      const itemIdArray = this.artistAlbums.relationships.albums.data.map(i => i.id);
+      this.artistAlbums.relationships.albums.data =
+        await this.musicPlayerService.musicKit.api.albums(itemIdArray);
+
+      const asd = 0;
     }
   }
 
