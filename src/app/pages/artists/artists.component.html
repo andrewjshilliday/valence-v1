@@ -10,7 +10,10 @@
         <h1 class="text-truncate text-light">{{musicPlayerService.artist.attributes.name}}</h1>
 
         <div class="row container-fluid">
-          <div *ngIf="musicPlayerService.artist && musicPlayerService.artist.relationships.albums.data && musicPlayerService.artist.relationships.albums.data | albumFilter : 'latestRelease'" class="col-6 col-sm-4 col-md-3" [ngClass]="(musicPlayerService.artist.relationships.albums.data | albumFilter : 'upcomingRelease') ? 'offset-sm-4 offset-md-6' : 'offset-6 offset-sm-8 offset-md-9'">
+          <div class="artist-image col-6 col-sm-3 col-md-4">
+            <img class="artist-image img-fluid rounded-circle" src="{{artistImage}}" />
+          </div>
+          <div *ngIf="musicPlayerService.artist && musicPlayerService.artist.relationships.albums.data && musicPlayerService.artist.relationships.albums.data | albumFilter : 'latestRelease'" class="col-6 col-sm-4 col-md-3" [ngClass]="(musicPlayerService.artist.relationships.albums.data | albumFilter : 'upcomingRelease') ? 'offset-md-2' : 'offset-md-5'">
             <h5 class="text-truncate text-light" title="Latest Release">Latest Release</h5>
             <app-media-item-view [item]="musicPlayerService.artist.relationships.albums.data | albumFilter : 'latestRelease'" [light]=true></app-media-item-view>
           </div>
