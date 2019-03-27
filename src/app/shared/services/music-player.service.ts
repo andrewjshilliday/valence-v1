@@ -43,6 +43,8 @@ export class MusicPlayerService {
 
   recommendationsDate: number;
 
+  deviceHardwareID: string;
+
   constructor() {
     MusicKit.configure({
       developerToken: Tokens.appleMusicDevToken,
@@ -56,12 +58,20 @@ export class MusicPlayerService {
     this.authorized = this.musicKit.isAuthorized;
     this.musicKit.player.repeatMode = 2;
 
+    if ( localStorage.getItem('bitrate') === null ) {
+      this.setBitrate(256);
+    } else {
+      this.setBitrate(+localStorage.getItem('bitrate'));
+    }
+
     this.musicKit.addEventListener(MusicKit.Events.mediaItemDidChange, this.mediaItemDidChange.bind(this));
     this.musicKit.addEventListener(MusicKit.Events.playbackStateDidChange, this.playbackStateDidChange.bind(this));
     this.musicKit.addEventListener(MusicKit.Events.authorizationStatusDidChange, this.authorizationStatusDidChange.bind(this));
     this.musicKit.addEventListener(MusicKit.Events.queueItemsDidChange, this.queueItemsDidChange.bind(this));
     this.musicKit.addEventListener(MusicKit.Events.queuePositionDidChange, this.queuePositionDidChange.bind(this));
     this.musicKit.addEventListener(MusicKit.Events.mediaPlaybackError, this.mediaPlaybackError.bind(this));
+
+    this.initializeMediaDevices();
   }
 
   async playItem(item: any, startIndex: number = 0, shuffle: boolean = false): Promise<any> {
@@ -150,6 +160,11 @@ export class MusicPlayerService {
 
   setVolume(volume: number) {
     this.musicKit.player.volume = volume;
+  }
+
+  setBitrate(bitrate: number) {
+    this.musicKit.bitrate = bitrate;
+    localStorage.setItem('bitrate', bitrate.toString());
   }
 
   formatArtworkURL(url: string, size: number): string {
@@ -244,6 +259,36 @@ export class MusicPlayerService {
     if (event.errorCode === 'DEVICE_LIMIT' || event.errorCode === 'STREAM_UPSELL') {
       this.stop();
     }
+  }
+
+  initializeMediaDevices() {
+    this.deviceHardwareID = localStorage.getItem('hardwareID');
+
+    navigator.mediaDevices.addEventListener('devicechange', () => {
+      if (Boolean(JSON.parse(localStorage.getItem('enablePlayPause')))) {
+        navigator.mediaDevices.enumerateDevices().then(devices => {
+          let foundDevice = false;
+          let didPlaybackChange = false;
+
+          if (this.deviceHardwareID && this.deviceHardwareID.length > 0) {
+            devices.forEach(device => {
+              if (device.deviceId === this.deviceHardwareID) {
+                foundDevice = true;
+
+                if (!this.playing && !didPlaybackChange) {
+                  this.play();
+                  didPlaybackChange = true;
+                }
+              }
+            });
+
+            if (this.playing && !foundDevice && !didPlaybackChange) {
+              this.pause();
+            }
+          }
+        });
+      }
+    });
   }
 
 }

@@ -1,0 +1,32 @@
+<div class="container-fluid">
+  <h1>Settings</h1>
+
+  <div class="bitrate">
+    <h3>Set playback bitrate</h3>
+    <mat-form-field>
+      <mat-label>Bitrate</mat-label>
+      <mat-select [(value)]="bitrate">
+        <mat-option value="64" (click)="musicPlayerService.setBitrate(64)">Standard (64kbps)</mat-option>
+        <mat-option value="256" (click)="musicPlayerService.setBitrate(256)">High (256kbps)</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="media-devices">
+    <h3>Auto Play/Pause</h3>
+    <p>This feature will automatically play or pause music when the specified device connects or disconnects.</p>
+    <mat-checkbox [(ngModel)]="enablePlayPause" (change)="changeEnablePlayPause()">Enable (experimental)</mat-checkbox> <br />
+    <mat-form-field class="hardware-id">
+      <div class="row"></div>
+      <input matInput type="text" placeholder="Enter Hardware ID" [(ngModel)]="hardwareID">
+      <button mat-button *ngIf="hardwareID" matSuffix mat-icon-button aria-label="Clear" (click)="hardwareID=''">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button mat-buttom *ngIf="hardwareID" matSuffix mat-icon-button aria-label="Save" (click)="saveHardwareID()">
+        <mat-icon>save</mat-icon>
+      </button>
+      <button mat-button matSuffix (click)="showConnectedDevices()">Show Connected Devices</button>
+    </mat-form-field>
+  </div>
+
+</div>

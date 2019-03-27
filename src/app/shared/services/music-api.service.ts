@@ -212,10 +212,6 @@ export class MusicApiService {
     }
   }
 
-  /* async getAttributes (collection: any) {
-
-  } */
-
   async getRatings(collection: any): Promise<any> {
     let url = 'https://api.music.apple.com/v1/me/ratings/songs?ids=';
 

@@ -1,0 +1,19 @@
+.bitrate {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+}
+
+.media-devices {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+}
+
+.media-devices p {
+  font-size: 10pt;
+}
+
+.hardware-id {
+  width: 800px;
+}

@@ -13,6 +13,7 @@ import { ArtistsComponent } from './pages/artists/artists.component';
 import { AlbumsComponent } from './pages/albums/albums.component';
 import { PlaylistsComponent } from './pages/playlists/playlists.component';
 import { CuratorsComponent } from './pages/curators/curators.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { CuratorsComponent } from './pages/curators/curators.component';
     AlbumsComponent,
     PlaylistsComponent,
     CuratorsComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +46,7 @@ import { CuratorsComponent } from './pages/curators/curators.component';
       { path: 'library/artists/:id', component: ArtistsComponent },
       { path: 'library/albums/:id', component: AlbumsComponent },
       { path: 'library/playlists/:id', component: PlaylistsComponent },
+      { path: 'settings', component: SettingsComponent },
       { path: '', redirectTo: 'browse', pathMatch: 'full' },
       { path: '**', redirectTo: 'browse', pathMatch: 'full' }
     ]),
