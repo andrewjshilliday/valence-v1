@@ -21,12 +21,17 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   ratings: any;
   popularity: any;
 
-  constructor(private route: ActivatedRoute, public musicPlayerService: MusicPlayerService, public musicApiService: MusicApiService) { }
+  constructor(private route: ActivatedRoute, private router: Router,
+    public musicPlayerService: MusicPlayerService, public musicApiService: MusicApiService) { }
 
   ngOnInit() {
     this.albumSubscription = this.route.params.subscribe(params => {
       this.loadAlbum(params['id']);
     });
+
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
   }
 
   ngOnDestroy(): void {
@@ -69,8 +74,6 @@ export class AlbumsComponent implements OnInit, OnDestroy {
       const itemIdArray = this.artistAlbums.relationships.albums.data.map(i => i.id);
       this.artistAlbums.relationships.albums.data =
         await this.musicPlayerService.musicKit.api.albums(itemIdArray);
-
-      const asd = 0;
     }
   }
 
@@ -95,10 +98,6 @@ export class AlbumsComponent implements OnInit, OnDestroy {
 
     this.getPopulatity();
   }
-
-  /* async getRelatedAlbums() {
-    this.relatedAlbums = await this.musicApiService.getRelatedAlbums(this.musicPlayerService.album);
-  } */
 
   async getRatings() {
     this.ratings = await this.musicApiService.getRatings(this.musicPlayerService.album);
