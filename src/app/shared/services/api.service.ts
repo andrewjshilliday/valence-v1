@@ -266,7 +266,7 @@ export class ApiService {
   }
 
   async getArtistData(name: string, id: string): Promise<any> {
-    await fetch(`${environment.musicServiceApi}/artists/${this.playerService.musicKit.storefrontId}/${name}/${id}`)
+    return await fetch(`${environment.musicServiceApi}/artists/${this.playerService.musicKit.storefrontId}/${name}/${id}`)
       .then(res => res.json());
   }
 
