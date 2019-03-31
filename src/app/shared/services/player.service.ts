@@ -61,10 +61,18 @@ export class PlayerService {
     this.authorized = this.musicKit.isAuthorized;
     this.musicKit.player.repeatMode = 2;
 
-    if ( localStorage.getItem('bitrate') === null ) {
+    const bitrate = localStorage.getItem('bitrate');
+    if (bitrate === null) {
       this.setBitrate(256);
     } else {
-      this.setBitrate(+localStorage.getItem('bitrate'));
+      this.setBitrate(+bitrate);
+    }
+
+    const volume = localStorage.getItem('volume');
+    if (volume === null) {
+      this.setVolume(1);
+    } else {
+      this.setVolume(+volume);
     }
 
     this.musicKit.addEventListener(MusicKit.Events.mediaItemDidChange, this.mediaItemDidChange.bind(this));
@@ -183,6 +191,7 @@ export class PlayerService {
 
   setVolume(volume: number) {
     this.musicKit.player.volume = volume;
+    localStorage.setItem('volume', volume.toString());
   }
 
   setBitrate(bitrate: number) {
