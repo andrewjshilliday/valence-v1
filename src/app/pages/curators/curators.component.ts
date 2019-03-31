@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-curators',
@@ -77,8 +76,7 @@ export class CuratorsComponent implements OnInit {
     if (this.getNextPlaylists && this.nextPlaylistsUrl) {
       this.getNextPlaylists = false;
 
-      const playlists = await fetch(`${environment.appleMusicApi}/this.nextPlaylistsUrl`,
-        { headers: this.apiService.appleApiHeaders() }).then(res => res.json());
+      const playlists = await this.apiService.getMusicKitData(this.nextPlaylistsUrl);
 
       if (playlists && playlists.data && playlists.data) {
         for (const playlist of playlists.data) {

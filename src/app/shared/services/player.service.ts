@@ -153,6 +153,26 @@ export class PlayerService {
     await this.musicKit.player.stop();
   }
 
+  async seekToTime(time: number) {
+    await this.musicKit.player.seekToTime(time);
+  }
+
+  toggleShuffle() {
+    if (this.musicKit.player.shuffleMode === 0) {
+      this.musicKit.player.shuffleMode = 1;
+    } else {
+      this.musicKit.player.shuffleMode = 0;
+    }
+  }
+
+  toggleRepeat() {
+    if (this.musicKit.player.repeatMode === 0) {
+      this.musicKit.player.repeatMode = 2;
+    } else {
+      this.musicKit.player.repeatMode = 0;
+    }
+  }
+
   async signin(): Promise<any> {
     await this.musicKit.authorize();
   }

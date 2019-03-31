@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-artists',
@@ -95,9 +94,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     const url = this.playerService.artist.attributes.url.split('/');
     const name = url[url.length - 2];
 
-    const artistData = await fetch(`${environment.musicServiceApi}/artists/
-      ${this.playerService.musicKit.storefrontId}/${name}/${this.playerService.artist.id}`)
-      .then(res => res.json());
+    const artistData = await this.apiService.getArtistData(name, this.playerService.artist.id);
 
     this.artistImage = artistData.imageUrl;
     this.artistInfo = artistData.resources.data;

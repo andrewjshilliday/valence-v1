@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService } from '../../shared/services/player.service';
-import { ApiService } from 'src/app/shared/services/api.service';
-import { environment } from 'src/environments/environment';
+import { ApiService } from '../../shared/services/api.service';
 
 @Component({
   selector: 'app-for-you',
@@ -20,7 +19,12 @@ export class ForYouComponent implements OnInit {
 
   async loadRecommenations() {
     this.loading = true;
-    await this.getRecommenations();
+
+    const recommendations = this.getRecommenations();
+    const recentPlayed = this.getRecentPlayed();
+    const heavyRotation = this.getHeavyRotation();
+    await Promise.all([recommendations, recentPlayed, heavyRotation]);
+
     this.loading = false;
 
     this.apiService.getRelationships(this.playerService.recentPlayed, 'albums');
@@ -37,13 +41,28 @@ export class ForYouComponent implements OnInit {
     if (!this.playerService.recommendations || (Date.now() - this.playerService.recommendationsDate) > 60 * 60 * 1000) {
       this.playerService.recommendations = await this.playerService.musicKit.api.recommendations();
       this.playerService.recommendationsDate = Date.now();
-    }
 
+      if (this.playerService.recommendations[4].next) {
+        const next = await this.apiService.getMusicKitData(this.playerService.recommendations[4].next);
+
+        if (next && next.data && next.data.length) {
+          for (const item of next.data[0].relationships.contents.data) {
+            this.playerService.recommendations[4].relationships.contents.data.push(item);
+          }
+        }
+      }
+    }
+  }
+
+  async getRecentPlayed(): Promise<any> {
     this.playerService.recentPlayed = await this.playerService.musicKit.api.recentPlayed();
 
-    if (this.playerService.recentPlayed.length === 10) {
-      const next = await fetch(`${environment.appleMusicApi}/v1/me/recent/played?offset=10`,
-        {headers: this.apiService.appleApiHeaders() }).then(res => res.json());
+    while (this.playerService.recentPlayed.length < 30) {
+      const next = await this.apiService.getRecentPlayed(this.playerService.recentPlayed.length);
+
+      if (!next || !next.data || !next.data.length) {
+        break;
+      }
 
       if (next && next.data && next.data.length) {
         for (const item of next.data) {
@@ -51,27 +70,21 @@ export class ForYouComponent implements OnInit {
         }
       }
     }
+  }
 
+  async getHeavyRotation(): Promise<any> {
     this.playerService.heavyRotation = await this.playerService.musicKit.api.historyHeavyRotation();
 
-    if (this.playerService.heavyRotation.length === 10) {
-      const next = await fetch(`${environment.appleMusicApi}/v1/me/me/history/heavy-rotation?offset=10`,
-        { headers: this.apiService.appleApiHeaders() }).then(res => res.json());
+    while (this.playerService.heavyRotation.length < 20) {
+      const next = await this.apiService.getHeavyRotation(this.playerService.heavyRotation.length);
+
+      if (!next || !next.data || !next.data.length) {
+        break;
+      }
 
       if (next && next.data && next.data.length) {
         for (const item of next.data) {
           this.playerService.recentPlayed.push(item);
-        }
-      }
-    }
-
-    if (this.playerService.recommendations[4].next) {
-      const next = await fetch(`${environment.appleMusicApi + this.playerService.recommendations[4].next}`,
-        { headers: this.apiService.appleApiHeaders() }).then(res => res.json());
-
-      if (next && next.data && next.data.length) {
-        for (const item of next.data[0].relationships.contents.data) {
-          this.playerService.recommendations[4].relationships.contents.data.push(item);
         }
       }
     }

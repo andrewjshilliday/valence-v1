@@ -90,30 +90,9 @@ export class ApiService {
     }
   }
 
-  async getRelatedAlbums(album: any) {
-    const url = album.attributes.url.split('/');
-    const name = url[url.length - 2];
-
-    const info = await fetch(`${environment.musicServiceApi}/albums/
-      ${this.playerService.musicKit.storefrontId}/${name}/${album.id}`)
-      .then(res => res.json());
-    info.description = JSON.parse(info.description);
-
-    if (!info.description.data.relationships.listenersAlsoBought) {
-      return;
-    }
-
-    const relatedAlbumsIds = info.description.data.relationships.listenersAlsoBought.data.map(i => i.id);
-    return await this.playerService.musicKit.api.albums(relatedAlbumsIds);
-  }
-
-  appleApiHeaders() {
-    return new Headers({
-      Authorization: 'Bearer ' + MusicKit.getInstance().developerToken,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'Music-User-Token': '' + MusicKit.getInstance().musicUserToken
-    });
+  async addToLibrary(item: any) {
+    await this.playerService.musicKit.api.addToLibrary({ [item.type]: [item.id] });
+    alert('Successfully added ' + item.attributes.name + ' to your library');
   }
 
   async getRelationships(collection: any, type: string) {
@@ -211,6 +190,30 @@ export class ApiService {
     }
   }
 
+  appleApiHeaders() {
+    return new Headers({
+      Authorization: 'Bearer ' + MusicKit.getInstance().developerToken,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Music-User-Token': '' + MusicKit.getInstance().musicUserToken
+    });
+  }
+
+  async getMusicKitData(url: string): Promise<any> {
+    return await fetch(`${environment.appleMusicApi}/${url}`,
+      { headers: this.appleApiHeaders() }).then(res => res.json());
+  }
+
+  async getRecentPlayed(offset: number): Promise<any> {
+    return await fetch(`${environment.appleMusicApi}/v1/me/recent/played?offset=${offset}`,
+      {headers: this.appleApiHeaders() }).then(res => res.json());
+  }
+
+  async getHeavyRotation(offset: number): Promise<any> {
+    return await fetch(`${environment.appleMusicApi}/v1/me/history/heavy-rotation?offset=${offset}`,
+      { headers: this.appleApiHeaders() }).then(res => res.json());
+  }
+
   async getRatings(collection: any): Promise<any> {
     let url = `${environment.appleMusicApi}/v1/me/ratings/songs?ids=`;
 
@@ -245,9 +248,31 @@ export class ApiService {
     }
   }
 
-  async addToLibrary(item: any) {
-    await this.playerService.musicKit.api.addToLibrary({ [item.type]: [item.id] });
-    alert('Successfully added ' + item.attributes.name + ' to your library');
+  async getRelatedAlbums(album: any): Promise<any> {
+    const url = album.attributes.url.split('/');
+    const name = url[url.length - 2];
+
+    const info = await fetch(`${environment.musicServiceApi}/albums/
+      ${this.playerService.musicKit.storefrontId}/${name}/${album.id}`)
+      .then(res => res.json());
+    info.description = JSON.parse(info.description);
+
+    if (!info.description.data.relationships.listenersAlsoBought) {
+      return;
+    }
+
+    const relatedAlbumsIds = info.description.data.relationships.listenersAlsoBought.data.map(i => i.id);
+    return await this.playerService.musicKit.api.albums(relatedAlbumsIds);
+  }
+
+  async getArtistData(name: string, id: string): Promise<any> {
+    await fetch(`${environment.musicServiceApi}/artists/${this.playerService.musicKit.storefrontId}/${name}/${id}`)
+      .then(res => res.json());
+  }
+
+  async getAlbumData(name: string, id: string): Promise<any> {
+    return await fetch(`${environment.musicServiceApi}/albums/${this.playerService.musicKit.storefrontId}/${name}/${id}`)
+      .then(res => res.json());
   }
 
   async getArtistArtwork(url: any): Promise<string> {
@@ -262,17 +287,20 @@ export class ApiService {
     return info.imageUrl;
   }
 
-  async getLyrics() {
-    this.playerService.geniusNowPlayingItem = null;
-    this.playerService.lyricsNowPlayingItem = null;
+  async getGeniusSong(artistName: string, trackName: string, includeLyrics: boolean): Promise<[any, any]> {
+    let geniusSong: any, lyrics: any;
 
-    let query = this.playerService.nowPlayingItem.artistName + ' | ' + this.playerService.nowPlayingItem.title;
+    let query = `${artistName} | ${trackName}`;
     query = encodeURIComponent(query);
 
     const response =  await fetch(`${environment.musicServiceApi}/genius/song/${query}`).then(res => res.json());
-    this.playerService.geniusNowPlayingItem = response.response.song;
-    this.playerService.lyricsNowPlayingItem = await fetch(
-      `${environment.musicServiceApi}/genius/lyrics/${this.playerService.geniusNowPlayingItem.id}`).then(res => res.json());
+    geniusSong = response.response.song;
+
+    if (includeLyrics && geniusSong) {
+      lyrics = await fetch(`${environment.musicServiceApi}/genius/lyrics/${geniusSong.id}`).then(res => res.json());
+    }
+
+    return [geniusSong, lyrics];
   }
 
 }

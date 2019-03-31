@@ -28,7 +28,7 @@
       </div>
       <div>
         <div class="row shuffle-icon" [ngClass]="playerService.musicKit.player.shuffleMode === 0 ? 'text-muted' : ''" title="shuffle">
-          <i class="fas fa-random" (click)="toggleShuffle()"></i>
+          <i class="fas fa-random" (click)="playerService.toggleShuffle()"></i>
         </div>
         <div class="row current-time"><span>{{playerService.musicKit.player.currentPlaybackTime | minutesSeconds}}</span></div>
       </div>
@@ -45,13 +45,13 @@
       </span>
       </div>
       <div class='row now-playing-progress'>
-        <mat-slider class='track-progress' [max]="playerService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="playerService.musicKit.player.currentPlaybackTime" (change)="seekToTime($event.value)"></mat-slider>
+        <mat-slider class='track-progress' [max]="playerService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="playerService.musicKit.player.currentPlaybackTime" (change)="playerService.seekToTime($event.value)"></mat-slider>
       </div>
     </div>
     <div class='col-2'>
       <div>
         <div class="row repeat-icon" [ngClass]="playerService.musicKit.player.repeatMode === 0 ? 'text-muted' : ''" title="repeat">
-          <i class="fas fa-redo" (click)="toggleRepeat()"></i>
+          <i class="fas fa-redo" (click)="playerService.toggleRepeat()"></i>
         </div>
         <div class="row remaining-time"><span>{{playerService.musicKit.player.currentPlaybackTimeRemaining | minutesSeconds}}</span></div>
       </div>
