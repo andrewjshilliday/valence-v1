@@ -137,7 +137,13 @@
               <mat-spinner class="loading-spinner"></mat-spinner>
             </div>
             <div *ngIf="!lyricsLoading">
-              <p *ngIf="playerService.lyricsNowPlayingItem" class="lyrics">{{playerService.lyricsNowPlayingItem}}</p>
+              <div *ngIf="playerService.lyricsNowPlayingItem" class="lyrics">
+                <h6>
+                  {{playerService.nowPlayingItem.title}}<br />
+                  {{playerService.nowPlayingItem.albumName}} - {{playerService.nowPlayingItem.artistName}}
+                </h6>
+                <p *ngIf="playerService.lyricsNowPlayingItem">{{playerService.lyricsNowPlayingItem}}</p>
+              </div>
             </div>
           </div>
         </div>

@@ -199,6 +199,16 @@ td {
   white-space: pre-wrap;
 }
 
+.lyrics h6 {
+  font-size: 11pt;
+  text-align: center;
+  font-weight: bold;
+}
+
+.lyrics p {
+  font-size: 11pt;
+}
+
 .loading-spinner {
   top: 15vh;
   margin: 0 auto;
