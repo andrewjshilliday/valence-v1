@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MusicPlayerService } from '../../../shared/services/music-player.service';
+import { MusicApiService } from 'src/app/shared/services/music-api.service';
+
+declare var MusicKit: any;
 
 @Component({
   selector: 'app-now-playing',
@@ -8,7 +11,11 @@ import { MusicPlayerService } from '../../../shared/services/music-player.servic
 })
 export class NowPlayingComponent implements OnInit {
 
-  constructor(public musicPlayerService: MusicPlayerService) { }
+  lyricsLoading: boolean;
+
+  constructor(public musicPlayerService: MusicPlayerService, public musicApiService: MusicApiService) {
+    this.musicPlayerService.musicKit.addEventListener(MusicKit.Events.mediaItemDidChange, this.mediaItemDidChange.bind(this));
+  }
 
   ngOnInit() {
   }
@@ -31,6 +38,12 @@ export class NowPlayingComponent implements OnInit {
     } else {
       this.musicPlayerService.musicKit.player.repeatMode = 0;
     }
+  }
+
+  async mediaItemDidChange() {
+    this.lyricsLoading = true;
+    await this.musicApiService.getLyrics();
+    this.lyricsLoading = false;
   }
 
 }

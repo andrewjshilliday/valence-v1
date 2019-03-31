@@ -26,6 +26,7 @@ export class SettingsComponent implements OnInit {
 
   saveHardwareID() {
     localStorage.setItem('hardwareID', this.hardwareID);
+    this.musicPlayerService.deviceHardwareID = this.hardwareID;
   }
 
   showConnectedDevices() {

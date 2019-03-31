@@ -194,3 +194,35 @@ td {
 .nav-pills .nav-link, .nav-pills {
   color:#454545; 
 }
+
+.lyrics {
+  white-space: pre-wrap;
+}
+
+.loading-spinner {
+  top: 15vh;
+  margin: 0 auto;
+}
+
+.scrollbar::-webkit-scrollbar
+{
+  height: 8px;
+	width: 8px;
+	background-color: #F5F5F5;
+}
+
+.scrollbar::-webkit-scrollbar-track
+{
+  box-shadow: #F5F5F5;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	background-color: #F5F5F5;
+}
+
+.scrollbar::-webkit-scrollbar-thumb
+{
+  box-shadow: #919191;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+	border-radius: 8px;
+	background-color: #919191;
+}

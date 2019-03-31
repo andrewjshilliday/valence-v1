@@ -24,6 +24,9 @@ export class MusicPlayerService {
   queue: Array<any>;
   history: Array<any> = [];
 
+  geniusNowPlayingItem: any;
+  lyricsNowPlayingItem: any;
+
   lastSearchTerm = '';
   searchArtists: any;
   searchAlbums: any;

@@ -78,7 +78,7 @@
           </div>
         </nav>
       </div>
-      <div class="modal-body queue">
+      <div class="modal-body queue scrollbar">
         <div class="tab-content" id="pills-tabContent">
           <div class="tab-pane fade show active" id="pills-queue" role="tabpanel" aria-labelledby="pills-queue-tab">
             <table *ngIf="musicPlayerService && musicPlayerService.queue" class="table table-hover">
@@ -132,7 +132,14 @@
               </tbody>
             </table>
           </div>
-          <div class="tab-pane fade" id="pills-lyrics" role="tabpanel" aria-labelledby="pills-lyrics-tab">...</div>
+          <div class="tab-pane fade" id="pills-lyrics" role="tabpanel" aria-labelledby="pills-lyrics-tab">
+            <div *ngIf="lyricsLoading">
+              <mat-spinner class="loading-spinner"></mat-spinner>
+            </div>
+            <div *ngIf="!lyricsLoading">
+              <p *ngIf="musicPlayerService.lyricsNowPlayingItem" class="lyrics">{{musicPlayerService.lyricsNowPlayingItem}}</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-footer"></div>

@@ -18,7 +18,6 @@ export class MusicApiService {
 
     const isLibraryResource = id.startsWith('r.');
     artist = null;
-    // this.album = null;
 
     if (isLibraryResource) {
       artist = await this.musicPlayerService.musicKit.api.library.artist(id);
@@ -261,6 +260,19 @@ export class MusicApiService {
       .then(res => res.json());
 
     return info.imageUrl;
+  }
+
+  async getLyrics() {
+    this.musicPlayerService.geniusNowPlayingItem = null;
+    this.musicPlayerService.lyricsNowPlayingItem = null;
+
+    let query = this.musicPlayerService.nowPlayingItem.artistName + ' | ' + this.musicPlayerService.nowPlayingItem.title;
+    query = encodeURIComponent(query);
+
+    const response =  await fetch(environment.musicServiceApi + 'genius/song/' + query).then(res => res.json());
+    this.musicPlayerService.geniusNowPlayingItem = response.response.song;
+    this.musicPlayerService.lyricsNowPlayingItem = await fetch(
+      environment.musicServiceApi + 'genius/lyrics/' + this.musicPlayerService.geniusNowPlayingItem.id).then(res => res.json());
   }
 
 }
