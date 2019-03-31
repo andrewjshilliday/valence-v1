@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MusicPlayerService } from '../../services/music-player.service';
+import { PlayerService } from '../../services/player.service';
 
 @Component({
   selector: 'app-media-item-collection-row',
@@ -12,7 +12,7 @@ export class MediaItemCollectionRowComponent implements OnInit {
   @Input() size: number;
   @Input() todaysAlbums: boolean;
 
-  constructor(public musicPlayerService: MusicPlayerService) { }
+  constructor(public playerService: PlayerService) { }
 
   ngOnInit() {
   }

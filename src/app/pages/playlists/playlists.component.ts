@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { MusicPlayerService } from '../../shared/services/music-player.service';
-import { MusicApiService } from '../../shared/services/music-api.service';
+import { PlayerService } from '../../shared/services/player.service';
+import { ApiService } from '../../shared/services/api.service';
 
 @Component({
   selector: 'app-playlists',
@@ -17,7 +17,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   artists: any;
   ratings: any;
 
-  constructor(private route: ActivatedRoute, public musicPlayerService: MusicPlayerService, public musicApiService: MusicApiService) { }
+  constructor(private route: ActivatedRoute, public playerService: PlayerService, public apiService: ApiService) { }
 
   ngOnInit() {
     this.playlistSubscription = this.route.params.subscribe(params => {
@@ -31,30 +31,30 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
   async loadPlaylist(id: string) {
     this.loading = true;
-    this.musicPlayerService.playlist = await this.musicApiService.getPlaylist(id, this.musicPlayerService.playlist);
+    this.playerService.playlist = await this.apiService.getPlaylist(id, this.playerService.playlist);
     this.loading = false;
     this.getTrackRelationships();
 
-    if (this.musicPlayerService.authorized) {
+    if (this.playerService.authorized) {
       this.getRatings();
     }
 
     this.playlistDuration = 0;
 
-    for (const item of this.musicPlayerService.playlist.relationships.tracks.data) {
+    for (const item of this.playerService.playlist.relationships.tracks.data) {
       this.playlistDuration += item.attributes.durationInMillis;
     }
   }
 
   async getRatings() {
-    this.ratings = await this.musicApiService.getRatings(this.musicPlayerService.playlist);
+    this.ratings = await this.apiService.getRatings(this.playerService.playlist);
   }
 
   async getTrackRelationships() {
-    const songIdArray = this.musicPlayerService.playlist.relationships.tracks.data.map(i => i.id);
-    const results = await this.musicPlayerService.musicKit.api.songs(songIdArray, { include: 'artists,albums' });
+    const songIdArray = this.playerService.playlist.relationships.tracks.data.map(i => i.id);
+    const results = await this.playerService.musicKit.api.songs(songIdArray, { include: 'artists,albums' });
 
-    for (const item of this.musicPlayerService.playlist.relationships.tracks.data) {
+    for (const item of this.playerService.playlist.relationships.tracks.data) {
       for (const result of results) {
         if (item.id === result.id) {
           item.relationships = result.relationships;
@@ -68,7 +68,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     const artistIdArray = Array.from(new Set(results.map(r => r.relationships.artists.data[0].id)));
 
     while (artistIdArray[offset]) {
-      const artists = await this.musicPlayerService.musicKit.api.artists(artistIdArray.slice(offset, offset + 30));
+      const artists = await this.playerService.musicKit.api.artists(artistIdArray.slice(offset, offset + 30));
 
       for (const artist of artists) {
         this.artists.push(artist);
@@ -83,7 +83,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
   async getArtwork(artist: any) {
     if (!artist.attributes.artworkUrl) {
-      artist.attributes.artworkUrl = await this.musicApiService.getArtistArtwork(artist.attributes.url);
+      artist.attributes.artworkUrl = await this.apiService.getArtistArtwork(artist.attributes.url);
     }
   }
 

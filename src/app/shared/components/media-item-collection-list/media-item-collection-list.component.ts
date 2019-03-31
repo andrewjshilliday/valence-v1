@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MusicPlayerService } from '../../services/music-player.service';
-import { MusicApiService } from '../../services/music-api.service';
+import { PlayerService } from '../../services/player.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-media-item-collection-list',
@@ -21,7 +21,7 @@ export class MediaItemCollectionListComponent implements OnInit {
   collectionRatings: any;
   collectionDuration = 0;
 
-  constructor(public musicPlayerService: MusicPlayerService, public musicApiService: MusicApiService) { }
+  constructor(public playerService: PlayerService, public apiService: ApiService) { }
 
   ngOnInit() {
     if (this.collection.relationships && this.collection.relationships.tracks) {
@@ -50,7 +50,7 @@ export class MediaItemCollectionListComponent implements OnInit {
   }
 
   addRating(item: any, oldRating: number, newRating: number) {
-    this.musicApiService.addRating(item, newRating);
+    this.apiService.addRating(item, newRating);
 
     const currentRatings = this.ratings.data.map(r => r.id);
 

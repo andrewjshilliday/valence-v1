@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MusicPlayerService } from 'src/app/shared/services/music-player.service';
+import { PlayerService } from 'src/app/shared/services/player.service';
 
 @Component({
   selector: 'app-settings',
@@ -12,10 +12,10 @@ export class SettingsComponent implements OnInit {
   enablePlayPause: boolean;
   hardwareID: string;
 
-  constructor(public musicPlayerService: MusicPlayerService) { }
+  constructor(public playerService: PlayerService) { }
 
   ngOnInit() {
-    this.bitrate = this.musicPlayerService.musicKit.bitrate.toString();
+    this.bitrate = this.playerService.musicKit.bitrate.toString();
     this.enablePlayPause = Boolean(JSON.parse(localStorage.getItem('enablePlayPause')));
     this.hardwareID = localStorage.getItem('hardwareID');
   }
@@ -26,7 +26,7 @@ export class SettingsComponent implements OnInit {
 
   saveHardwareID() {
     localStorage.setItem('hardwareID', this.hardwareID);
-    this.musicPlayerService.deviceHardwareID = this.hardwareID;
+    this.playerService.deviceHardwareID = this.hardwareID;
   }
 
   showConnectedDevices() {

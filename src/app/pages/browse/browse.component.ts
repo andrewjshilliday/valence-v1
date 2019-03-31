@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MusicPlayerService } from '../../shared/services/music-player.service';
-import { MusicApiService } from '../../shared/services/music-api.service';
+import { PlayerService } from '../../shared/services/player.service';
+import { ApiService } from '../../shared/services/api.service';
 import { Constants } from '../../shared/constants';
 
 @Component({
@@ -12,7 +12,7 @@ export class BrowseComponent implements OnInit {
 
   loading: boolean;
 
-  constructor(public musicPlayerService: MusicPlayerService, public musicApiService: MusicApiService) { }
+  constructor(public playerService: PlayerService, public apiService: ApiService) { }
 
   ngOnInit() {
     this.loadBrowse();
@@ -29,44 +29,44 @@ export class BrowseComponent implements OnInit {
   }
 
   async loadMostPlayed() {
-    if (!this.musicPlayerService.mostPlayed) {
-      this.musicPlayerService.mostPlayed = await this.musicPlayerService.musicKit.api.charts(null, { types: 'albums,playlists,songs' });
+    if (!this.playerService.mostPlayed) {
+      this.playerService.mostPlayed = await this.playerService.musicKit.api.charts(null, { types: 'albums,playlists,songs' });
     }
 
     this.loading = false;
 
-    this.musicApiService.getRelationships(this.musicPlayerService.mostPlayed.albums[0].data, 'albums');
-    this.musicApiService.getRelationships(this.musicPlayerService.mostPlayed.playlists[0].data, 'playlists');
-    this.musicApiService.getRelationships(this.musicPlayerService.mostPlayed.songs[0].data, 'songs');
+    this.apiService.getRelationships(this.playerService.mostPlayed.albums[0].data, 'albums');
+    this.apiService.getRelationships(this.playerService.mostPlayed.playlists[0].data, 'playlists');
+    this.apiService.getRelationships(this.playerService.mostPlayed.songs[0].data, 'songs');
   }
 
   async loadtop100() {
-    if (!this.musicPlayerService.top100) {
-      this.musicPlayerService.top100 = await this.musicPlayerService.musicKit.api.playlists(Constants.top100Ids);
+    if (!this.playerService.top100) {
+      this.playerService.top100 = await this.playerService.musicKit.api.playlists(Constants.top100Ids);
     }
   }
 
   async loadFeaturedPlaylists() {
-    if (!this.musicPlayerService.featuredPlaylists) {
-      this.musicPlayerService.featuredPlaylists = await this.musicPlayerService.musicKit.api.playlists(Constants.featuredPlaylistsIds);
+    if (!this.playerService.featuredPlaylists) {
+      this.playerService.featuredPlaylists = await this.playerService.musicKit.api.playlists(Constants.featuredPlaylistsIds);
     }
   }
 
   async loadAppleCurators() {
-    if (!this.musicPlayerService.appleCurators) {
-      this.musicPlayerService.appleCurators = await this.musicPlayerService.musicKit.api.appleCurators(Constants.appleCuratorsIds);
+    if (!this.playerService.appleCurators) {
+      this.playerService.appleCurators = await this.playerService.musicKit.api.appleCurators(Constants.appleCuratorsIds);
     }
   }
 
   async loadCurators() {
-    if (!this.musicPlayerService.curators) {
-      this.musicPlayerService.curators = await this.musicPlayerService.musicKit.api.curators(Constants.curatorsIds);
+    if (!this.playerService.curators) {
+      this.playerService.curators = await this.playerService.musicKit.api.curators(Constants.curatorsIds);
     }
   }
 
   async loadAListPlaylists() {
-    if (!this.musicPlayerService.aListPlaylists) {
-      this.musicPlayerService.aListPlaylists = await this.musicPlayerService.musicKit.api.playlists(Constants.aListPlaylistsIds);
+    if (!this.playerService.aListPlaylists) {
+      this.playerService.aListPlaylists = await this.playerService.musicKit.api.playlists(Constants.aListPlaylistsIds);
     }
   }
 

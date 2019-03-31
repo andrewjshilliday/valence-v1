@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { MusicPlayerService } from '../../shared/services/music-player.service';
-import { MusicApiService } from '../../shared/services/music-api.service';
+import { PlayerService } from '../../shared/services/player.service';
+import { ApiService } from '../../shared/services/api.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -33,7 +33,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
   sortLiveAlbums = 'recommended';
   sortCompilations = 'recommended';
 
-  constructor(private route: ActivatedRoute, public musicPlayerService: MusicPlayerService, public musicApiService: MusicApiService) { }
+  constructor(private route: ActivatedRoute, public playerService: PlayerService, public apiService: ApiService) { }
 
   ngOnInit() {
     this.artistSubscription = this.route.params.subscribe(params => {
@@ -48,14 +48,14 @@ export class ArtistsComponent implements OnInit, OnDestroy {
   async loadArtist(id: string) {
     this.loading = true;
 
-    this.musicPlayerService.artist = await this.musicApiService.getArtist(id, this.musicPlayerService.artist);
+    this.playerService.artist = await this.apiService.getArtist(id, this.playerService.artist);
 
-    const itemIdArray = this.musicPlayerService.artist.relationships.albums.data.filter(i => i.type === 'albums').map(i => i.id);
-    this.musicPlayerService.artist.relationships.albums.data =
-      await this.musicPlayerService.musicKit.api.albums(itemIdArray, { include: 'artists' });
+    const itemIdArray = this.playerService.artist.relationships.albums.data.filter(i => i.type === 'albums').map(i => i.id);
+    this.playerService.artist.relationships.albums.data =
+      await this.playerService.musicKit.api.albums(itemIdArray, { include: 'artists' });
 
-    this.musicApiService.getRelationships(this.musicPlayerService.artist.relationships.albums.data, 'albums');
-    this.musicPlayerService.playlists = await this.musicApiService.getPlaylists(id);
+    this.apiService.getRelationships(this.playerService.artist.relationships.albums.data, 'albums');
+    this.playerService.playlists = await this.apiService.getPlaylists(id);
     await this.getArtistInfo();
 
     this.loading = false;
@@ -84,19 +84,19 @@ export class ArtistsComponent implements OnInit, OnDestroy {
   }
 
   async getArtistInfo() {
-    if (!this.musicPlayerService.artist.attributes.url) {
-      if (this.musicPlayerService.artist.relationships.albums) {
-        this.albums = this.musicPlayerService.artist.relationships.albums.data;
+    if (!this.playerService.artist.attributes.url) {
+      if (this.playerService.artist.relationships.albums) {
+        this.albums = this.playerService.artist.relationships.albums.data;
       }
 
       return;
     }
 
-    const url = this.musicPlayerService.artist.attributes.url.split('/');
+    const url = this.playerService.artist.attributes.url.split('/');
     const name = url[url.length - 2];
 
-    const artistData = await fetch(environment.musicServiceApi + 'artists/' +
-      `${this.musicPlayerService.musicKit.storefrontId}/${name}/${this.musicPlayerService.artist.id}`)
+    const artistData = await fetch(`${environment.musicServiceApi}/artists/
+      ${this.playerService.musicKit.storefrontId}/${name}/${this.playerService.artist.id}`)
       .then(res => res.json());
 
     this.artistImage = artistData.imageUrl;
@@ -109,23 +109,23 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     let compilationsIds: any;
 
     for (const item of artistData.resources.included) {
-      if (item.id.match(this.musicPlayerService.artist.id + '/topSongs')) {
+      if (item.id.match(this.playerService.artist.id + '/topSongs')) {
         topSongs = item.relationships.content.data.map(i => i.id);
         continue;
       }
-      if (item.id.match(this.musicPlayerService.artist.id + '/fullAlbums')) {
+      if (item.id.match(this.playerService.artist.id + '/fullAlbums')) {
         albumsIds = item.relationships.content.data.map(i => i.id);
         continue;
       }
-      if (item.id.match(this.musicPlayerService.artist.id + '/singleAlbums')) {
+      if (item.id.match(this.playerService.artist.id + '/singleAlbums')) {
         singlesIds = item.relationships.content.data.map(i => i.id);
         continue;
       }
-      if (item.id.match(this.musicPlayerService.artist.id + '/liveAlbums')) {
+      if (item.id.match(this.playerService.artist.id + '/liveAlbums')) {
         liveAlbumsIds = item.relationships.content.data.map(i => i.id);
         continue;
       }
-      if (item.id.match(this.musicPlayerService.artist.id + '/compilationAlbums')) {
+      if (item.id.match(this.playerService.artist.id + '/compilationAlbums')) {
         compilationsIds = item.relationships.content.data.map(i => i.id);
         continue;
       }
@@ -139,7 +139,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.liveAlbums = [];
     this.compilations = [];
 
-    for (const item of this.musicPlayerService.artist.relationships.albums.data) {
+    for (const item of this.playerService.artist.relationships.albums.data) {
       if (albumsIds && albumsIds.indexOf(item.id) > -1) {
         this.albums.push(item);
         continue;
@@ -159,7 +159,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     }
 
     if (topSongs) {
-      this.topSongs = await this.musicPlayerService.musicKit.api.songs(topSongs, {include: 'albums'});
+      this.topSongs = await this.playerService.musicKit.api.songs(topSongs, {include: 'albums'});
     }
   }
 
@@ -172,7 +172,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     }
 
     const itemIdArray = this.artistInfo.relationships.artistContemporaries.data.map(i => i.id);
-    this.relatedArtists = await this.musicPlayerService.musicKit.api.artists(itemIdArray);
+    this.relatedArtists = await this.playerService.musicKit.api.artists(itemIdArray);
 
     const promises = this.relatedArtists.map(this.getArtwork.bind(this));
     await Promise.all(promises);
@@ -180,7 +180,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
 
   async getArtwork(artist: any) {
     if (!artist.attributes.artworkUrl) {
-      artist.attributes.artworkUrl = await this.musicApiService.getArtistArtwork(artist.attributes.url);
+      artist.attributes.artworkUrl = await this.apiService.getArtistArtwork(artist.attributes.url);
     }
   }
 

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { MusicPlayerService } from '../../shared/services/music-player.service';
-import { MusicApiService } from '../../shared/services/music-api.service';
+import { PlayerService } from '../../shared/services/player.service';
+import { ApiService } from '../../shared/services/api.service';
 
 @Component({
   selector: 'app-search',
@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   searchHints: any;
 
   constructor(private route: ActivatedRoute, private router: Router,
-    public musicPlayerService: MusicPlayerService, public musicApiService: MusicApiService) { }
+    public playerService: PlayerService, public apiService: ApiService) { }
 
   ngOnInit() {
     this.searchSubscription = this.route.queryParams.subscribe(params => {
@@ -35,18 +35,18 @@ export class SearchComponent implements OnInit, OnDestroy {
     await this.search(term);
     this.loading = false;
 
-    if (this.musicPlayerService.searchAlbums) {
-      this.musicApiService.getRelationships(this.musicPlayerService.searchAlbums, 'albums');
+    if (this.playerService.searchAlbums) {
+      this.apiService.getRelationships(this.playerService.searchAlbums, 'albums');
     }
-    if (this.musicPlayerService.searchSongs) {
-      this.musicApiService.getRelationships(this.musicPlayerService.searchSongs, 'songs');
+    if (this.playerService.searchSongs) {
+      this.apiService.getRelationships(this.playerService.searchSongs, 'songs');
     }
-    if (this.musicPlayerService.searchPlaylists) {
-      this.musicApiService.getRelationships(this.musicPlayerService.searchPlaylists, 'playlists');
+    if (this.playerService.searchPlaylists) {
+      this.apiService.getRelationships(this.playerService.searchPlaylists, 'playlists');
     }
 
-    if (this.musicPlayerService.searchArtists) {
-      const promises = this.musicPlayerService.searchArtists.map(this.getArtwork.bind(this));
+    if (this.playerService.searchArtists) {
+      const promises = this.playerService.searchArtists.map(this.getArtwork.bind(this));
       await Promise.all(promises);
     }
   }
@@ -56,45 +56,45 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.router.navigate(['/search'], { queryParams: { term: term } });
     }
 
-    if (term === '' || term === this.musicPlayerService.lastSearchTerm) {
+    if (term === '' || term === this.playerService.lastSearchTerm) {
       return;
     }
 
-    this.musicPlayerService.searchArtists = null;
-    this.musicPlayerService.searchAlbums = null;
-    this.musicPlayerService.searchSongs = null;
-    this.musicPlayerService.searchPlaylists = null;
+    this.playerService.searchArtists = null;
+    this.playerService.searchAlbums = null;
+    this.playerService.searchSongs = null;
+    this.playerService.searchPlaylists = null;
 
-    const results = await this.musicPlayerService.musicKit.api.search(term, { types: 'artists,albums,songs,playlists', limit: 20 });
+    const results = await this.playerService.musicKit.api.search(term, { types: 'artists,albums,songs,playlists', limit: 20 });
 
     if (results.artists != null) {
-      this.musicPlayerService.searchArtists = results.artists.data;
+      this.playerService.searchArtists = results.artists.data;
     }
 
     if (results.albums != null) {
-      this.musicPlayerService.searchAlbums = results.albums.data;
+      this.playerService.searchAlbums = results.albums.data;
     }
 
     if (results.songs != null) {
-      this.musicPlayerService.searchSongs = results.songs.data;
+      this.playerService.searchSongs = results.songs.data;
     }
 
     if (results.playlists != null) {
-      this.musicPlayerService.searchPlaylists = results.playlists.data;
+      this.playerService.searchPlaylists = results.playlists.data;
     }
 
-    this.musicPlayerService.lastSearchTerm = term;
+    this.playerService.lastSearchTerm = term;
   }
 
   async getSearchHints(term: string) {
     if (term !== '') {
-      this.searchHints = await this.musicPlayerService.musicKit.api.searchHints(term);
+      this.searchHints = await this.playerService.musicKit.api.searchHints(term);
     }
   }
 
   async getArtwork(artist: any) {
     if (!artist.attributes.artworkUrl) {
-      artist.attributes.artworkUrl = await this.musicApiService.getArtistArtwork(artist.attributes.url);
+      artist.attributes.artworkUrl = await this.apiService.getArtistArtwork(artist.attributes.url);
     }
   }
 

@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { MusicApiService } from './music-api.service';
+import { ApiService } from './api.service';
 
-describe('MusicApiService', () => {
+describe('ApiService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: MusicApiService = TestBed.get(MusicApiService);
+    const service: ApiService = TestBed.get(ApiService);
     expect(service).toBeTruthy();
   });
 });

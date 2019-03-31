@@ -3,8 +3,8 @@
     <div *ngFor="let column of columns" class="col-12 col-sm-6 col-md-4 column">
       <div *ngFor="let row of rows" class="media-item rounded">
         <div *ngIf="collection[(column * numRows) + row]; let item" class="row" [ngStyle]="{'padding-bottom': row === rows[rows.length - 1] || !collection[(column * numRows) + row] || collection[(column * numRows) + row] === collection[collection.length - 1] ? '4px' : ''}">
-          <div class="media-artwork" (click)="musicPlayerService.playItem(item)">
-            <img class="img-fluid rounded" style="height: 50px; width: 50px;" [attr.data-src]="musicPlayerService.formatArtworkURL(item.attributes.artwork, 100)" src="././assets/images/placeholder.png" />
+          <div class="media-artwork" (click)="playerService.playItem(item)">
+            <img class="img-fluid rounded" style="height: 50px; width: 50px;" [attr.data-src]="playerService.formatArtworkURL(item.attributes.artwork, 100)" src="././assets/images/placeholder.png" />
             <div class="media-control-button">
               <i class="fas fa-play-circle fa-2x" aria-hidden="true"></i>
             </div>

@@ -23,12 +23,12 @@
         <i class="fas fa-ellipsis-h"></i>
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" (click)="musicPlayerService.playItem(collection)">Play</a>
-        <a class="dropdown-item" (click)="musicPlayerService.playItem(collection, 0, true)">Shuffle</a>
-        <a class="dropdown-item" (click)="musicPlayerService.queueNext(collection)">Play Next</a>
-        <a class="dropdown-item" (click)="musicPlayerService.queueLater(collection)">Play Later</a>
+        <a class="dropdown-item" (click)="playerService.playItem(collection)">Play</a>
+        <a class="dropdown-item" (click)="playerService.playItem(collection, 0, true)">Shuffle</a>
+        <a class="dropdown-item" (click)="playerService.queueNext(collection)">Play Next</a>
+        <a class="dropdown-item" (click)="playerService.queueLater(collection)">Play Later</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" (click)="musicApiService.addToLibrary(collection)">Add to Library</a>
+        <a class="dropdown-item" (click)="apiService.addToLibrary(collection)">Add to Library</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item">Love</a>
         <a class="dropdown-item">Dislike</a>
@@ -39,10 +39,10 @@
   <div class="minimised">
     <div class="row header">
       <div class="col-4" appLazyLoadImage>
-        <img *ngIf="collection.attributes.artwork" class="img-fluid card-img-top rounded" [attr.data-src]="musicPlayerService.formatArtworkURL(collection.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
+        <img *ngIf="collection.attributes.artwork" class="img-fluid card-img-top rounded" [attr.data-src]="playerService.formatArtworkURL(collection.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
         <img *ngIf="!collection.attributes.artwork" class="img-fluid card-img-top rounded" src="././assets/images/placeholder.png" />
-        <span><a (click)='musicPlayerService.playItem(collection, 0)'><i class="fas fa-play fa-xs"></i>Play</a></span><br />
-        <span><a (click)='musicPlayerService.playItem(collection, 0, true)'><i class="fas fa-random fa-xs"></i>Shuffle</a></span>
+        <span><a (click)='playerService.playItem(collection, 0)'><i class="fas fa-play fa-xs"></i>Play</a></span><br />
+        <span><a (click)='playerService.playItem(collection, 0, true)'><i class="fas fa-random fa-xs"></i>Shuffle</a></span>
       </div>
       <div class="col-8">
         <div class="row">
@@ -65,10 +65,10 @@
               <i class="fas fa-ellipsis-h"></i>
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" (click)='musicPlayerService.playItem(collection)'>Play</a>
-              <a class="dropdown-item" (click)='musicPlayerService.playItem(collection, 0, true)'>Shuffle</a>
-              <a class="dropdown-item" (click)='musicPlayerService.queueNext(collection)'>Play Next</a>
-              <a class="dropdown-item" (click)='musicPlayerService.queueLater(collection)'>Play Later</a>
+              <a class="dropdown-item" (click)='playerService.playItem(collection)'>Play</a>
+              <a class="dropdown-item" (click)='playerService.playItem(collection, 0, true)'>Shuffle</a>
+              <a class="dropdown-item" (click)='playerService.queueNext(collection)'>Play Next</a>
+              <a class="dropdown-item" (click)='playerService.queueLater(collection)'>Play Later</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item">Add to Library</a>
               <div class="dropdown-divider"></div>
@@ -95,15 +95,15 @@
 
   <tbody>
     <tr *ngFor="let item of tracks" class="mediarow">
-      <td class="media-status" (click)="!musicPlayerService.isItemCurrentlyPlaying(item.id) ? musicPlayerService.playItem(collection, tracks.indexOf(item)) : musicPlayerService.pause()">
-        <span *ngIf="!musicPlayerService.isItemCurrentlyPlaying(item.id) && !showArtwork && !getPopularity(item.id) && collection.relationships" class="item-number text-center text-muted">{{tracks.indexOf(item) + 1}}</span>
-        <i *ngIf="!musicPlayerService.isItemCurrentlyPlaying(item.id) && !showArtwork && getPopularity(item.id)" class="fas fa-star item-popularity text-center text-muted"></i>
-        <img *ngIf="showArtwork" class="img-fluid" [attr.data-src]="musicPlayerService.formatArtworkURL(item.attributes.artwork, 50)" src="././assets/images/placeholder.png" />
-        <i *ngIf="!musicPlayerService.isItemCurrentlyPlaying(item.id)" class="fas fa-play media-icon"></i>
-        <i *ngIf="musicPlayerService.isItemCurrentlyPlaying(item.id)" class="fas fa-pause media-icon"></i>
-        <i *ngIf="musicPlayerService.isItemCurrentlyPlaying(item.id)" class="fas fa-volume-up now-playing-icon"></i>
+      <td class="media-status" (click)="!playerService.isItemCurrentlyPlaying(item.id) ? playerService.playItem(collection, tracks.indexOf(item)) : playerService.pause()">
+        <span *ngIf="!playerService.isItemCurrentlyPlaying(item.id) && !showArtwork && !getPopularity(item.id) && collection.relationships" class="item-number text-center text-muted">{{tracks.indexOf(item) + 1}}</span>
+        <i *ngIf="!playerService.isItemCurrentlyPlaying(item.id) && !showArtwork && getPopularity(item.id)" class="fas fa-star item-popularity text-center text-muted"></i>
+        <img *ngIf="showArtwork" class="img-fluid" [attr.data-src]="playerService.formatArtworkURL(item.attributes.artwork, 50)" src="././assets/images/placeholder.png" />
+        <i *ngIf="!playerService.isItemCurrentlyPlaying(item.id)" class="fas fa-play media-icon"></i>
+        <i *ngIf="playerService.isItemCurrentlyPlaying(item.id)" class="fas fa-pause media-icon"></i>
+        <i *ngIf="playerService.isItemCurrentlyPlaying(item.id)" class="fas fa-volume-up now-playing-icon"></i>
       </td>
-      <td class="song-name text-truncate" (click)="!musicPlayerService.isItemCurrentlyPlaying(item.id) ? musicPlayerService.playItem(collection, tracks.indexOf(item)) : musicPlayerService.pause()" title="{{item.attributes.name}}" [ngStyle]="{'border': tracks[0].id === item.id ? 'none' : ''}">
+      <td class="song-name text-truncate" (click)="!playerService.isItemCurrentlyPlaying(item.id) ? playerService.playItem(collection, tracks.indexOf(item)) : playerService.pause()" title="{{item.attributes.name}}" [ngStyle]="{'border': tracks[0].id === item.id ? 'none' : ''}">
         <span class="song-text" [ngStyle]="{'width': item.attributes.contentRating && item.attributes.contentRating === 'explicit' ? 'calc(100% - 20px)' : ''}">
           {{item.attributes.name}}
         </span>
@@ -126,9 +126,9 @@
             <i class="fas fa-ellipsis-h"></i>
           </a>
           <div class="dropdown-menu media-options-dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" (click)='musicPlayerService.playItem(item)'>Play</a>
-            <a class="dropdown-item" (click)='musicPlayerService.queueNext(item)'>Play Next</a>
-            <a class="dropdown-item" (click)='musicPlayerService.playItem(item)'>Play Later</a>
+            <a class="dropdown-item" (click)='playerService.playItem(item)'>Play</a>
+            <a class="dropdown-item" (click)='playerService.queueNext(item)'>Play Next</a>
+            <a class="dropdown-item" (click)='playerService.playItem(item)'>Play Later</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item">Add to Library</a>
             <div class="dropdown-divider"></div>

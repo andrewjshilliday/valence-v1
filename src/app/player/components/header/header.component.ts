@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MusicPlayerService } from '../../../shared/services/music-player.service';
+import { PlayerService } from '../../../shared/services/player.service';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +8,7 @@ import { MusicPlayerService } from '../../../shared/services/music-player.servic
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public musicPlayerService: MusicPlayerService) { }
+  constructor(public playerService: PlayerService) { }
 
   ngOnInit() {
   }

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { MusicPlayerService } from '../../shared/services/music-player.service';
-import { MusicApiService } from '../../shared/services/music-api.service';
+import { PlayerService } from '../../shared/services/player.service';
+import { ApiService } from '../../shared/services/api.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -22,7 +22,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   popularity: any;
 
   constructor(private route: ActivatedRoute, private router: Router,
-    public musicPlayerService: MusicPlayerService, public musicApiService: MusicApiService) { }
+    public playerService: PlayerService, public apiService: ApiService) { }
 
   ngOnInit() {
     this.albumSubscription = this.route.params.subscribe(params => {
@@ -41,7 +41,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   async loadAlbum(id: string) {
     this.loading = true;
 
-    this.musicPlayerService.album = await this.musicApiService.getAlbum(id, this.musicPlayerService.album);
+    this.playerService.album = await this.apiService.getAlbum(id, this.playerService.album);
 
     this.loading = false;
 
@@ -51,42 +51,42 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     this.relatedAlbums = null;
     this.getAlbumInfo();
 
-    if (this.musicPlayerService.authorized) {
+    if (this.playerService.authorized) {
       this.getRatings();
     }
 
-    if (this.musicPlayerService.album.attributes.artistName === 'Various Artists') {
-      this.musicApiService.getRelationships(this.musicPlayerService.album.relationships.tracks.data, 'songs');
+    if (this.playerService.album.attributes.artistName === 'Various Artists') {
+      this.apiService.getRelationships(this.playerService.album.relationships.tracks.data, 'songs');
     }
 
     this.albumDuration = 0;
 
-    for (const item of this.musicPlayerService.album.relationships.tracks.data) {
+    for (const item of this.playerService.album.relationships.tracks.data) {
       this.albumDuration += item.attributes.durationInMillis;
     }
   }
 
   async getArtistAlbums() {
-    if (this.musicPlayerService.album.relationships.artists && this.musicPlayerService.album.relationships.artists.data.length) {
-      this.artistAlbums = await this.musicPlayerService.musicKit.api.artist(
-        this.musicPlayerService.album.relationships.artists.data[0].id);
+    if (this.playerService.album.relationships.artists && this.playerService.album.relationships.artists.data.length) {
+      this.artistAlbums = await this.playerService.musicKit.api.artist(
+        this.playerService.album.relationships.artists.data[0].id);
 
       const itemIdArray = this.artistAlbums.relationships.albums.data.map(i => i.id);
       this.artistAlbums.relationships.albums.data =
-        await this.musicPlayerService.musicKit.api.albums(itemIdArray);
+        await this.playerService.musicKit.api.albums(itemIdArray);
     }
   }
 
   async getAlbumInfo() {
-    if (!this.musicPlayerService.album.attributes.url) {
+    if (!this.playerService.album.attributes.url) {
       return;
     }
 
-    const url = this.musicPlayerService.album.attributes.url.split('/');
+    const url = this.playerService.album.attributes.url.split('/');
     const name = url[url.length - 2];
 
-    this.albumData = await fetch(environment.musicServiceApi + 'albums/' +
-      `${this.musicPlayerService.musicKit.storefrontId}/${name}/${this.musicPlayerService.album.id}`)
+    this.albumData = await fetch(`${environment.musicServiceApi}/albums/
+      ${this.playerService.musicKit.storefrontId}/${name}/${this.playerService.album.id}`)
       .then(res => res.json());
 
     if (!this.albumData.resources.data.relationships.listenersAlsoBought.data) {
@@ -94,13 +94,13 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     }
 
     const relatedAlbumsIds = this.albumData.resources.data.relationships.listenersAlsoBought.data.map(i => i.id);
-    this.relatedAlbums = await this.musicPlayerService.musicKit.api.albums(relatedAlbumsIds);
+    this.relatedAlbums = await this.playerService.musicKit.api.albums(relatedAlbumsIds);
 
     this.getPopulatity();
   }
 
   async getRatings() {
-    this.ratings = await this.musicApiService.getRatings(this.musicPlayerService.album);
+    this.ratings = await this.apiService.getRatings(this.playerService.album);
   }
 
   async getPopulatity() {

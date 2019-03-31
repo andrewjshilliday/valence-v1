@@ -6,7 +6,7 @@ declare var MusicKit: any;
 @Injectable({
   providedIn: 'root'
 })
-export class MusicPlayerService {
+export class PlayerService {
 
   musicKit: any;
   authorized = false;

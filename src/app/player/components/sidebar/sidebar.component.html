@@ -16,30 +16,30 @@
         </div>
       </li>
       <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/browse']"><i class="far fa-clone"></i>Browse</a></li>
-      <li><a *ngIf="musicPlayerService.authorized" class="nav-link" routerLinkActive="active" [routerLink]="['/foryou']"><i class="fas fa-user"></i>For You</a></li>
-      <li><a *ngIf="musicPlayerService.authorized" class="nav-link" routerLinkActive="active" [routerLink]="['/library']"><i class="fas fa-align-left"></i>Library</a></li>
-      <li *ngIf="musicPlayerService.authorized" class="settings"><a class="nav-link" [routerLink]="['/settings']"><i class="fas fa-cog"></i>Settings</a></li>
-      <li *ngIf="!musicPlayerService.authorized" class="authentication"><a class="nav-link" (click)="musicPlayerService.signin()"><i class="fas fa-sign-in-alt"></i>Sign In</a></li>
-      <li *ngIf="musicPlayerService.authorized" class="authentication"><a class="nav-link" (click)="musicPlayerService.signout()"><i class="fas fa-sign-out-alt"></i>Sign Out</a></li>
+      <li><a *ngIf="playerService.authorized" class="nav-link" routerLinkActive="active" [routerLink]="['/foryou']"><i class="fas fa-user"></i>For You</a></li>
+      <li><a *ngIf="playerService.authorized" class="nav-link" routerLinkActive="active" [routerLink]="['/library']"><i class="fas fa-align-left"></i>Library</a></li>
+      <li *ngIf="playerService.authorized" class="settings"><a class="nav-link" [routerLink]="['/settings']"><i class="fas fa-cog"></i>Settings</a></li>
+      <li *ngIf="!playerService.authorized" class="authentication"><a class="nav-link" (click)="playerService.signin()"><i class="fas fa-sign-in-alt"></i>Sign In</a></li>
+      <li *ngIf="playerService.authorized" class="authentication"><a class="nav-link" (click)="playerService.signout()"><i class="fas fa-sign-out-alt"></i>Sign Out</a></li>
     </ul>
 
     <ul class="sidebar-nav minimised">
       <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/search']" [queryParams]="{term: ''}"><i class="fas fa-search"></i></a></li>
       <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/browse']"><i class="far fa-clone"></i></a></li>
-      <li><a *ngIf="musicPlayerService.authorized" class="nav-link" routerLinkActive="active" [routerLink]="['/foryou']"><i class="fas fa-user"></i></a></li>
-      <li><a *ngIf="musicPlayerService.authorized" class="nav-link" routerLinkActive="active" [routerLink]="['/library']"><i class="fas fa-align-left"></i></a></li>
-      <li *ngIf="musicPlayerService.authorized" class="settings"><a class="nav-link" [routerLink]="['/settings']"><i class="fas fa-cog"></i></a></li>
-      <li *ngIf="!musicPlayerService.authorized" class="authentication"><a class="nav-link" (click)="musicPlayerService.signin()"><i class="fas fa-sign-in-alt"></i></a></li>
-      <li *ngIf="musicPlayerService.authorized" class="authentication"><a class="nav-link" (click)="musicPlayerService.signout()"><i class="fas fa-sign-out-alt"></i></a></li>
+      <li><a *ngIf="playerService.authorized" class="nav-link" routerLinkActive="active" [routerLink]="['/foryou']"><i class="fas fa-user"></i></a></li>
+      <li><a *ngIf="playerService.authorized" class="nav-link" routerLinkActive="active" [routerLink]="['/library']"><i class="fas fa-align-left"></i></a></li>
+      <li *ngIf="playerService.authorized" class="settings"><a class="nav-link" [routerLink]="['/settings']"><i class="fas fa-cog"></i></a></li>
+      <li *ngIf="!playerService.authorized" class="authentication"><a class="nav-link" (click)="playerService.signin()"><i class="fas fa-sign-in-alt"></i></a></li>
+      <li *ngIf="playerService.authorized" class="authentication"><a class="nav-link" (click)="playerService.signout()"><i class="fas fa-sign-out-alt"></i></a></li>
     </ul>
 
     <ul class="sidebar-nav mobile">
       <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/search']" [queryParams]="{term: ''}"><i class="fas fa-search"></i></a></li>
       <li><a class="nav-link" routerLinkActive="active" [routerLink]="['/browse']"><i class="far fa-clone"></i></a></li>
-      <li><a *ngIf="musicPlayerService.authorized" class="nav-link" routerLinkActive="active" [routerLink]="['/foryou']"><i class="fas fa-user"></i></a></li>
-      <li><a *ngIf="musicPlayerService.authorized" class="nav-link" routerLinkActive="active" [routerLink]="['/library']"><i class="fas fa-align-left"></i></a></li>
-      <li *ngIf="!musicPlayerService.authorized" class="float-right"><a class="nav-link" (click)="musicPlayerService.signin()"><i class="fas fa-sign-in-alt"></i></a></li>
-      <li *ngIf="musicPlayerService.authorized" class="float-right"><a class="nav-link" (click)="musicPlayerService.signout()"><i class="fas fa-sign-out-alt"></i></a></li>
+      <li><a *ngIf="playerService.authorized" class="nav-link" routerLinkActive="active" [routerLink]="['/foryou']"><i class="fas fa-user"></i></a></li>
+      <li><a *ngIf="playerService.authorized" class="nav-link" routerLinkActive="active" [routerLink]="['/library']"><i class="fas fa-align-left"></i></a></li>
+      <li *ngIf="!playerService.authorized" class="float-right"><a class="nav-link" (click)="playerService.signin()"><i class="fas fa-sign-in-alt"></i></a></li>
+      <li *ngIf="playerService.authorized" class="float-right"><a class="nav-link" (click)="playerService.signout()"><i class="fas fa-sign-out-alt"></i></a></li>
     </ul>
 
   </mat-sidenav>

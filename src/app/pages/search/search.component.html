@@ -1,11 +1,11 @@
 <div class="container-fluid">
   <h1>Search</h1>
 
-  <div *ngIf="this.loading">
+  <div *ngIf="loading">
     <mat-spinner class="loading-spinner"></mat-spinner>
   </div>
 
-  <div *ngIf="!this.loading">
+  <div *ngIf="!loading">
 
     <div *ngIf="searchTerm === ''">
       <div class="input-group">
@@ -22,24 +22,24 @@
     </div>
 
     <div *ngIf="searchTerm !== ''">
-      <div *ngIf="musicPlayerService.searchArtists && musicPlayerService.searchArtists.length">
+      <div *ngIf="playerService.searchArtists && playerService.searchArtists.length">
         <h3>Artists</h3>
-        <app-media-item-collection-row [collection]="musicPlayerService.searchArtists"></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="playerService.searchArtists"></app-media-item-collection-row>
       </div>
 
-      <div *ngIf="musicPlayerService.searchAlbums && musicPlayerService.searchAlbums.length">
+      <div *ngIf="playerService.searchAlbums && playerService.searchAlbums.length">
         <h3>Albums</h3>
-        <app-media-item-collection-row [collection]="musicPlayerService.searchAlbums"></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="playerService.searchAlbums"></app-media-item-collection-row>
       </div>
 
-      <div *ngIf="musicPlayerService.searchSongs && musicPlayerService.searchSongs.length">
+      <div *ngIf="playerService.searchSongs && playerService.searchSongs.length">
         <h3>Songs</h3>
-        <app-media-item-collection-grid [collection]="musicPlayerService.searchSongs" [numRows]=3 [showArtist]=true></app-media-item-collection-grid>
+        <app-media-item-collection-grid [collection]="playerService.searchSongs" [numRows]=3 [showArtist]=true></app-media-item-collection-grid>
       </div>
 
-      <div *ngIf="musicPlayerService.searchPlaylists && musicPlayerService.searchPlaylists.length">
+      <div *ngIf="playerService.searchPlaylists && playerService.searchPlaylists.length">
         <h3>Playlists</h3>
-        <app-media-item-collection-row [collection]="musicPlayerService.searchPlaylists"></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="playerService.searchPlaylists"></app-media-item-collection-row>
       </div>
     </div>
 

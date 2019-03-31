@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MusicPlayerService } from './music-player.service';
+import { PlayerService } from './player.service';
 import { environment } from '../../../environments/environment';
 
 declare var MusicKit: any;
@@ -7,9 +7,9 @@ declare var MusicKit: any;
 @Injectable({
   providedIn: 'root'
 })
-export class MusicApiService {
+export class ApiService {
 
-  constructor(public musicPlayerService: MusicPlayerService) { }
+  constructor(public playerService: PlayerService) { }
 
   async getArtist(id: string, artist?: any): Promise<any> {
     if (artist && artist.id === id) {
@@ -20,9 +20,9 @@ export class MusicApiService {
     artist = null;
 
     if (isLibraryResource) {
-      artist = await this.musicPlayerService.musicKit.api.library.artist(id);
+      artist = await this.playerService.musicKit.api.library.artist(id);
     } else {
-      artist = await this.musicPlayerService.musicKit.api.artist(id);
+      artist = await this.playerService.musicKit.api.artist(id);
     }
 
     return artist;
@@ -33,9 +33,9 @@ export class MusicApiService {
     albums = null;
 
     if (isLibraryResource) {
-      albums = await this.musicPlayerService.musicKit.api.library.artist(id, { include: 'albums' });
+      albums = await this.playerService.musicKit.api.library.artist(id, { include: 'albums' });
     } else {
-      albums = await this.musicPlayerService.musicKit.api.artist(id, { include: 'albums' });
+      albums = await this.playerService.musicKit.api.artist(id, { include: 'albums' });
     }
 
     return albums;
@@ -50,9 +50,9 @@ export class MusicApiService {
     album = null;
 
     if (isLibraryResource) {
-      album = await this.musicPlayerService.musicKit.api.library.album(id, { include: 'artists' });
+      album = await this.playerService.musicKit.api.library.album(id, { include: 'artists' });
     } else {
-      album = await this.musicPlayerService.musicKit.api.album(id, { include: 'songs' });
+      album = await this.playerService.musicKit.api.album(id, { include: 'songs' });
     }
 
     return album;
@@ -67,9 +67,9 @@ export class MusicApiService {
     playlist = null;
 
     if (isLibraryResource) {
-      playlist = await this.musicPlayerService.musicKit.api.library.playlist(id, { include: 'tracks' });
+      playlist = await this.playerService.musicKit.api.library.playlist(id, { include: 'tracks' });
     } else {
-      playlist = await this.musicPlayerService.musicKit.api.playlist(id, { include: 'curators' });
+      playlist = await this.playerService.musicKit.api.playlist(id, { include: 'curators' });
     }
 
     return playlist;
@@ -80,10 +80,10 @@ export class MusicApiService {
     const isLibraryResource = id.startsWith('r.');
 
     if (isLibraryResource) {
-      return await this.musicPlayerService.musicKit.api.library.artist(id, { include: 'playlists' });
+      return await this.playerService.musicKit.api.library.artist(id, { include: 'playlists' });
     } else {
       try {
-        playlists = await this.musicPlayerService.musicKit.api.artist(id, { include: 'playlists' });
+        playlists = await this.playerService.musicKit.api.artist(id, { include: 'playlists' });
       } finally {
         return playlists;
       }
@@ -94,8 +94,8 @@ export class MusicApiService {
     const url = album.attributes.url.split('/');
     const name = url[url.length - 2];
 
-    const info = await fetch(environment.musicServiceApi + 'albums/' +
-      `${this.musicPlayerService.musicKit.storefrontId}/${name}/${album.id}`)
+    const info = await fetch(`${environment.musicServiceApi}/albums/
+      ${this.playerService.musicKit.storefrontId}/${name}/${album.id}`)
       .then(res => res.json());
     info.description = JSON.parse(info.description);
 
@@ -104,7 +104,7 @@ export class MusicApiService {
     }
 
     const relatedAlbumsIds = info.description.data.relationships.listenersAlsoBought.data.map(i => i.id);
-    return await this.musicPlayerService.musicKit.api.albums(relatedAlbumsIds);
+    return await this.playerService.musicKit.api.albums(relatedAlbumsIds);
   }
 
   appleApiHeaders() {
@@ -128,7 +128,7 @@ export class MusicApiService {
           return;
         }
 
-        results = await this.musicPlayerService.musicKit.api.albums(itemIdArray, { include: 'artists' });
+        results = await this.playerService.musicKit.api.albums(itemIdArray, { include: 'artists' });
 
         for (const item of collection.filter(i => i.type === 'albums')) {
           let index = 0;
@@ -154,7 +154,7 @@ export class MusicApiService {
           }
         }
 
-        results = await this.musicPlayerService.musicKit.api.albums(itemIdArray, { include: 'artists' });
+        results = await this.playerService.musicKit.api.albums(itemIdArray, { include: 'artists' });
 
         for (const recommendation of collection) {
           for (const item of recommendation.relationships.contents.data) {
@@ -176,7 +176,7 @@ export class MusicApiService {
           return;
         }
 
-        results = await this.musicPlayerService.musicKit.api.playlists(itemIdArray, { include: 'curators' });
+        results = await this.playerService.musicKit.api.playlists(itemIdArray, { include: 'curators' });
 
         for (const item of collection.filter(i => i.type === 'playlists')) {
           let index = 0;
@@ -195,7 +195,7 @@ export class MusicApiService {
       }
       case 'songs': {
         itemIdArray = collection.map(i => i.id);
-        results = await this.musicPlayerService.musicKit.api.songs(itemIdArray, { include: 'artists,albums' });
+        results = await this.playerService.musicKit.api.songs(itemIdArray, { include: 'artists,albums' });
 
         for (const item of collection) {
           for (const result of results) {
@@ -212,7 +212,7 @@ export class MusicApiService {
   }
 
   async getRatings(collection: any): Promise<any> {
-    let url = 'https://api.music.apple.com/v1/me/ratings/songs?ids=';
+    let url = `${environment.appleMusicApi}/v1/me/ratings/songs?ids=`;
 
     for (const item of collection.relationships.tracks.data) {
       url += item.id;
@@ -227,7 +227,7 @@ export class MusicApiService {
 
   addRating(item: any, rating: number) {
     if (rating !== 0) {
-      fetch(`https://api.music.apple.com/v1/me/ratings/songs/${item.id}`, {
+      fetch(`${environment.appleMusicApi}/v1/me/ratings/songs/${item.id}`, {
         method: 'PUT',
         headers: this.appleApiHeaders(),
         body: JSON.stringify({
@@ -238,7 +238,7 @@ export class MusicApiService {
         })
       });
     } else {
-      fetch(`https://api.music.apple.com/v1/me/ratings/songs/${item.id}`, {
+      fetch(`${environment.appleMusicApi}/v1/me/ratings/songs/${item.id}`, {
         method: 'DELETE',
         headers: this.appleApiHeaders(),
       });
@@ -246,7 +246,7 @@ export class MusicApiService {
   }
 
   async addToLibrary(item: any) {
-    await this.musicPlayerService.musicKit.api.addToLibrary({ [item.type]: [item.id] });
+    await this.playerService.musicKit.api.addToLibrary({ [item.type]: [item.id] });
     alert('Successfully added ' + item.attributes.name + ' to your library');
   }
 
@@ -256,23 +256,23 @@ export class MusicApiService {
     const name = url[url.length - 2];
     const storefront = url[url.length - 4];
 
-    const info = await fetch(environment.musicServiceApi + `artists/image/${storefront}/${name}/${id}`)
+    const info = await fetch(`${environment.musicServiceApi}/artists/image/${storefront}/${name}/${id}`)
       .then(res => res.json());
 
     return info.imageUrl;
   }
 
   async getLyrics() {
-    this.musicPlayerService.geniusNowPlayingItem = null;
-    this.musicPlayerService.lyricsNowPlayingItem = null;
+    this.playerService.geniusNowPlayingItem = null;
+    this.playerService.lyricsNowPlayingItem = null;
 
-    let query = this.musicPlayerService.nowPlayingItem.artistName + ' | ' + this.musicPlayerService.nowPlayingItem.title;
+    let query = this.playerService.nowPlayingItem.artistName + ' | ' + this.playerService.nowPlayingItem.title;
     query = encodeURIComponent(query);
 
-    const response =  await fetch(environment.musicServiceApi + 'genius/song/' + query).then(res => res.json());
-    this.musicPlayerService.geniusNowPlayingItem = response.response.song;
-    this.musicPlayerService.lyricsNowPlayingItem = await fetch(
-      environment.musicServiceApi + 'genius/lyrics/' + this.musicPlayerService.geniusNowPlayingItem.id).then(res => res.json());
+    const response =  await fetch(`${environment.musicServiceApi}/genius/song/${query}`).then(res => res.json());
+    this.playerService.geniusNowPlayingItem = response.response.song;
+    this.playerService.lyricsNowPlayingItem = await fetch(
+      `${environment.musicServiceApi}/genius/lyrics/${this.playerService.geniusNowPlayingItem.id}`).then(res => res.json());
   }
 
 }

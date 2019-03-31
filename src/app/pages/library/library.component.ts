@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { MusicPlayerService } from '../../shared/services/music-player.service';
+import { PlayerService } from '../../shared/services/player.service';
 
 @Component({
   selector: 'app-library',
@@ -20,7 +20,7 @@ export class LibraryComponent implements OnInit, OnDestroy {
   songs: Array<any>;
   playlists: Array<any>;
 
-  constructor(private route: ActivatedRoute, public musicPlayerService: MusicPlayerService) { }
+  constructor(private route: ActivatedRoute, public playerService: PlayerService) { }
 
   ngOnInit() {
     this.librarySubscription = this.route.params.subscribe(params => {
@@ -74,7 +74,7 @@ export class LibraryComponent implements OnInit, OnDestroy {
 
     switch (type) {
       case 'recently-added': {
-        results = await this.musicPlayerService.musicKit.api.library.collection('recently-added', null, { offset: offset, limit: 10 });
+        results = await this.playerService.musicKit.api.library.collection('recently-added', null, { offset: offset, limit: 10 });
         this.recentlyAdded = this.recentlyAdded.concat(results);
 
         if (results.length !== 0 && this.recentlyAdded.length < 100) {
@@ -91,7 +91,7 @@ export class LibraryComponent implements OnInit, OnDestroy {
         break;
       }
       case 'artists': {
-        results = await this.musicPlayerService.musicKit.api.library.artists(null, { limit: 100, offset: offset });
+        results = await this.playerService.musicKit.api.library.artists(null, { limit: 100, offset: offset });
         this.artists = this.artists.concat(results);
 
         if (results.length !== 0) {
@@ -108,7 +108,7 @@ export class LibraryComponent implements OnInit, OnDestroy {
         break;
       }
       case 'albums': {
-        results = await this.musicPlayerService.musicKit.api.library.albums(null, { offset: offset });
+        results = await this.playerService.musicKit.api.library.albums(null, { offset: offset });
         this.albums = this.albums.concat(results);
 
         if (results.length !== 0) {
@@ -125,7 +125,7 @@ export class LibraryComponent implements OnInit, OnDestroy {
         break;
       }
       case 'songs': {
-        results = await this.musicPlayerService.musicKit.api.library.songs(null, { offset: offset });
+        results = await this.playerService.musicKit.api.library.songs(null, { offset: offset });
         this.songs = this.songs.concat(results);
 
         if (results.length !== 0) {
@@ -142,7 +142,7 @@ export class LibraryComponent implements OnInit, OnDestroy {
         break;
       }
       case 'playlists': {
-        results = await this.musicPlayerService.musicKit.api.library.playlists(null, { offset: offset });
+        results = await this.playerService.musicKit.api.library.playlists(null, { offset: offset });
         this.playlists = this.playlists.concat(results);
 
         if (results.length !== 0) {

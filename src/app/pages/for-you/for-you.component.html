@@ -1,45 +1,45 @@
 <div class="container-fluid">
   <h1>For You</h1>
 
-  <div *ngIf="this.loading">
+  <div *ngIf="loading">
     <mat-spinner class="loading-spinner"></mat-spinner>
   </div>
 
-  <div *ngIf='!this.loading'>
+  <div *ngIf='!loading'>
 
-    <div *ngIf="musicPlayerService.recommendations && musicPlayerService.recommendations.length && musicPlayerService.recommendations[0]">
-      <h3>{{musicPlayerService.recommendations[0].attributes.title.stringForDisplay}}</h3> <!-- Personalized Mixes -->
-      <app-media-item-collection-row [collection]="musicPlayerService.recommendations[0].relationships.contents.data" [size]="2"></app-media-item-collection-row>
+    <div *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[0]">
+      <h3>{{playerService.recommendations[0].attributes.title.stringForDisplay}}</h3> <!-- Personalized Mixes -->
+      <app-media-item-collection-row [collection]="playerService.recommendations[0].relationships.contents.data" [size]="2"></app-media-item-collection-row>
     </div>
 
-    <div *ngIf="musicPlayerService.recentPlayed && musicPlayerService.recentPlayed.length">
+    <div *ngIf="playerService.recentPlayed && playerService.recentPlayed.length">
       <h3>Recently Played</h3> <!-- Recently Played -->
-      <app-media-item-collection-row [collection]="musicPlayerService.recentPlayed"></app-media-item-collection-row>
+      <app-media-item-collection-row [collection]="playerService.recentPlayed"></app-media-item-collection-row>
     </div>
 
-    <div *ngIf="musicPlayerService.heavyRotation && musicPlayerService.heavyRotation.length">
+    <div *ngIf="playerService.heavyRotation && playerService.heavyRotation.length">
       <h3>Heavy Rotation</h3> <!-- Heavy Rotation -->
-      <app-media-item-collection-row [collection]="musicPlayerService.heavyRotation"></app-media-item-collection-row>
+      <app-media-item-collection-row [collection]="playerService.heavyRotation"></app-media-item-collection-row>
     </div>
 
-    <div *ngIf="musicPlayerService.recommendations && musicPlayerService.recommendations.length && musicPlayerService.recommendations[1]">
-      <h3>{{musicPlayerService.recommendations[1].attributes.title.stringForDisplay}}</h3> <!-- Today's Playlists -->
-      <app-media-item-collection-row [collection]="musicPlayerService.recommendations[1].relationships.contents.data" [size]="2"></app-media-item-collection-row>
+    <div *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[1]">
+      <h3>{{playerService.recommendations[1].attributes.title.stringForDisplay}}</h3> <!-- Today's Playlists -->
+      <app-media-item-collection-row [collection]="playerService.recommendations[1].relationships.contents.data" [size]="2"></app-media-item-collection-row>
     </div>
 
-    <div *ngIf="musicPlayerService.recommendations && musicPlayerService.recommendations.length && musicPlayerService.recommendations[2]">
-      <h3>{{musicPlayerService.recommendations[2].attributes.title.stringForDisplay}}</h3> <!-- Today's Albums -->
-      <app-media-item-collection-row [collection]="musicPlayerService.recommendations[2].relationships.recommendations.data" [todaysAlbums]=true></app-media-item-collection-row>
+    <div *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[2]">
+      <h3>{{playerService.recommendations[2].attributes.title.stringForDisplay}}</h3> <!-- Today's Albums -->
+      <app-media-item-collection-row [collection]="playerService.recommendations[2].relationships.recommendations.data" [todaysAlbums]=true></app-media-item-collection-row>
     </div>
 
-    <div *ngIf="musicPlayerService.recommendations && musicPlayerService.recommendations.length && musicPlayerService.recommendations[3]">
-      <h3>{{musicPlayerService.recommendations[3].attributes.title.stringForDisplay}}</h3> <!-- Artist Spotlight Playlists -->
-      <app-media-item-collection-row [collection]="musicPlayerService.recommendations[3].relationships.contents.data" [size]="2"></app-media-item-collection-row>
+    <div *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[3]">
+      <h3>{{playerService.recommendations[3].attributes.title.stringForDisplay}}</h3> <!-- Artist Spotlight Playlists -->
+      <app-media-item-collection-row [collection]="playerService.recommendations[3].relationships.contents.data" [size]="2"></app-media-item-collection-row>
     </div>
 
-    <div *ngIf="musicPlayerService.recommendations && musicPlayerService.recommendations.length && musicPlayerService.recommendations[4]">
-      <h3>{{musicPlayerService.recommendations[4].attributes.title.stringForDisplay}}</h3> <!-- New Releases -->
-      <app-media-item-collection-row [collection]="musicPlayerService.recommendations[4].relationships.contents.data"></app-media-item-collection-row>
+    <div *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[4]">
+      <h3>{{playerService.recommendations[4].attributes.title.stringForDisplay}}</h3> <!-- New Releases -->
+      <app-media-item-collection-row [collection]="playerService.recommendations[4].relationships.contents.data"></app-media-item-collection-row>
     </div>
 
   </div>

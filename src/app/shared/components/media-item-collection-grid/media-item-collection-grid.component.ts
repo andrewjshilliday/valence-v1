@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { MusicPlayerService } from '../../services/music-player.service';
+import { PlayerService } from '../../services/player.service';
 
 @Component({
   selector: 'app-media-item-collection-grid',
@@ -15,7 +15,7 @@ export class MediaItemCollectionGridComponent implements OnInit {
   columns: Array<number>;
   rows: Array<number>;
 
-  constructor(private router: Router, public musicPlayerService: MusicPlayerService) { }
+  constructor(private router: Router, public playerService: PlayerService) { }
 
   ngOnInit() {
     this.columns = Array.from(Array(Math.ceil(this.collection.length / this.numRows)).keys());

@@ -1,9 +1,9 @@
 <div *ngIf="item.type.includes('albums') && item.attributes" appLazyLoadImage>
   <div *ngIf="item.attributes.artwork" class="row media-artwork">
-    <a *ngIf="!item.type.includes('library')" [routerLink]="['/albums', item.id]"><img class="img-fluid rounded" [attr.data-src]="musicPlayerService.formatArtworkURL(item.attributes.artwork, 500)" src="././assets/images/placeholder.png" /></a>
-    <a *ngIf="item.type.includes('library')" [routerLink]="['/library/albums', item.id]"><img class="img-fluid rounded" [attr.data-src]="musicPlayerService.formatArtworkURL(item.attributes.artwork, 500)" src="././assets/images/placeholder.png" /></a>
+    <a *ngIf="!item.type.includes('library')" [routerLink]="['/albums', item.id]"><img class="img-fluid rounded" [attr.data-src]="playerService.formatArtworkURL(item.attributes.artwork, 500)" src="././assets/images/placeholder.png" /></a>
+    <a *ngIf="item.type.includes('library')" [routerLink]="['/library/albums', item.id]"><img class="img-fluid rounded" [attr.data-src]="playerService.formatArtworkURL(item.attributes.artwork, 500)" src="././assets/images/placeholder.png" /></a>
     <div class="media-control-button">
-      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="musicPlayerService.playItem(item)"></i>
+      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="playerService.playItem(item)"></i>
     </div>
   </div>
   <div class="row">
@@ -22,17 +22,17 @@
 
 <div *ngIf="item.type.includes('playlists')" appLazyLoadImage>
   <div *ngIf="item.attributes.artwork" class="row media-artwork">
-    <a *ngIf="!item.type.includes('library')" [routerLink]="['/playlists', item.id]"><img class="img-fluid rounded" [attr.data-src]="musicPlayerService.formatArtworkURL(item.attributes.artwork, 500)" src="././assets/images/placeholder.png" /></a>
-    <a *ngIf="item.type.includes('library')" [routerLink]="['/library/playlists', item.id]"><img class="img-fluid rounded" [attr.data-src]="musicPlayerService.formatArtworkURL(item.attributes.artwork, 500)" src="././assets/images/placeholder.png" /></a>
+    <a *ngIf="!item.type.includes('library')" [routerLink]="['/playlists', item.id]"><img class="img-fluid rounded" [attr.data-src]="playerService.formatArtworkURL(item.attributes.artwork, 500)" src="././assets/images/placeholder.png" /></a>
+    <a *ngIf="item.type.includes('library')" [routerLink]="['/library/playlists', item.id]"><img class="img-fluid rounded" [attr.data-src]="playerService.formatArtworkURL(item.attributes.artwork, 500)" src="././assets/images/placeholder.png" /></a>
     <div class="media-control-button">
-      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="musicPlayerService.playItem(item)"></i>
+      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="playerService.playItem(item)"></i>
     </div>
   </div>
   <div *ngIf="!item.attributes.artwork" class="row media-artwork">
     <a *ngIf="!item.type.includes('library')" [routerLink]="['/playlists', item.id]"><img class="img-fluid rounded" src="././assets/images/placeholder.png" /></a>
     <a *ngIf="item.type.includes('library')" [routerLink]="['/library/playlists', item.id]"><img class="img-fluid rounded" src="././assets/images/placeholder.png" /></a>
     <div class="media-control-button">
-      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="musicPlayerService.playItem(item)"></i>
+      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="playerService.playItem(item)"></i>
     </div>
   </div>
   <div class='row media-album'>
@@ -60,10 +60,10 @@
 
 <div *ngIf="item.type.includes('songs')" appLazyLoadImage>
   <div *ngIf="item.attributes.artwork" class="row media-artwork">
-    <img *ngIf="!item.relationships || !item.relationships.albums" class="img-fluid rounded" [attr.data-src]="musicPlayerService.formatArtworkURL(item.attributes.artwork, 300)" src="././assets/images/placeholder.png" />
-    <a *ngIf="item.relationships && item.relationships.albums" [routerLink]="['/albums', item.relationships.albums.data[0].id]"><img class="img-fluid rounded" [src]="musicPlayerService.formatArtworkURL(item.attributes.artwork, 300)" src="././assets/images/placeholder.png" /></a>
+    <img *ngIf="!item.relationships || !item.relationships.albums" class="img-fluid rounded" [attr.data-src]="playerService.formatArtworkURL(item.attributes.artwork, 300)" src="././assets/images/placeholder.png" />
+    <a *ngIf="item.relationships && item.relationships.albums" [routerLink]="['/albums', item.relationships.albums.data[0].id]"><img class="img-fluid rounded" [src]="playerService.formatArtworkURL(item.attributes.artwork, 300)" src="././assets/images/placeholder.png" /></a>
     <div class="media-control-button">
-      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="musicPlayerService.playItem(item)"></i>
+      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="playerService.playItem(item)"></i>
     </div>
   </div>
   <div class="row media-album">
@@ -82,8 +82,8 @@
 
 <div *ngIf="item.type.includes('curators')" appLazyLoadImage>
   <div *ngIf="item.attributes.artwork" class="row media-artwork">
-    <a *ngIf="item.type === 'apple-curators'" [routerLink]="['/curators', 'apple', item.id]"><img class="img-fluid rounded" [attr.data-src]="musicPlayerService.formatArtworkURL(item.attributes.artwork, 500)" src="././assets/images/placeholder.png" /></a>
-    <a *ngIf="item.type === 'curators'" [routerLink]="['/curators', 'user', item.id]"><img class="img-fluid rounded" [attr.data-src]="musicPlayerService.formatArtworkURL(item.attributes.artwork, 500)" src="././assets/images/placeholder.png" /></a>
+    <a *ngIf="item.type === 'apple-curators'" [routerLink]="['/curators', 'apple', item.id]"><img class="img-fluid rounded" [attr.data-src]="playerService.formatArtworkURL(item.attributes.artwork, 500)" src="././assets/images/placeholder.png" /></a>
+    <a *ngIf="item.type === 'curators'" [routerLink]="['/curators', 'user', item.id]"><img class="img-fluid rounded" [attr.data-src]="playerService.formatArtworkURL(item.attributes.artwork, 500)" src="././assets/images/placeholder.png" /></a>
   </div>
   <div class="row media-artist">
     <a *ngIf="item.type === 'apple-curators'" class="text-truncate" [routerLink]="['/curators', 'apple', item.id]" title="{{item.attributes.name}}">{{item.attributes.name}}</a>
@@ -95,7 +95,7 @@
   <div *ngIf="item.attributes.artwork" class="row media-artwork">
     <img class="img-fluid rounded" src="././assets/images/placeholder.png" />
     <div class="media-control-button">
-      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="musicPlayerService.playItem(item)"></i>
+      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="playerService.playItem(item)"></i>
     </div>
   </div>
   <div class="row media-artist">

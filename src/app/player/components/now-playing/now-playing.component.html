@@ -1,66 +1,66 @@
 <div id="now-playing-wrapper" class="row">
   <div class='media-controls'>
     <div class="row btn-group" role="group">
-      <i class="fas fa-backward media-control-icon" (click)='musicPlayerService.playPrevious()'></i>
-      <i class="fas fa-play media-control-icon" *ngIf="!this.musicPlayerService.playing && !this.musicPlayerService.playbackLoading" (click)='musicPlayerService.play()'></i>
-      <i class="fas fa-pause media-control-icon" *ngIf="this.musicPlayerService.playing && !this.musicPlayerService.playbackLoading" (click)='musicPlayerService.pause()'></i>
-      <mat-spinner *ngIf="this.musicPlayerService.playbackLoading" class="spinner" [diameter]="25" (click)='musicPlayerService.stop()'></mat-spinner>
-      <i class="fas fa-forward media-control-icon" (click)='musicPlayerService.playNext()'></i>
+      <i class="fas fa-backward media-control-icon" (click)='playerService.playPrevious()'></i>
+      <i class="fas fa-play media-control-icon" *ngIf="!playerService.playing && !playerService.playbackLoading" (click)='playerService.play()'></i>
+      <i class="fas fa-pause media-control-icon" *ngIf="playerService.playing && !playerService.playbackLoading" (click)='playerService.pause()'></i>
+      <mat-spinner *ngIf="playerService.playbackLoading" class="spinner" [diameter]="25" (click)='playerService.stop()'></mat-spinner>
+      <i class="fas fa-forward media-control-icon" (click)='playerService.playNext()'></i>
     </div>
     <div class='row'>
       <div class='col-3 volume-icon align-bottom'><i class="fas fa-volume-down fa-xs float-right"></i></div>
-      <div class='col-6'><mat-slider class='volume-slider' [max]="1.0" [min]="0.0" [step]="0.01" [value]="musicPlayerService.musicKit.player.volume" (input)="musicPlayerService.setVolume($event.value)"></mat-slider></div>
+      <div class='col-6'><mat-slider class='volume-slider' [max]="1.0" [min]="0.0" [step]="0.01" [value]="playerService.musicKit.player.volume" (input)="playerService.setVolume($event.value)"></mat-slider></div>
       <div class='col-3 volume-icon align-bottom'><i class="fas fa-volume-up fa-xs float-left"></i></div>
     </div>
   </div>
-  <div *ngIf='musicPlayerService.nowPlayingItem' class="rounded now-playing-bar row">
+  <div *ngIf='playerService.nowPlayingItem' class="rounded now-playing-bar row">
     <div class='col-2'>
       <div class='now-playing-album-art rounded'>
-        <a *ngIf="musicPlayerService.nowPlayingItem.assets[0]" [routerLink]="['/albums', musicPlayerService.nowPlayingItem.assets[0].metadata.playlistId]">
-          <img class="img-fluid rounded" [src]='musicPlayerService.formatArtworkURL(musicPlayerService.nowPlayingItem.attributes.artwork, 100)' />
+        <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/albums', playerService.nowPlayingItem.assets[0].metadata.playlistId]">
+          <img class="img-fluid rounded" [src]='playerService.formatArtworkURL(playerService.nowPlayingItem.attributes.artwork, 100)' />
         </a>
-        <img *ngIf="!musicPlayerService.nowPlayingItem.assets[0]" class="img-fluid rounded" [src]='musicPlayerService.formatArtworkURL(musicPlayerService.nowPlayingItem.attributes.artwork, 100)' />
+        <img *ngIf="!playerService.nowPlayingItem.assets[0]" class="img-fluid rounded" [src]='playerService.formatArtworkURL(playerService.nowPlayingItem.attributes.artwork, 100)' />
       </div>
-      <div *ngIf="musicPlayerService.nowPlayingPlaylist" class="now-playing-playlist rounded">
-        <a [routerLink]="['/playlists', musicPlayerService.nowPlayingPlaylist.id]">
-          <img class="img-fluid rounded" [src]='musicPlayerService.formatArtworkURL(musicPlayerService.nowPlayingPlaylist.attributes.artwork, 100)' />
+      <div *ngIf="playerService.nowPlayingPlaylist" class="now-playing-playlist rounded">
+        <a [routerLink]="['/playlists', playerService.nowPlayingPlaylist.id]">
+          <img class="img-fluid rounded" [src]='playerService.formatArtworkURL(playerService.nowPlayingPlaylist.attributes.artwork, 100)' />
         </a>
       </div>
       <div>
-        <div class="row shuffle-icon" [ngClass]="musicPlayerService.musicKit.player.shuffleMode === 0 ? 'text-muted' : ''" title="shuffle">
+        <div class="row shuffle-icon" [ngClass]="playerService.musicKit.player.shuffleMode === 0 ? 'text-muted' : ''" title="shuffle">
           <i class="fas fa-random" (click)="toggleShuffle()"></i>
         </div>
-        <div class="row current-time"><span>{{musicPlayerService.musicKit.player.currentPlaybackTime | minutesSeconds}}</span></div>
+        <div class="row current-time"><span>{{playerService.musicKit.player.currentPlaybackTime | minutesSeconds}}</span></div>
       </div>
     </div>
     <div class='col-8'>
       <div class='row now-playing-text text-truncate justify-content-center'>
         <span>
-          {{musicPlayerService.nowPlayingItem.attributes.name}}<br />
-          <a *ngIf="musicPlayerService.nowPlayingItem.assets[0]" [routerLink]="['/albums', musicPlayerService.nowPlayingItem.assets[0].metadata.playlistId]">{{musicPlayerService.nowPlayingItem.albumName}}</a>
-          <span *ngIf="!musicPlayerService.nowPlayingItem.assets[0]">{{musicPlayerService.nowPlayingItem.albumName}}</span>
+          {{playerService.nowPlayingItem.attributes.name}}<br />
+          <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/albums', playerService.nowPlayingItem.assets[0].metadata.playlistId]">{{playerService.nowPlayingItem.albumName}}</a>
+          <span *ngIf="!playerService.nowPlayingItem.assets[0]">{{playerService.nowPlayingItem.albumName}}</span>
           | 
-          <a *ngIf="musicPlayerService.nowPlayingItem.assets[0]" [routerLink]="['/artists', musicPlayerService.nowPlayingItem.assets[0].metadata.artistId]">{{musicPlayerService.nowPlayingItem.artistName}}</a>
-          <span *ngIf="!musicPlayerService.nowPlayingItem.assets[0]">{{musicPlayerService.nowPlayingItem.artistName}}</span>
+          <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/artists', playerService.nowPlayingItem.assets[0].metadata.artistId]">{{playerService.nowPlayingItem.artistName}}</a>
+          <span *ngIf="!playerService.nowPlayingItem.assets[0]">{{playerService.nowPlayingItem.artistName}}</span>
       </span>
       </div>
       <div class='row now-playing-progress'>
-        <mat-slider class='track-progress' [max]="musicPlayerService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="musicPlayerService.musicKit.player.currentPlaybackTime" (change)="seekToTime($event.value)"></mat-slider>
+        <mat-slider class='track-progress' [max]="playerService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="playerService.musicKit.player.currentPlaybackTime" (change)="seekToTime($event.value)"></mat-slider>
       </div>
     </div>
     <div class='col-2'>
       <div>
-        <div class="row repeat-icon" [ngClass]="musicPlayerService.musicKit.player.repeatMode === 0 ? 'text-muted' : ''" title="repeat">
+        <div class="row repeat-icon" [ngClass]="playerService.musicKit.player.repeatMode === 0 ? 'text-muted' : ''" title="repeat">
           <i class="fas fa-redo" (click)="toggleRepeat()"></i>
         </div>
-        <div class="row remaining-time"><span>{{musicPlayerService.musicKit.player.currentPlaybackTimeRemaining | minutesSeconds}}</span></div>
+        <div class="row remaining-time"><span>{{playerService.musicKit.player.currentPlaybackTimeRemaining | minutesSeconds}}</span></div>
       </div>
       <div class='queue-options'>
         <i class="material-icons now-playing-queue" data-toggle="modal" data-target="#queueModal">queue_music</i>
       </div>
     </div>
   </div>
-  <div *ngIf='!musicPlayerService.nowPlayingItem' class="rounded now-playing-bar justify-content-center logo row">
+  <div *ngIf='!playerService.nowPlayingItem' class="rounded now-playing-bar justify-content-center logo row">
     <i class="fab fa-apple fa-3x"></i>
   </div>
 </div>
@@ -81,13 +81,13 @@
       <div class="modal-body queue scrollbar">
         <div class="tab-content" id="pills-tabContent">
           <div class="tab-pane fade show active" id="pills-queue" role="tabpanel" aria-labelledby="pills-queue-tab">
-            <table *ngIf="musicPlayerService && musicPlayerService.queue" class="table table-hover">
+            <table *ngIf="playerService && playerService.queue" class="table table-hover">
               <tbody>
-                <tr *ngFor="let item of musicPlayerService.queue" class="queue-row">
-                  <td (click)="musicPlayerService.musicKit.changeToMediaAtIndex(musicPlayerService.musicKit.player.queue.items.indexOf(item))">
-                    <img class="queue-artwork" [src]="musicPlayerService.formatArtworkURL(item.artwork, 50)" />
+                <tr *ngFor="let item of playerService.queue" class="queue-row">
+                  <td (click)="playerService.musicKit.changeToMediaAtIndex(playerService.musicKit.player.queue.items.indexOf(item))">
+                    <img class="queue-artwork" [src]="playerService.formatArtworkURL(item.artwork, 50)" />
                   </td>
-                  <td class="queue-text text-truncate" (click)="musicPlayerService.musicKit.changeToMediaAtIndex(musicPlayerService.musicKit.player.queue.items.indexOf(item))">
+                  <td class="queue-text text-truncate" (click)="playerService.musicKit.changeToMediaAtIndex(playerService.musicKit.player.queue.items.indexOf(item))">
                     {{item.title}}<br />
                     {{item.albumName}} - {{item.artistName}}
                   </td>
@@ -107,11 +107,11 @@
             </table>
           </div>
           <div class="tab-pane fade" id="pills-history" role="tabpanel" aria-labelledby="pills-history-tab">
-            <table *ngIf="musicPlayerService && musicPlayerService.history && musicPlayerService.history.length" class="table table-hover">
+            <table *ngIf="playerService && playerService.history && playerService.history.length" class="table table-hover">
               <tbody>
-                <tr *ngFor="let item of musicPlayerService.history.slice().reverse()" class="queue-row">
+                <tr *ngFor="let item of playerService.history.slice().reverse()" class="queue-row">
                   <td>
-                    <img class="queue-artwork" [src]="musicPlayerService.formatArtworkURL(item.artwork, 50)" />
+                    <img class="queue-artwork" [src]="playerService.formatArtworkURL(item.artwork, 50)" />
                   </td>
                   <td class="queue-text">
                     {{item.title}}<br />
@@ -137,7 +137,7 @@
               <mat-spinner class="loading-spinner"></mat-spinner>
             </div>
             <div *ngIf="!lyricsLoading">
-              <p *ngIf="musicPlayerService.lyricsNowPlayingItem" class="lyrics">{{musicPlayerService.lyricsNowPlayingItem}}</p>
+              <p *ngIf="playerService.lyricsNowPlayingItem" class="lyrics">{{playerService.lyricsNowPlayingItem}}</p>
             </div>
           </div>
         </div>

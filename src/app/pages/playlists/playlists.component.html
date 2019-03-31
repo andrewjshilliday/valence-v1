@@ -1,38 +1,38 @@
 <div class="container-fluid">
 
-  <div *ngIf="this.loading">
+  <div *ngIf="loading">
     <mat-spinner class="loading-spinner"></mat-spinner>
   </div>
 
-  <div *ngIf="!this.loading">
-    <div *ngIf="musicPlayerService.playlist">
+  <div *ngIf="!loading">
+    <div *ngIf="playerService.playlist">
 
       <div class="expanded">
         <div class="row pt-3" appLazyLoadImage>
           <div class="col-4">
             <div class="media-artwork">
-              <img *ngIf="musicPlayerService.playlist.attributes.artwork" class="img-fluid card-img-top rounded" [attr.data-src]="musicPlayerService.formatArtworkURL(musicPlayerService.playlist.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
-              <img *ngIf="!musicPlayerService.playlist.attributes.artwork" class="img-fluid card-img-top rounded" src="././assets/images/placeholder.png" />
+              <img *ngIf="playerService.playlist.attributes.artwork" class="img-fluid card-img-top rounded" [attr.data-src]="playerService.formatArtworkURL(playerService.playlist.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
+              <img *ngIf="!playerService.playlist.attributes.artwork" class="img-fluid card-img-top rounded" src="././assets/images/placeholder.png" />
               <div class="media-control-button">
-                <i class="fas fa-play-circle fa-3x" aria-hidden="true" (click)="musicPlayerService.playItem(musicPlayerService.playlist)"></i>
+                <i class="fas fa-play-circle fa-3x" aria-hidden="true" (click)="playerService.playItem(playerService.playlist)"></i>
               </div>
             </div>
             <div class="row">
               <div class="col-8">
-                <span class="text-muted">{{musicPlayerService.playlist.relationships.tracks.data.length}} Songs, {{(playlistDuration / 1000 / 60) | hoursMinutes}}</span>
+                <span class="text-muted">{{playerService.playlist.relationships.tracks.data.length}} Songs, {{(playlistDuration / 1000 / 60) | hoursMinutes}}</span>
               </div>
               <div class="col-4">
-                <span class="text-muted float-right shuffle-label"><a (click)="musicPlayerService.playItem(musicPlayerService.playlist, 0, true)">Shuffle <i class="fas fa-random fa-xs"></i></a></span>
+                <span class="text-muted float-right shuffle-label"><a (click)="playerService.playItem(playerService.playlist, 0, true)">Shuffle <i class="fas fa-random fa-xs"></i></a></span>
               </div>
             </div>
-            <hr *ngIf="musicPlayerService.playlist.attributes.description" />
-            <div class="editorial-notes scrollbar" [ngStyle]="{'max-height': 260 + (musicPlayerService.playlist.relationships.tracks.data.length > 11 ? ((musicPlayerService.playlist.relationships.tracks.data.length - 11) * 40) : 0) + 'px'}">
-              <p *ngIf="musicPlayerService.playlist.attributes.description && musicPlayerService.playlist.attributes.description.standard">{{musicPlayerService.playlist.attributes.description.standard}}</p>
-              <p *ngIf="musicPlayerService.playlist.attributes.description && !musicPlayerService.playlist.attributes.description.standard">{{musicPlayerService.playlist.attributes.description.short}}</p>
+            <hr *ngIf="playerService.playlist.attributes.description" />
+            <div class="editorial-notes scrollbar" [ngStyle]="{'max-height': 260 + (playerService.playlist.relationships.tracks.data.length > 11 ? ((playerService.playlist.relationships.tracks.data.length - 11) * 40) : 0) + 'px'}">
+              <p *ngIf="playerService.playlist.attributes.description && playerService.playlist.attributes.description.standard">{{playerService.playlist.attributes.description.standard}}</p>
+              <p *ngIf="playerService.playlist.attributes.description && !playerService.playlist.attributes.description.standard">{{playerService.playlist.attributes.description.short}}</p>
             </div>
           </div>
           <div class='col-8'>
-            <app-media-item-collection-list [collection]="musicPlayerService.playlist" [ratings]="ratings" [showHeader]=true [showArtist]=true [showAlbum]=true></app-media-item-collection-list>
+            <app-media-item-collection-list [collection]="playerService.playlist" [ratings]="ratings" [showHeader]=true [showArtist]=true [showAlbum]=true></app-media-item-collection-list>
           </div>
         </div>
         <div *ngIf="artists && artists.length">
@@ -43,7 +43,7 @@
       </div>
 
       <div class="minimised">
-        <app-media-item-collection-list [collection]="musicPlayerService.playlist" [ratings]="ratings"[showHeader]=true ></app-media-item-collection-list>
+        <app-media-item-collection-list [collection]="playerService.playlist" [ratings]="ratings"[showHeader]=true ></app-media-item-collection-list>
         <div *ngIf="artists && artists.length">
           <hr />
           <h4>Featured Artists</h4>
