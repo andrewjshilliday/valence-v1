@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { PlayerModule } from './player/player.module';
 import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
@@ -14,6 +16,7 @@ import { AlbumsComponent } from './pages/albums/albums.component';
 import { PlaylistsComponent } from './pages/playlists/playlists.component';
 import { CuratorsComponent } from './pages/curators/curators.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { SettingsComponent } from './pages/settings/settings.component';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     PlayerModule,
     SharedModule,
     RouterModule.forRoot([
@@ -50,6 +54,7 @@ import { SettingsComponent } from './pages/settings/settings.component';
       { path: '', redirectTo: 'browse', pathMatch: 'full' },
       { path: '**', redirectTo: 'browse', pathMatch: 'full' }
     ]),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent]
