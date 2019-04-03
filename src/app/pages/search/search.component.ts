@@ -46,8 +46,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     if (this.playerService.searchArtists) {
-      const promises = this.playerService.searchArtists.map(this.getArtwork.bind(this));
-      await Promise.all(promises);
+      this.getArtistArtwork(this.playerService.searchArtists);
     }
   }
 
@@ -92,9 +91,18 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  async getArtwork(artist: any) {
-    if (!artist.attributes.artworkUrl) {
-      artist.attributes.artworkUrl = await this.apiService.getArtistArtwork(artist.attributes.url);
+  async getArtistArtwork(artists: Array<any>) {
+    const artistIds = artists.map(a => a.id);
+    const resp = await this.apiService.getArtistData(artistIds, true);
+
+    for (const a of resp.artists) {
+      if (a.imageUrl) {
+        for (const artist of artists) {
+          if (artist.id === a.id) {
+            artist.attributes.artworkUrl = a.imageUrl;
+          }
+        }
+      }
     }
   }
 

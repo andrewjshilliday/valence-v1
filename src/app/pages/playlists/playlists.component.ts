@@ -77,13 +77,21 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
       offset = offset + 30;
     }
 
-    const promises = this.artists.map(this.getArtwork.bind(this));
-    await Promise.all(promises);
+    this.getArtistArtwork(this.artists);
   }
 
-  async getArtwork(artist: any) {
-    if (!artist.attributes.artworkUrl) {
-      artist.attributes.artworkUrl = await this.apiService.getArtistArtwork(artist.attributes.url);
+  async getArtistArtwork(artists: Array<any>) {
+    const artistIds = artists.map(a => a.id);
+    const resp = await this.apiService.getArtistData(artistIds, true);
+
+    for (const a of resp.artists) {
+      if (a.imageUrl) {
+        for (const artist of artists) {
+          if (artist.id === a.id) {
+            artist.attributes.artworkUrl = a.imageUrl;
+          }
+        }
+      }
     }
   }
 

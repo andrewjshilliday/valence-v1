@@ -49,12 +49,10 @@ export class ArtistsComponent implements OnInit, OnDestroy {
 
     this.playerService.artist = await this.apiService.getArtist(id, this.playerService.artist);
 
-    const itemIdArray = this.playerService.artist.relationships.albums.data.filter(i => i.type === 'albums').map(i => i.id);
-    this.playerService.artist.relationships.albums.data =
-      await this.playerService.musicKit.api.albums(itemIdArray, { include: 'artists' });
+    const artistRelationships = this.getArtistRelationships();
+    const artistPlaylists = this.getArtistPlaylists(id);
+    await Promise.all([artistRelationships, artistPlaylists]);
 
-    this.apiService.getRelationships(this.playerService.artist.relationships.albums.data, 'albums');
-    this.playerService.playlists = await this.apiService.getPlaylists(id);
     await this.getArtistInfo();
 
     this.loading = false;
@@ -82,7 +80,17 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async getArtistInfo() {
+  async getArtistRelationships(): Promise<any> {
+    const itemIdArray = this.playerService.artist.relationships.albums.data.filter(i => i.type === 'albums').map(i => i.id);
+    this.playerService.artist.relationships.albums.data = await this.playerService.musicKit.api.albums(itemIdArray, { include: 'artists' });
+    this.apiService.getRelationships(this.playerService.artist.relationships.albums.data, 'albums');
+  }
+
+  async getArtistPlaylists(id): Promise<any> {
+    this.playerService.playlists = await this.apiService.getPlaylists(id);
+  }
+
+  async getArtistInfo(): Promise<any> {
     if (!this.playerService.artist.attributes.url) {
       if (this.playerService.artist.relationships.albums) {
         this.albums = this.playerService.artist.relationships.albums.data;
@@ -91,13 +99,10 @@ export class ArtistsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const url = this.playerService.artist.attributes.url.split('/');
-    const name = url[url.length - 2];
+    const resp = await this.apiService.getArtistData(Array.of(this.playerService.artist.id));
 
-    const artistData = await this.apiService.getArtistData(name, this.playerService.artist.id);
-
-    this.artistImage = artistData.imageUrl;
-    this.artistInfo = artistData.resources.data;
+    this.artistImage = resp.artists[0].imageUrl;
+    this.artistInfo = resp.artists[0].resources.data;
 
     let topSongs: any;
     let albumsIds: any;
@@ -105,7 +110,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     let liveAlbumsIds: any;
     let compilationsIds: any;
 
-    for (const item of artistData.resources.included) {
+    for (const item of resp.artists[0].resources.included) {
       if (item.id.match(this.playerService.artist.id + '/topSongs')) {
         topSongs = item.relationships.content.data.map(i => i.id);
         continue;
@@ -171,13 +176,21 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     const itemIdArray = this.artistInfo.relationships.artistContemporaries.data.map(i => i.id);
     this.relatedArtists = await this.playerService.musicKit.api.artists(itemIdArray);
 
-    const promises = this.relatedArtists.map(this.getArtwork.bind(this));
-    await Promise.all(promises);
+    this.getArtistArtwork(this.relatedArtists);
   }
 
-  async getArtwork(artist: any) {
-    if (!artist.attributes.artworkUrl) {
-      artist.attributes.artworkUrl = await this.apiService.getArtistArtwork(artist.attributes.url);
+  async getArtistArtwork(artists: Array<any>) {
+    const artistIds = artists.map(a => a.id);
+    const resp = await this.apiService.getArtistData(artistIds, true);
+
+    for (const a of resp.artists) {
+      if (a.imageUrl) {
+        for (const artist of artists) {
+          if (artist.id === a.id) {
+            artist.attributes.artworkUrl = a.imageUrl;
+          }
+        }
+      }
     }
   }
 

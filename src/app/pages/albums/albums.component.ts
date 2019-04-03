@@ -81,10 +81,8 @@ export class AlbumsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const url = this.playerService.album.attributes.url.split('/');
-    const name = url[url.length - 2];
-
-    this.albumData = await this.apiService.getAlbumData(name, this.playerService.album.id);
+    const resp = await this.apiService.getAlbumData(Array.of(this.playerService.album.id));
+    this.albumData = resp.albums[0];
 
     if (!this.albumData.resources.data.relationships.listenersAlsoBought.data) {
       return;

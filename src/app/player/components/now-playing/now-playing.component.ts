@@ -23,19 +23,17 @@ export class NowPlayingComponent implements OnInit {
   async mediaItemDidChange() {
     this.lyricsLoading = true;
     try {
-      this.playerService.geniusNowPlayingItem = null;
-      this.playerService.lyricsNowPlayingItem = null;
+      this.playerService.nowPlayingItemGenius = null;
 
-      [this.playerService.geniusNowPlayingItem, this.playerService.lyricsNowPlayingItem] = await
+      this.playerService.nowPlayingItemGenius = await
         this.apiService.getGeniusSong(this.playerService.nowPlayingItem.artistName, this.playerService.nowPlayingItem.title, true);
-
-      if (!this.playerService.lyricsNowPlayingItem) {
-        this.playerService.lyricsNowPlayingItem = 'Lyrics unavailable';
-      }
-    } catch {
-      this.playerService.geniusNowPlayingItem = null;
-      this.playerService.lyricsNowPlayingItem = 'Lyrics unavailable';
     } finally {
+      if (this.playerService.nowPlayingItemGenius) {
+        this.playerService.nowPlayingItemLyrics = this.playerService.nowPlayingItemGenius.lyrics;
+      } else {
+        this.playerService.nowPlayingItemLyrics = 'Lyrics unavailable';
+      }
+
       this.lyricsLoading = false;
     }
   }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { PlayerService } from './player.service';
 import { environment } from '../../../environments/environment';
 
@@ -9,7 +10,7 @@ declare var MusicKit: any;
 })
 export class ApiService {
 
-  constructor(public playerService: PlayerService) { }
+  constructor(public playerService: PlayerService, private http: HttpClient) { }
 
   async getArtist(id: string, artist?: any): Promise<any> {
     if (artist && artist.id === id) {
@@ -190,117 +191,86 @@ export class ApiService {
     }
   }
 
-  appleApiHeaders() {
-    return new Headers({
-      Authorization: 'Bearer ' + MusicKit.getInstance().developerToken,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'Music-User-Token': '' + MusicKit.getInstance().musicUserToken
-    });
+  appleApiHeaders(): HttpHeaders {
+    return new HttpHeaders()
+      .set('Authorization', 'Bearer ' + MusicKit.getInstance().developerToken)
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .set('Music-User-Token', MusicKit.getInstance().musicUserToken);
   }
 
   async getMusicKitData(url: string): Promise<any> {
-    return await fetch(`${environment.appleMusicApi}/${url}`,
-      { headers: this.appleApiHeaders() }).then(res => res.json());
+    const headers = this.appleApiHeaders();
+    return await this.http.get(`${environment.appleMusicApi}/${url}`, { headers: headers }).toPromise;
   }
 
   async getRecentPlayed(offset: number): Promise<any> {
-    return await fetch(`${environment.appleMusicApi}/v1/me/recent/played?offset=${offset}`,
-      {headers: this.appleApiHeaders() }).then(res => res.json());
+    const headers = this.appleApiHeaders();
+    return await this.http.get(`${environment.appleMusicApi}/v1/me/recent/played?offset=${offset}`, { headers: headers }).toPromise();
   }
 
   async getHeavyRotation(offset: number): Promise<any> {
-    return await fetch(`${environment.appleMusicApi}/v1/me/history/heavy-rotation?offset=${offset}`,
-      { headers: this.appleApiHeaders() }).then(res => res.json());
+    const headers = this.appleApiHeaders();
+    return await this.http.get(
+      `${environment.appleMusicApi}/v1/me/history/heavy-rotation?offset=${offset}`, { headers: headers }).toPromise();
   }
 
   async getRatings(collection: any): Promise<any> {
     let url = `${environment.appleMusicApi}/v1/me/ratings/songs?ids=`;
+    const collectionIds = collection.relationships.tracks.data.map(i => i.id);
+    url += collectionIds.join(',');
 
-    for (const item of collection.relationships.tracks.data) {
-      url += item.id;
-
-      if (collection.relationships.tracks.data[collection.relationships.tracks.data.length - 1].id !== item.id) {
-        url += ',';
-      }
-    }
-
-    return await fetch(url, { headers: this.appleApiHeaders() }).then(res => res.json());
+    const headers = this.appleApiHeaders();
+    return await this.http.get(url, { headers: headers }).toPromise();
   }
 
   addRating(item: any, rating: number) {
+    const headers = this.appleApiHeaders();
+
     if (rating !== 0) {
-      fetch(`${environment.appleMusicApi}/v1/me/ratings/songs/${item.id}`, {
-        method: 'PUT',
-        headers: this.appleApiHeaders(),
-        body: JSON.stringify({
-          type: 'rating',
-          attributes: {
-            value: rating
-          }
-        })
+      const body = JSON.stringify({
+        type: 'rating',
+        attributes: {
+          value: rating
+        }
       });
+
+      this.http.put(`${environment.appleMusicApi}/v1/me/ratings/songs/${item.id}`, body, { headers: headers }).subscribe();
     } else {
-      fetch(`${environment.appleMusicApi}/v1/me/ratings/songs/${item.id}`, {
-        method: 'DELETE',
-        headers: this.appleApiHeaders(),
-      });
+      this.http.delete(`${environment.appleMusicApi}/v1/me/ratings/songs/${item.id}`, { headers : headers }).subscribe();
     }
   }
 
-  async getRelatedAlbums(album: any): Promise<any> {
-    const url = album.attributes.url.split('/');
-    const name = url[url.length - 2];
+  async getArtistData(ids: Array<string>, imageOnly?: boolean): Promise<any> {
+    let url = `${environment.musicServiceApi}/artists`;
+    const params = new HttpParams()
+      .set('ids', ids.join(','));
 
-    const info = await fetch(`${environment.musicServiceApi}/albums/
-      ${this.playerService.musicKit.storefrontId}/${name}/${album.id}`)
-      .then(res => res.json());
-    info.description = JSON.parse(info.description);
-
-    if (!info.description.data.relationships.listenersAlsoBought) {
-      return;
+    if (imageOnly) {
+      url += '/images';
     }
 
-    const relatedAlbumsIds = info.description.data.relationships.listenersAlsoBought.data.map(i => i.id);
-    return await this.playerService.musicKit.api.albums(relatedAlbumsIds);
+    return await this.http.get(url, { params: params }).toPromise();
   }
 
-  async getArtistData(name: string, id: string): Promise<any> {
-    return await fetch(`${environment.musicServiceApi}/artists/${this.playerService.musicKit.storefrontId}/${name}/${id}`)
-      .then(res => res.json());
+  async getAlbumData(ids: Array<string>): Promise<any> {
+    const url = `${environment.musicServiceApi}/albums`;
+    const params = new HttpParams()
+      .set('ids', ids.join(','));
+
+    return await this.http.get(url, { params: params }).toPromise();
   }
 
-  async getAlbumData(name: string, id: string): Promise<any> {
-    return await fetch(`${environment.musicServiceApi}/albums/${this.playerService.musicKit.storefrontId}/${name}/${id}`)
-      .then(res => res.json());
-  }
+  async getGeniusSong(artist: string, song: string, includeLyrics?: boolean): Promise<any> {
+    const url = `${environment.musicServiceApi}/genius/song`;
+    const params = new HttpParams()
+      .set('artist', artist)
+      .set('song', song)
+      .set('includeLyrics', includeLyrics.toString());
 
-  async getArtistArtwork(url: any): Promise<string> {
-    url = url.split('/');
-    const id = url[url.length - 1];
-    const name = url[url.length - 2];
-    const storefront = url[url.length - 4];
+    const response: any = await this.http.get(url, { params: params }).toPromise();
 
-    const info = await fetch(`${environment.musicServiceApi}/artists/image/${storefront}/${name}/${id}`)
-      .then(res => res.json());
-
-    return info.imageUrl;
-  }
-
-  async getGeniusSong(artistName: string, trackName: string, includeLyrics: boolean): Promise<[any, any]> {
-    let geniusSong: any, lyrics: any;
-
-    let query = `${artistName} | ${trackName}`;
-    query = encodeURIComponent(query);
-
-    const response =  await fetch(`${environment.musicServiceApi}/genius/song/${query}`).then(res => res.json());
-    geniusSong = response.response.song;
-
-    if (includeLyrics && geniusSong) {
-      lyrics = await fetch(`${environment.musicServiceApi}/genius/lyrics/${geniusSong.id}`).then(res => res.json());
-    }
-
-    return [geniusSong, lyrics];
+    return response.response.song;
   }
 
 }

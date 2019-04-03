@@ -14,7 +14,12 @@ export class PlayerService {
   nowPlayingItem: any;
   nowPlayingPlaylist: any;
   playbackLoading: boolean;
-  playbackLoadingTimeout: any;
+  loadingTimeout: any;
+  hasPlaybackTimedOut: boolean;
+  playbackTimeout: any;
+
+  nowPlayingItemGenius: any;
+  nowPlayingItemLyrics: any;
 
   artist: any;
   albums: any;
@@ -23,9 +28,6 @@ export class PlayerService {
   playlist: any;
   queue: Array<any>;
   history: Array<any> = [];
-
-  geniusNowPlayingItem: any;
-  lyricsNowPlayingItem: any;
 
   lastSearchTerm = '';
   searchArtists: any;
@@ -36,6 +38,7 @@ export class PlayerService {
   recommendations: any;
   recentPlayed: any;
   heavyRotation: any;
+  recommendationsDate: number;
 
   mostPlayed: any;
   top100: any;
@@ -43,8 +46,6 @@ export class PlayerService {
   aListPlaylists: any;
   appleCurators: any;
   curators: any;
-
-  recommendationsDate: number;
 
   deviceHardwareID: string;
 
@@ -86,7 +87,7 @@ export class PlayerService {
   }
 
   async playItem(item: any, startIndex: number = 0, shuffle: boolean = false): Promise<any> {
-    if (this.playbackLoading === true) {
+    if (this.playbackLoading) {
       return;
     }
 
@@ -108,7 +109,7 @@ export class PlayerService {
       await this.musicKit.changeToMediaAtIndex(startIndex);
     }
 
-    if (shuffle === true) {
+    if (shuffle) {
       this.musicKit.player.shuffleMode = 1;
     }
 
@@ -130,15 +131,20 @@ export class PlayerService {
   }
 
   async play(): Promise<any> {
-    if (this.playbackLoading === true) {
+    if (this.playbackLoading) {
       return;
+    }
+
+    if (this.hasPlaybackTimedOut) {
+      await this.musicKit.player.play();
+      await this.musicKit.player.stop();
     }
 
     await this.musicKit.player.play();
   }
 
   async pause(): Promise<any> {
-    if (this.playbackLoading === true) {
+    if (this.playbackLoading) {
       return;
     }
 
@@ -249,18 +255,27 @@ export class PlayerService {
     }
 
     this.nowPlayingItem = event.item;
+
+    if (localStorage.getItem('enablePlayPause')) {
+      this.hasPlaybackTimedOut = false;
+      window.clearTimeout(this.playbackTimeout);
+
+      this.playbackTimeout = window.setTimeout(() => {
+        this.hasPlaybackTimedOut = true;
+      }, 898000);
+    }
   }
 
   playbackStateDidChange(event: any) {
     this.playing = event.state === 2;
     this.playbackLoading = event.state === 1 || event.state === 8;
 
-    window.clearTimeout(this.playbackLoadingTimeout);
+    window.clearTimeout(this.loadingTimeout);
 
     if (this.playbackLoading) {
       const currentPlaybackTime = this.musicKit.player.currentPlaybackTime;
 
-      this.playbackLoadingTimeout = window.setTimeout(async function() {
+      this.loadingTimeout = window.setTimeout(async function() {
         const musicKit = MusicKit.getInstance();
 
         if (currentPlaybackTime <= 10) {
@@ -307,7 +322,7 @@ export class PlayerService {
               if (device.deviceId === this.deviceHardwareID) {
                 foundDevice = true;
 
-                if (!this.playing && !didPlaybackChange) {
+                if (this.musicKit.nowplayingItem && !this.playing && !didPlaybackChange) {
                   this.play();
                   didPlaybackChange = true;
                 }

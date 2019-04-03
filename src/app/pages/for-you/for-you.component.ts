@@ -21,11 +21,15 @@ export class ForYouComponent implements OnInit {
     this.loading = true;
 
     const recommendations = this.getRecommenations();
-    const recentPlayed = this.getRecentPlayed();
-    const heavyRotation = this.getHeavyRotation();
+    const recentPlayed = this.getRecentPlayed(true);
+    const heavyRotation = this.getHeavyRotation(true);
     await Promise.all([recommendations, recentPlayed, heavyRotation]);
 
     this.loading = false;
+
+    const additionalRecentPlayed = this.getRecentPlayed(false);
+    const additionalHeavyRotation = this.getHeavyRotation(false);
+    await Promise.all([additionalRecentPlayed, additionalHeavyRotation]);
 
     this.apiService.getRelationships(this.playerService.recentPlayed, 'albums');
     this.apiService.getRelationships(this.playerService.recentPlayed, 'playlists');
@@ -54,37 +58,41 @@ export class ForYouComponent implements OnInit {
     }
   }
 
-  async getRecentPlayed(): Promise<any> {
-    this.playerService.recentPlayed = await this.playerService.musicKit.api.recentPlayed();
+  async getRecentPlayed(loadInitial: boolean): Promise<any> {
+    if (loadInitial) {
+      this.playerService.recentPlayed = await this.playerService.musicKit.api.recentPlayed();
+    } else {
+      while (this.playerService.recentPlayed.length < 30) {
+        const next = await this.apiService.getRecentPlayed(this.playerService.recentPlayed.length);
 
-    while (this.playerService.recentPlayed.length < 30) {
-      const next = await this.apiService.getRecentPlayed(this.playerService.recentPlayed.length);
+        if (!next || !next.data || !next.data.length) {
+          break;
+        }
 
-      if (!next || !next.data || !next.data.length) {
-        break;
-      }
-
-      if (next && next.data && next.data.length) {
-        for (const item of next.data) {
-          this.playerService.recentPlayed.push(item);
+        if (next && next.data && next.data.length) {
+          for (const item of next.data) {
+            this.playerService.recentPlayed.push(item);
+          }
         }
       }
     }
   }
 
-  async getHeavyRotation(): Promise<any> {
-    this.playerService.heavyRotation = await this.playerService.musicKit.api.historyHeavyRotation();
+  async getHeavyRotation(loadInitial: boolean): Promise<any> {
+    if (loadInitial) {
+      this.playerService.heavyRotation = await this.playerService.musicKit.api.historyHeavyRotation();
+    } else {
+      while (this.playerService.heavyRotation.length < 20) {
+        const next = await this.apiService.getHeavyRotation(this.playerService.heavyRotation.length);
 
-    while (this.playerService.heavyRotation.length < 20) {
-      const next = await this.apiService.getHeavyRotation(this.playerService.heavyRotation.length);
+        if (!next || !next.data || !next.data.length) {
+          break;
+        }
 
-      if (!next || !next.data || !next.data.length) {
-        break;
-      }
-
-      if (next && next.data && next.data.length) {
-        for (const item of next.data) {
-          this.playerService.recentPlayed.push(item);
+        if (next && next.data && next.data.length) {
+          for (const item of next.data) {
+            this.playerService.recentPlayed.push(item);
+          }
         }
       }
     }
