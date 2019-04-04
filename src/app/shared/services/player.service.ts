@@ -322,7 +322,7 @@ export class PlayerService {
               if (device.deviceId === this.deviceHardwareID) {
                 foundDevice = true;
 
-                if (this.musicKit.nowplayingItem && !this.playing && !didPlaybackChange) {
+                if (this.musicKit.player.nowplayingItem && !this.playing && !didPlaybackChange) {
                   this.play();
                   didPlaybackChange = true;
                 }

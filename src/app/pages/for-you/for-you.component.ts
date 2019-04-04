@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-for-you',
@@ -19,17 +20,10 @@ export class ForYouComponent implements OnInit {
 
   async loadRecommenations() {
     this.loading = true;
-
-    const recommendations = this.getRecommenations();
-    const recentPlayed = this.getRecentPlayed(true);
-    const heavyRotation = this.getHeavyRotation(true);
-    await Promise.all([recommendations, recentPlayed, heavyRotation]);
-
+    await Promise.all([this.getRecommenations(), this.getRecentPlayed(true), this.getHeavyRotation(true)].map(p => p.catch(e => e)));
     this.loading = false;
 
-    const additionalRecentPlayed = this.getRecentPlayed(false);
-    const additionalHeavyRotation = this.getHeavyRotation(false);
-    await Promise.all([additionalRecentPlayed, additionalHeavyRotation]);
+    await Promise.all([this.getRecentPlayed(false), this.getHeavyRotation(false)].map(p => p.catch(e => e)));
 
     this.apiService.getRelationships(this.playerService.recentPlayed, 'albums');
     this.apiService.getRelationships(this.playerService.recentPlayed, 'playlists');
@@ -97,5 +91,4 @@ export class ForYouComponent implements OnInit {
       }
     }
   }
-
 }

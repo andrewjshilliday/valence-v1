@@ -97,6 +97,10 @@ export class ApiService {
   }
 
   async getRelationships(collection: any, type: string) {
+    if (!collection) {
+      return;
+    }
+
     let itemIdArray: any;
     let results: any;
 
