@@ -10,23 +10,34 @@ export class SettingsComponent implements OnInit {
 
   bitrate: string;
   enablePlayPause: boolean;
-  hardwareID: string;
+  device: any;
 
   constructor(public playerService: PlayerService) { }
 
   ngOnInit() {
     this.bitrate = this.playerService.musicKit.bitrate.toString();
     this.enablePlayPause = Boolean(JSON.parse(localStorage.getItem('enablePlayPause')));
-    this.hardwareID = localStorage.getItem('hardwareID');
+    this.device = JSON.parse(localStorage.getItem('device'));
+
+    if (!this.device) {
+      this.device = {
+        name: '',
+        id: ''
+      };
+    }
   }
 
   changeEnablePlayPause() {
     localStorage.setItem('enablePlayPause', JSON.stringify(this.enablePlayPause));
   }
 
-  saveHardwareID() {
-    localStorage.setItem('hardwareID', this.hardwareID);
-    this.playerService.deviceHardwareID = this.hardwareID;
+  saveDevice() {
+    if (!this.device.name || !this.device.id || this.device.id.length !== 64) {
+      return;
+    }
+
+    localStorage.setItem('device', JSON.stringify(this.device));
+    this.playerService.device = this.device;
   }
 
   showConnectedDevices() {

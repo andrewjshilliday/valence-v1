@@ -15,18 +15,24 @@
   <div class="media-devices">
     <h3>Auto Play/Pause</h3>
     <p>This feature will automatically play or pause music when the specified device connects or disconnects.</p>
-    <mat-checkbox [(ngModel)]="enablePlayPause" (change)="changeEnablePlayPause()">Enable (experimental)</mat-checkbox> <br />
-    <mat-form-field class="hardware-id">
-      <div class="row"></div>
-      <input matInput type="text" placeholder="Enter Hardware ID" [(ngModel)]="hardwareID">
-      <button mat-button *ngIf="hardwareID" matSuffix mat-icon-button aria-label="Clear" (click)="hardwareID=''">
+    <mat-checkbox [(ngModel)]="enablePlayPause" (change)="changeEnablePlayPause()">Enable (experimental)</mat-checkbox>
+    <br />
+    <mat-form-field class="device-name">
+      <input matInput type="text" placeholder="Device Name" [(ngModel)]="device.name">
+      <button mat-button *ngIf="device.name" matSuffix mat-icon-button aria-label="Clear" (click)="device.name=''">
         <mat-icon>close</mat-icon>
       </button>
-      <button mat-buttom *ngIf="hardwareID" matSuffix mat-icon-button aria-label="Save" (click)="saveHardwareID()">
-        <mat-icon>save</mat-icon>
-      </button>
-      <button mat-button matSuffix (click)="showConnectedDevices()">Show Connected Devices</button>
     </mat-form-field>
+    <br />
+    <mat-form-field class="device-id">
+      <input matInput type="text" placeholder="Hardware ID" [(ngModel)]="device.id">
+      <button mat-button *ngIf="device.id" matSuffix mat-icon-button aria-label="Clear" (click)="device.id=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <br />
+    <button mat-stroked-button class="save-button" (click)="saveDevice()">Save</button>
+    <button mat-stroked-button matSuffix (click)="showConnectedDevices()">Show Connected Devices</button>
   </div>
 
 </div>

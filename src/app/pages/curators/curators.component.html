@@ -6,7 +6,7 @@
 
   <div *ngIf="!loading">
     <div *ngIf="curator">
-      <div class="curator-background container-fluid" [ngStyle]="{ 'background-image': 'url(' + playerService.formatArtworkURL(curator.attributes.artwork, 1080) + ')' }">
+      <div class="curator-background container-fluid" [ngStyle]="{ 'background-image': 'url(' + playerService.formatArtwork(curator.attributes.artwork, 1080) + ')' }">
         <h1 class="text-truncate text-light">{{curator.attributes.name}}</h1>
 
         <div class="row container-fluid">

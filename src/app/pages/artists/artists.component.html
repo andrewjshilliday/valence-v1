@@ -6,12 +6,12 @@
 
   <div *ngIf="!loading">
     <div *ngIf="playerService.artist">
-      <div class="artist-background container-fluid" [ngStyle]="{'background-image': 'url(' + artistImage + ')'}">
+      <div class="artist-background container-fluid" [ngStyle]="artistImage && {'background-image': 'url(' + playerService.formatArtwork(artistImage, 1000) + ')'}">
         <h1 class="text-truncate text-light">{{playerService.artist.attributes.name}}</h1>
 
         <div class="row container-fluid">
           <div class="artist-image col-6 col-sm-3 col-md-4">
-            <img class="artist-image img-fluid rounded-circle" src="{{artistImage}}" />
+            <img *ngIf="artistImage" class="artist-image img-fluid rounded-circle" src="{{playerService.formatArtwork(artistImage, 500)}}" />
           </div>
           <div *ngIf="playerService.artist && playerService.artist.relationships.albums.data && playerService.artist.relationships.albums.data | albumFilter : 'latestRelease'" class="col-6 col-sm-4 col-md-3" [ngClass]="(playerService.artist.relationships.albums.data | albumFilter : 'upcomingRelease') ? 'offset-md-2' : 'offset-md-5'">
             <h5 class="text-truncate text-light" title="Latest Release">Latest Release</h5>
@@ -79,6 +79,18 @@
         <app-media-item-collection-row [collection]="sortItems(compilations, sortCompilations)"></app-media-item-collection-row>
       </div>
 
+      <div *ngIf="appearsOn && appearsOn.length">
+        <div class="row">
+          <div class="col-6"><h3>Appears On Albums</h3></div>
+          <div *ngIf="compilations.length > 1" class="col-6">
+            <select class="float-right" [(ngModel)]="sortAppearsOn">
+              <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
+            </select>
+          </div>
+        </div>
+        <app-media-item-collection-row [collection]="sortItems(appearsOn, sortAppearsOn)"></app-media-item-collection-row>
+      </div>
+
       <div *ngIf="playerService.playlists && playerService.playlists.length">
         <h3>Artist Playlists</h3>
         <app-media-item-collection-row [collection]="playerService.playlists"></app-media-item-collection-row>
@@ -91,25 +103,26 @@
             <p>{{artistInfo.attributes.artistBio}}</p>
           </div>
           <div class="col-3 artist-details">
-            <div class="row">
+            <div *ngIf="artistInfo.attributes.origin" class="row">
               <span *ngIf="artistInfo.attributes.isGroup"><b>ORIGIN</b><br />{{artistInfo.attributes.origin}}</span>
               <span *ngIf="!artistInfo.attributes.isGroup"><b>HOMETOWN</b><br />{{artistInfo.attributes.origin}}</span>
             </div>
-            <br />
-            <div class="row">
+            <br *ngIf="artistInfo.attributes.origin" />
+            <div *ngIf="artistInfo.attributes.bornOrFormedDate" class="row">
               <span *ngIf="artistInfo.attributes.isGroup"><b>FORMED</b><br />{{artistInfo.attributes.bornOrFormedDate}}</span>
               <span *ngIf="!artistInfo.attributes.isGroup"><b>BORN</b><br />{{artistInfo.attributes.bornOrFormedDate | date : longDate}}</span>
             </div>
-            <br />
+            <br *ngIf="artistInfo.attributes.bornOrFormedDate" />
             <div class="row">
               <span><b>GENRE</b><br />{{playerService.artist.attributes.genreNames[0]}}</span>
             </div>
           </div>
         </div>
       </div>
+      <br *ngIf="artistInfo && artistInfo.attributes.artistBio" />
 
       <div *ngIf="relatedArtists">
-        <br *ngIf="artistInfo && artistInfo.attributes.artistBio" />
+        <!-- <br *ngIf="artistInfo && artistInfo.attributes.artistBio" /> -->
         <h3>Related Artists</h3>
         <app-media-item-collection-row [collection]="relatedArtists"></app-media-item-collection-row>
       </div>

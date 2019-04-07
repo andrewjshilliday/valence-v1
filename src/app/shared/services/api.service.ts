@@ -12,7 +12,7 @@ export class ApiService {
 
   constructor(public playerService: PlayerService, private http: HttpClient) { }
 
-  async getArtist(id: string, artist?: any): Promise<any> {
+  async getArtist(id: string, include?: Array<string>, artist?: any): Promise<any> {
     if (artist && artist.id === id) {
       return artist;
     }
@@ -205,7 +205,7 @@ export class ApiService {
 
   async getMusicKitData(url: string): Promise<any> {
     const headers = this.appleApiHeaders();
-    return await this.http.get(`${environment.appleMusicApi}/${url}`, { headers: headers }).toPromise;
+    return await this.http.get(`${environment.appleMusicApi}/${url}`, { headers: headers }).toPromise();
   }
 
   async getRecentPlayed(offset: number): Promise<any> {
@@ -246,12 +246,13 @@ export class ApiService {
   }
 
   async getArtistData(ids: Array<string>, imageOnly?: boolean): Promise<any> {
-    let url = `${environment.musicServiceApi}/artists`;
-    const params = new HttpParams()
-      .set('ids', ids.join(','));
+    const url = `${environment.musicServiceApi}/artists`;
+    let params = new HttpParams()
+      .set('ids', ids.join(','))
+      .set('storefront', this.playerService.musicKit.storefrontId);
 
     if (imageOnly) {
-      url += '/images';
+      params = params.append('imageOnly', 'true');
     }
 
     return await this.http.get(url, { params: params }).toPromise();
@@ -260,21 +261,24 @@ export class ApiService {
   async getAlbumData(ids: Array<string>): Promise<any> {
     const url = `${environment.musicServiceApi}/albums`;
     const params = new HttpParams()
-      .set('ids', ids.join(','));
+      .set('ids', ids.join(','))
+      .set('storefront', this.playerService.musicKit.storefrontId);
 
     return await this.http.get(url, { params: params }).toPromise();
   }
 
   async getGeniusSong(artist: string, song: string, includeLyrics?: boolean): Promise<any> {
     const url = `${environment.musicServiceApi}/genius/song`;
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('artist', artist)
-      .set('song', song)
-      .set('includeLyrics', includeLyrics.toString());
+      .set('song', song);
 
-    const response: any = await this.http.get(url, { params: params }).toPromise();
+      if (includeLyrics) {
+        params = params.append('includeLyrics', 'true');
+      }
 
-    return response.response.song;
+    const response: any = await this.http.get(url, { params: params }).toPromise().catch(e => e);
+    return response.response && response.response.song ? response.response.song : null;
   }
 
 }

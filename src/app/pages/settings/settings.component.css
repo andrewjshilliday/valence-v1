@@ -14,6 +14,14 @@
   font-size: 10pt;
 }
 
-.hardware-id {
-  width: 800px;
+.device-name {
+  width: 400px;
+}
+
+.device-id {
+  width: 590px;
+}
+
+.save-button {
+  margin-right: 15px;
 }

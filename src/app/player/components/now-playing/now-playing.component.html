@@ -17,13 +17,13 @@
     <div class='col-2'>
       <div class='now-playing-album-art rounded'>
         <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/albums', playerService.nowPlayingItem.assets[0].metadata.playlistId]">
-          <img class="img-fluid rounded" [src]='playerService.formatArtworkURL(playerService.nowPlayingItem.attributes.artwork, 100)' />
+          <img class="img-fluid rounded" [src]='playerService.formatArtwork(playerService.nowPlayingItem.attributes.artwork, 100)' />
         </a>
-        <img *ngIf="!playerService.nowPlayingItem.assets[0]" class="img-fluid rounded" [src]='playerService.formatArtworkURL(playerService.nowPlayingItem.attributes.artwork, 100)' />
+        <img *ngIf="!playerService.nowPlayingItem.assets[0]" class="img-fluid rounded" [src]='playerService.formatArtwork(playerService.nowPlayingItem.attributes.artwork, 100)' />
       </div>
       <div *ngIf="playerService.nowPlayingPlaylist" class="now-playing-playlist rounded">
         <a [routerLink]="['/playlists', playerService.nowPlayingPlaylist.id]">
-          <img class="img-fluid rounded" [src]='playerService.formatArtworkURL(playerService.nowPlayingPlaylist.attributes.artwork, 100)' />
+          <img class="img-fluid rounded" [src]='playerService.formatArtwork(playerService.nowPlayingPlaylist.attributes.artwork, 100)' />
         </a>
       </div>
       <div>
@@ -85,7 +85,7 @@
               <tbody>
                 <tr *ngFor="let item of playerService.queue" class="queue-row">
                   <td (click)="playerService.musicKit.changeToMediaAtIndex(playerService.musicKit.player.queue.items.indexOf(item))">
-                    <img class="queue-artwork" [src]="playerService.formatArtworkURL(item.artwork, 50)" />
+                    <img class="queue-artwork" [src]="playerService.formatArtwork(item.artwork, 50)" />
                   </td>
                   <td class="queue-text text-truncate" (click)="playerService.musicKit.changeToMediaAtIndex(playerService.musicKit.player.queue.items.indexOf(item))">
                     {{item.title}}<br />
@@ -111,7 +111,7 @@
               <tbody>
                 <tr *ngFor="let item of playerService.history.slice().reverse()" class="queue-row">
                   <td>
-                    <img class="queue-artwork" [src]="playerService.formatArtworkURL(item.artwork, 50)" />
+                    <img class="queue-artwork" [src]="playerService.formatArtwork(item.artwork, 50)" />
                   </td>
                   <td class="queue-text">
                     {{item.title}}<br />

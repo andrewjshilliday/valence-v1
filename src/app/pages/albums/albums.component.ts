@@ -67,12 +67,9 @@ export class AlbumsComponent implements OnInit, OnDestroy {
 
   async getArtistAlbums() {
     if (this.playerService.album.relationships.artists && this.playerService.album.relationships.artists.data.length) {
-      this.artistAlbums = await this.playerService.musicKit.api.artist(
-        this.playerService.album.relationships.artists.data[0].id);
-
+      this.artistAlbums = await this.playerService.musicKit.api.artist(this.playerService.album.relationships.artists.data[0].id);
       const itemIdArray = this.artistAlbums.relationships.albums.data.map(i => i.id);
-      this.artistAlbums.relationships.albums.data =
-        await this.playerService.musicKit.api.albums(itemIdArray);
+      this.artistAlbums.relationships.albums.data = await this.playerService.musicKit.api.albums(itemIdArray);
     }
   }
 

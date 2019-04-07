@@ -47,7 +47,7 @@ export class PlayerService {
   appleCurators: any;
   curators: any;
 
-  deviceHardwareID: string;
+  device: any;
 
   constructor() {
     MusicKit.configure({
@@ -205,8 +205,27 @@ export class PlayerService {
     localStorage.setItem('bitrate', bitrate.toString());
   }
 
-  formatArtworkURL(url: string, size: number): string {
-    return MusicKit.formatArtworkURL(url, size, size);
+  formatArtwork(artwork: any, size: number): string {
+    if (typeof artwork === 'string' || artwork instanceof String) {
+      artwork = this.generateArtwork(String(artwork));
+    }
+
+    return MusicKit.formatArtworkURL(artwork, size, size);
+  }
+
+  generateArtwork(url: string) {
+    const artwork = {
+      url: url,
+      bgColor: '000000',
+      height: 1000,
+      width: 1000,
+      textColor1: '000000',
+      textColor2: '000000',
+      textColor3: '000000',
+      textColor4: '000000'
+    };
+
+    return artwork;
   }
 
   isItemCurrentlyPlaying(id: number): boolean {
@@ -309,7 +328,7 @@ export class PlayerService {
   }
 
   initializeMediaDevices() {
-    this.deviceHardwareID = localStorage.getItem('hardwareID');
+    this.device = localStorage.getItem('device');
 
     navigator.mediaDevices.addEventListener('devicechange', () => {
       if (Boolean(JSON.parse(localStorage.getItem('enablePlayPause')))) {
@@ -317,9 +336,9 @@ export class PlayerService {
           let foundDevice = false;
           let didPlaybackChange = false;
 
-          if (this.deviceHardwareID && this.deviceHardwareID.length > 0) {
+          if (this.device && this.device.id.length > 0) {
             devices.forEach(device => {
-              if (device.deviceId === this.deviceHardwareID) {
+              if (device.deviceId === this.device.id) {
                 foundDevice = true;
 
                 if (this.musicKit.player.nowplayingItem && !this.playing && !didPlaybackChange) {

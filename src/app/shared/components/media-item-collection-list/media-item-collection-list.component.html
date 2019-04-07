@@ -39,7 +39,7 @@
   <div class="minimised">
     <div class="row header">
       <div class="col-4" appLazyLoadImage>
-        <img *ngIf="collection.attributes.artwork" class="img-fluid card-img-top rounded" [attr.data-src]="playerService.formatArtworkURL(collection.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
+        <img *ngIf="collection.attributes.artwork" class="img-fluid card-img-top rounded" [attr.data-src]="playerService.formatArtwork(collection.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
         <img *ngIf="!collection.attributes.artwork" class="img-fluid card-img-top rounded" src="././assets/images/placeholder.png" />
         <span><a (click)='playerService.playItem(collection, 0)'><i class="fas fa-play fa-xs"></i>Play</a></span><br />
         <span><a (click)='playerService.playItem(collection, 0, true)'><i class="fas fa-random fa-xs"></i>Shuffle</a></span>
@@ -98,7 +98,7 @@
       <td class="media-status" (click)="!playerService.isItemCurrentlyPlaying(item.id) ? playerService.playItem(collection, tracks.indexOf(item)) : playerService.pause()">
         <span *ngIf="!playerService.isItemCurrentlyPlaying(item.id) && !showArtwork && !getPopularity(item.id) && collection.relationships" class="item-number text-center text-muted">{{tracks.indexOf(item) + 1}}</span>
         <i *ngIf="!playerService.isItemCurrentlyPlaying(item.id) && !showArtwork && getPopularity(item.id)" class="fas fa-star item-popularity text-center text-muted"></i>
-        <img *ngIf="showArtwork" class="img-fluid" [attr.data-src]="playerService.formatArtworkURL(item.attributes.artwork, 50)" src="././assets/images/placeholder.png" />
+        <img *ngIf="showArtwork" class="img-fluid" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 50)" src="././assets/images/placeholder.png" />
         <i *ngIf="!playerService.isItemCurrentlyPlaying(item.id)" class="fas fa-play media-icon"></i>
         <i *ngIf="playerService.isItemCurrentlyPlaying(item.id)" class="fas fa-pause media-icon"></i>
         <i *ngIf="playerService.isItemCurrentlyPlaying(item.id)" class="fas fa-volume-up now-playing-icon"></i>

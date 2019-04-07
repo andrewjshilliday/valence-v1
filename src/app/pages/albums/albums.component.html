@@ -11,7 +11,7 @@
         <div class='row pt-3' appLazyLoadImage>
           <div class='col-4'>
             <div class="media-artwork">
-              <img class="img-fluid card-img-top rounded" [attr.data-src]="playerService.formatArtworkURL(playerService.album.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
+              <img class="img-fluid card-img-top rounded" [attr.data-src]="playerService.formatArtwork(playerService.album.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
               <div class='media-control-button'>
                 <i class="fas fa-play-circle fa-3x" aria-hidden="true" (click)="playerService.playItem(playerService.album)"></i>
               </div>
@@ -26,8 +26,8 @@
             </div>
             <hr *ngIf='playerService.album.attributes.editorialNotes' />
             <div class="editorial-notes scrollbar" [ngStyle]="{'max-height': 260 + (playerService.album.attributes.trackCount > 11 ? ((playerService.album.attributes.trackCount - 11) * 40) : 0) + 'px'}">
-              <p *ngIf='playerService.album.attributes.editorialNotes && playerService.album.attributes.editorialNotes.standard'>{{playerService.album.attributes.editorialNotes.standard}}</p>
-              <p *ngIf='playerService.album.attributes.editorialNotes && !playerService.album.attributes.editorialNotes.standard'>{{playerService.album.attributes.editorialNotes.short}}</p>
+              <div *ngIf="playerService.album.attributes.editorialNotes && playerService.album.attributes.editorialNotes.standard" [innerHTML]="playerService.album.attributes.editorialNotes.standard"></div>
+              <div *ngIf="playerService.album.attributes.editorialNotes && !playerService.album.attributes.editorialNotes.standard" [innerHTML]="playerService.album.attributes.editorialNotes.short"></div>
             </div>
           </div>
           <div class='col-8'>

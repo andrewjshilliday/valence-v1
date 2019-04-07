@@ -99,7 +99,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       if (a.imageUrl) {
         for (const artist of artists) {
           if (artist.id === a.id) {
-            artist.attributes.artworkUrl = a.imageUrl;
+            artist.attributes.artwork = this.playerService.formatArtwork(a.imageUrl, 500);
           }
         }
       }

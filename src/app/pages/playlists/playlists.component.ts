@@ -88,7 +88,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
       if (a.imageUrl) {
         for (const artist of artists) {
           if (artist.id === a.id) {
-            artist.attributes.artworkUrl = a.imageUrl;
+            artist.attributes.artwork = this.playerService.generateArtwork(a.imageUrl);
           }
         }
       }

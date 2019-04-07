@@ -17,6 +17,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
   singles: Array<any>;
   liveAlbums: Array<any>;
   compilations: Array<any>;
+  appearsOn: Array<any>;
   topSongs: any;
   artistImage: string;
   artistInfo: any;
@@ -31,6 +32,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
   sortSingles = 'recommended';
   sortLiveAlbums = 'recommended';
   sortCompilations = 'recommended';
+  sortAppearsOn = 'recommended';
 
   constructor(private route: ActivatedRoute, public playerService: PlayerService, public apiService: ApiService) { }
 
@@ -46,12 +48,8 @@ export class ArtistsComponent implements OnInit, OnDestroy {
 
   async loadArtist(id: string) {
     this.loading = true;
-
     this.playerService.artist = await this.apiService.getArtist(id, this.playerService.artist);
-
-    const artistRelationships = this.getArtistRelationships();
-    const artistPlaylists = this.getArtistPlaylists(id);
-    await Promise.all([artistRelationships, artistPlaylists]);
+    await Promise.all([this.getArtistRelationships(), this.getArtistPlaylists(id)].map(p => p.catch(e => e)));
 
     await this.getArtistInfo();
 
@@ -86,7 +84,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.apiService.getRelationships(this.playerService.artist.relationships.albums.data, 'albums');
   }
 
-  async getArtistPlaylists(id): Promise<any> {
+  async getArtistPlaylists(id: string): Promise<any> {
     this.playerService.playlists = await this.apiService.getPlaylists(id);
   }
 
@@ -104,11 +102,12 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.artistImage = resp.artists[0].imageUrl;
     this.artistInfo = resp.artists[0].resources.data;
 
-    let topSongs: any;
-    let albumsIds: any;
-    let singlesIds: any;
-    let liveAlbumsIds: any;
-    let compilationsIds: any;
+    let topSongs: Array<string>;
+    let albumsIds: Array<string>;
+    let singlesIds: Array<string>;
+    let liveAlbumsIds: Array<string>;
+    let compilationsIds: Array<string>;
+    let appearsOnIds: Array<string>;
 
     for (const item of resp.artists[0].resources.included) {
       if (item.id.match(this.playerService.artist.id + '/topSongs')) {
@@ -131,6 +130,10 @@ export class ArtistsComponent implements OnInit, OnDestroy {
         compilationsIds = item.relationships.content.data.map(i => i.id);
         continue;
       }
+      if (item.id.match(this.playerService.artist.id + '/appearsOnAlbums')) {
+        appearsOnIds = item.relationships.content.data.map(i => i.id);
+        continue;
+      }
       if (topSongs && albumsIds && singlesIds && liveAlbumsIds && compilationsIds) {
         break;
       }
@@ -140,6 +143,10 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.singles = [];
     this.liveAlbums = [];
     this.compilations = [];
+
+    if (appearsOnIds && appearsOnIds.length) {
+      this.getAppearsOn(appearsOnIds);
+    }
 
     for (const item of this.playerService.artist.relationships.albums.data) {
       if (albumsIds && albumsIds.indexOf(item.id) > -1) {
@@ -158,6 +165,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
         this.compilations.push(item);
         continue;
       }
+      this.albums.push(item);
     }
 
     if (topSongs) {
@@ -179,6 +187,10 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.getArtistArtwork(this.relatedArtists);
   }
 
+  async getAppearsOn(ids: Array<string>) {
+    this.appearsOn = await this.playerService.musicKit.api.albums(ids);
+  }
+
   async getArtistArtwork(artists: Array<any>) {
     const artistIds = artists.map(a => a.id);
     const resp = await this.apiService.getArtistData(artistIds, true);
@@ -187,7 +199,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
       if (a.imageUrl) {
         for (const artist of artists) {
           if (artist.id === a.id) {
-            artist.attributes.artworkUrl = a.imageUrl;
+            artist.attributes.artwork = this.playerService.generateArtwork(a.imageUrl);
           }
         }
       }
