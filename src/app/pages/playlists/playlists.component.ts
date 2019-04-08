@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-playlists',
@@ -23,6 +24,14 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     this.playlistSubscription = this.route.params.subscribe(params => {
       this.loadPlaylist(params['id']);
     });
+
+    window.addEventListener('resize', function () {
+      let resizeTimer: any;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        this.setEditorialNotesStyle();
+      }.bind(this), 250);
+    });
   }
 
   ngOnDestroy(): void {
@@ -32,7 +41,9 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   async loadPlaylist(id: string) {
     this.loading = true;
     this.playerService.playlist = await this.apiService.getPlaylist(id, this.playerService.playlist);
+    this.setEditorialNotesStyle();
     this.loading = false;
+
     this.getTrackRelationships();
 
     if (this.playerService.authorized) {
@@ -93,6 +104,21 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
         }
       }
     }
+  }
+
+  setEditorialNotesStyle() {
+    if (!this.playerService.playlist.attributes.description) {
+      return;
+    }
+
+    $( document ).ready(function() {
+      if ($('#notes')) {
+        const height = $(window).height();
+        const notesOffset = $('#notes').offset().top;
+        const notesParentOffset = $('#notes').parent().offset().top;
+        $('#notes').css('max-height', height  - notesOffset + notesParentOffset - 174);
+      }
+    });
   }
 
 }

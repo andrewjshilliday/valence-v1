@@ -42,6 +42,12 @@
 .editorial-notes {
   overflow-y: auto;
   white-space: pre-wrap;
+  font-size: 9pt;
+}
+
+.side-sticky {
+  position: sticky;
+  top: 16px;
 }
 
 p {

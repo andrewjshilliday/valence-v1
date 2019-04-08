@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-albums',
@@ -31,6 +32,14 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
+
+    window.addEventListener('resize', function () {
+      let resizeTimer: any;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        this.setEditorialNotesStyle();
+      }.bind(this), 250);
+    }.bind(this));
   }
 
   ngOnDestroy(): void {
@@ -41,6 +50,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.playerService.album = await this.apiService.getAlbum(id, this.playerService.album);
+    this.setEditorialNotesStyle();
 
     this.loading = false;
 
@@ -105,6 +115,21 @@ export class AlbumsComponent implements OnInit, OnDestroy {
         }
       }
     }
+  }
+
+  setEditorialNotesStyle() {
+    if (!this.playerService.album.attributes.editorialNotes) {
+      return;
+    }
+
+    $(document).ready(function() {
+      if ($('#notes')) {
+        const height = $(window).height();
+        const notesOffset = $('#notes').offset().top;
+        const notesParentOffset = $('#notes').parent().offset().top;
+        $('#notes').css('max-height', height  - notesOffset + notesParentOffset - 174);
+      }
+    });
   }
 
 }

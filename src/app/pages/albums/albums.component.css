@@ -45,6 +45,11 @@
   font-size: 9pt;
 }
 
+.side-sticky {
+  position: sticky;
+  top: 16px;
+}
+
 p {
   font-size: 9pt;
 }

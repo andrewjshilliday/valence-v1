@@ -4,32 +4,35 @@
     <mat-spinner class="loading-spinner"></mat-spinner>
   </div>
 
-  <div *ngIf="!loading">
+  <div *ngIf="!loading" id="content">
     <div *ngIf="playerService.album">
 
       <div class="expanded">
         <div class='row pt-3' appLazyLoadImage>
           <div class='col-4'>
-            <div class="media-artwork">
-              <img class="img-fluid card-img-top rounded" [attr.data-src]="playerService.formatArtwork(playerService.album.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
-              <div class='media-control-button'>
-                <i class="fas fa-play-circle fa-3x" aria-hidden="true" (click)="playerService.playItem(playerService.album)"></i>
+            <div class="side-sticky">
+              <div class="media-artwork">
+                <img class="img-fluid card-img-top rounded" [attr.data-src]="playerService.formatArtwork(playerService.album.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
+                <div class='media-control-button'>
+                  <i class="fas fa-play-circle fa-3x" aria-hidden="true" (click)="playerService.playItem(playerService.album)"></i>
+                </div>
               </div>
-            </div>
-            <div class='row'>
-              <div class='col-8'>
-                <span class='text-muted'>{{playerService.album.attributes.trackCount}} Songs, {{(albumDuration / 1000 / 60) | hoursMinutes}}</span>
+              <div class='row'>
+                <div class='col-8'>
+                  <span class='text-muted'>{{playerService.album.attributes.trackCount}} Songs, {{(albumDuration / 1000 / 60) | hoursMinutes}}</span>
+                </div>
+                <div class='col-4'>
+                  <span class='text-muted float-right shuffle-label'><a (click)='playerService.playItem(playerService.album, 0, true)'>Shuffle <i class="fas fa-random fa-xs"></i></a></span>
+                </div>
               </div>
-              <div class='col-4'>
-                <span class='text-muted float-right shuffle-label'><a (click)='playerService.playItem(playerService.album, 0, true)'>Shuffle <i class="fas fa-random fa-xs"></i></a></span>
+              <hr *ngIf="playerService.album.attributes.editorialNotes" />
+              <div id="notes" class="editorial-notes scrollbar">
+                <div *ngIf="playerService.album.attributes.editorialNotes && playerService.album.attributes.editorialNotes.standard" [innerHTML]="playerService.album.attributes.editorialNotes.standard"></div>
+                <div *ngIf="playerService.album.attributes.editorialNotes && !playerService.album.attributes.editorialNotes.standard" [innerHTML]="playerService.album.attributes.editorialNotes.short"></div>
               </div>
-            </div>
-            <hr *ngIf='playerService.album.attributes.editorialNotes' />
-            <div class="editorial-notes scrollbar" [ngStyle]="{'max-height': 260 + (playerService.album.attributes.trackCount > 11 ? ((playerService.album.attributes.trackCount - 11) * 40) : 0) + 'px'}">
-              <div *ngIf="playerService.album.attributes.editorialNotes && playerService.album.attributes.editorialNotes.standard" [innerHTML]="playerService.album.attributes.editorialNotes.standard"></div>
-              <div *ngIf="playerService.album.attributes.editorialNotes && !playerService.album.attributes.editorialNotes.standard" [innerHTML]="playerService.album.attributes.editorialNotes.short"></div>
             </div>
           </div>
+
           <div class='col-8'>
             <app-media-item-collection-list [collection]="playerService.album" [ratings]="ratings" [popularity]="popularity" [showHeader]=true [showArtist]="playerService.album.attributes.artistName === 'Various Artists'"></app-media-item-collection-list>
             <div *ngIf="playerService.album && !playerService.album.type.includes('library')" class="row container-fluid">
