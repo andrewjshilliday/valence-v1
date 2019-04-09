@@ -2,7 +2,7 @@
   <h1>Settings</h1>
 
   <div class="bitrate">
-    <h3>Set playback bitrate</h3>
+    <h3>Set Playback Bitrate</h3>
     <mat-form-field>
       <mat-label>Bitrate</mat-label>
       <mat-select [(value)]="bitrate">
@@ -33,6 +33,15 @@
     <br />
     <button mat-stroked-button class="save-button" (click)="saveDevice()">Save</button>
     <button mat-stroked-button matSuffix (click)="showConnectedDevices()">Show Connected Devices</button>
+  </div>
+
+  <div class="playback-recovery">
+    <h3>Playback Recovery</h3>
+    <p>This setting will attempt to restart playback if it is stuck loading for the set time but may cause songs to skip.</p>
+    <mat-checkbox [(ngModel)]="enablePlaybackRecovery" (change)="changeEnablePlaybackRecovery()">Enable</mat-checkbox>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Timeout (ms)" [(ngModel)]="playbackTimeout" (input)="onPlaybackTimeoutChange()">
+    </mat-form-field>
   </div>
 
 </div>

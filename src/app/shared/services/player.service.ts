@@ -291,7 +291,7 @@ export class PlayerService {
 
     window.clearTimeout(this.loadingTimeout);
 
-    if (this.playbackLoading) {
+    if (this.playbackLoading && localStorage.getItem('enablePlaybackRecovery')) {
       const currentPlaybackTime = this.musicKit.player.currentPlaybackTime;
 
       this.loadingTimeout = window.setTimeout(async function() {
@@ -301,7 +301,7 @@ export class PlayerService {
           await musicKit.player.stop();
           await musicKit.player.play();
         }
-      }, 5000);
+      }, (+localStorage.getItem('playbackTimeout') || 8000));
     }
   }
 
@@ -328,27 +328,26 @@ export class PlayerService {
   }
 
   initializeMediaDevices() {
-    this.device = localStorage.getItem('device');
+    this.device = JSON.parse(localStorage.getItem('device'));
 
     navigator.mediaDevices.addEventListener('devicechange', () => {
       if (Boolean(JSON.parse(localStorage.getItem('enablePlayPause')))) {
-        navigator.mediaDevices.enumerateDevices().then(devices => {
+        navigator.mediaDevices.enumerateDevices().then(audioDevices => {
           let foundDevice = false;
-          let didPlaybackChange = false;
 
           if (this.device && this.device.id.length > 0) {
-            devices.forEach(device => {
-              if (device.deviceId === this.device.id) {
+            for (const audioDevice of audioDevices) {
+              if (audioDevice.deviceId === this.device.id) {
                 foundDevice = true;
 
-                if (this.musicKit.player.nowplayingItem && !this.playing && !didPlaybackChange) {
+                if (this.musicKit.player.nowPlayingItem && !this.playing) {
                   this.play();
-                  didPlaybackChange = true;
+                  return;
                 }
               }
-            });
+            }
 
-            if (this.playing && !foundDevice && !didPlaybackChange) {
+            if (this.playing && !foundDevice) {
               this.pause();
             }
           }

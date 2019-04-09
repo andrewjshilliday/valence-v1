@@ -33,12 +33,8 @@ export class AlbumsComponent implements OnInit, OnDestroy {
       return false;
     };
 
-    window.addEventListener('resize', function () {
-      let resizeTimer: any;
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function() {
-        this.setEditorialNotesStyle();
-      }.bind(this), 250);
+    $(window).on('resize', function() {
+      this.setEditorialNotesStyle();
     }.bind(this));
   }
 
@@ -127,7 +123,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
         const height = $(window).height();
         const notesOffset = $('#notes').offset().top;
         const notesParentOffset = $('#notes').parent().offset().top;
-        $('#notes').css('max-height', height  - notesOffset + notesParentOffset - 174);
+        $('#notes').css('max-height', height  - notesOffset + notesParentOffset - 160);
       }
     });
   }

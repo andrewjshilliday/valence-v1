@@ -46,6 +46,14 @@
   }
 }
 
+.header-sticky {
+  position: sticky;
+  top: 0;
+  padding-top: 1rem;
+  background: white;
+  z-index: 20;
+}
+
 .mediarow {
   position: relative;
   z-index: 1;

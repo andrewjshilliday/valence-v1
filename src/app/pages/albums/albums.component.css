@@ -47,7 +47,8 @@
 
 .side-sticky {
   position: sticky;
-  top: 16px;
+  top: 0;
+  padding-top: 1rem;
 }
 
 p {
