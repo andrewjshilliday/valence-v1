@@ -44,9 +44,7 @@ export class ForYouComponent implements OnInit {
         const next = await this.apiService.getMusicKitData(this.playerService.recommendations[4].next);
 
         if (next && next.data && next.data.length) {
-          for (const item of next.data[0].relationships.contents.data) {
-            this.playerService.recommendations[4].relationships.contents.data.push(item);
-          }
+          this.playerService.recommendations[4].relationships.contents.data.push(...next.data[0].relationships.contents.data);
         }
       }
     }
@@ -64,9 +62,7 @@ export class ForYouComponent implements OnInit {
         }
 
         if (next && next.data && next.data.length) {
-          for (const item of next.data) {
-            this.playerService.recentPlayed.push(item);
-          }
+          this.playerService.recentPlayed.push(...next.data);
         }
       }
     }
@@ -84,9 +80,7 @@ export class ForYouComponent implements OnInit {
         }
 
         if (next && next.data && next.data.length) {
-          for (const item of next.data) {
-            this.playerService.recentPlayed.push(item);
-          }
+          this.playerService.recentPlayed.push(...next.data);
         }
       }
     }

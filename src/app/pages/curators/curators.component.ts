@@ -79,10 +79,7 @@ export class CuratorsComponent implements OnInit {
       const playlists = await this.apiService.getMusicKitData(this.nextPlaylistsUrl);
 
       if (playlists && playlists.data && playlists.data) {
-        for (const playlist of playlists.data) {
-          this.curatorPlaylists.push(playlist);
-        }
-
+        this.curatorPlaylists.push(...playlists.data);
         this.nextPlaylistsUrl = playlists.next;
 
         if (this.nextPlaylistsUrl) {

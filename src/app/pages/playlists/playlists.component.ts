@@ -76,11 +76,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
     while (artistIdArray[offset]) {
       const artists = await this.playerService.musicKit.api.artists(artistIdArray.slice(offset, offset + 30));
-
-      for (const artist of artists) {
-        this.artists.push(artist);
-      }
-
+      this.artists.push(...artists);
       offset = offset + 30;
     }
 

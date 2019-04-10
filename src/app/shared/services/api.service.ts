@@ -246,16 +246,31 @@ export class ApiService {
   }
 
   async getArtistData(ids: Array<string>, imageOnly?: boolean): Promise<any> {
+    let artistData: any;
+    let offset = 0;
     const url = `${environment.musicServiceApi}/artists`;
-    let params = new HttpParams()
-      .set('ids', ids.join(','))
-      .set('storefront', this.playerService.musicKit.storefrontId);
 
-    if (imageOnly) {
-      params = params.append('imageOnly', 'true');
+    while (ids.slice(offset, offset + 30).length) {
+      let params = new HttpParams()
+        .set('ids', ids.slice(offset, offset + 30).join(','))
+        .set('storefront', this.playerService.musicKit.storefrontId);
+
+      if (imageOnly) {
+        params = params.append('imageOnly', 'true');
+      }
+
+      const response: any = await this.http.get(url, { params: params }).toPromise();
+
+      if (!artistData) {
+        artistData = response;
+      } else {
+        artistData.artists.push(...response.artists);
+      }
+
+      offset += 30;
     }
 
-    return await this.http.get(url, { params: params }).toPromise();
+    return artistData;
   }
 
   async getAlbumData(ids: Array<string>): Promise<any> {
