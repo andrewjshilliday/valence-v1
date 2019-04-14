@@ -30,7 +30,7 @@ export class BrowseComponent implements OnInit {
 
   async loadMostPlayed() {
     if (!this.playerService.mostPlayed) {
-      this.playerService.mostPlayed = await this.playerService.musicKit.api.charts(null, { types: 'albums,playlists,songs' });
+      this.playerService.mostPlayed = await this.apiService.charts('albums,playlists,songs');
     }
 
     this.loading = false;
@@ -42,31 +42,31 @@ export class BrowseComponent implements OnInit {
 
   async loadtop100() {
     if (!this.playerService.top100) {
-      this.playerService.top100 = await this.playerService.musicKit.api.playlists(Constants.top100Ids);
+      this.playerService.top100 = await this.apiService.playlists(Constants.top100Ids);
     }
   }
 
   async loadFeaturedPlaylists() {
     if (!this.playerService.featuredPlaylists) {
-      this.playerService.featuredPlaylists = await this.playerService.musicKit.api.playlists(Constants.featuredPlaylistsIds);
+      this.playerService.featuredPlaylists = await this.apiService.playlists(Constants.featuredPlaylistsIds);
     }
   }
 
   async loadAppleCurators() {
     if (!this.playerService.appleCurators) {
-      this.playerService.appleCurators = await this.playerService.musicKit.api.appleCurators(Constants.appleCuratorsIds);
+      this.playerService.appleCurators = await this.apiService.appleCurators(Constants.appleCuratorsIds);
     }
   }
 
   async loadCurators() {
     if (!this.playerService.curators) {
-      this.playerService.curators = await this.playerService.musicKit.api.curators(Constants.curatorsIds);
+      this.playerService.curators = await this.apiService.curators(Constants.curatorsIds);
     }
   }
 
   async loadAListPlaylists() {
     if (!this.playerService.aListPlaylists) {
-      this.playerService.aListPlaylists = await this.playerService.musicKit.api.playlists(Constants.aListPlaylistsIds);
+      this.playerService.aListPlaylists = await this.apiService.playlists(Constants.aListPlaylistsIds);
     }
   }
 

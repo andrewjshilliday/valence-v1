@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PlayerService } from '../../services/player.service';
 import { ApiService } from '../../services/api.service';
+import { Rating } from '../../../models/musicKit/rating.model';
 
 @Component({
   selector: 'app-media-item-collection-list',
@@ -10,7 +11,7 @@ import { ApiService } from '../../services/api.service';
 export class MediaItemCollectionListComponent implements OnInit {
 
   @Input() collection: any;
-  @Input() ratings: any;
+  @Input() ratings: Rating[];
   @Input() popularity: any;
   @Input() showHeader: boolean;
   @Input() showArtist: boolean;
@@ -36,11 +37,11 @@ export class MediaItemCollectionListComponent implements OnInit {
   }
 
   getRating(item: any): number {
-    if (!item || !this.ratings || !this.ratings.data) {
+    if (!item || !this.ratings) {
       return 0;
     }
 
-    for (const rating of this.ratings.data) {
+    for (const rating of this.ratings) {
       if (item.id === rating.id && rating.attributes.value === 1) {
         return rating.attributes.value;
       }
@@ -49,24 +50,24 @@ export class MediaItemCollectionListComponent implements OnInit {
     return 0;
   }
 
-  addRating(item: any, oldRating: number, newRating: number) {
-    this.apiService.addRating(item, newRating);
+  addRating(id: any, oldRating: number, newRating: number) {
+    this.apiService.addRating(id, newRating);
 
-    const currentRatings = this.ratings.data.map(r => r.id);
+    const currentRatings = this.ratings.map(r => r.id);
 
-    if (currentRatings.indexOf(item.id) === -1) {
+    if (currentRatings.indexOf(id) === -1) {
       const rating = {
-        id: item.id,
+        id: id,
         type: 'ratings',
-        href: `/v1/me/ratings/songs/${item.id}`,
+        href: `/v1/me/ratings/songs/${id}`,
         attributes: {
           value: newRating
         }
       };
 
-      this.ratings.data.push(rating);
+      this.ratings.push(rating);
     } else {
-      this.ratings.data[currentRatings.indexOf(item.id)].attributes.value = newRating;
+      this.ratings[currentRatings.indexOf(id)].attributes.value = newRating;
     }
   }
 

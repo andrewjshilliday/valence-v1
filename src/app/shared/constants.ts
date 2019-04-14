@@ -1,6 +1,6 @@
 export class Constants {
 
-  static appleCuratorsIds: Array<string> = [
+  static appleCuratorsIds: string[] = [
     '976439528', /* blues */
     '988581516', /* rock */
     '988556214', /* alternative */
@@ -25,7 +25,7 @@ export class Constants {
     '989066661', /* childrens-music */
   ];
 
-  static featuredPlaylistsIds: Array<string> = [
+  static featuredPlaylistsIds: string[] = [
     'pl.f4d106fed2bd41149aaacabb233eb5eb', /* todays-hits */
     'pl.567c541f63414e798be5cf214e155557', /* today-at-apple */
     'pl.4589a0c55c9e462e9d3cb17964f5bda6', /* mellow-days */
@@ -47,7 +47,7 @@ export class Constants {
     'pl.dbd712beded846dca273d5d3259d28aa', /* pure-focus */
   ];
 
-  static top100Ids: Array<string> = [
+  static top100Ids: string[] = [
     'pl.d25f5d1181894928af76c85c967f8f31', /* top-100-global */
     'pl.c2273b7e89b44121b3093f67228918e7', /* top-100-uk */
     'pl.3b47111ed6b7461eae67fadf895d56db', /* top-100-ireland */
@@ -62,7 +62,7 @@ export class Constants {
     'pl.d3d10c32fbc540b38e266367dc8cb00c', /* top-100-south-korea */
   ];
 
-  static aListPlaylistsIds: Array<string> = [
+  static aListPlaylistsIds: string[] = [
     'pl.a9faca07cf8f47e19f1819b0f5a2e765', /* the-a-list-blues */
     'pl.0b593f1142b84a50a2c1e7088b3fb683', /* the-a-list-alternative */
     'pl.5ee8333dbe944d9f9151e97d92d1ead9', /* the-a-list-pop */
@@ -85,7 +85,7 @@ export class Constants {
     'pl.fecfa8a26ea44ad581d4fe501892c8ff', /* a-list-christian */
   ];
 
-  static curatorsIds: Array<string> = [
+  static curatorsIds: string[] = [
     '1231985718', /* ministry-of-sound */
     '1114653141', /* bbc-music */
     '999976862', /* shazam */

@@ -72,9 +72,9 @@
               <div class="dropdown-divider"></div>
               <a class="dropdown-item">Add to Library</a>
               <div class="dropdown-divider"></div>
-              <a *ngIf="getRating(item) !== 1" class="dropdown-item" (click)="addRating(item, getRating(item), 1)">Love</a>
-              <a *ngIf="getRating(item) !== -1" class="dropdown-item" (click)="addRating(item, getRating(item), -1)">Dislike</a>
-              <a *ngIf="getRating(item) !== 0" class="dropdown-item" (click)="addRating(item, getRating(item), 0)">Remove Rating</a>
+              <a *ngIf="getRating(item) !== 1" class="dropdown-item" (click)="addRating(item.id, getRating(item), 1)">Love</a>
+              <a *ngIf="getRating(item) !== -1" class="dropdown-item" (click)="addRating(item.id, getRating(item), -1)">Dislike</a>
+              <a *ngIf="getRating(item) !== 0" class="dropdown-item" (click)="addRating(item.id, getRating(item), 0)">Remove Rating</a>
             </div>
           </div>
         </div>
@@ -132,9 +132,9 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item">Add to Library</a>
             <div class="dropdown-divider"></div>
-            <a *ngIf="getRating(item) !== 1" class="dropdown-item" (click)="addRating(item, getRating(item), 1)">Love</a>
-            <a *ngIf="getRating(item) !== -1" class="dropdown-item" (click)="addRating(item, getRating(item), -1)">Dislike</a>
-            <a *ngIf="getRating(item) !== 0" class="dropdown-item" (click)="addRating(item, getRating(item), 0)">Remove Rating</a>
+            <a *ngIf="getRating(item) !== 1" class="dropdown-item" (click)="addRating(item.id, getRating(item), 1)">Love</a>
+            <a *ngIf="getRating(item) !== -1" class="dropdown-item" (click)="addRating(item.id, getRating(item), -1)">Dislike</a>
+            <a *ngIf="getRating(item) !== 0" class="dropdown-item" (click)="addRating(item.id, getRating(item), 0)">Remove Rating</a>
           </div>
         </div>
         <i *ngIf="getRating(item) === 1" class="fas fa-heart rating"></i>

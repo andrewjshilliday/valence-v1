@@ -21,25 +21,30 @@
       </div>
     </div>
 
-    <div *ngIf="searchTerm !== ''">
-      <div *ngIf="playerService.searchArtists && playerService.searchArtists.length">
+    <div *ngIf="searchTerm !== '' && playerService.searchResults">
+      <div *ngIf="playerService.searchResults.artists">
         <h3>Artists</h3>
-        <app-media-item-collection-row [collection]="playerService.searchArtists"></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="playerService.searchResults.artists.data"></app-media-item-collection-row>
       </div>
 
-      <div *ngIf="playerService.searchAlbums && playerService.searchAlbums.length">
+      <div *ngIf="playerService.searchResults.albums">
         <h3>Albums</h3>
-        <app-media-item-collection-row [collection]="playerService.searchAlbums"></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="playerService.searchResults.albums.data"></app-media-item-collection-row>
       </div>
 
-      <div *ngIf="playerService.searchSongs && playerService.searchSongs.length">
+      <div *ngIf="playerService.searchResults.songs">
         <h3>Songs</h3>
-        <app-media-item-collection-grid [collection]="playerService.searchSongs" [numRows]=3 [showArtist]=true></app-media-item-collection-grid>
+        <app-media-item-collection-grid [collection]="playerService.searchResults.songs.data" [numRows]=3 [showArtist]=true></app-media-item-collection-grid>
       </div>
 
-      <div *ngIf="playerService.searchPlaylists && playerService.searchPlaylists.length">
+      <div *ngIf="playerService.searchResults.playlists">
         <h3>Playlists</h3>
-        <app-media-item-collection-row [collection]="playerService.searchPlaylists"></app-media-item-collection-row>
+        <app-media-item-collection-row [collection]="playerService.searchResults.playlists.data"></app-media-item-collection-row>
+      </div>
+
+      <div *ngIf="playerService.searchResults.curators">
+        <h3>Curators</h3>
+        <app-media-item-collection-row [collection]="playerService.searchResults.curators.data"></app-media-item-collection-row>
       </div>
     </div>
 

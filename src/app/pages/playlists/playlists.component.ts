@@ -5,6 +5,9 @@ import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
 import * as $ from 'jquery';
 
+import { Artist } from '../../models/musicKit/artist.model';
+import { Rating } from '../../models/musicKit/rating.model';
+
 @Component({
   selector: 'app-playlists',
   templateUrl: './playlists.component.html',
@@ -15,8 +18,9 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   playlistSubscription: Subscription;
   loading: boolean;
   playlistDuration: number;
-  artists: any;
-  ratings: any;
+  artists: Artist[];
+  ratings: Rating[];
+  isLibraryPlaylist: boolean;
 
   constructor(private route: ActivatedRoute, public playerService: PlayerService, public apiService: ApiService) { }
 
@@ -36,8 +40,11 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
   async loadPlaylist(id: string) {
     this.loading = true;
-    this.playerService.playlist = await this.apiService.getPlaylist(id, this.playerService.playlist);
+
+    this.isLibraryPlaylist = id.startsWith('p.');
+    this.playerService.playlist = await this.apiService.playlist(id, 'artists,tracks');
     this.setEditorialNotesStyle();
+
     this.loading = false;
 
     this.getTrackRelationships();
@@ -54,12 +61,20 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   }
 
   async getRatings() {
-    this.ratings = await this.apiService.getRatings(this.playerService.playlist);
+    if (this.isLibraryPlaylist) {
+      return;
+    }
+
+    this.ratings = await this.apiService.ratings(this.playerService.playlist.relationships.tracks.data.map(i => i.id));
   }
 
   async getTrackRelationships() {
-    const songIdArray = this.playerService.playlist.relationships.tracks.data.map(i => i.id);
-    const results = await this.playerService.musicKit.api.songs(songIdArray, { include: 'artists,albums' });
+    if (this.isLibraryPlaylist) {
+      return;
+    }
+
+    const songIds = this.playerService.playlist.relationships.tracks.data.map(i => i.id);
+    const results = await this.apiService.songs(songIds, 'artists,albums');
 
     for (const item of this.playerService.playlist.relationships.tracks.data) {
       for (const result of results) {
@@ -72,10 +87,10 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
     let offset = 0;
     this.artists = [];
-    const artistIdArray = Array.from(new Set(results.map(r => r.relationships.artists.data[0].id)));
+    const artistIds = results.map(r => r.relationships.artists.data[0].id);
 
-    while (artistIdArray[offset]) {
-      const artists = await this.playerService.musicKit.api.artists(artistIdArray.slice(offset, offset + 30));
+    while (artistIds.slice(offset, offset + 30).length) {
+      const artists = await this.apiService.artists(artistIds.slice(offset, offset + 30));
       this.artists.push(...artists);
       offset = offset + 30;
     }
@@ -83,11 +98,11 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     this.getArtistArtwork(this.artists);
   }
 
-  async getArtistArtwork(artists: Array<any>) {
+  async getArtistArtwork(artists: Artist[]) {
     const artistIds = artists.map(a => a.id);
-    const resp = await this.apiService.getArtistData(artistIds, true);
+    const artistsData = await this.apiService.artistsData(artistIds, true);
 
-    for (const a of resp.artists) {
+    for (const a of artistsData) {
       if (a.imageUrl) {
         for (const artist of artists) {
           if (artist.id === a.id) {

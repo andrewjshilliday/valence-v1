@@ -12,8 +12,8 @@ export class MediaItemCollectionGridComponent implements OnInit {
   @Input() collection: any;
   @Input() numRows: number;
   @Input() showArtist: boolean;
-  columns: Array<number>;
-  rows: Array<number>;
+  columns: number[];
+  rows: number[];
 
   constructor(private router: Router, public playerService: PlayerService) { }
 

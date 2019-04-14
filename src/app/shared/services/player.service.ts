@@ -1,6 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Tokens } from '../../tokens';
 
+import { Artist } from '../../models/musicKit/artist.model';
+import { Album } from '../../models/musicKit/album.model';
+import { Playlist } from '../../models/musicKit/playlist.model';
+import { Curator } from '../../models/musicKit/curator.model';
+import { Recommendation } from '../../models/musicKit/recommendation.model';
+import { ChartResults } from '../../models/musicKit/chart.model';
+import { SearchResults } from '../../models/musicKit/search.model';
+import { GeniusSong } from '../../models/genius-song.model';
+
 declare var MusicKit: any;
 
 @Injectable({
@@ -18,34 +27,30 @@ export class PlayerService {
   hasPlaybackTimedOut: boolean;
   playbackTimeout: any;
 
-  nowPlayingItemGenius: any;
-  nowPlayingItemLyrics: any;
+  nowPlayingItemGenius: GeniusSong;
+  nowPlayingItemLyrics: string;
 
-  artist: any;
-  albums: any;
-  album: any;
-  playlists: any;
-  playlist: any;
-  queue: Array<any>;
-  history: Array<any> = [];
+  artist: Artist;
+  albums: Album[];
+  album: Album;
+  playlists: Playlist[];
+  playlist: Playlist;
+  queue: any[];
+  history: any[] = [];
 
-  lastSearchTerm = '';
-  searchArtists: any;
-  searchAlbums: any;
-  searchSongs: any;
-  searchPlaylists: any;
+  searchResults: SearchResults;
 
-  recommendations: any;
-  recentPlayed: any;
-  heavyRotation: any;
+  recommendations: Recommendation[];
+  recentPlayed: Recommendation[];
+  heavyRotation: Recommendation[];
   recommendationsDate: number;
 
-  mostPlayed: any;
-  top100: any;
-  featuredPlaylists: any;
-  aListPlaylists: any;
-  appleCurators: any;
-  curators: any;
+  mostPlayed: ChartResults;
+  top100: Playlist[];
+  featuredPlaylists: Playlist[];
+  aListPlaylists: Playlist[];
+  appleCurators: Curator[];
+  curators: Curator[];
 
   device: any;
 
@@ -86,15 +91,11 @@ export class PlayerService {
     this.initializeMediaDevices();
   }
 
-  async playItem(item: any, startIndex: number = 0, shuffle: boolean = false): Promise<any> {
-    if (this.playbackLoading) {
-      return;
-    }
-
+  async playItem(item: any, startIndex: number = 0, shuffle: boolean = false) {
     const playParams = item.attributes.playParams;
     this.musicKit.player.shuffleMode = 0;
 
-    if (!this.playing && this.musicKit.player.nowPlayingItem && item.relationships.tracks.data[startIndex]) {
+    if (!this.playing && this.musicKit.player.nowPlayingItem && (item.type === 'songs' || item.relationships.tracks.data[startIndex])) {
       if (item.relationships.tracks.data[startIndex].id === this.musicKit.player.nowPlayingItem.id) {
         this.play();
         return;
@@ -130,11 +131,7 @@ export class PlayerService {
     this.musicKit.player.queue.append(item);
   }
 
-  async play(): Promise<any> {
-    if (this.playbackLoading) {
-      return;
-    }
-
+  async play() {
     if (this.hasPlaybackTimedOut) {
       await this.musicKit.player.play();
       await this.musicKit.player.stop();
@@ -143,19 +140,15 @@ export class PlayerService {
     await this.musicKit.player.play();
   }
 
-  async pause(): Promise<any> {
-    if (this.playbackLoading) {
-      return;
-    }
-
+  async pause() {
     await this.musicKit.player.pause();
   }
 
-  async playNext(): Promise<any> {
+  async playNext() {
     await this.musicKit.player.skipToNextItem();
   }
 
-  async playPrevious(): Promise<any> {
+  async playPrevious() {
     if (this.musicKit.player.currentPlaybackTime < 11) {
       await this.musicKit.player.skipToPreviousItem();
     } else {
@@ -163,7 +156,7 @@ export class PlayerService {
     }
   }
 
-  async stop(): Promise<any> {
+  async stop() {
     await this.musicKit.player.stop();
   }
 
@@ -187,11 +180,11 @@ export class PlayerService {
     }
   }
 
-  async signin(): Promise<any> {
+  async signin() {
     await this.musicKit.authorize();
   }
 
-  async signout(): Promise<any> {
+  async signout() {
     await this.musicKit.unauthorize();
   }
 

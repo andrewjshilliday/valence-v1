@@ -1,8 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
+
+import { Curator } from '../../models/musicKit/curator.model';
+import { Playlist } from '../../models/musicKit/playlist.model';
+import { ChartResults } from '../../models/musicKit/chart.model';
 
 @Component({
   selector: 'app-curators',
@@ -13,14 +17,14 @@ export class CuratorsComponent implements OnInit {
 
   curatorSubscription: Subscription;
   loading: boolean;
-  curator: any;
-  curatorPlaylists: any;
+  curator: Curator;
+  curatorPlaylists: Playlist[];
   @Input() featuredPlaylistId: string;
   genre: string;
-  featuredPlaylist: any;
-  mostPlayed: any;
+  featuredPlaylist: Playlist;
+  mostPlayed: ChartResults;
 
-  filters: Array<string> = [ 'All', 'Essentials', 'Next Steps', 'Deep Cuts', 'Influences', 'Inspired' ];
+  filters: string[] = [ 'All', 'Essentials', 'Next Steps', 'Deep Cuts', 'Influences', 'Inspired' ];
 
   nextPlaylistsUrl: string;
   getNextPlaylists = true;
@@ -38,14 +42,12 @@ export class CuratorsComponent implements OnInit {
     this.loading = true;
 
     if (type === 'apple') {
-      this.curator = await this.playerService.musicKit.api.appleCurator(id);
-      this.curatorPlaylists = await this.playerService.musicKit.api.playlists(
-        this.curator.relationships.playlists.data.map(i => i.id));
+      this.curator = await this.apiService.appleCurator(id);
     } else {
-      this.curator = await this.playerService.musicKit.api.curator(id);
-      this.curatorPlaylists = await this.playerService.musicKit.api.playlists(
-        this.curator.relationships.playlists.data.map(i => i.id));
+      this.curator = await this.apiService.curator(id);
     }
+
+    this.curatorPlaylists = await this.apiService.playlists(this.curator.relationships.playlists.data.map(i => i.id));
 
     if (this.curator.relationships.playlists.next) {
       this.getNextPlaylists = true;
@@ -65,7 +67,7 @@ export class CuratorsComponent implements OnInit {
       this.featuredPlaylistId = this.curatorPlaylists[0].id;
     }
 
-    this.featuredPlaylist = await this.playerService.musicKit.api.playlist(this.featuredPlaylistId);
+    this.featuredPlaylist = await this.apiService.playlist(this.featuredPlaylistId);
 
     this.loading = false;
   }
@@ -98,7 +100,7 @@ export class CuratorsComponent implements OnInit {
   }
 
   async getMostPlayed() {
-    this.mostPlayed = await this.playerService.musicKit.api.charts(null, { genre: this.genre, types: 'albums,songs' });
+    this.mostPlayed = await this.apiService.charts('albums,songs', this.genre);
 
     this.apiService.getRelationships(this.mostPlayed.albums[0].data, 'albums');
     this.apiService.getRelationships(this.mostPlayed.songs[0].data, 'songs');

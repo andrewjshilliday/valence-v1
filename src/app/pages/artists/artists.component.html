@@ -82,7 +82,7 @@
       <div *ngIf="appearsOn && appearsOn.length">
         <div class="row">
           <div class="col-6"><h3>Appears On Albums</h3></div>
-          <div *ngIf="compilations.length > 1" class="col-6">
+          <div *ngIf="appearsOn.length > 1" class="col-6">
             <select class="float-right" [(ngModel)]="sortAppearsOn">
               <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
             </select>
@@ -96,33 +96,40 @@
         <app-media-item-collection-row [collection]="playerService.playlists"></app-media-item-collection-row>
       </div>
 
-      <div *ngIf="artistInfo && artistInfo.attributes.artistBio" class="artist-info">
-        <h3>About {{artistInfo.attributes.name}}</h3>
+      <div *ngIf="artistData && artistData.resources.data.attributes.artistBio" class="artist-info">
+        <h3>About {{artistData.resources.data.attributes.name}}</h3>
         <div class="row">
           <div class="col-9 artist-bio scrollbar">
-            <p>{{artistInfo.attributes.artistBio}}</p>
+            <p>{{artistData.resources.data.attributes.artistBio}}</p>
           </div>
           <div class="col-3 artist-details">
-            <div *ngIf="artistInfo.attributes.origin" class="row">
-              <span *ngIf="artistInfo.attributes.isGroup"><b>ORIGIN</b><br />{{artistInfo.attributes.origin}}</span>
-              <span *ngIf="!artistInfo.attributes.isGroup"><b>HOMETOWN</b><br />{{artistInfo.attributes.origin}}</span>
+            <div *ngIf="artistData.resources.data.attributes.origin" class="row">
+              <span *ngIf="artistData.resources.data.attributes.isGroup">
+                <b>ORIGIN</b><br />{{artistData.resources.data.attributes.origin}}
+              </span>
+              <span *ngIf="!artistData.resources.data.attributes.isGroup">
+                <b>HOMETOWN</b><br />{{artistData.resources.data.attributes.origin}}
+              </span>
             </div>
-            <br *ngIf="artistInfo.attributes.origin" />
-            <div *ngIf="artistInfo.attributes.bornOrFormedDate" class="row">
-              <span *ngIf="artistInfo.attributes.isGroup"><b>FORMED</b><br />{{artistInfo.attributes.bornOrFormedDate}}</span>
-              <span *ngIf="!artistInfo.attributes.isGroup"><b>BORN</b><br />{{artistInfo.attributes.bornOrFormedDate | date : longDate}}</span>
+            <br *ngIf="artistData.resources.data.attributes.origin" />
+            <div *ngIf="artistData.resources.data.attributes.bornOrFormedDate" class="row">
+              <span *ngIf="artistData.resources.data.attributes.isGroup">
+                <b>FORMED</b><br />{{artistData.resources.data.attributes.bornOrFormedDate}}
+              </span>
+              <span *ngIf="!artistData.resources.data.attributes.isGroup">
+                <b>BORN</b><br />{{artistData.resources.data.attributes.bornOrFormedDate | date : longDate}}
+              </span>
             </div>
-            <br *ngIf="artistInfo.attributes.bornOrFormedDate" />
+            <br *ngIf="artistData.resources.data.attributes.bornOrFormedDate" />
             <div class="row">
               <span><b>GENRE</b><br />{{playerService.artist.attributes.genreNames[0]}}</span>
             </div>
           </div>
         </div>
       </div>
-      <br *ngIf="artistInfo && artistInfo.attributes.artistBio" />
+      <br *ngIf="artistData && artistData.resources.data.attributes.artistBio" />
 
       <div *ngIf="relatedArtists">
-        <!-- <br *ngIf="artistInfo && artistInfo.attributes.artistBio" /> -->
         <h3>Related Artists</h3>
         <app-media-item-collection-row [collection]="relatedArtists"></app-media-item-collection-row>
       </div>

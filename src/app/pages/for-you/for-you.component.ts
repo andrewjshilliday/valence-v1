@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
-import * as $ from 'jquery';
 
 @Component({
   selector: 'app-for-you',
@@ -29,15 +28,22 @@ export class ForYouComponent implements OnInit {
     this.apiService.getRelationships(this.playerService.recentPlayed, 'playlists');
     this.apiService.getRelationships(this.playerService.heavyRotation, 'albums');
     this.apiService.getRelationships(this.playerService.heavyRotation, 'playlists');
-    this.apiService.getRelationships(this.playerService.recommendations[2].relationships.recommendations.data, 'todaysAlbums');
-    this.apiService.getRelationships(this.playerService.recommendations[4].relationships.contents.data, 'albums');
     this.apiService.getRelationships(this.playerService.recommendations[1].relationships.contents.data, 'playlists');
     this.apiService.getRelationships(this.playerService.recommendations[3].relationships.contents.data, 'playlists');
+    this.apiService.getRelationships(this.playerService.recommendations[4].relationships.contents.data, 'albums');
+    this.apiService.getRelationships(
+      this.playerService.recommendations[2].relationships.recommendations.data[0].relationships.contents.data, 'albums');
+    this.apiService.getRelationships(
+      this.playerService.recommendations[2].relationships.recommendations.data[1].relationships.contents.data, 'albums');
+    this.apiService.getRelationships(
+      this.playerService.recommendations[2].relationships.recommendations.data[2].relationships.contents.data, 'albums');
+    this.apiService.getRelationships(
+      this.playerService.recommendations[2].relationships.recommendations.data[3].relationships.contents.data, 'albums');
   }
 
-  async getRecommenations(): Promise<any> {
+  async getRecommenations() {
     if (!this.playerService.recommendations || (Date.now() - this.playerService.recommendationsDate) > 60 * 60 * 1000) {
-      this.playerService.recommendations = await this.playerService.musicKit.api.recommendations();
+      this.playerService.recommendations = await this.apiService.recommendations();
       this.playerService.recommendationsDate = Date.now();
 
       if (this.playerService.recommendations[4].next) {
@@ -50,37 +56,31 @@ export class ForYouComponent implements OnInit {
     }
   }
 
-  async getRecentPlayed(loadInitial: boolean): Promise<any> {
+  async getRecentPlayed(loadInitial: boolean) {
     if (loadInitial) {
-      this.playerService.recentPlayed = await this.playerService.musicKit.api.recentPlayed();
+      this.playerService.recentPlayed = await this.apiService.recentPlayed();
     } else {
       while (this.playerService.recentPlayed.length < 30) {
-        const next = await this.apiService.getRecentPlayed(this.playerService.recentPlayed.length);
+        const next = await this.apiService.recentPlayed(this.playerService.recentPlayed.length);
 
-        if (!next || !next.data || !next.data.length) {
-          break;
-        }
-
-        if (next && next.data && next.data.length) {
-          this.playerService.recentPlayed.push(...next.data);
+        if (next && next.length > 0) {
+          this.playerService.recentPlayed.push(...next);
         }
       }
     }
   }
 
-  async getHeavyRotation(loadInitial: boolean): Promise<any> {
+  async getHeavyRotation(loadInitial: boolean) {
     if (loadInitial) {
-      this.playerService.heavyRotation = await this.playerService.musicKit.api.historyHeavyRotation();
+      this.playerService.heavyRotation = await this.apiService.heavyRotation();
     } else {
-      while (this.playerService.heavyRotation.length < 20) {
-        const next = await this.apiService.getHeavyRotation(this.playerService.heavyRotation.length);
+      while (this.playerService.heavyRotation.length < 30) {
+        const next = await this.apiService.heavyRotation(this.playerService.heavyRotation.length);
 
-        if (!next || !next.data || !next.data.length) {
+        if (next && next.length > 0) {
+          this.playerService.recentPlayed.push(...next);
+        } else {
           break;
-        }
-
-        if (next && next.data && next.data.length) {
-          this.playerService.recentPlayed.push(...next.data);
         }
       }
     }

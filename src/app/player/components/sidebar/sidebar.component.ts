@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlayerService } from '../../../shared/services/player.service';
+import { ApiService } from '../../../shared/services/api.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,7 +12,7 @@ export class SidebarComponent implements OnInit {
 
   searchHints: any;
 
-  constructor(private router: Router, public playerService: PlayerService) { }
+  constructor(private router: Router, public playerService: PlayerService, public apiService: ApiService) { }
 
   ngOnInit() {
   }
@@ -22,7 +23,7 @@ export class SidebarComponent implements OnInit {
 
   async getSearchHints(term: string) {
     if (term !== '') {
-      this.searchHints = await this.playerService.musicKit.api.searchHints(term);
+      this.searchHints = await this.apiService.searchHints(term, 10);
     }
   }
 

@@ -4,6 +4,9 @@ import { Subscription } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
 
+import { Artist } from '../../models/musicKit/artist.model';
+import { SearchHints } from '../../models/musicKit/search-hints.model';
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -14,10 +17,9 @@ export class SearchComponent implements OnInit, OnDestroy {
   searchSubscription: Subscription;
   loading: boolean;
   searchTerm = '';
-  searchHints: any;
+  searchHints: SearchHints;
 
-  constructor(private route: ActivatedRoute, private router: Router,
-    public playerService: PlayerService, public apiService: ApiService) { }
+  constructor(private route: ActivatedRoute, private router: Router, public playerService: PlayerService, public apiService: ApiService) { }
 
   ngOnInit() {
     this.searchSubscription = this.route.queryParams.subscribe(params => {
@@ -35,18 +37,18 @@ export class SearchComponent implements OnInit, OnDestroy {
     await this.search(term);
     this.loading = false;
 
-    if (this.playerService.searchAlbums) {
-      this.apiService.getRelationships(this.playerService.searchAlbums, 'albums');
+    if (this.playerService.searchResults.albums) {
+      this.apiService.getRelationships(this.playerService.searchResults.albums.data, 'albums');
     }
-    if (this.playerService.searchSongs) {
-      this.apiService.getRelationships(this.playerService.searchSongs, 'songs');
+    if (this.playerService.searchResults.songs) {
+      this.apiService.getRelationships(this.playerService.searchResults.songs.data, 'songs');
     }
-    if (this.playerService.searchPlaylists) {
-      this.apiService.getRelationships(this.playerService.searchPlaylists, 'playlists');
+    if (this.playerService.searchResults.playlists) {
+      this.apiService.getRelationships(this.playerService.searchResults.playlists.data, 'playlists');
     }
 
-    if (this.playerService.searchArtists) {
-      this.getArtistArtwork(this.playerService.searchArtists);
+    if (this.playerService.searchResults.artists) {
+      this.getArtistArtwork(this.playerService.searchResults.artists.data);
     }
   }
 
@@ -55,51 +57,32 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.router.navigate(['/search'], { queryParams: { term: term } });
     }
 
-    if (term === '' || term === this.playerService.lastSearchTerm) {
+    if (term === '' || (this.playerService.searchResults && term === this.playerService.searchResults.term)) {
       return;
     }
 
-    this.playerService.searchArtists = null;
-    this.playerService.searchAlbums = null;
-    this.playerService.searchSongs = null;
-    this.playerService.searchPlaylists = null;
+    this.playerService.searchResults = null;
 
-    const results = await this.playerService.musicKit.api.search(term, { types: 'artists,albums,songs,playlists', limit: 20 });
-
-    if (results.artists != null) {
-      this.playerService.searchArtists = results.artists.data;
-    }
-
-    if (results.albums != null) {
-      this.playerService.searchAlbums = results.albums.data;
-    }
-
-    if (results.songs != null) {
-      this.playerService.searchSongs = results.songs.data;
-    }
-
-    if (results.playlists != null) {
-      this.playerService.searchPlaylists = results.playlists.data;
-    }
-
-    this.playerService.lastSearchTerm = term;
+    const results = await this.apiService.search(term, undefined, 20);
+    results.term = term;
+    this.playerService.searchResults = results;
   }
 
   async getSearchHints(term: string) {
     if (term !== '') {
-      this.searchHints = await this.playerService.musicKit.api.searchHints(term);
+      this.searchHints = await this.apiService.searchHints(term, 10);
     }
   }
 
-  async getArtistArtwork(artists: Array<any>) {
+  async getArtistArtwork(artists: Artist[]) {
     const artistIds = artists.map(a => a.id);
-    const resp = await this.apiService.getArtistData(artistIds, true);
+    const artistsData = await this.apiService.artistsData(artistIds, true);
 
-    for (const a of resp.artists) {
+    for (const a of artistsData) {
       if (a.imageUrl) {
         for (const artist of artists) {
           if (artist.id === a.id) {
-            artist.attributes.artwork = this.playerService.formatArtwork(a.imageUrl, 500);
+            artist.attributes.artwork = this.playerService.generateArtwork(this.playerService.formatArtwork(a.imageUrl, 500));
           }
         }
       }
