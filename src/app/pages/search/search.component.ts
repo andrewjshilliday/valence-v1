@@ -75,8 +75,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   async getArtistArtwork(artists: Artist[]) {
-    const artistIds = artists.map(a => a.id);
-    const artistsData = await this.apiService.artistsData(artistIds, true);
+    const ids = artists.map(a => a.id);
+    const artistsData = await this.apiService.artistsData(ids, true);
 
     for (const a of artistsData) {
       if (a.imageUrl) {

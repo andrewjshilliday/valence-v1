@@ -41,7 +41,6 @@ export interface Attributes {
 
 export interface Relationships {
   artist: RelationshipData;
-  genres: RelationshipsData;
   listenersAlsoBought: RelationshipsData;
   songs: RelationshipsData;
   topAlbums: RelationshipsData;

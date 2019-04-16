@@ -35,7 +35,6 @@ export interface Attributes {
 export interface Relationships {
   artistContemporaries: RelationshipsData;
   content: RelationshipsData;
-  genres: RelationshipsData;
 }
 
 export interface RelationshipsData {
