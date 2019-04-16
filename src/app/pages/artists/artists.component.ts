@@ -56,8 +56,8 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.isLibraryArtist = id.startsWith('r.');
-    this.playerService.artist = await this.apiService.artist(id, 'albums');
-    await Promise.all([this.getArtistRelationships(), this.getArtistPlaylists(id)].map(p => p.catch(e => e)));
+    this.playerService.artist = await this.apiService.artist(id, 'albums,playlists');
+    await Promise.all([this.getArtistRelationships(), this.getArtistPlaylists()].map(p => p.catch(e => e)));
     await this.getArtistData();
 
     this.loading = false;
@@ -95,12 +95,9 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.apiService.getRelationships(this.playerService.artist.relationships.albums.data, 'albums');
   }
 
-  async getArtistPlaylists(id: string) {
-    let artistPlaylists: Artist;
-    artistPlaylists = await this.apiService.artist(id, 'playlists');
-
-    if (artistPlaylists && artistPlaylists.relationships) {
-      this.playerService.playlists = artistPlaylists.relationships.playlists.data;
+  async getArtistPlaylists() {
+    if (this.playerService.artist.relationships && this.playerService.artist.relationships.playlists) {
+      this.playerService.playlists = this.playerService.artist.relationships.playlists.data;
     }
   }
 
@@ -154,6 +151,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.singles = [];
     this.liveAlbums = [];
     this.compilations = [];
+    this.appearsOn = [];
 
     if (appearsOnIds && appearsOnIds.length) {
       this.getAppearsOn(appearsOnIds);

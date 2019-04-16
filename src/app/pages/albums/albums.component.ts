@@ -97,7 +97,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
 
     this.albumData = await this.apiService.albumData(this.playerService.album.id);
 
-    if (!this.albumData.resources.data.relationships.listenersAlsoBought.data) {
+    if (!this.albumData.resources.data.relationships.listenersAlsoBought) {
       return;
     }
 

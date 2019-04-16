@@ -37,11 +37,16 @@ export class ApiService {
   }
 
   appleApiHeaders(): HttpHeaders {
-    return new HttpHeaders()
+    let headers = new HttpHeaders()
       .set('Authorization', 'Bearer ' + MusicKit.getInstance().developerToken)
       .set('Accept', 'application/json')
-      .set('Content-Type', 'application/json')
-      .set('Music-User-Token', MusicKit.getInstance().musicUserToken);
+      .set('Content-Type', 'application/json');
+
+    if (this.playerService.musicKit.isAuthorized) {
+      headers = headers.append('Music-User-Token', MusicKit.getInstance().musicUserToken);
+    }
+
+    return headers;
   }
 
   async getMusicKitData(url: string): Promise<any> {

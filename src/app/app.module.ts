@@ -2,8 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ApiCache } from './shared/cache/api/api-cache.service';
+import { ApiCacheInterceptor } from './shared/cache/api/api-cache.interceptor';
 import { PlayerModule } from './player/player.module';
 import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
@@ -56,7 +58,10 @@ import { environment } from '../environments/environment';
     ]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
-  providers: [],
+  providers: [
+    ApiCache,
+    { provide: HTTP_INTERCEPTORS, useClass: ApiCacheInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

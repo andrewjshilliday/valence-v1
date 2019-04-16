@@ -95,7 +95,7 @@ export class PlayerService {
     const playParams = item.attributes.playParams;
     this.musicKit.player.shuffleMode = 0;
 
-    if (!this.playing && this.musicKit.player.nowPlayingItem && (item.type === 'songs' || item.relationships.tracks.data[startIndex])) {
+    if (!this.playing && this.musicKit.player.nowPlayingItem && item.type !== 'songs' && item.relationships.tracks.data[startIndex]) {
       if (item.relationships.tracks.data[startIndex].id === this.musicKit.player.nowPlayingItem.id) {
         this.play();
         return;
