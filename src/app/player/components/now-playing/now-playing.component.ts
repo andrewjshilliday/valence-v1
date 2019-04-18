@@ -25,8 +25,8 @@ export class NowPlayingComponent implements OnInit {
     try {
       this.playerService.nowPlayingItemGenius = null;
 
-      this.playerService.nowPlayingItemGenius = await
-        this.apiService.geniusSong(this.playerService.nowPlayingItem.artistName, this.playerService.nowPlayingItem.title, true);
+      this.playerService.nowPlayingItemGenius = await this.apiService.geniusSong(
+        this.playerService.nowPlayingItem.artistName, this.playerService.nowPlayingItem.title, true).toPromise();
     } finally {
       if (this.playerService.nowPlayingItemGenius) {
         this.playerService.nowPlayingItemLyrics = this.playerService.nowPlayingItemGenius.lyrics;

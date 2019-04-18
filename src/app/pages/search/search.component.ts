@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
 
@@ -63,30 +63,39 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     this.playerService.searchResults = null;
 
-    const results = await this.apiService.search(term, undefined, 20);
+    const results = await this.apiService.search(term, undefined, 20).toPromise();
     results.term = term;
     this.playerService.searchResults = results;
   }
 
-  async getSearchHints(term: string) {
+  getSearchHints(term: string) {
     if (term !== '') {
-      this.searchHints = await this.apiService.searchHints(term, 10);
+      this.apiService.searchHints(term, 10).subscribe(res => this.searchHints = res);
     }
   }
 
-  async getArtistArtwork(artists: Artist[]) {
+  getArtistArtwork(artists: Artist[]) {
     const ids = artists.map(a => a.id);
-    const artistsData = await this.apiService.artistsData(ids, true);
+    const observables = [];
+    let offset = 0;
 
-    for (const a of artistsData) {
-      if (a.imageUrl) {
-        for (const artist of artists) {
-          if (artist.id === a.id) {
-            artist.attributes.artwork = this.playerService.generateArtwork(this.playerService.formatArtwork(a.imageUrl, 500));
+    while (ids.slice(offset, offset + 30).length) {
+      observables.push(this.apiService.artistsData(ids.slice(offset, offset + 30), true).subscribe(res => {
+        for (const a of res) {
+          if (a.imageUrl) {
+            for (const artist of artists) {
+              if (artist.id === a.id) {
+                artist.attributes.artwork = this.playerService.generateArtwork(a.imageUrl);
+              }
+            }
           }
         }
-      }
+      }));
+
+      offset += 30;
     }
+
+    forkJoin(observables);
   }
 
 }

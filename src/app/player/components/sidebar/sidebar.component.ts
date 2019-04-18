@@ -23,7 +23,7 @@ export class SidebarComponent implements OnInit {
 
   async getSearchHints(term: string) {
     if (term !== '') {
-      this.searchHints = await this.apiService.searchHints(term, 10);
+      this.apiService.searchHints(term, 10).subscribe(res => this.searchHints = res);
     }
   }
 

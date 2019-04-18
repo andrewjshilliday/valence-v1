@@ -42,17 +42,9 @@ export class CuratorsComponent implements OnInit {
     this.loading = true;
 
     if (type === 'apple') {
-      this.curator = await this.apiService.appleCurator(id);
+      this.curator = await this.apiService.appleCurator(id).toPromise();
     } else {
-      this.curator = await this.apiService.curator(id);
-    }
-
-    this.curatorPlaylists = await this.apiService.playlists(this.curator.relationships.playlists.data.map(i => i.id));
-
-    if (this.curator.relationships.playlists.next) {
-      this.getNextPlaylists = true;
-      this.nextPlaylistsUrl = this.curator.relationships.playlists.next;
-      this.loadPlaylists();
+      this.curator = await this.apiService.curator(id).toPromise();
     }
 
     if (this.curator.type === 'apple-curators') {
@@ -60,16 +52,24 @@ export class CuratorsComponent implements OnInit {
     }
 
     if (this.genre) {
-      this.getMostPlayed();
+      await this.getMostPlayed();
     }
 
     if (!this.featuredPlaylistId) {
       this.featuredPlaylistId = this.curatorPlaylists[0].id;
     }
 
-    this.featuredPlaylist = await this.apiService.playlist(this.featuredPlaylistId);
+    this.featuredPlaylist = await this.apiService.playlist(this.featuredPlaylistId).toPromise();
 
     this.loading = false;
+
+    this.curatorPlaylists = await this.apiService.playlists(this.curator.relationships.playlists.data.map(i => i.id)).toPromise();
+
+    if (this.curator.relationships.playlists.next) {
+      this.getNextPlaylists = true;
+      this.nextPlaylistsUrl = this.curator.relationships.playlists.next;
+      this.loadPlaylists();
+    }
   }
 
   async loadPlaylists(): Promise<any> {
@@ -78,20 +78,20 @@ export class CuratorsComponent implements OnInit {
     if (this.getNextPlaylists && this.nextPlaylistsUrl) {
       this.getNextPlaylists = false;
 
-      const playlists = await this.apiService.getMusicKitData(this.nextPlaylistsUrl);
+      this.apiService.getMusicKitData(this.nextPlaylistsUrl).subscribe(res => {
+        if (res && res.data) {
+          this.curatorPlaylists.push(...res.data);
+          this.nextPlaylistsUrl = res.next;
 
-      if (playlists && playlists.data && playlists.data) {
-        this.curatorPlaylists.push(...playlists.data);
-        this.nextPlaylistsUrl = playlists.next;
-
-        if (this.nextPlaylistsUrl) {
-          if (Number(this.nextPlaylistsUrl.substring(this.nextPlaylistsUrl.indexOf('=') + 1, this.nextPlaylistsUrl.length)) % 30 !== 0) {
-            this.getNextPlaylists = true;
-            this.loadPlaylists();
-            return;
+          if (this.nextPlaylistsUrl) {
+            if (Number(this.nextPlaylistsUrl.substring(this.nextPlaylistsUrl.indexOf('=') + 1, this.nextPlaylistsUrl.length)) % 30 !== 0) {
+              this.getNextPlaylists = true;
+              this.loadPlaylists();
+              return;
+            }
           }
         }
-      }
+      });
 
       this.getNextPlaylists = true;
     }
@@ -100,7 +100,7 @@ export class CuratorsComponent implements OnInit {
   }
 
   async getMostPlayed() {
-    this.mostPlayed = await this.apiService.charts('albums,songs', this.genre);
+    this.mostPlayed = await this.apiService.charts('albums,songs', this.genre).toPromise();
 
     this.apiService.getRelationships(this.mostPlayed.albums[0].data, 'albums');
     this.apiService.getRelationships(this.mostPlayed.songs[0].data, 'songs');

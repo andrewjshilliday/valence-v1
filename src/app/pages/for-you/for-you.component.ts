@@ -43,25 +43,25 @@ export class ForYouComponent implements OnInit {
 
   async getRecommenations() {
     if (!this.playerService.recommendations || (Date.now() - this.playerService.recommendationsDate) > 60 * 60 * 1000) {
-      this.playerService.recommendations = await this.apiService.recommendations();
+      this.playerService.recommendations = await this.apiService.recommendations().toPromise();
       this.playerService.recommendationsDate = Date.now();
 
       if (this.playerService.recommendations[4].next) {
-        const next = await this.apiService.getMusicKitData(this.playerService.recommendations[4].next);
-
-        if (next && next.data && next.data.length) {
-          this.playerService.recommendations[4].relationships.contents.data.push(...next.data[0].relationships.contents.data);
-        }
+        this.apiService.getMusicKitData(this.playerService.recommendations[4].next).subscribe(res => {
+          if (res && res.data && res.data.length) {
+            this.playerService.recommendations[4].relationships.contents.data.push(...res.data[0].relationships.contents.data);
+          }
+        });
       }
     }
   }
 
   async getRecentPlayed(loadInitial: boolean) {
     if (loadInitial) {
-      this.playerService.recentPlayed = await this.apiService.recentPlayed();
+      this.playerService.recentPlayed = await this.apiService.recentPlayed().toPromise();
     } else {
       while (this.playerService.recentPlayed.length < 30) {
-        const next = await this.apiService.recentPlayed(this.playerService.recentPlayed.length);
+        const next = await this.apiService.recentPlayed(this.playerService.recentPlayed.length).toPromise();
 
         if (next && next.length > 0) {
           this.playerService.recentPlayed.push(...next);
@@ -72,10 +72,10 @@ export class ForYouComponent implements OnInit {
 
   async getHeavyRotation(loadInitial: boolean) {
     if (loadInitial) {
-      this.playerService.heavyRotation = await this.apiService.heavyRotation();
+      this.playerService.heavyRotation = await this.apiService.heavyRotation().toPromise();
     } else {
       while (this.playerService.heavyRotation.length < 30) {
-        const next = await this.apiService.heavyRotation(this.playerService.heavyRotation.length);
+        const next = await this.apiService.heavyRotation(this.playerService.heavyRotation.length).toPromise();
 
         if (next && next.length > 0) {
           this.playerService.recentPlayed.push(...next);

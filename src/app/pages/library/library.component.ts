@@ -76,91 +76,89 @@ export class LibraryComponent implements OnInit, OnDestroy {
     }
 
     this.loading = true;
-    let results: any;
 
     switch (type) {
       case 'recently-added': {
-        results = await this.apiService.libraryRecentlyAdded(offset, 10);
-        this.recentlyAdded = this.recentlyAdded.concat(results);
+        this.apiService.libraryRecentlyAdded(offset, 10).subscribe(res => {
+          this.recentlyAdded = this.recentlyAdded.concat(res);
 
-        if (results.length !== 0 && this.recentlyAdded.length < 100) {
-          if (this.type !== 'recently-added') {
+          if (res.length !== 0 && this.recentlyAdded.length < 100) {
+            if (this.type !== 'recently-added') {
+              return;
+            }
+            this.getLibraryResource(type, offset + 10);
             return;
+          } else {
+            this.loading = false;
           }
-
-          this.getLibraryResource(type, offset + 10);
-          return;
-        } else {
-          this.loading = false;
-        }
-
+        });
         break;
       }
       case 'artists': {
-        results = await this.apiService.libraryArtists(offset, undefined, 100);
-        this.artists = this.artists.concat(results);
+        this.apiService.libraryArtists(offset, undefined, 100).subscribe(res => {
+          this.artists = this.artists.concat(res);
 
-        if (results.length !== 0) {
-          if (this.type !== 'artists') {
+          if (res.length !== 0) {
+            if (this.type !== 'artists') {
+              return;
+            }
+            this.getLibraryResource(type, offset + 100);
             return;
+          } else {
+            this.loading = false;
           }
-
-          this.getLibraryResource(type, offset + 100);
-          return;
-        } else {
-          this.loading = false;
-        }
+        });
 
         break;
       }
       case 'albums': {
-        results = await this.apiService.libraryAlbums(offset);
-        this.albums = this.albums.concat(results);
+        this.apiService.libraryAlbums(offset).subscribe(res => {
+          this.albums = this.albums.concat(res);
 
-        if (results.length !== 0) {
-          if (this.type !== 'albums') {
+          if (res.length !== 0) {
+            if (this.type !== 'albums') {
+              return;
+            }
+            this.getLibraryResource(type, offset + 50);
             return;
+          } else {
+            this.loading = false;
           }
-
-          this.getLibraryResource(type, offset + 50);
-          return;
-        } else {
-          this.loading = false;
-        }
+        });
 
         break;
       }
       case 'songs': {
-        results = await this.apiService.librarySongs(offset);
-        this.songs = this.songs.concat(results);
+        this.apiService.librarySongs(offset).subscribe(res => {
+          this.songs = this.songs.concat(res);
 
-        if (results.length !== 0) {
-          if (this.type !== 'songs') {
+          if (res.length !== 0) {
+            if (this.type !== 'songs') {
+              return;
+            }
+            this.getLibraryResource(type, offset + 100);
             return;
+          } else {
+            this.loading = false;
           }
-
-          this.getLibraryResource(type, offset + 100);
-          return;
-        } else {
-          this.loading = false;
-        }
+        });
 
         break;
       }
       case 'playlists': {
-        results = await this.apiService.libraryPlaylists(offset);
-        this.playlists = this.playlists.concat(results);
+        this.apiService.libraryPlaylists(offset).subscribe(res => {
+          this.playlists = this.playlists.concat(res);
 
-        if (results.length !== 0) {
-          if (this.type !== 'playlists') {
+          if (res.length !== 0) {
+            if (this.type !== 'playlists') {
+              return;
+            }
+            this.getLibraryResource(type, offset + 100);
             return;
+          } else {
+            this.loading = false;
           }
-
-          this.getLibraryResource(type, offset + 100);
-          return;
-        } else {
-          this.loading = false;
-        }
+        });
 
         break;
       }

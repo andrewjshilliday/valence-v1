@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription, forkJoin } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
 
@@ -56,12 +56,16 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.isLibraryArtist = id.startsWith('r.');
-    this.playerService.artist = await this.apiService.artist(id, 'albums,playlists');
-    await Promise.all([this.getArtistRelationships(), this.getArtistPlaylists()].map(p => p.catch(e => e)));
+    this.playerService.artist = await this.apiService.artist(id, 'albums,playlists').toPromise();
     await this.getArtistData();
 
     this.loading = false;
 
+    if (this.playerService.artist.relationships && this.playerService.artist.relationships.playlists) {
+      this.playerService.playlists = this.playerService.artist.relationships.playlists.data;
+    }
+
+    this.getArtistRelationships();
     this.getRelatedArtists();
   }
 
@@ -85,20 +89,16 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async getArtistRelationships() {
+  getArtistRelationships() {
     if (this.isLibraryArtist) {
       return;
     }
 
     const ids = this.playerService.artist.relationships.albums.data.filter(i => i.type === 'albums').map(i => i.id);
-    this.playerService.artist.relationships.albums.data = await this.apiService.albums(ids, 'artists');
-    this.apiService.getRelationships(this.playerService.artist.relationships.albums.data, 'albums');
-  }
-
-  async getArtistPlaylists() {
-    if (this.playerService.artist.relationships && this.playerService.artist.relationships.playlists) {
-      this.playerService.playlists = this.playerService.artist.relationships.playlists.data;
-    }
+    this.apiService.albums(ids, 'artists').subscribe(res => {
+      this.playerService.artist.relationships.albums.data = res;
+      this.apiService.getRelationships(this.playerService.artist.relationships.albums.data, 'albums');
+    });
   }
 
   async getArtistData(): Promise<any> {
@@ -107,7 +107,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.artistData = await this.apiService.artistData(this.playerService.artist.id);
+    this.artistData = await this.apiService.artistData(this.playerService.artist.id).toPromise();
     this.artistImage = this.artistData.imageUrl;
 
     let topSongs: string[];
@@ -181,11 +181,11 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     }
 
     if (topSongs) {
-      this.topSongs = await this.apiService.songs(topSongs, 'albums');
+      this.topSongs = await this.apiService.songs(topSongs, 'albums').toPromise();
     }
   }
 
-  async getRelatedArtists() {
+  getRelatedArtists() {
     this.relatedArtists = null;
 
     if (!this.artistData || !this.artistData.resources.data.relationships.artistContemporaries ||
@@ -194,28 +194,38 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     }
 
     const ids = this.artistData.resources.data.relationships.artistContemporaries.data.map(i => i.id);
-    this.relatedArtists = await this.apiService.artists(ids);
-
-    this.getArtistArtwork(this.relatedArtists);
+    this.apiService.artists(ids).subscribe(res => {
+      this.relatedArtists = res;
+      this.getArtistArtwork(this.relatedArtists);
+    });
   }
 
-  async getAppearsOn(ids: string[]) {
-    this.appearsOn = await this.apiService.albums(ids);
+  getAppearsOn(ids: string[]) {
+    this.apiService.albums(ids).subscribe(res => this.appearsOn = res);
   }
 
-  async getArtistArtwork(artists: Artist[]) {
+  getArtistArtwork(artists: Artist[]) {
     const ids = artists.map(a => a.id);
-    const artistsData = await this.apiService.artistsData(ids, true);
+    const observables = [];
+    let offset = 0;
 
-    for (const artistData of artistsData) {
-      if (artistData.imageUrl) {
-        for (const artist of artists) {
-          if (artist.id === artistData.id) {
-            artist.attributes.artwork = this.playerService.generateArtwork(artistData.imageUrl);
+    while (ids.slice(offset, offset + 30).length) {
+      observables.push(this.apiService.artistsData(ids.slice(offset, offset + 30), true).subscribe(res => {
+        for (const a of res) {
+          if (a.imageUrl) {
+            for (const artist of artists) {
+              if (artist.id === a.id) {
+                artist.attributes.artwork = this.playerService.generateArtwork(a.imageUrl);
+              }
+            }
           }
         }
-      }
+      }));
+
+      offset += 30;
     }
+
+    forkJoin(observables);
   }
 
 }

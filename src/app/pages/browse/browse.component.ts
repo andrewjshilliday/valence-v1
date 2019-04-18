@@ -30,7 +30,7 @@ export class BrowseComponent implements OnInit {
 
   async loadMostPlayed() {
     if (!this.playerService.mostPlayed) {
-      this.playerService.mostPlayed = await this.apiService.charts('albums,playlists,songs');
+      this.playerService.mostPlayed = await this.apiService.charts('albums,playlists,songs').toPromise();
     }
 
     this.loading = false;
@@ -40,33 +40,33 @@ export class BrowseComponent implements OnInit {
     this.apiService.getRelationships(this.playerService.mostPlayed.songs[0].data, 'songs');
   }
 
-  async loadtop100() {
+  loadtop100() {
     if (!this.playerService.top100) {
-      this.playerService.top100 = await this.apiService.playlists(Constants.top100Ids);
+      this.apiService.playlists(Constants.top100Ids).subscribe(res => this.playerService.top100 = res);
     }
   }
 
-  async loadFeaturedPlaylists() {
+  loadFeaturedPlaylists() {
     if (!this.playerService.featuredPlaylists) {
-      this.playerService.featuredPlaylists = await this.apiService.playlists(Constants.featuredPlaylistsIds);
+      this.apiService.playlists(Constants.featuredPlaylistsIds).subscribe(res => this.playerService.featuredPlaylists = res);
     }
   }
 
-  async loadAppleCurators() {
+  loadAppleCurators() {
     if (!this.playerService.appleCurators) {
-      this.playerService.appleCurators = await this.apiService.appleCurators(Constants.appleCuratorsIds);
+      this.apiService.appleCurators(Constants.appleCuratorsIds).subscribe(res => this.playerService.appleCurators = res);
     }
   }
 
-  async loadCurators() {
+  loadCurators() {
     if (!this.playerService.curators) {
-      this.playerService.curators = await this.apiService.curators(Constants.curatorsIds);
+      this.apiService.curators(Constants.curatorsIds).subscribe(res => this.playerService.curators = res);
     }
   }
 
-  async loadAListPlaylists() {
+  loadAListPlaylists() {
     if (!this.playerService.aListPlaylists) {
-      this.playerService.aListPlaylists = await this.apiService.playlists(Constants.aListPlaylistsIds);
+      this.apiService.playlists(Constants.aListPlaylistsIds).subscribe(res => this.playerService.aListPlaylists = res);
     }
   }
 

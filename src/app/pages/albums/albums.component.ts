@@ -51,7 +51,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.isLibraryAlbum = id.startsWith('l.');
-    this.playerService.album = await this.apiService.album(id, 'artists,tracks');
+    this.playerService.album = await this.apiService.album(id, 'artists,tracks').toPromise();
     this.setEditorialNotesStyle();
 
     this.loading = false;
@@ -77,45 +77,49 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async getArtistAlbums() {
+  getArtistAlbums() {
     if (this.playerService.album.relationships.artists && this.playerService.album.relationships.artists.data.length) {
-      this.artistAlbums = await this.apiService.artist(this.playerService.album.relationships.artists.data[0].id, 'albums');
-      const itemIdArray = this.artistAlbums.relationships.albums.data.map(i => i.id);
+      this.apiService.artist(this.playerService.album.relationships.artists.data[0].id, 'albums').subscribe(res => {
+        this.artistAlbums = res;
+        const itemIdArray = this.artistAlbums.relationships.albums.data.map(i => i.id);
 
-      if (this.isLibraryAlbum) {
-        this.artistAlbums.relationships.albums.data = await this.apiService.libraryAlbums(0, itemIdArray);
-      } else {
-        this.artistAlbums.relationships.albums.data = await this.apiService.albums(itemIdArray);
-      }
+        if (this.isLibraryAlbum) {
+          this.apiService.libraryAlbums(0, itemIdArray).subscribe(albumRes => this.artistAlbums.relationships.albums.data = albumRes);
+        } else {
+          this.apiService.albums(itemIdArray).subscribe(albumRes => this.artistAlbums.relationships.albums.data = albumRes);
+        }
+      });
     }
   }
 
-  async getAlbumData() {
+  getAlbumData() {
     if (!this.playerService.album.attributes.url) {
       return;
     }
 
-    this.albumData = await this.apiService.albumData(this.playerService.album.id);
+    this.apiService.albumData(this.playerService.album.id).subscribe(res => {
+      this.albumData = res;
+      this.getPopulatity();
 
-    if (!this.albumData.resources.data.relationships.listenersAlsoBought) {
-      return;
-    }
+      if (!this.albumData.resources.data.relationships.listenersAlsoBought) {
+        return;
+      }
 
-    const relatedAlbumsIds = this.albumData.resources.data.relationships.listenersAlsoBought.data.map(i => i.id);
-    this.relatedAlbums = await this.apiService.albums(relatedAlbumsIds);
+      const relatedAlbumsIds = this.albumData.resources.data.relationships.listenersAlsoBought.data.map(i => i.id);
+      this.apiService.albums(relatedAlbumsIds).subscribe(albumRes => this.relatedAlbums = albumRes);
+    });
 
-    this.getPopulatity();
   }
 
-  async getRatings() {
+  getRatings() {
     if (this.isLibraryAlbum) {
       return;
     }
 
-    this.ratings = await this.apiService.ratings(this.playerService.album.relationships.tracks.data.map(i => i.id));
+    this.apiService.ratings(this.playerService.album.relationships.tracks.data.map(i => i.id)).subscribe(res => this.ratings = res);
   }
 
-  async getPopulatity() {
+  getPopulatity() {
     this.popularity = [];
 
     for (const item of this.albumData.resources.included) {
