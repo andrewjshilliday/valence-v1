@@ -33,8 +33,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-/src/app/tokens.ts
-/src/assets/AuthKey.p8
+/src/app/secrets.ts
 
 # System Files
 .DS_Store

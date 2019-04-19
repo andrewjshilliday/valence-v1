@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Tokens } from '../../tokens';
+import { Secrets } from '../../secrets';
 
 import { Artist } from '../../models/musicKit/artist.model';
 import { Album } from '../../models/musicKit/album.model';
@@ -56,7 +56,7 @@ export class PlayerService {
 
   constructor() {
     MusicKit.configure({
-      developerToken: Tokens.appleMusicDevToken,
+      developerToken: Secrets.appleMusicDevToken,
       app: {
         name: 'Apple Music Web Player',
         build: '0.1'
