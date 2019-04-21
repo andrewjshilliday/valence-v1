@@ -43,6 +43,13 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
     this.isLibraryPlaylist = id.startsWith('p.');
     this.playerService.playlist = await this.apiService.playlist(id, 'artists,tracks').toPromise();
+
+    if (this.playerService.playlist.relationships.tracks.next) {
+      this.apiService.getMusicKitData(this.playerService.playlist.relationships.tracks.next).subscribe(res => {
+        this.playerService.playlist.relationships.tracks.data.push(...res.data);
+      });
+    }
+
     this.setEditorialNotesStyle();
 
     this.loading = false;
@@ -128,7 +135,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     }
 
     $(document).ready(function() {
-      if ($('#notes')) {
+      if ($('#notes') && $('#notes').offset()) {
         const height = $(window).height();
         const notesOffset = $('#notes').offset().top;
         const notesParentOffset = $('#notes').parent().offset().top;

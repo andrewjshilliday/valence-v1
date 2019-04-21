@@ -137,7 +137,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     }
 
     $(document).ready(function() {
-      if ($('#notes')) {
+      if ($('#notes') && $('#notes').offset()) {
         const height = $(window).height();
         const notesOffset = $('#notes').offset().top;
         const notesParentOffset = $('#notes').parent().offset().top;

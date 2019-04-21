@@ -47,6 +47,7 @@ export interface Previews {
 export interface Songs {
   data?: (Song)[] | null;
   href: string;
+  next: string;
 }
 
 export interface SongResponse {
