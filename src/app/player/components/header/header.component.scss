@@ -1,0 +1,102 @@
+#header-wrapper {
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  margin-left: 0px;
+  background-color: white;
+  border-bottom: 1px solid lightgray;
+  z-index: 1000;
+  /* opacity: 0.95; */
+}
+
+.music-icon {
+  position: absolute;
+  left: 45px;
+  top: 5px;
+
+  img {
+    height: 37px;
+  }
+  i {
+    font-size: 32pt;
+  }
+}
+
+.nav-extras {
+  position: fixed;
+  right: 10px;
+  display: inline-flex;
+}
+
+.search-control {
+  position: relative;
+  height: 50px;
+  padding: 10px;
+}
+
+.search-control.active .input-text {
+  max-width: 100%;
+  left: 0%;
+  border: 1px solid #ccc;
+  padding: 5px 30px 6px 6px;
+  background: white;
+}
+
+.search-control .icon {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
+.search-control .icon:hover {
+  color: #f40000;
+}
+
+.search-control .input-text {
+  position: relative;
+  max-width: 0;
+  border-width: 0;
+  border-radius: 3px;
+  height: 30px;
+  left: 100%;
+  padding: 0;
+  outline: 0;
+  font-size: 11pt;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.settings {
+  padding: 15px 20px 10px 0;
+}
+
+.settings a {
+  color: black;
+  cursor: pointer;
+  outline: 0;
+  i {
+    font-size: 16pt;
+  }
+  i:hover {
+    color: #f40000;
+  }
+}
+
+.authenticaion {
+  padding: 13px 20px 10px 0;
+
+  span {
+    cursor: pointer;
+    outline: 0;
+  }
+
+  span:hover {
+    color: #f40000;
+  }
+}
+
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}

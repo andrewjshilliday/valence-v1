@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
@@ -12,7 +12,7 @@ import { Playlist } from '../../models/musicKit/playlist.model';
 @Component({
   selector: 'app-library',
   templateUrl: './library.component.html',
-  styleUrls: ['./library.component.css']
+  styleUrls: ['./library.component.scss']
 })
 export class LibraryComponent implements OnInit, OnDestroy {
 
@@ -26,13 +26,17 @@ export class LibraryComponent implements OnInit, OnDestroy {
   songs: Song[];
   playlists: Playlist[];
 
-  constructor(private route: ActivatedRoute, public playerService: PlayerService, public apiService: ApiService) { }
+  constructor(private route: ActivatedRoute, private router: Router, public playerService: PlayerService, public apiService: ApiService) { }
 
   ngOnInit() {
     this.librarySubscription = this.route.params.subscribe(params => {
       this.type = params['type'];
       this.loadLibrary();
     });
+
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
   }
 
   ngOnDestroy(): void {
@@ -129,6 +133,9 @@ export class LibraryComponent implements OnInit, OnDestroy {
         break;
       }
       case 'songs': {
+        this.loading = false;
+        return;
+
         this.apiService.librarySongs(offset).subscribe(res => {
           this.songs = this.songs.concat(res);
 

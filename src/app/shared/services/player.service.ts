@@ -175,6 +175,8 @@ export class PlayerService {
   toggleRepeat() {
     if (this.musicKit.player.repeatMode === 0) {
       this.musicKit.player.repeatMode = 2;
+    } else if (this.musicKit.player.repeatMode === 2) {
+      this.musicKit.player.repeatMode = 1;
     } else {
       this.musicKit.player.repeatMode = 0;
     }

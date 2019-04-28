@@ -5,7 +5,7 @@ import { ApiService } from '../../shared/services/api.service';
 @Component({
   selector: 'app-for-you',
   templateUrl: './for-you.component.html',
-  styleUrls: ['./for-you.component.css']
+  styleUrls: ['./for-you.component.scss']
 })
 export class ForYouComponent implements OnInit {
 
@@ -24,21 +24,27 @@ export class ForYouComponent implements OnInit {
 
     await Promise.all([this.getRecentPlayed(false), this.getHeavyRotation(false)].map(p => p.catch(e => e)));
 
-    this.apiService.getRelationships(this.playerService.recentPlayed, 'albums');
-    this.apiService.getRelationships(this.playerService.recentPlayed, 'playlists');
-    this.apiService.getRelationships(this.playerService.heavyRotation, 'albums');
-    this.apiService.getRelationships(this.playerService.heavyRotation, 'playlists');
-    this.apiService.getRelationships(this.playerService.recommendations[1].relationships.contents.data, 'playlists');
-    this.apiService.getRelationships(this.playerService.recommendations[3].relationships.contents.data, 'playlists');
-    this.apiService.getRelationships(this.playerService.recommendations[4].relationships.contents.data, 'albums');
-    this.apiService.getRelationships(
-      this.playerService.recommendations[2].relationships.recommendations.data[0].relationships.contents.data, 'albums');
-    this.apiService.getRelationships(
-      this.playerService.recommendations[2].relationships.recommendations.data[1].relationships.contents.data, 'albums');
-    this.apiService.getRelationships(
-      this.playerService.recommendations[2].relationships.recommendations.data[2].relationships.contents.data, 'albums');
-    this.apiService.getRelationships(
-      this.playerService.recommendations[2].relationships.recommendations.data[3].relationships.contents.data, 'albums');
+    if (this.playerService.recentPlayed) {
+      this.apiService.getRelationships(this.playerService.recentPlayed, 'albums');
+      this.apiService.getRelationships(this.playerService.recentPlayed, 'playlists');
+    }
+    if (this.playerService.heavyRotation) {
+      this.apiService.getRelationships(this.playerService.heavyRotation, 'albums');
+      this.apiService.getRelationships(this.playerService.heavyRotation, 'playlists');
+    }
+    if (this.playerService.recommendations) {
+      this.apiService.getRelationships(this.playerService.recommendations[1].relationships.contents.data, 'playlists');
+      this.apiService.getRelationships(this.playerService.recommendations[3].relationships.contents.data, 'playlists');
+      this.apiService.getRelationships(this.playerService.recommendations[4].relationships.contents.data, 'albums');
+      this.apiService.getRelationships(
+        this.playerService.recommendations[2].relationships.recommendations.data[0].relationships.contents.data, 'albums');
+      this.apiService.getRelationships(
+        this.playerService.recommendations[2].relationships.recommendations.data[1].relationships.contents.data, 'albums');
+      this.apiService.getRelationships(
+        this.playerService.recommendations[2].relationships.recommendations.data[2].relationships.contents.data, 'albums');
+      this.apiService.getRelationships(
+        this.playerService.recommendations[2].relationships.recommendations.data[3].relationships.contents.data, 'albums');
+    }
   }
 
   async getRecommenations() {

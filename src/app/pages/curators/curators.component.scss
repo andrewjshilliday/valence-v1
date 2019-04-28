@@ -1,0 +1,56 @@
+.loading-spinner {
+  top: 32vh;
+  margin: 0 auto;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  height: 60px;
+  margin-bottom: -4px;
+  z-index: 10;
+  opacity: 0.95;
+  background: linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,1) 15%)
+}
+
+.curator-image {
+  display: inherit;
+  position: relative;
+  top: 10px;
+  height: 220px;
+}
+
+.editorial-notes-short {
+  position: absolute;
+  bottom: 20px;
+}
+
+.editorial-notes {
+  overflow: auto;
+  height: 0;
+  padding: 0 15px 15%;
+  font-size: 10pt;
+}
+
+.load-more {
+  display: block;
+  text-align: center;
+}
+
+.load-more a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.load-more-spinner {
+  margin: 0 auto;
+}
+
+.filters span {
+  padding-right: 5px;
+}
+
+h3 {
+  padding-left: 15px;
+  padding-right: 15px;
+}

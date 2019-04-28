@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" data-simplebar>
 
   <div *ngIf="loading">
     <mat-spinner class="loading-spinner"></mat-spinner>
@@ -12,17 +12,17 @@
           <div class="col-4">
             <div class="side-sticky">
               <div class="media-artwork">
-                <img class="img-fluid card-img-top rounded" [attr.data-src]="playerService.formatArtwork(playerService.album.attributes.artwork, 800)" src="././assets/images/placeholder.png" />
-                <div class='media-control-button'>
+                <img class="img-fluid card-img-top rounded" [attr.data-src]="playerService.formatArtwork(playerService.album.attributes.artwork, 800)" src="./assets/images/placeholder.jpeg" />
+                <div class="media-control-button">
                   <i class="fas fa-play-circle fa-3x" aria-hidden="true" (click)="playerService.playItem(playerService.album)"></i>
                 </div>
               </div>
-              <div class='row'>
-                <div class='col-8'>
-                  <span class='text-muted'>{{playerService.album.attributes.trackCount}} Songs, {{(albumDuration / 1000 / 60) | hoursMinutes}}</span>
+              <div class="row">
+                <div class="col-8">
+                  <span>{{playerService.album.attributes.trackCount}} Songs, {{(albumDuration / 1000 / 60) | hoursMinutes}}</span>
                 </div>
-                <div class='col-4'>
-                  <span class='text-muted float-right shuffle-label'><a (click)='playerService.playItem(playerService.album, 0, true)'>Shuffle <i class="fas fa-random fa-xs"></i></a></span>
+                <div class="col-4">
+                  <span class="shuffle-label"><a (click)="playerService.playItem(playerService.album, 0, true)">Shuffle <i class="fas fa-random fa-xs"></i></a></span>
                 </div>
               </div>
               <hr *ngIf="playerService.album.attributes.editorialNotes" />
@@ -38,14 +38,14 @@
               <app-media-item-collection-list [collection]="playerService.album" [ratings]="ratings" [popularity]="popularity" [showHeader]=true [showArtist]="playerService.album.attributes.artistName === 'Various Artists'"></app-media-item-collection-list>
             </div>
             <div *ngIf="playerService.album && !playerService.album.type.includes('library')" class="row container-fluid">
-              <p class="text-muted">
+              <span class="text-muted release-date">
                 Released: {{playerService.album.attributes.releaseDate | date : 'fullDate'}} <br />
                 {{playerService.album.attributes.recordLabel}} | {{playerService.album.attributes.copyright}}
-              </p>
+              </span>
             </div>
           </div>
         </div>
-        <div *ngIf="artistAlbums && artistAlbums.relationships.albums.data.length > 0 && (artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : playerService.album.id).length">
+        <div *ngIf="artistAlbums && artistAlbums.relationships && (artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : playerService.album.id).length">
           <hr />
           <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{playerService.album.attributes.artistName}}</a></h4>
           <app-media-item-collection-row [collection]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : playerService.album.id"></app-media-item-collection-row>
@@ -59,12 +59,12 @@
       <div class="minimised">
         <app-media-item-collection-list [collection]="playerService.album" [ratings]="ratings"[showHeader]=true ></app-media-item-collection-list>
         <div *ngIf="playerService.album && !playerService.album.type.includes('library')" class="row container-fluid">
-          <p class="text-muted">
+          <span class="text-muted release-date">
             Released: {{playerService.album.attributes.releaseDate | date : 'fullDate'}} <br />
             {{playerService.album.attributes.recordLabel}} | {{playerService.album.attributes.copyright}}
-          </p>
+          </span>
         </div>
-        <div *ngIf="artistAlbums && (artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : playerService.album.id).length">
+        <div *ngIf="artistAlbums && artistAlbums.relationships && (artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : playerService.album.id).length">
           <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{playerService.album.attributes.artistName}}</a></h4>
           <app-media-item-collection-row [collection]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : playerService.album.id"></app-media-item-collection-row>
         </div>

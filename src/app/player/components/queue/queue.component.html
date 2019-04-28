@@ -1,0 +1,117 @@
+<mat-tab-group (selectedTabChange)="setContentSize(); setSelectedTab(tabGroup.selectedIndex)" [selectedIndex]="selectedTab" #tabGroup data-simplebar>
+
+  <mat-tab label="Queue">
+    <div class="queue">
+      <div data-simplebar>
+        <table *ngIf="playerService && playerService.queue" class="table table-hover">
+          <thead>
+            <tr>
+              <th class="queue-artwork" >
+                <img class="rounded" [src]="playerService.formatArtwork(playerService.nowPlayingItem.artwork, 50)" />
+              </th>
+              <th class="queue-text text-truncate">
+                <span>{{playerService.nowPlayingItem.title}}<br />
+                {{playerService.nowPlayingItem.albumName}}<br />
+                {{playerService.nowPlayingItem.artistName}}</span>
+              </th>
+              <th class="queue-options">
+                <a role="button" id="dropdown{{playerService.nowPlayingItem.id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded='false'>
+                  <i class="fas fa-ellipsis-h"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item">Add to Library</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item">Love</a>
+                  <a class="dropdown-item">Dislike</a>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of playerService.queue">
+              <td class="queue-artwork" (click)="playerService.musicKit.changeToMediaAtIndex(playerService.musicKit.player.queue.items.indexOf(item))">
+                <img class="rounded" [src]="playerService.formatArtwork(item.artwork, 50)" />
+              </td>
+              <td class="queue-text text-truncate" (click)="playerService.musicKit.changeToMediaAtIndex(playerService.musicKit.player.queue.items.indexOf(item))">
+                <span>{{item.title}}<br />
+                {{item.albumName}}<br />
+                {{item.artistName}}</span>
+              </td>
+              <td class="queue-options">
+                <a role='button' id='dropdown{{item.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                  <i class="fas fa-ellipsis-h"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item">Add to Library</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item">Love</a>
+                  <a class="dropdown-item">Dislike</a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="History">
+    <div class="history">
+      <div data-simplebar>
+        <table *ngIf="playerService && playerService.history && playerService.history.length" class="table table-hover">
+          <tbody>
+            <tr *ngFor="let item of playerService.history.slice().reverse()">
+              <td class="queue-artwork">
+                <img class="rounded" [src]="playerService.formatArtwork(item.artwork, 50)" />
+              </td>
+              <td class="queue-text">
+                <span>{{item.title}}<br />
+                {{item.albumName}}<br />
+                {{item.artistName}}</span>
+              </td>
+              <td class="queue-options">
+                <a role='button' id='dropdown{{item.id}}' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                  <i class="fas fa-ellipsis-h"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item">Add to Library</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item">Love</a>
+                  <a class="dropdown-item">Dislike</a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Lyrics">
+    <div class="lyrics">
+      <div data-simplebar>
+        <div *ngIf="lyricsLoading">
+          <mat-spinner class="loading-spinner"></mat-spinner>
+        </div>
+        <div *ngIf="!lyricsLoading">
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+              <h6>
+                {{playerService.nowPlayingItem.title}}<br />
+                {{playerService.nowPlayingItem.albumName}}<br />
+                {{playerService.nowPlayingItem.artistName}}
+              </h6>
+            </div>
+            <div class="col-2">
+              <i class="material-icons refresh-lyrics" (click)="getLyrics(true)" matTooltip="Refresh Lyrics">autorenew</i>
+              </div>
+          </div>
+          <p *ngIf="playerService.nowPlayingItemGenius && playerService.nowPlayingItemGenius.lyrics">{{playerService.nowPlayingItemGenius.lyrics}}</p>
+          <p *ngIf="!playerService.nowPlayingItemGenius || !playerService.nowPlayingItemGenius.lyrics">Lyrics unavailable</p>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>

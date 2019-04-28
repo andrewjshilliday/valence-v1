@@ -1,0 +1,113 @@
+@import '../../../../theme.scss';
+
+/deep/ .mat-dialog-container {
+  overflow: hidden!important;
+}
+
+/deep/ .mat-tab-label {
+  min-width: 150px!important;
+}
+
+.queue {
+  overflow: auto;
+  height: 0;
+}
+
+.history {
+  overflow: auto;
+  height: 0;
+}
+
+table {
+  margin: 8px 0;
+
+  .queue-artwork {
+    img {
+      position: relative;
+      top: -1px;
+      height: 51px;
+      width: 51px;
+    }
+  }
+
+  .queue-text {
+    width: 330px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 9pt;
+
+    span {
+      position: relative;
+      top: -2px;
+    }
+  }
+
+  th.queue-text {
+    span {
+      font-weight: 500;
+    }
+  }
+
+  .queue-options {
+    i {
+      padding: 15px 0;
+    }
+  }
+
+  th.queue-options {
+    a {
+      position: relative;
+      top: -4px;
+    }
+  }
+
+  th {
+    border-bottom: 1px solid #dee2e6;
+  }
+  tr {
+    max-height: 60px;
+  }
+  tr:hover {
+    cursor: pointer;
+  }
+  td {
+    padding-top: 5px;
+    padding-bottom: 0;
+    border-top: 0;
+  }
+}
+
+.lyrics {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 0;
+  white-space: pre-wrap;
+
+  h6 {
+    font-size: 11pt;
+    text-align: center;
+    font-weight: bold;
+  }
+  p {
+    font-size: 10pt;
+  }
+
+  .refresh-lyrics {
+    float: right!important;
+    cursor: pointer;
+  }
+
+  .refresh-lyrics:hover {
+    color: #f40000;
+  }
+
+  .loading-spinner {
+    top: 20vh;
+    margin: 0 auto;
+  }
+
+  .row {
+    margin: 0;
+  }
+}

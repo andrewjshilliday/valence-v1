@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { PlayerService } from '../../services/player.service';
 import { ApiService } from '../../services/api.service';
 import { Rating } from '../../../models/musicKit/rating.model';
@@ -6,9 +7,9 @@ import { Rating } from '../../../models/musicKit/rating.model';
 @Component({
   selector: 'app-media-item-collection-list',
   templateUrl: './media-item-collection-list.component.html',
-  styleUrls: ['./media-item-collection-list.component.css']
+  styleUrls: ['./media-item-collection-list.component.scss']
 })
-export class MediaItemCollectionListComponent implements OnInit {
+export class MediaItemCollectionListComponent implements OnInit, OnDestroy {
 
   @Input() collection: any;
   @Input() ratings: Rating[];
@@ -22,6 +23,8 @@ export class MediaItemCollectionListComponent implements OnInit {
   collectionRatings: any;
   collectionDuration = 0;
 
+  ratingsSubscription: Subscription;
+
   constructor(public playerService: PlayerService, public apiService: ApiService) { }
 
   ngOnInit() {
@@ -34,6 +37,16 @@ export class MediaItemCollectionListComponent implements OnInit {
     } else {
       this.tracks = this.collection;
     }
+
+    this.ratingsSubscription = this.apiService.ratingSubject.subscribe(ratingResponse => {
+      if (this.tracks.map(i => i.id).includes(ratingResponse.id)) {
+        this.addRatingToCollection(ratingResponse.id, ratingResponse.rating);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.ratingsSubscription.unsubscribe();
   }
 
   getRating(item: any): number {
@@ -50,9 +63,11 @@ export class MediaItemCollectionListComponent implements OnInit {
     return 0;
   }
 
-  addRating(id: any, oldRating: number, newRating: number) {
+  addRating(id: any, newRating: number, oldRating?: number) {
     this.apiService.addRating(id, newRating);
+  }
 
+  addRatingToCollection(id: string, newRating: number) {
     const currentRatings = this.ratings.map(r => r.id);
 
     if (currentRatings.indexOf(id) === -1) {

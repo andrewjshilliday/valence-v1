@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PlayerService } from './player.service';
 import { environment } from '../../../environments/environment';
@@ -28,6 +28,7 @@ declare var MusicKit: any;
 export class ApiService {
 
   storefront: string;
+  ratingSubject = new Subject<any>();
 
   constructor(public playerService: PlayerService, private http: HttpClient) {
     this.storefront = this.playerService.musicKit.storefrontId;
@@ -381,9 +382,13 @@ export class ApiService {
         }
       });
 
-      this.http.put(`${environment.appleMusicApi}/v1/me/ratings/songs/${id}`, body, { headers: headers }).subscribe();
+      this.http.put(`${environment.appleMusicApi}/v1/me/ratings/songs/${id}`, body, { headers: headers }).subscribe(() => {
+        this.ratingSubject.next({ id: id, rating: rating });
+      });
     } else {
-      this.http.delete(`${environment.appleMusicApi}/v1/me/ratings/songs/${id}`, { headers : headers }).subscribe();
+      this.http.delete(`${environment.appleMusicApi}/v1/me/ratings/songs/${id}`, { headers : headers }).subscribe(() => {
+        this.ratingSubject.next({ id: id, rating: rating });
+      });
     }
   }
 
@@ -508,14 +513,18 @@ export class ApiService {
     return this.http.get<AlbumDataResponse>(url, { params: params }).pipe(map(res => res.albums[0]));
   }
 
-  geniusSong(artist: string, song: string, includeLyrics?: boolean): Observable<GeniusSong> {
+  geniusSong(id: string, artist: string, song: string, includeLyrics?: boolean, refreshLyrics?: boolean): Observable<GeniusSong> {
     const url = `${environment.musicServiceApi}/genius/song`;
     let params = new HttpParams()
+      .set('id', id)
       .set('artist', artist)
       .set('song', song);
 
     if (includeLyrics) {
       params = params.append('includeLyrics', 'true');
+    }
+    if (refreshLyrics) {
+      params = params.append('refreshLyrics', 'true');
     }
 
     return this.http.get<GeniusSongResponse>(url, { params: params }).pipe(map(res => res.song));

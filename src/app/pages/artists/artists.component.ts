@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, forkJoin } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
@@ -12,7 +12,7 @@ import { ArtistData } from 'src/app/models/artist-data.model';
 @Component({
   selector: 'app-artists',
   templateUrl: './artists.component.html',
-  styleUrls: ['./artists.component.css']
+  styleUrls: ['./artists.component.scss']
 })
 export class ArtistsComponent implements OnInit, OnDestroy {
 
@@ -40,12 +40,16 @@ export class ArtistsComponent implements OnInit, OnDestroy {
   sortCompilations = 'recommended';
   sortAppearsOn = 'recommended';
 
-  constructor(private route: ActivatedRoute, public playerService: PlayerService, public apiService: ApiService) { }
+  constructor(private route: ActivatedRoute, private router: Router, public playerService: PlayerService, public apiService: ApiService) { }
 
   ngOnInit() {
     this.artistSubscription = this.route.params.subscribe(params => {
       this.loadArtist(params['id']);
     });
+
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
   }
 
   ngOnDestroy(): void {
@@ -61,6 +65,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
 
     this.loading = false;
 
+    this.playerService.playlists = null;
     if (this.playerService.artist.relationships && this.playerService.artist.relationships.playlists) {
       this.playerService.playlists = this.playerService.artist.relationships.playlists.data;
     }

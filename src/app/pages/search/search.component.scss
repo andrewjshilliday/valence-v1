@@ -1,0 +1,23 @@
+.loading-spinner {
+  top: 32vh;
+  margin: 0 auto;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  height: 60px;
+  margin-bottom: -4px;
+  z-index: 10;
+  opacity: 0.95;
+  background: linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,1) 15%)
+}
+
+h3 {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}

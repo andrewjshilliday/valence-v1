@@ -1,0 +1,30 @@
+.spinner {
+  float: right!important;
+  padding: 10px;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  height: 60px;
+  margin-bottom: -4px;
+  z-index: 10;
+  opacity: 0.95;
+  background: linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,1) 15%)
+}
+
+.songs {
+  width: 98%;
+}
+
+.unavailable {
+  position: absolute;
+  top: 30%;
+  left: 25%;
+  text-align: center;
+
+  i {
+    font-size: 100pt;
+    cursor: default;
+  }
+}

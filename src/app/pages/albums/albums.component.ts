@@ -13,7 +13,7 @@ import { AlbumData } from '../../models/album-data.model';
 @Component({
   selector: 'app-albums',
   templateUrl: './albums.component.html',
-  styleUrls: ['./albums.component.css']
+  styleUrls: ['./albums.component.scss']
 })
 export class AlbumsComponent implements OnInit, OnDestroy {
 
@@ -81,6 +81,11 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     if (this.playerService.album.relationships.artists && this.playerService.album.relationships.artists.data.length) {
       this.apiService.artist(this.playerService.album.relationships.artists.data[0].id, 'albums').subscribe(res => {
         this.artistAlbums = res;
+
+        if (!this.artistAlbums || !this.artistAlbums.relationships) {
+          return;
+        }
+
         const itemIdArray = this.artistAlbums.relationships.albums.data.map(i => i.id);
 
         if (this.isLibraryAlbum) {

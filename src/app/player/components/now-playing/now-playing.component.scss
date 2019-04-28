@@ -1,0 +1,266 @@
+@import '../../../../theme.scss';
+
+@media (min-width: 607px) {
+  #now-playing-wrapper {
+    bottom: 0px;
+  }
+}
+
+@media (max-width: 606px) {
+  #now-playing-wrapper {
+    bottom: 50px;
+  }
+}
+
+#now-playing-wrapper { 
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  margin-left: 0px;
+  background-color: white;
+  border-top: 1px solid lightgrey;
+  z-index: 1000;
+  /* opacity: 0.95; */
+}
+
+.logo {
+  width: 100%;
+  padding: 20px;
+  margin: 0;
+  color: black;
+}
+
+.now-playing-bar {
+  width: 100%;
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  left: 15px;
+  padding: 10px 5px 0 20px;
+}
+
+.now-playing-progress-bar {
+  position: relative;
+  top: -1px;
+  width: 100%;
+  height: 5px;
+  background-color: #ff6666;
+
+  mat-slider {
+    width: calc(100% + 10px);
+    top: -13px;
+    left: -7px;
+    height: 2px!important;
+    padding: 0;
+  }
+
+  /deep/ .mat-accent {
+    .mat-slider-thumb {
+      bottom: -9px!important;
+      height: 15px!important;
+      background-color: #f40000!important;
+    }
+
+    .mat-slider-track-wrapper {
+      height: 5px;
+    }
+
+    .mat-slider-track-fill {
+      height: 5px;
+      background-color: #f40000!important;/* #f40000!important; */
+    }
+
+    .mat-slider-track-background {
+      height: 5px;
+      background-color: #ff8888!important;// #ff9393!important;
+    }
+  }
+}
+
+.now-playing-info {
+  padding: 0 0 0 25px;
+
+  .album-artwork {
+    position: relative;
+    height: 70px;
+    width: 70px;
+    z-index: 10;
+  }
+  
+  .playlist-artwork {
+    position: absolute;
+    height: 62px;
+    width: 62px;
+    top: 4px;
+    left: 0px;
+    z-index: 0;
+  }
+
+  .playlist-artwork:hover {
+    z-index: 20;
+  }
+
+  .now-playing-text {
+    padding: 3px 0 0 10px;
+    width: calc(100% - 75px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 11pt;
+
+    a {
+      color: black;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #f40000;
+    }
+  }
+}
+
+.media-controls {
+  display: flex;
+  justify-content: center;
+  padding: 2px 29px 0 0;
+
+  .shuffle {
+    padding-top: 25px;
+    i {
+      color: black;
+      font-size: 14pt;
+    }
+  }
+  .repeat {
+    padding: 25px 10px;
+    i {
+      color: black;
+      font-size: 14pt;
+    }
+  }
+  .previous {
+    padding-top: 12px;
+    i {
+      color: black;
+      font-size: 32pt;
+    }
+    i:hover { color: #f40000; }
+  }
+  .play {
+    i {
+      color: black;
+      font-size: 50pt;
+    }
+    i:hover { color: #f40000; }
+  }
+  .next {
+    padding-top: 12px;
+    i {
+      color: black;
+      font-size: 32pt;
+    }
+    i:hover { color: #f40000; }
+  }
+  .favorite {
+    padding: 20px 10px;
+    i {
+      color: black;
+      font-size: 20pt;
+    }
+    i:hover:not(.liked) { color: #f40000; }
+  }
+
+  .liked i {
+    color: #f40000;
+  }
+
+  i {
+    cursor: pointer;
+  }
+
+  .spinner {
+    margin: 11px 11px 0 11px;
+  }
+
+  .playback-time {
+    position: absolute;
+    top: 23px;
+    right: -50px;
+    font-size: 11pt;
+    color: black;
+  }
+}
+
+.extra-media-controls {
+  .volume-slider {
+    position: relative;
+    top: -5px;
+    width: 180px;
+    padding-top: 30px;
+    margin: 0 auto;
+    margin-right: 0;
+
+    i {
+      font-size: 14pt;
+    }
+
+    /deep/ .mat-accent {
+      .mat-slider-thumb {
+        background-color: #f40000!important;
+      }
+  
+      .mat-slider-track-fill {
+        background-color: #f40000!important;
+      }
+  
+      .mat-slider-track-background {
+        background-color: #ff8888!important;
+      }
+    }
+  }
+
+  mat-slider {
+    top: -5px!important;
+    width: 125px!important;
+    height: 2px!important;
+    padding: 0!important;
+  }
+
+  .queue-icon {
+    display: inline-block;
+    position: absolute;
+    top: 16px;
+    right: 210px;
+
+    i {
+      font-size: 25pt;
+      color: black;
+      cursor: pointer;
+    }
+    
+    i:hover {
+      color: #f40000;
+    }
+  }
+}
+
+/deep/ .mat-slider-wrapper {
+  top: 0!important;
+  cursor: pointer;
+}
+
+/deep/ .mat-slider-thumb {
+  transform: scale(1)!important;
+  right: -5px!important;
+  bottom: -7px!important;
+  width: 6px!important;
+  height: 14px!important;
+  border-radius: 30%!important;
+  border: 0;
+}
+
+.material-icons {
+  cursor: default;
+}

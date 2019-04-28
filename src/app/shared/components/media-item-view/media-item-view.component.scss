@@ -38,3 +38,16 @@
   transform: scale(0.7);
   margin-bottom: -5px;
 }
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #f40000;
+}
+
+.material-icons {
+  cursor: default;
+}

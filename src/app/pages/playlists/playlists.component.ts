@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, forkJoin } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
@@ -11,7 +11,7 @@ import { Rating } from '../../models/musicKit/rating.model';
 @Component({
   selector: 'app-playlists',
   templateUrl: './playlists.component.html',
-  styleUrls: ['./playlists.component.css']
+  styleUrls: ['./playlists.component.scss']
 })
 export class PlaylistsComponent implements OnInit, OnDestroy {
 
@@ -22,12 +22,16 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   ratings: Rating[];
   isLibraryPlaylist: boolean;
 
-  constructor(private route: ActivatedRoute, public playerService: PlayerService, public apiService: ApiService) { }
+  constructor(private route: ActivatedRoute, private router: Router, public playerService: PlayerService, public apiService: ApiService) { }
 
   ngOnInit() {
     this.playlistSubscription = this.route.params.subscribe(params => {
       this.loadPlaylist(params['id']);
     });
+
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
 
     $(window).on('resize', function() {
       this.setEditorialNotesStyle();

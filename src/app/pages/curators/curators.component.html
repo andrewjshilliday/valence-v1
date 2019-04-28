@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" data-simplebar>
 
   <div *ngIf="loading">
     <mat-spinner class="loading-spinner"></mat-spinner>
@@ -6,18 +6,20 @@
 
   <div *ngIf="!loading">
     <div *ngIf="curator">
-      <div class="curator-background container-fluid" [ngStyle]="{ 'background-image': 'url(' + playerService.formatArtwork(curator.attributes.artwork, 1080) + ')' }">
-        <h1 class="text-truncate text-light">{{curator.attributes.name}}</h1>
-
+      <div class="header">
+        <h1 class="text-truncate">{{curator.attributes.name}}</h1>
+      </div>
+      <div class="container-fluid">
         <div class="row container-fluid">
-          <div class="col-6 col-sm-8 col-md-9">
+          <div class="col-6 col-sm-8 col-md-9" appLazyLoadImage>
+            <img class="curator-image img-fluid rounded-circle" [attr.data-src]="playerService.formatArtwork(curator.attributes.artwork, 500)" src="././assets/images/placeholder.jpeg" />
             <div *ngIf="curator.attributes.editorialNotes">
-              <span class="text-light editorial-notes-short">{{curator.attributes.editorialNotes.short}}</span>
+              <span class="editorial-notes-short">{{curator.attributes.editorialNotes.short}}</span>
             </div>
           </div>
           <div *ngIf="featuredPlaylist" class="col-6 col-sm-4 col-md-3">
-            <h5 class="text-truncate text-light" title="Featured Playlist">Featured Playlist</h5>
-            <app-media-item-view [item]="featuredPlaylist" [light]=true></app-media-item-view>
+            <h5 class="text-truncate" title="Featured Playlist">Featured Playlist</h5>
+            <app-media-item-view [item]="featuredPlaylist"></app-media-item-view>
           </div>
         </div>
       </div>

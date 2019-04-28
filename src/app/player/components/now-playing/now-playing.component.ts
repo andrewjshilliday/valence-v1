@@ -1,41 +1,78 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { QueueComponent } from '../queue/queue.component';
 import { PlayerService } from '../../../shared/services/player.service';
 import { ApiService } from '../../../shared/services/api.service';
+import { Rating } from '../../../models/musicKit/rating.model';
 
 declare var MusicKit: any;
 
 @Component({
   selector: 'app-now-playing',
   templateUrl: './now-playing.component.html',
-  styleUrls: ['./now-playing.component.css']
+  styleUrls: ['./now-playing.component.scss']
 })
-export class NowPlayingComponent implements OnInit {
+export class NowPlayingComponent implements OnInit, OnDestroy {
 
-  lyricsLoading: boolean;
+  nowPlayingRating: Rating;
+  dialogRef: MatDialogRef<QueueComponent>;
+  queueSelectedTab: number;
 
-  constructor(public playerService: PlayerService, public apiService: ApiService) {
+  constructor(public playerService: PlayerService, public apiService: ApiService, public dialog: MatDialog) {
     this.playerService.musicKit.addEventListener(MusicKit.Events.mediaItemDidChange, this.mediaItemDidChange.bind(this));
   }
 
   ngOnInit() {
+    this.apiService.ratingSubject.subscribe(ratingResponse => {
+      this.nowPlayingRating = {
+        id: ratingResponse.id,
+        type: 'ratings',
+        href: `/v1/me/ratings/songs/${ratingResponse.id}`,
+        attributes: {
+          value: ratingResponse.rating
+        }
+      };
+    });
   }
 
-  async mediaItemDidChange() {
-    this.lyricsLoading = true;
-    try {
-      this.playerService.nowPlayingItemGenius = null;
+  ngOnDestroy(): void {
+    this.apiService.ratingSubject.unsubscribe();
+  }
 
-      this.playerService.nowPlayingItemGenius = await this.apiService.geniusSong(
-        this.playerService.nowPlayingItem.artistName, this.playerService.nowPlayingItem.title, true).toPromise();
-    } finally {
-      if (this.playerService.nowPlayingItemGenius) {
-        this.playerService.nowPlayingItemLyrics = this.playerService.nowPlayingItemGenius.lyrics;
-      } else {
-        this.playerService.nowPlayingItemLyrics = 'Lyrics unavailable';
-      }
+  mediaItemDidChange() {
+    this.getLyrics();
+    this.getRating();
+  }
 
-      this.lyricsLoading = false;
-    }
+  async getLyrics(refresh?: boolean) {
+    this.playerService.nowPlayingItemGenius = null;
+    this.apiService.geniusSong(this.playerService.nowPlayingItem.id, this.playerService.nowPlayingItem.artistName,
+      this.playerService.nowPlayingItem.title, true, refresh).subscribe(res => this.playerService.nowPlayingItemGenius = res);
+  }
+
+  getRating() {
+    this.apiService.ratings(Array.of(this.playerService.nowPlayingItem.id)).subscribe(res => {
+      this.nowPlayingRating = res[0];
+    });
+  }
+
+  changeRating(rating: number) {
+    this.apiService.addRating(this.playerService.nowPlayingItem.id, rating);
+  }
+
+  openDialog(): void {
+    this.dialogRef = this.dialog.open(QueueComponent, {
+      width: '498px',
+      height: '80vh',
+      position: {
+        top: '10vh'
+      },
+      data: { selectedTab: this.queueSelectedTab },
+    });
+
+    this.dialogRef.afterClosed().subscribe(() => {
+      this.queueSelectedTab = this.dialogRef.componentInstance.selectedTab;
+    });
   }
 
 }

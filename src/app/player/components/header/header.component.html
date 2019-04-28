@@ -1,5 +1,22 @@
 <div id="header-wrapper" class='row'>
-  <div>
-    <a [routerLink]="['/browse']"><img class="logo" src="./assets/images/apple_music_logo.png" /></a>
+  <div class="music-icon">
+      <a [routerLink]="['/browse']"><img src="./assets/images/apple-music.svg" /></a>
+  </div>
+  <div class="nav-extras">
+    <div id="search-control" class="search-control">
+      <input id="search-bar" class="input-text" type="search" placeholder="Search" list="searchHints" #searchbar
+        (keyup.enter)="search(searchbar.value)" (keyup)="getSearchHints(searchbar.value)">
+      <datalist *ngIf="searchHints && searchHints.terms" id="searchHints">
+        <option *ngFor="let searchHint of searchHints.terms" [value]="searchHint">{{searchHint}}</option>
+      </datalist>
+      <i id="search-icon" class="icon fa fa-search"></i>
+    </div>
+    <div *ngIf="playerService.authorized" class="settings">
+      <a [routerLink]="['/settings']"><i class="material-icons">settings</i></a>
+    </div>
+    <div class="authenticaion">
+      <span *ngIf="!playerService.authorized" (click)="playerService.signin()">Sign In</span>
+      <span *ngIf="playerService.authorized" (click)="playerService.signout()">Sign Out</span>
+    </div>
   </div>
 </div>

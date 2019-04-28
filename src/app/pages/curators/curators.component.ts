@@ -11,7 +11,7 @@ import { ChartResults } from '../../models/musicKit/chart.model';
 @Component({
   selector: 'app-curators',
   templateUrl: './curators.component.html',
-  styleUrls: ['./curators.component.css']
+  styleUrls: ['./curators.component.scss']
 })
 export class CuratorsComponent implements OnInit {
 
@@ -55,6 +55,8 @@ export class CuratorsComponent implements OnInit {
       await this.getMostPlayed();
     }
 
+    this.curatorPlaylists = await this.apiService.playlists(this.curator.relationships.playlists.data.map(i => i.id)).toPromise();
+
     if (!this.featuredPlaylistId) {
       this.featuredPlaylistId = this.curatorPlaylists[0].id;
     }
@@ -62,8 +64,6 @@ export class CuratorsComponent implements OnInit {
     this.featuredPlaylist = await this.apiService.playlist(this.featuredPlaylistId).toPromise();
 
     this.loading = false;
-
-    this.curatorPlaylists = await this.apiService.playlists(this.curator.relationships.playlists.data.map(i => i.id)).toPromise();
 
     if (this.curator.relationships.playlists.next) {
       this.getNextPlaylists = true;

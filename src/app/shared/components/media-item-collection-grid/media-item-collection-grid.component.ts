@@ -5,7 +5,7 @@ import { PlayerService } from '../../services/player.service';
 @Component({
   selector: 'app-media-item-collection-grid',
   templateUrl: './media-item-collection-grid.component.html',
-  styleUrls: ['./media-item-collection-grid.component.css']
+  styleUrls: ['./media-item-collection-grid.component.scss']
 })
 export class MediaItemCollectionGridComponent implements OnInit {
 
