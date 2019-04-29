@@ -30,7 +30,7 @@ export class ApiService {
   storefront: string;
 
   ratingSubject = new Subject<any>();
-  lyricSubject = new BehaviorSubject<any>(null);
+  lyricsSubject = new BehaviorSubject<any>(null);
 
   constructor(public playerService: PlayerService, private http: HttpClient) {
     this.storefront = this.playerService.musicKit.storefrontId;
@@ -537,10 +537,10 @@ export class ApiService {
     const artist = this.playerService.nowPlayingItem.artistName;
     const song = this.playerService.nowPlayingItem.title;
 
-    this.lyricSubject.next({loading: true});
+    this.lyricsSubject.next({loading: true});
     this.playerService.nowPlayingItemGenius = null;
     this.geniusSong(id, artist, song , true, refreshLyrics).pipe(finalize(() => {
-      this.lyricSubject.next({loading: false});
+      this.lyricsSubject.next({loading: false});
     })).subscribe(res => {
       this.playerService.nowPlayingItemGenius = res;
     });

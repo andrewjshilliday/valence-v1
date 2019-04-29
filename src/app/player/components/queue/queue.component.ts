@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, Inject, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { PlayerService } from '../../../shared/services/player.service';
 import { ApiService } from '../../../shared/services/api.service';
@@ -12,6 +13,7 @@ import * as $ from 'jquery';
 export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
 
   lyricsLoading: boolean;
+  lyricsSubscription: Subscription;
   selectedTab: number;
 
   constructor(public playerService: PlayerService, public apiService: ApiService, public dialogRef: MatDialogRef<QueueComponent>,
@@ -20,7 +22,7 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.apiService.lyricSubject.subscribe(lyricResponse => this.lyricsLoading = lyricResponse.loading);
+    this.lyricsSubscription = this.apiService.lyricsSubject.subscribe(lyricsResponse => this.lyricsLoading = lyricsResponse.loading);
 
     const self = this;
     $(window).on('resize', function() { self.setContentSize(); });
@@ -31,7 +33,7 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.apiService.lyricSubject.unsubscribe();
+    this.lyricsSubscription.unsubscribe();
   }
 
   async getLyrics(refresh?: boolean) {
