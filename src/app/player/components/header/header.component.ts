@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { PlayerService } from '../../../shared/services/player.service';
 import { ApiService } from '../../../shared/services/api.service';
 import * as $ from 'jquery';
-import { SearchHints } from '../../../models/musicKit/search-hints.model';
+import { SearchHints } from '../../../shared/models/musicKit/search-hints.model';
 
 @Component({
   selector: 'app-header',

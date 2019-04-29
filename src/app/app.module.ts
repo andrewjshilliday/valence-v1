@@ -10,15 +10,15 @@ import { ApiCacheInterceptor } from './shared/cache/api/api-cache.interceptor';
 import { PlayerModule } from './player/player.module';
 import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
-import { BrowseComponent } from './pages/browse/browse.component';
-import { ForYouComponent } from './pages/for-you/for-you.component';
-import { LibraryComponent } from './pages/library/library.component';
-import { SearchComponent } from './pages/search/search.component';
-import { ArtistsComponent } from './pages/artists/artists.component';
-import { AlbumsComponent } from './pages/albums/albums.component';
-import { PlaylistsComponent } from './pages/playlists/playlists.component';
-import { CuratorsComponent } from './pages/curators/curators.component';
-import { SettingsComponent } from './pages/settings/settings.component';
+import { BrowseComponent } from './views/browse/browse.component';
+import { ForYouComponent } from './views/for-you/for-you.component';
+import { LibraryComponent } from './views/library/library.component';
+import { SearchComponent } from './views/search/search.component';
+import { ArtistsComponent } from './views/artists/artists.component';
+import { AlbumsComponent } from './views/albums/albums.component';
+import { PlaylistsComponent } from './views/playlists/playlists.component';
+import { CuratorsComponent } from './views/curators/curators.component';
+import { SettingsComponent } from './views/settings/settings.component';
 import { environment } from '../environments/environment';
 
 @NgModule({

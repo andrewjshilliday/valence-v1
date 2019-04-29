@@ -5,8 +5,8 @@ import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
 import * as $ from 'jquery';
 
-import { Artist } from '../../models/musicKit/artist.model';
-import { Rating } from '../../models/musicKit/rating.model';
+import { Artist } from '../../shared/models/musicKit/artist.model';
+import { Rating } from '../../shared/models/musicKit/rating.model';
 
 @Component({
   selector: 'app-playlists',

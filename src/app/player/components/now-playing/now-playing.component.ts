@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { QueueComponent } from '../queue/queue.component';
 import { PlayerService } from '../../../shared/services/player.service';
 import { ApiService } from '../../../shared/services/api.service';
-import { Rating } from '../../../models/musicKit/rating.model';
+import { Rating } from '../../../shared/models/musicKit/rating.model';
 
 declare var MusicKit: any;
 
@@ -44,10 +44,8 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
     this.getRating();
   }
 
-  async getLyrics(refresh?: boolean) {
-    this.playerService.nowPlayingItemGenius = null;
-    this.apiService.geniusSong(this.playerService.nowPlayingItem.id, this.playerService.nowPlayingItem.artistName,
-      this.playerService.nowPlayingItem.title, true, refresh).subscribe(res => this.playerService.nowPlayingItemGenius = res);
+  async getLyrics() {
+    this.apiService.updateNowPlayingItem();
   }
 
   getRating() {

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Secrets } from '../../secrets';
 
-import { Artist } from '../../models/musicKit/artist.model';
-import { Album } from '../../models/musicKit/album.model';
-import { Playlist } from '../../models/musicKit/playlist.model';
-import { Curator } from '../../models/musicKit/curator.model';
-import { Recommendation } from '../../models/musicKit/recommendation.model';
-import { ChartResults } from '../../models/musicKit/chart.model';
-import { SearchResults } from '../../models/musicKit/search.model';
-import { GeniusSong } from '../../models/genius-song.model';
+import { Artist } from '../models/musicKit/artist.model';
+import { Album } from '../models/musicKit/album.model';
+import { Playlist } from '../models/musicKit/playlist.model';
+import { Curator } from '../models/musicKit/curator.model';
+import { Recommendation } from '../models/musicKit/recommendation.model';
+import { ChartResults } from '../models/musicKit/chart.model';
+import { SearchResults } from '../models/musicKit/search.model';
+import { GeniusSong } from '../models/genius-song.model';
 
 declare var MusicKit: any;
 

@@ -4,10 +4,10 @@ import { Subscription, forkJoin } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
 
-import { Artist } from '../../models/musicKit/artist.model';
-import { Album } from '../../models/musicKit/album.model';
-import { Song } from '../../models/musicKit/song.model';
-import { ArtistData } from 'src/app/models/artist-data.model';
+import { Artist } from '../../shared/models/musicKit/artist.model';
+import { Album } from '../../shared/models/musicKit/album.model';
+import { Song } from '../../shared/models/musicKit/song.model';
+import { ArtistData } from 'src/app/shared/models/artist-data.model';
 
 @Component({
   selector: 'app-artists',

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { PlayerService } from '../../../shared/services/player.service';
 import { ApiService } from '../../../shared/services/api.service';
@@ -9,7 +9,7 @@ import * as $ from 'jquery';
   templateUrl: './queue.component.html',
   styleUrls: ['./queue.component.scss']
 })
-export class QueueComponent implements OnInit, AfterViewInit {
+export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
 
   lyricsLoading: boolean;
   selectedTab: number;
@@ -20,6 +20,8 @@ export class QueueComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.apiService.lyricSubject.subscribe(lyricResponse => this.lyricsLoading = lyricResponse.loading);
+
     const self = this;
     $(window).on('resize', function() { self.setContentSize(); });
   }
@@ -28,10 +30,12 @@ export class QueueComponent implements OnInit, AfterViewInit {
     this.setContentSize();
   }
 
+  ngOnDestroy() {
+    this.apiService.lyricSubject.unsubscribe();
+  }
+
   async getLyrics(refresh?: boolean) {
-    this.playerService.nowPlayingItemGenius = null;
-    this.apiService.geniusSong(this.playerService.nowPlayingItem.id, this.playerService.nowPlayingItem.artistName,
-      this.playerService.nowPlayingItem.title, true, refresh).subscribe(res => this.playerService.nowPlayingItemGenius = res);
+    this.apiService.updateNowPlayingItem(refresh);
   }
 
   setContentSize() {

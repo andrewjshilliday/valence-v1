@@ -5,10 +5,10 @@ import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
 import * as $ from 'jquery';
 
-import { Artist } from '../../models/musicKit/artist.model';
-import { Album } from '../../models/musicKit/album.model';
-import { Rating } from '../../models/musicKit/rating.model';
-import { AlbumData } from '../../models/album-data.model';
+import { Artist } from '../../shared/models/musicKit/artist.model';
+import { Album } from '../../shared/models/musicKit/album.model';
+import { Rating } from '../../shared/models/musicKit/rating.model';
+import { AlbumData } from '../../shared/models/album-data.model';
 
 @Component({
   selector: 'app-albums',

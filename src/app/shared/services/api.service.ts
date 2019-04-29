@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { map, finalize } from 'rxjs/operators';
 import { PlayerService } from './player.service';
 import { environment } from '../../../environments/environment';
 
-import { Artist, ArtistResponse } from '../../models/musicKit/artist.model';
-import { Album, AlbumResponse } from '../../models/musicKit/album.model';
-import { Playlist, PlaylistResponse } from '../../models/musicKit/playlist.model';
-import { Song, SongResponse } from '../../models/musicKit/song.model';
-import { Curator, CuratorResponse } from '../../models/musicKit/curator.model';
-import { Recommendation, RecommendationResponse } from '../../models/musicKit/recommendation.model';
-import { Rating, RatingResponse } from '../../models/musicKit/rating.model';
-import { ChartResults, ChartResponse } from '../../models/musicKit/chart.model';
-import { SearchResults, SearchResponse } from '../../models/musicKit/search.model';
-import { SearchHints, SearchHintsResponse } from '../../models/musicKit/search-hints.model';
-import { Resource, ResourceResponse } from '../../models/musicKit/common/resource.model';
-import { ArtistData, ArtistDataResponse } from '../../models/artist-data.model';
-import { AlbumData, AlbumDataResponse } from '../../models/album-data.model';
-import { GeniusSong, GeniusSongResponse } from '../../models/genius-song.model';
+import { Artist, ArtistResponse } from '../models/musicKit/artist.model';
+import { Album, AlbumResponse } from '../models/musicKit/album.model';
+import { Playlist, PlaylistResponse } from '../models/musicKit/playlist.model';
+import { Song, SongResponse } from '../models/musicKit/song.model';
+import { Curator, CuratorResponse } from '../models/musicKit/curator.model';
+import { Recommendation, RecommendationResponse } from '../models/musicKit/recommendation.model';
+import { Rating, RatingResponse } from '../models/musicKit/rating.model';
+import { ChartResults, ChartResponse } from '../models/musicKit/chart.model';
+import { SearchResults, SearchResponse } from '../models/musicKit/search.model';
+import { SearchHints, SearchHintsResponse } from '../models/musicKit/search-hints.model';
+import { Resource, ResourceResponse } from '../models/musicKit/common/resource.model';
+import { ArtistData, ArtistDataResponse } from '../models/artist-data.model';
+import { AlbumData, AlbumDataResponse } from '../models/album-data.model';
+import { GeniusSong, GeniusSongResponse } from '../models/genius-song.model';
 
 declare var MusicKit: any;
 
@@ -28,7 +28,9 @@ declare var MusicKit: any;
 export class ApiService {
 
   storefront: string;
+
   ratingSubject = new Subject<any>();
+  lyricSubject = new BehaviorSubject<any>(null);
 
   constructor(public playerService: PlayerService, private http: HttpClient) {
     this.storefront = this.playerService.musicKit.storefrontId;
@@ -528,6 +530,20 @@ export class ApiService {
     }
 
     return this.http.get<GeniusSongResponse>(url, { params: params }).pipe(map(res => res.song));
+  }
+
+  updateNowPlayingItem(refreshLyrics?: boolean) {
+    const id = this.playerService.nowPlayingItem.id;
+    const artist = this.playerService.nowPlayingItem.artistName;
+    const song = this.playerService.nowPlayingItem.title;
+
+    this.lyricSubject.next({loading: true});
+    this.playerService.nowPlayingItemGenius = null;
+    this.geniusSong(id, artist, song , true, refreshLyrics).pipe(finalize(() => {
+      this.lyricSubject.next({loading: false});
+    })).subscribe(res => {
+      this.playerService.nowPlayingItemGenius = res;
+    });
   }
 
 }
