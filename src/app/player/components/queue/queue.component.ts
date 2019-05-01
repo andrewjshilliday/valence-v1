@@ -5,6 +5,8 @@ import { PlayerService } from '../../../shared/services/player.service';
 import { ApiService } from '../../../shared/services/api.service';
 import * as $ from 'jquery';
 
+declare var MusicKit: any;
+
 @Component({
   selector: 'app-queue',
   templateUrl: './queue.component.html',
@@ -15,10 +17,13 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
   lyricsLoading: boolean;
   lyricsSubscription: Subscription;
   selectedTab: number;
+  canRefreshLyrics: boolean;
 
   constructor(public playerService: PlayerService, public apiService: ApiService, public dialogRef: MatDialogRef<QueueComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.playerService.musicKit.addEventListener(MusicKit.Events.mediaItemDidChange, this.mediaItemDidChange.bind(this));
     this.selectedTab = data.selectedTab;
+    this.canRefreshLyrics = data.canRefreshLyrics;
   }
 
   ngOnInit() {
@@ -38,6 +43,7 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async getLyrics(refresh?: boolean) {
     this.apiService.updateNowPlayingItem(refresh);
+    this.canRefreshLyrics = false;
   }
 
   setContentSize() {
@@ -52,6 +58,10 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
 
   setSelectedTab(tab: number) {
     this.selectedTab = tab;
+  }
+
+  mediaItemDidChange() {
+    this.canRefreshLyrics = true;
   }
 
 }

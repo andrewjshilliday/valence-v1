@@ -59,6 +59,15 @@ span {
   font-size: 10pt;
 }
 
+a {
+  color: black!important;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #f40000!important;
+}
+
 .shuffle-label {
   padding-top: 3px;
   float: right!important;

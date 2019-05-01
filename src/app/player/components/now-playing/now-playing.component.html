@@ -8,7 +8,7 @@
     <div class="now-playing-progress-bar">
       <mat-slider class='track-progress' [max]="playerService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="playerService.musicKit.player.currentPlaybackTime" (change)="playerService.seekToTime($event.value)"></mat-slider>
     </div>
-    <div class="row media">
+    <div class="media">
       <div class="col-4 now-playing-info">
         <div class="row">
           <div>
@@ -41,14 +41,12 @@
         <div class="play"><i *ngIf="playerService.playing && !playerService.playbackLoading" class="material-icons" (click)="playerService.pause()">pause</i></div>
         <mat-spinner *ngIf="playerService.playbackLoading" class="spinner" [diameter]="45" (click)='playerService.stop()'></mat-spinner>
         <div class="next"><i class="material-icons" (click)="playerService.playNext()">skip_next</i></div>
-        <div *ngIf="nowPlayingRating && nowPlayingRating.attributes.value === 1" class="favorite liked"><i class="material-icons" (click)="changeRating(0)">favorite</i></div>
-        <div *ngIf="!nowPlayingRating || nowPlayingRating.attributes.value !== 1" class="favorite"><i class="material-icons" (click)="changeRating(1)">favorite_border</i></div>
         <span (click)="onSetTheme('dark-theme')" class="playback-time">{{playerService.musicKit.player.currentPlaybackTime | minutesSeconds}} / {{playerService.musicKit.player.currentPlaybackDuration | minutesSeconds}}</span>
       </div>
       <div class="col-4 extra-media-controls">
-        <div class="queue-icon">
-          <i class="material-icons" (click)="openDialog()">queue_music</i>
-        </div>
+        <div *ngIf="nowPlayingRating && nowPlayingRating.attributes.value === 1" class="favorite liked"><i class="material-icons" (click)="changeRating(0)">favorite</i></div>
+        <div *ngIf="!nowPlayingRating || nowPlayingRating.attributes.value !== 1" class="favorite"><i class="material-icons" (click)="changeRating(1)">favorite_border</i></div>
+        <div class="queue-icon"><i class="material-icons" (click)="openDialog()">queue_music</i></div>
         <div class="volume-slider">
           <i class="material-icons">volume_down</i>
           <mat-slider class='volume-slider' [max]="1.0" [min]="0.0" [step]="0.01" [value]="playerService.musicKit.player.volume" (input)="playerService.setVolume($event.value)"></mat-slider>

@@ -37,8 +37,7 @@
 .media {
   position: relative;
   width: 100%;
-  left: 15px;
-  padding: 10px 5px 0 20px;
+  padding: 6px 5px 0 20px;
 }
 
 .now-playing-progress-bar {
@@ -84,16 +83,16 @@
 
   .album-artwork {
     position: relative;
-    height: 70px;
-    width: 70px;
+    height: 80px;
+    width: 80px;
     z-index: 10;
   }
   
   .playlist-artwork {
     position: absolute;
-    height: 62px;
-    width: 62px;
-    top: 4px;
+    height: 70px;
+    width: 70px;
+    top: 5px;
     left: 0px;
     z-index: 0;
   }
@@ -103,8 +102,8 @@
   }
 
   .now-playing-text {
-    padding: 3px 0 0 10px;
-    width: calc(100% - 75px);
+    padding: 6px 0 0 10px;
+    width: calc(100% - 80px);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -124,7 +123,7 @@
 .media-controls {
   display: flex;
   justify-content: center;
-  padding: 2px 29px 0 0;
+  padding: 5px 0 0 10px;
 
   .shuffle {
     padding-top: 25px;
@@ -163,18 +162,6 @@
     }
     i:hover { color: #f40000; }
   }
-  .favorite {
-    padding: 20px 10px;
-    i {
-      color: black;
-      font-size: 20pt;
-    }
-    i:hover:not(.liked) { color: #f40000; }
-  }
-
-  .liked i {
-    color: #f40000;
-  }
 
   i {
     cursor: pointer;
@@ -185,15 +172,47 @@
   }
 
   .playback-time {
-    position: absolute;
-    top: 23px;
-    right: -50px;
+    padding: 22px 10px;
     font-size: 11pt;
     color: black;
   }
 }
 
 .extra-media-controls {
+  padding-top: 5px;
+
+  .favorite {
+    position: absolute;
+    right: 250px;
+    padding: 21px 10px;
+    i {
+      color: black;
+      font-size: 20pt;
+      cursor: pointer;
+    }
+    i:hover:not(.liked) { color: #f40000; }
+  }
+
+  .liked i {
+    color: #f40000;
+  }
+
+  .queue-icon {
+    position: absolute;
+    padding-top: 17px;
+    right: 210px;
+
+    i {
+      font-size: 25pt;
+      color: black;
+      cursor: pointer;
+    }
+    
+    i:hover {
+      color: #f40000;
+    }
+  }
+
   .volume-slider {
     position: relative;
     top: -5px;
@@ -226,23 +245,6 @@
     width: 125px!important;
     height: 2px!important;
     padding: 0!important;
-  }
-
-  .queue-icon {
-    display: inline-block;
-    position: absolute;
-    top: 16px;
-    right: 210px;
-
-    i {
-      font-size: 25pt;
-      color: black;
-      cursor: pointer;
-    }
-    
-    i:hover {
-      color: #f40000;
-    }
   }
 }
 

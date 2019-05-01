@@ -101,7 +101,7 @@
     margin-left: 1px;
     transform: scale(2.6);
   }
-  i:hover {
+  i:hover:not(.explicit-icon) {
     color: #f40000;
   }
 }

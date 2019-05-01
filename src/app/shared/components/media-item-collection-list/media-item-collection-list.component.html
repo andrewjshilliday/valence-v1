@@ -96,12 +96,13 @@
   <tbody>
     <tr *ngFor="let item of tracks" class="mediarow">
       <td class="media-status" (click)="!playerService.isItemCurrentlyPlaying(item.id) ? playerService.playItem(collection, tracks.indexOf(item)) : playerService.pause()">
-        <span *ngIf="!playerService.isItemCurrentlyPlaying(item.id) && !showArtwork && !getPopularity(item.id) && collection.relationships" class="item-number">{{tracks.indexOf(item) + 1}}</span>
-        <i *ngIf="!playerService.isItemCurrentlyPlaying(item.id) && !showArtwork && getPopularity(item.id)" class="material-icons item-popularity">star</i>
+        <span *ngIf="!playerService.isItemCurrentlyPlaying(item.id) && !playerService.isItemCurrentlyPaused(item.id) && !showArtwork && !getPopularity(item.id) && collection.relationships" class="item-number">{{tracks.indexOf(item) + 1}}</span>
+        <i *ngIf="!playerService.isItemCurrentlyPlaying(item.id) && !playerService.isItemCurrentlyPaused(item.id) && !showArtwork && getPopularity(item.id)" class="material-icons item-popularity">star</i>
         <img *ngIf="showArtwork" class="img-fluid" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 50)" src="././assets/images/placeholder.jpeg" />
         <i *ngIf="!playerService.isItemCurrentlyPlaying(item.id)" class="material-icons media-icon">play_arrow</i>
         <i *ngIf="playerService.isItemCurrentlyPlaying(item.id)" class="material-icons media-icon">pause</i>
         <i *ngIf="playerService.isItemCurrentlyPlaying(item.id)" class="material-icons now-playing-icon">volume_up</i>
+        <i *ngIf="playerService.isItemCurrentlyPaused(item.id)" class="material-icons now-playing-icon">volume_mute</i>
       </td>
       <td class="song-name text-truncate" (click)="!playerService.isItemCurrentlyPlaying(item.id) ? playerService.playItem(collection, tracks.indexOf(item)) : playerService.pause()" title="{{item.attributes.name}}" [ngStyle]="{'border': tracks[0].id === item.id ? 'none' : ''}">
         <span class="song-text" [ngStyle]="{'width': item.attributes.contentRating && item.attributes.contentRating === 'explicit' ? 'calc(100% - 20px)' : ''}">

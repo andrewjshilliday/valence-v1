@@ -104,8 +104,8 @@
               </h6>
             </div>
             <div class="col-2">
-              <i class="material-icons refresh-lyrics" (click)="getLyrics(true)" matTooltip="Refresh Lyrics">autorenew</i>
-              </div>
+              <i *ngIf="canRefreshLyrics" class="material-icons refresh-lyrics" (click)="getLyrics(true)" matTooltip="Refresh Lyrics">autorenew</i>
+            </div>
           </div>
           <p *ngIf="playerService.nowPlayingItemGenius && playerService.nowPlayingItemGenius.lyrics">{{playerService.nowPlayingItemGenius.lyrics}}</p>
           <p *ngIf="!playerService.nowPlayingItemGenius || !playerService.nowPlayingItemGenius.lyrics">Lyrics unavailable</p>

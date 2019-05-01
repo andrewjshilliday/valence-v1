@@ -17,6 +17,7 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   nowPlayingRating: Rating;
   dialogRef: MatDialogRef<QueueComponent>;
   queueSelectedTab: number;
+  canRefreshLyrics: boolean;
 
   constructor(public playerService: PlayerService, public apiService: ApiService, public dialog: MatDialog) {
     this.playerService.musicKit.addEventListener(MusicKit.Events.mediaItemDidChange, this.mediaItemDidChange.bind(this));
@@ -42,6 +43,7 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   mediaItemDidChange() {
     this.getLyrics();
     this.getRating();
+    this.canRefreshLyrics = true;
   }
 
   async getLyrics() {
@@ -65,11 +67,12 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
       position: {
         top: '10vh'
       },
-      data: { selectedTab: this.queueSelectedTab },
+      data: { selectedTab: this.queueSelectedTab, canRefreshLyrics: this.canRefreshLyrics },
     });
 
     this.dialogRef.afterClosed().subscribe(() => {
       this.queueSelectedTab = this.dialogRef.componentInstance.selectedTab;
+      this.canRefreshLyrics = this.dialogRef.componentInstance.canRefreshLyrics;
     });
   }
 
