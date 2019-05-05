@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, forkJoin } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
+import { Utils } from '../../shared/utils';
 import * as $ from 'jquery';
 
 import { Artist } from '../../shared/models/musicKit/artist.model';
@@ -146,6 +147,10 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
         $('#notes').css('max-height', height  - notesOffset + notesParentOffset - 160);
       }
     });
+  }
+
+  formatTime(ms: number) {
+    return Utils.formatTime(ms);
   }
 
 }

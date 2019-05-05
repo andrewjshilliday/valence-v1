@@ -1,8 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { QueueComponent } from '../queue/queue.component';
 import { PlayerService } from '../../../shared/services/player.service';
 import { ApiService } from '../../../shared/services/api.service';
+import { Utils } from '../../../shared/utils';
+
 import { Rating } from '../../../shared/models/musicKit/rating.model';
 
 declare var MusicKit: any;
@@ -18,26 +21,29 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   dialogRef: MatDialogRef<QueueComponent>;
   queueSelectedTab: number;
   canRefreshLyrics: boolean;
+  ratingSubscription: Subscription;
 
   constructor(public playerService: PlayerService, public apiService: ApiService, public dialog: MatDialog) {
     this.playerService.musicKit.addEventListener(MusicKit.Events.mediaItemDidChange, this.mediaItemDidChange.bind(this));
   }
 
   ngOnInit() {
-    this.apiService.ratingSubject.subscribe(ratingResponse => {
-      this.nowPlayingRating = {
-        id: ratingResponse.id,
-        type: 'ratings',
-        href: `/v1/me/ratings/songs/${ratingResponse.id}`,
-        attributes: {
-          value: ratingResponse.rating
-        }
-      };
+    this.ratingSubscription = this.apiService.ratingSubject.subscribe(ratingResponse => {
+      if (ratingResponse.id === this.playerService.nowPlayingItem.id) {
+        this.nowPlayingRating = {
+          id: ratingResponse.id,
+          type: 'ratings',
+          href: `/v1/me/ratings/songs/${ratingResponse.id}`,
+          attributes: {
+            value: ratingResponse.rating
+          }
+        };
+      }
     });
   }
 
   ngOnDestroy(): void {
-    this.apiService.ratingSubject.unsubscribe();
+    this.ratingSubscription.unsubscribe();
   }
 
   mediaItemDidChange() {
@@ -74,6 +80,10 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
       this.queueSelectedTab = this.dialogRef.componentInstance.selectedTab;
       this.canRefreshLyrics = this.dialogRef.componentInstance.canRefreshLyrics;
     });
+  }
+
+  formatTime(ms: number) {
+    return Utils.formatTime(ms);
   }
 
 }

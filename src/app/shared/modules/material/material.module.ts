@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatInputModule,
     MatDialogModule,
     MatTabsModule,
+    MatSnackBarModule,
   ],
   exports: [
     MatSliderModule,
@@ -37,6 +39,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatInputModule,
     MatDialogModule,
     MatTabsModule,
+    MatSnackBarModule,
   ],
   declarations: []
 })

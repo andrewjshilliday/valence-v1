@@ -3,6 +3,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { map, finalize } from 'rxjs/operators';
 import { PlayerService } from './player.service';
+import { NotificationService } from './notification.service';
 import { environment } from '../../../environments/environment';
 
 import { Artist, ArtistResponse } from '../models/musicKit/artist.model';
@@ -32,14 +33,14 @@ export class ApiService {
   ratingSubject = new Subject<any>();
   lyricsSubject = new BehaviorSubject<any>(null);
 
-  constructor(public playerService: PlayerService, private http: HttpClient) {
+  constructor(public playerService: PlayerService, public notificationService: NotificationService, private http: HttpClient) {
     this.storefront = this.playerService.musicKit.storefrontId;
   }
 
-  async addToLibrary(item: any) {
+  /* async addToLibrary(item: any) {
     await this.playerService.musicKit.api.addToLibrary({ [item.type]: [item.id] });
     alert('Successfully added ' + item.attributes.name + ' to your library');
-  }
+  } */
 
   appleApiHeaders(): HttpHeaders {
     let headers = new HttpHeaders()
@@ -374,6 +375,7 @@ export class ApiService {
   }
 
   addRating(id: string, rating: number) {
+    const url = `${environment.appleMusicApi}/v1/me/ratings/songs/${id}`;
     const headers = this.appleApiHeaders();
 
     if (rating !== 0) {
@@ -384,14 +386,29 @@ export class ApiService {
         }
       });
 
-      this.http.put(`${environment.appleMusicApi}/v1/me/ratings/songs/${id}`, body, { headers: headers }).subscribe(() => {
+      this.http.put(url, body, { headers: headers }).subscribe(() => {
         this.ratingSubject.next({ id: id, rating: rating });
       });
     } else {
-      this.http.delete(`${environment.appleMusicApi}/v1/me/ratings/songs/${id}`, { headers : headers }).subscribe(() => {
+      this.http.delete(url, { headers : headers }).subscribe(() => {
         this.ratingSubject.next({ id: id, rating: rating });
       });
     }
+  }
+
+  async addToLibrary(item: any) {
+    /* const url = `${environment.appleMusicApi}/v1/me/library`;
+    const headers = this.appleApiHeaders();
+    const params = new HttpParams()
+      .set(`ids[${item.type}]`, item.id);
+
+    this.http.put(url, null, { headers: headers, params: params }).subscribe(() => {
+      this.notificationService.open(`${item.attributes.name} successfully added to library`);
+    }); */
+
+    await this.playerService.musicKit.api.addToLibrary({ [item.type]: [item.id] }).then(() => {
+      this.notificationService.open(`${item.attributes.name} successfully added to library`);
+    });
   }
 
   getRelationships(collection: any, type: string) {

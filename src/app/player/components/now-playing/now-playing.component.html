@@ -41,7 +41,7 @@
         <div class="play"><i *ngIf="playerService.playing && !playerService.playbackLoading" class="material-icons" (click)="playerService.pause()">pause</i></div>
         <mat-spinner *ngIf="playerService.playbackLoading" class="spinner" [diameter]="45" (click)='playerService.stop()'></mat-spinner>
         <div class="next"><i class="material-icons" (click)="playerService.playNext()">skip_next</i></div>
-        <span (click)="onSetTheme('dark-theme')" class="playback-time">{{playerService.musicKit.player.currentPlaybackTime | minutesSeconds}} / {{playerService.musicKit.player.currentPlaybackDuration | minutesSeconds}}</span>
+        <span class="playback-time">{{formatTime(playerService.musicKit.player.currentPlaybackTime) | minutesSeconds}} / {{formatTime(playerService.musicKit.player.currentPlaybackDuration) | minutesSeconds}}</span>
       </div>
       <div class="col-4 extra-media-controls">
         <div *ngIf="nowPlayingRating && nowPlayingRating.attributes.value === 1" class="favorite liked"><i class="material-icons" (click)="changeRating(0)">favorite</i></div>

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, forkJoin } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
+import { Utils } from '../../shared/utils';
 
 import { Artist } from '../../shared/models/musicKit/artist.model';
 import { Album } from '../../shared/models/musicKit/album.model';
@@ -231,6 +232,10 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     }
 
     forkJoin(observables);
+  }
+
+  formatDate(date: string) {
+    return Utils.formatDate(date);
   }
 
 }
