@@ -1,24 +1,18 @@
 <div id="sidebar-wrapper">
-  <mat-sidenav-container>
-    <mat-sidenav #appDrawer mode="push" fixedInViewport="true" fixedTopGap="50" fixedBottomGap="100" opened="true" disableClose="true">
-      <div  data-simplebar>
+  
+  <div class="nav-box">
+    <span class="nav-header">Apple Music</span>
+    <a class="nav-item" [routerLink]="['/browse']" [routerLinkActive]="'route-active'"><i class="material-icons">format_list_bulleted</i>Browse</a>
+    <a *ngIf="playerService.authorized" class="nav-item" [routerLink]="['/foryou']" [routerLinkActive]="'route-active'"><i class="material-icons">favorite</i>For You</a>
+  </div>
 
-        <div class="nav-box">
-          <span class="nav-header">Apple Music</span>
-          <a class="nav-item" [routerLink]="['/browse']" [routerLinkActive]="'route-active'"><i class="material-icons">format_list_bulleted</i>Browse</a>
-          <a *ngIf="playerService.authorized" class="nav-item" [routerLink]="['/foryou']" [routerLinkActive]="'route-active'"><i class="material-icons">favorite</i>For You</a>
-        </div>
-
-        <div *ngIf="playerService.authorized" class="nav-box">
-          <span class="nav-header">Library</span>
-          <a class="nav-item" [routerLink]="['/library/recently-added']" [routerLinkActive]="'route-active'"><i class="material-icons">person_add</i>Recently Added</a>
-          <a class="nav-item" [routerLink]="['/library/artists']" [routerLinkActive]="'route-active'"><i class="material-icons">person</i>Artists</a>
-          <a class="nav-item" [routerLink]="['/library/albums']" [routerLinkActive]="'route-active'"><i class="material-icons">album</i>Albums</a>
-          <a class="nav-item" [routerLink]="['/library/playlists']" [routerLinkActive]="'route-active'"><i class="material-icons">playlist_play</i>Playlists</a>
-          <a class="nav-item" [routerLink]="['/library/songs']" [routerLinkActive]="'route-active'"><i class="material-icons">music_note</i>Songs</a>
-        </div>
-        
-      </div>
-    </mat-sidenav>
-  </mat-sidenav-container>
+  <div *ngIf="playerService.authorized" class="nav-box">
+    <span class="nav-header">Library</span>
+    <a class="nav-item" [routerLink]="['/library/recently-added']" [routerLinkActive]="'route-active'"><i class="material-icons">person_add</i>Recently Added</a>
+    <a class="nav-item" [routerLink]="['/library/artists']" [routerLinkActive]="'route-active'"><i class="material-icons">person</i>Artists</a>
+    <a class="nav-item" [routerLink]="['/library/albums']" [routerLinkActive]="'route-active'"><i class="material-icons">album</i>Albums</a>
+    <a class="nav-item" [routerLink]="['/library/playlists']" [routerLinkActive]="'route-active'"><i class="material-icons">playlist_play</i>Playlists</a>
+    <a class="nav-item" [routerLink]="['/library/songs']" [routerLinkActive]="'route-active'"><i class="material-icons">music_note</i>Songs</a>
+  </div>
+    
 </div>

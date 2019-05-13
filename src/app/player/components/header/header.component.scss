@@ -1,31 +1,28 @@
-#header-wrapper {
-  position: fixed;
-  width: 100%;
-  height: 50px;
-  margin-left: 0px;
+.header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "logo options";
+  height: 100%;
   background-color: white;
   border-bottom: 1px solid lightgray;
   z-index: 1000;
-  /* opacity: 0.95; */
-}
 
-.music-icon {
-  position: absolute;
-  left: 45px;
-  top: 5px;
+  .logo {
+    grid-area: logo;
+    justify-self: start;
+    padding: 5px 0 0 45px;
 
-  img {
-    height: 37px;
+    img {
+      height: 37px;
+    }
   }
-  i {
-    font-size: 32pt;
+  .nav-extras {
+    grid-area: options;
+    justify-self: end;
+    display: flex;
   }
-}
-
-.nav-extras {
-  position: fixed;
-  right: 10px;
-  display: inline-flex;
 }
 
 .search-control {

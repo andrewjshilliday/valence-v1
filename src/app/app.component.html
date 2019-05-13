@@ -1,6 +1,8 @@
-<app-header></app-header>
-<app-sidebar></app-sidebar>
-<main id="page-content-wrapper" [@fadeAnimation]="getRouterOutletState(o)">
-  <router-outlet #o="outlet"></router-outlet>
-</main>
-<app-now-playing></app-now-playing>
+<div class="site">
+  <app-header class="header"></app-header>
+  <app-sidebar class="sidebar"></app-sidebar>
+  <main class="main-content" [@fadeAnimation]="getRouterOutletState(o)">
+    <router-outlet #o="outlet"></router-outlet>
+  </main>
+  <app-now-playing class="player-bar"></app-now-playing>
+</div>
