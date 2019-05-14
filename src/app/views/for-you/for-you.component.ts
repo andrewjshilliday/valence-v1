@@ -33,17 +33,12 @@ export class ForYouComponent implements OnInit {
       this.apiService.getRelationships(this.playerService.heavyRotation, 'playlists');
     }
     if (this.playerService.recommendations) {
-      this.apiService.getRelationships(this.playerService.recommendations[1].relationships.contents.data, 'playlists');
-      this.apiService.getRelationships(this.playerService.recommendations[3].relationships.contents.data, 'playlists');
-      this.apiService.getRelationships(this.playerService.recommendations[4].relationships.contents.data, 'albums');
-      this.apiService.getRelationships(
-        this.playerService.recommendations[2].relationships.recommendations.data[0].relationships.contents.data, 'albums');
-      this.apiService.getRelationships(
-        this.playerService.recommendations[2].relationships.recommendations.data[1].relationships.contents.data, 'albums');
-      this.apiService.getRelationships(
-        this.playerService.recommendations[2].relationships.recommendations.data[2].relationships.contents.data, 'albums');
-      this.apiService.getRelationships(
-        this.playerService.recommendations[2].relationships.recommendations.data[3].relationships.contents.data, 'albums');
+      this.apiService.getRelationships(this.playerService.recommendations[2].relationships.contents.data, 'albums');
+
+      for (const recommendation of this.playerService.recommendations[1].relationships.recommendations.data) {
+        this.apiService.getRelationships(recommendation.relationships.contents.data, 'albums');
+        this.apiService.getRelationships(recommendation.relationships.contents.data, 'playlists');
+      }
     }
   }
 

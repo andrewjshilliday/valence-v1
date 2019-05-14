@@ -24,24 +24,16 @@
       <app-media-item-collection-row [collection]="playerService.heavyRotation"></app-media-item-collection-row>
     </div>
 
-    <div *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[1]">
-      <h3>{{playerService.recommendations[1].attributes.title.stringForDisplay}}</h3> <!-- Today's Playlists -->
-      <app-media-item-collection-row [collection]="playerService.recommendations[1].relationships.contents.data" [size]="2"></app-media-item-collection-row>
-    </div>
+    <section *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[1]">
+      <div *ngFor="let recommendation of playerService.recommendations[1].relationships.recommendations.data">
+        <h3>{{recommendation.attributes.title.stringForDisplay}}</h3>
+      <app-media-item-collection-row [collection]="recommendation.relationships.contents.data"></app-media-item-collection-row>
+      </div>
+    </section>
 
     <div *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[2]">
-      <h3>{{playerService.recommendations[2].attributes.title.stringForDisplay}}</h3> <!-- Today's Albums -->
-      <app-media-item-collection-row [collection]="playerService.recommendations[2].relationships.recommendations.data" [todaysAlbums]=true></app-media-item-collection-row>
-    </div>
-
-    <div *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[3]">
-      <h3>{{playerService.recommendations[3].attributes.title.stringForDisplay}}</h3> <!-- Artist Spotlight Playlists -->
-      <app-media-item-collection-row [collection]="playerService.recommendations[3].relationships.contents.data" [size]="2"></app-media-item-collection-row>
-    </div>
-
-    <div *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[4]">
-      <h3>{{playerService.recommendations[4].attributes.title.stringForDisplay}}</h3> <!-- New Releases -->
-      <app-media-item-collection-row [collection]="playerService.recommendations[4].relationships.contents.data"></app-media-item-collection-row>
+      <h3>{{playerService.recommendations[2].attributes.title.stringForDisplay}}</h3> <!-- New Releases -->
+      <app-media-item-collection-row [collection]="playerService.recommendations[2].relationships.contents.data"></app-media-item-collection-row>
     </div>
 
   </div>
