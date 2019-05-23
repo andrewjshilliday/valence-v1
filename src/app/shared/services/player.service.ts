@@ -191,8 +191,12 @@ export class PlayerService {
   }
 
   setVolume(volume: number) {
-    this.musicKit.player.volume = volume;
-    localStorage.setItem('volume', volume.toString());
+    const audio: any = document.getElementById('apple-music-player');
+
+    if (audio) {
+      audio.volume = volume;
+      localStorage.setItem('volume', volume.toString());
+    }
   }
 
   setBitrate(bitrate: number) {
