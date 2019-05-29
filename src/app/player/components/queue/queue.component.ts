@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, Inject, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PlayerService } from '../../../shared/services/player.service';
 import { ApiService } from '../../../shared/services/api.service';
 import * as $ from 'jquery';
