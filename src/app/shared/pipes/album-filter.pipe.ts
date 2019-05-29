@@ -27,7 +27,7 @@ export class AlbumFilterPipe implements PipeTransform {
     }
 
     if (args === 'latestRelease') {
-      items = items.filter(item => item.attributes.isSingle === false && new Date(item.attributes.releaseDate).getTime() < Date.now());
+      items = items.filter(item => new Date(item.attributes.releaseDate).getTime() < Date.now());
       return items.sort((a, b) => new Date(b.attributes.releaseDate).getTime() - new Date(a.attributes.releaseDate).getTime())[0];
     }
 

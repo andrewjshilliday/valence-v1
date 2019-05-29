@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Secrets } from '../../secrets';
+import { NotificationService } from './notification.service';
 
 import { Artist } from '../models/musicKit/artist.model';
 import { Album } from '../models/musicKit/album.model';
@@ -54,7 +55,7 @@ export class PlayerService {
 
   device: any;
 
-  constructor() {
+  constructor(private notificationService: NotificationService) {
     MusicKit.configure({
       developerToken: Secrets.appleMusicDevToken,
       app: {
@@ -95,8 +96,8 @@ export class PlayerService {
     const playParams = item.attributes.playParams;
     this.musicKit.player.shuffleMode = 0;
 
-    if (!this.playing && this.musicKit.player.nowPlayingItem && item.type !== 'songs' && item.relationships.tracks.data[startIndex]) {
-      if (item.relationships.tracks.data[startIndex].id === this.musicKit.player.nowPlayingItem.id) {
+    if (!this.playing && this.nowPlayingItem && item.type !== 'songs' && item.relationships.tracks.data[startIndex]) {
+      if (item.relationships.tracks.data[startIndex].id === this.nowPlayingItem.id) {
         this.play();
         return;
       }
@@ -125,10 +126,12 @@ export class PlayerService {
 
   queueNext (item: any) {
     this.musicKit.player.queue.prepend(item);
+    this.notificationService.open(`${item.attributes.name} by ${item.attributes.artistName} playing next`);
   }
 
   queueLater (item: any) {
     this.musicKit.player.queue.append(item);
+    this.notificationService.open(`${item.attributes.name} by ${item.attributes.artistName} playing later`);
   }
 
   async play() {
@@ -228,11 +231,11 @@ export class PlayerService {
   }
 
   isItemCurrentlyPlaying(id: number): boolean {
-    if (this.musicKit.player.nowPlayingItem === null) {
+    if (this.nowPlayingItem === null) {
       return false;
     }
 
-    if (id === this.musicKit.player.nowPlayingItem.id && this.playing) {
+    if (id === this.nowPlayingItem.id && this.playing) {
       return true;
     }
 
@@ -240,11 +243,11 @@ export class PlayerService {
   }
 
   isItemCurrentlyPaused(id: number): boolean {
-    if (this.musicKit.player.nowPlayingItem === null) {
+    if (this.nowPlayingItem === null) {
       return false;
     }
 
-    if (id === this.musicKit.player.nowPlayingItem.id && !this.playing) {
+    if (id === this.nowPlayingItem.id && !this.playing) {
       return true;
     }
 
@@ -339,7 +342,7 @@ export class PlayerService {
               if (audioDevice.deviceId === this.device.id) {
                 foundDevice = true;
 
-                if (this.musicKit.player.nowPlayingItem && !this.playing) {
+                if (this.nowPlayingItem && !this.playing) {
                   this.play();
                   return;
                 }

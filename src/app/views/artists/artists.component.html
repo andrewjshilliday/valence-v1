@@ -114,11 +114,14 @@
             </div>
             <br *ngIf="artistData.resources.data.attributes.origin" />
             <div *ngIf="artistData.resources.data.attributes.bornOrFormedDate" class="row">
-              <span *ngIf="artistData.resources.data.attributes.isGroup || artistData.resources.data.attributes.isGroup === undefined">
+              <span *ngIf="artistData.resources.data.attributes.isGroup">
                 <b>FORMED</b><br />{{formatDate(artistData.resources.data.attributes.bornOrFormedDate)}}
               </span>
-              <span *ngIf="!artistData.resources.data.attributes.isGroup && artistData.resources.data.attributes.isGroup !== undefined">
+              <span *ngIf="!artistData.resources.data.attributes.isGroup && artistData.resources.data.attributes.bornOrFormedDate.length !== 4">
                 <b>BORN</b><br />{{formatDate(artistData.resources.data.attributes.bornOrFormedDate)}}
+              </span>
+              <span *ngIf="!artistData.resources.data.attributes.isGroup && artistData.resources.data.attributes.bornOrFormedDate.length === 4">
+                <b>FORMED</b><br />{{formatDate(artistData.resources.data.attributes.bornOrFormedDate)}}
               </span>
             </div>
             <br *ngIf="artistData.resources.data.attributes.bornOrFormedDate" />
