@@ -24,7 +24,7 @@
     "@angular/pwa": "^0.800.0",
     "@angular/router": "^8.0.0",
     "@angular/service-worker": "^8.0.0",
-    "@sentry/browser": "^5.0.8",
+    "@sentry/browser": "^5.3.0",
     "angular-font-awesome": "^3.1.2",
     "bootstrap": "^4.3.1",
     "core-js": "^2.6.5",
