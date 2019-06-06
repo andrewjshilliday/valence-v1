@@ -2,7 +2,7 @@
 
   <mat-tab label="Queue">
     <div class="queue">
-      <div data-simplebar>
+      <div class="simplebar" data-simplebar>
         <table *ngIf="playerService && playerService.queue" class="table table-hover">
           <thead>
             <tr>
@@ -57,7 +57,7 @@
 
   <mat-tab label="History">
     <div class="history">
-      <div data-simplebar>
+      <div class="simplebar" data-simplebar>
         <table *ngIf="playerService && playerService.history && playerService.history.length" class="table table-hover">
           <tbody>
             <tr *ngFor="let item of playerService.history.slice().reverse()">
@@ -89,7 +89,7 @@
 
   <mat-tab label="Lyrics">
     <div class="lyrics">
-      <div data-simplebar>
+      <div class="simplebar" data-simplebar>
         <div *ngIf="lyricsLoading">
           <mat-spinner class="loading-spinner"></mat-spinner>
         </div>
