@@ -148,6 +148,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
         const notesOffset = $('#notes').offset().top;
         const notesParentOffset = $('#notes').parent().offset().top;
         $('#notes').css('max-height', height  - notesOffset + notesParentOffset - 160);
+        $('#notes').css('height', height  - notesOffset + notesParentOffset - 160);
       }
     });
   }

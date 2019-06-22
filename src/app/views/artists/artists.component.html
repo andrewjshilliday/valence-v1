@@ -1,144 +1,151 @@
-<div class="container-fluid simplebar" data-simplebar>
+<ng-scrollbar>
+  <div class="container-fluid">
 
-  <div *ngIf="loading">
-    <mat-spinner class="loading-spinner"></mat-spinner>
-  </div>
-
-  <div *ngIf="!loading">
-    <div *ngIf="playerService.artist">
-      <div class="header">
-        <h1 class="text-truncate">{{playerService.artist.attributes.name}}</h1>
-      </div>
-      <div class="container-fluid">
-        <div class="row container-fluid">
-          <div class="artist-image col-6 col-sm-3 col-md-4" appLazyLoadImage>
-            <img *ngIf="artistImage" class="artist-image img-fluid rounded-circle" [attr.data-src]="playerService.formatArtwork(artistImage, 500)" src="././assets/images/placeholder.jpeg" />
-            <img *ngIf="!artistImage" class="artist-image img-fluid rounded-circle" src="./assets/images/placeholder.jpeg" />
-          </div>
-          <div *ngIf="playerService.artist && playerService.artist.relationships.albums.data && playerService.artist.relationships.albums.data | albumFilter : 'latestRelease'" class="col-6 col-sm-4 col-md-3" [ngClass]="(playerService.artist.relationships.albums.data | albumFilter : 'upcomingRelease') ? 'offset-md-2' : 'offset-md-5'">
-            <h5 class="text-truncate" title="Latest Release">Latest Release</h5>
-            <app-media-item-view [item]="playerService.artist.relationships.albums.data | albumFilter : 'latestRelease'"></app-media-item-view>
-          </div>
-          <div *ngIf="playerService.artist && playerService.artist.relationships.albums.data && playerService.artist.relationships.albums.data | albumFilter : 'upcomingRelease'" class="col-6 col-sm-4 col-md-3">
-            <h5 class="text-truncate" title="Upcoming Release">Upcoming Release</h5>
-            <app-media-item-view [item]="playerService.artist.relationships.albums.data | albumFilter : 'upcomingRelease'"></app-media-item-view>
-          </div>
-        </div>
-      </div>
-
-      <hr />
-
-      <div *ngIf="topSongs">
-        <h3>Top Songs</h3>
-        <app-media-item-collection-grid [collection]="topSongs" [numRows]=3></app-media-item-collection-grid>
-      </div>
-
-      <div *ngIf="albums && albums.length">
-        <div class="row">
-          <div class="col-6"><h3>Albums</h3></div>
-          <div *ngIf="albums.length > 1" class="col-6">
-            <select class="float-right" [(ngModel)]="sortAlbums">
-              <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
-            </select>
-          </div>
-        </div>
-        <app-media-item-collection-row [collection]="sortItems(albums, sortAlbums)"></app-media-item-collection-row>
-      </div>
-
-      <div *ngIf="singles && singles.length">
-        <div class="row">
-          <div class="col-6"><h3>EPs & Singles</h3></div>
-          <div *ngIf="singles.length > 1" class="col-6">
-            <select class="float-right" [(ngModel)]="sortSingles">
-              <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
-            </select>
-          </div>
-        </div>
-        <app-media-item-collection-row [collection]="sortItems(singles, sortSingles)"></app-media-item-collection-row>
-      </div>
-
-      <div *ngIf="liveAlbums && liveAlbums.length">
-        <div class="row">
-          <div class="col-6"><h3>Live Albums</h3></div>
-          <div *ngIf="liveAlbums.length > 1" class="col-6">
-            <select class="float-right" [(ngModel)]="sortLiveAlbums">
-              <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
-            </select>
-          </div>
-        </div>
-        <app-media-item-collection-row [collection]="sortItems(liveAlbums, sortLiveAlbums)"></app-media-item-collection-row>
-      </div>
-
-      <div *ngIf="compilations && compilations.length">
-        <div class="row">
-          <div class="col-6"><h3>Compilation Albums</h3></div>
-          <div *ngIf="compilations.length > 1" class="col-6">
-            <select class="float-right" [(ngModel)]="sortCompilations">
-              <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
-            </select>
-          </div>
-        </div>
-        <app-media-item-collection-row [collection]="sortItems(compilations, sortCompilations)"></app-media-item-collection-row>
-      </div>
-
-      <div *ngIf="appearsOn && appearsOn.length">
-        <div class="row">
-          <div class="col-6"><h3>Appears On Albums</h3></div>
-          <div *ngIf="appearsOn.length > 1" class="col-6">
-            <select class="float-right" [(ngModel)]="sortAppearsOn">
-              <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
-            </select>
-          </div>
-        </div>
-        <app-media-item-collection-row [collection]="sortItems(appearsOn, sortAppearsOn)"></app-media-item-collection-row>
-      </div>
-
-      <div *ngIf="playerService.playlists && playerService.playlists.length">
-        <h3>Artist Playlists</h3>
-        <app-media-item-collection-row [collection]="playerService.playlists"></app-media-item-collection-row>
-      </div>
-
-      <div *ngIf="artistData && artistData.resources.data.attributes.artistBio" class="artist-info">
-        <h3>About {{artistData.resources.data.attributes.name}}</h3>
-        <div class="row">
-          <div class="col-9 artist-bio scrollbar" [innerHTML]="artistData.resources.data.attributes.artistBio">
-          </div>
-          <div class="col-3 artist-details">
-            <div *ngIf="artistData.resources.data.attributes.origin" class="row">
-              <span *ngIf="artistData.resources.data.attributes.isGroup">
-                <b>ORIGIN</b><br />{{artistData.resources.data.attributes.origin}}
-              </span>
-              <span *ngIf="!artistData.resources.data.attributes.isGroup">
-                <b>HOMETOWN</b><br />{{artistData.resources.data.attributes.origin}}
-              </span>
-            </div>
-            <br *ngIf="artistData.resources.data.attributes.origin" />
-            <div *ngIf="artistData.resources.data.attributes.bornOrFormedDate" class="row">
-              <span *ngIf="artistData.resources.data.attributes.isGroup">
-                <b>FORMED</b><br />{{formatDate(artistData.resources.data.attributes.bornOrFormedDate)}}
-              </span>
-              <span *ngIf="!artistData.resources.data.attributes.isGroup && artistData.resources.data.attributes.bornOrFormedDate.length !== 4">
-                <b>BORN</b><br />{{formatDate(artistData.resources.data.attributes.bornOrFormedDate)}}
-              </span>
-              <span *ngIf="!artistData.resources.data.attributes.isGroup && artistData.resources.data.attributes.bornOrFormedDate.length === 4">
-                <b>FORMED</b><br />{{formatDate(artistData.resources.data.attributes.bornOrFormedDate)}}
-              </span>
-            </div>
-            <br *ngIf="artistData.resources.data.attributes.bornOrFormedDate" />
-            <div class="row">
-              <span><b>GENRE</b><br />{{playerService.artist.attributes.genreNames[0]}}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br *ngIf="artistData && artistData.resources.data.attributes.artistBio" />
-
-      <div *ngIf="relatedArtists">
-        <h3>Related Artists</h3>
-        <app-media-item-collection-row [collection]="relatedArtists"></app-media-item-collection-row>
-      </div>
-
+    <div *ngIf="loading">
+      <mat-spinner class="loading-spinner"></mat-spinner>
     </div>
-  </div>
 
-</div>
+    <div *ngIf="!loading">
+      <div *ngIf="playerService.artist">
+        <div class="header">
+          <h1 class="text-truncate">{{playerService.artist.attributes.name}}</h1>
+        </div>
+        <div class="container-fluid">
+          <div class="row container-fluid">
+            <div class="artist-image col-6 col-sm-3 col-md-4" appLazyLoadImage>
+              <img *ngIf="artistImage" class="artist-image img-fluid rounded-circle" [attr.data-src]="playerService.formatArtwork(artistImage, 500)" src="././assets/images/placeholder.jpeg" />
+              <img *ngIf="!artistImage" class="artist-image img-fluid rounded-circle" src="./assets/images/placeholder.jpeg" />
+            </div>
+            <div *ngIf="playerService.artist && playerService.artist.relationships.albums.data && playerService.artist.relationships.albums.data | albumFilter : 'latestRelease'" class="col-6 col-sm-4 col-md-3" [ngClass]="(playerService.artist.relationships.albums.data | albumFilter : 'upcomingRelease') ? 'offset-md-2' : 'offset-md-5'">
+              <h5 class="text-truncate" title="Latest Release">Latest Release</h5>
+              <app-media-item-view [item]="playerService.artist.relationships.albums.data | albumFilter : 'latestRelease'"></app-media-item-view>
+            </div>
+            <div *ngIf="playerService.artist && playerService.artist.relationships.albums.data && playerService.artist.relationships.albums.data | albumFilter : 'upcomingRelease'" class="col-6 col-sm-4 col-md-3">
+              <h5 class="text-truncate" title="Upcoming Release">Upcoming Release</h5>
+              <app-media-item-view [item]="playerService.artist.relationships.albums.data | albumFilter : 'upcomingRelease'"></app-media-item-view>
+            </div>
+          </div>
+        </div>
+
+        <hr />
+
+        <div *ngIf="topSongs">
+          <h3>Top Songs</h3>
+          <app-media-item-collection-grid [collection]="topSongs" [numRows]=3></app-media-item-collection-grid>
+        </div>
+
+        <div *ngIf="albums && albums.length">
+          <div class="row">
+            <div class="col-6"><h3>Albums</h3></div>
+            <div *ngIf="albums.length > 1" class="col-6">
+              <select class="float-right" [(ngModel)]="sortAlbums">
+                <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
+              </select>
+            </div>
+          </div>
+          <!-- <app-media-item-collection-row [collection]="sortItems(albums, sortAlbums)"></app-media-item-collection-row> -->
+          <app-media-item-collection-row [collection]="albums"></app-media-item-collection-row>
+        </div>
+
+        <div *ngIf="singles && singles.length">
+          <div class="row">
+            <div class="col-6"><h3>EPs & Singles</h3></div>
+            <div *ngIf="singles.length > 1" class="col-6">
+              <select class="float-right" [(ngModel)]="sortSingles">
+                <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
+              </select>
+            </div>
+          </div>
+          <!-- <app-media-item-collection-row [collection]="sortItems(singles, sortSingles)"></app-media-item-collection-row> -->
+          <app-media-item-collection-row [collection]="singles"></app-media-item-collection-row>
+        </div>
+
+        <div *ngIf="liveAlbums && liveAlbums.length">
+          <div class="row">
+            <div class="col-6"><h3>Live Albums</h3></div>
+            <div *ngIf="liveAlbums.length > 1" class="col-6">
+              <select class="float-right" [(ngModel)]="sortLiveAlbums">
+                <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
+              </select>
+            </div>
+          </div>
+          <!-- <app-media-item-collection-row [collection]="sortItems(liveAlbums, sortLiveAlbums)"></app-media-item-collection-row> -->
+          <app-media-item-collection-row [collection]="liveAlbums"></app-media-item-collection-row>
+        </div>
+
+        <div *ngIf="compilations && compilations.length">
+          <div class="row">
+            <div class="col-6"><h3>Compilation Albums</h3></div>
+            <div *ngIf="compilations.length > 1" class="col-6">
+              <select class="float-right" [(ngModel)]="sortCompilations">
+                <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
+              </select>
+            </div>
+          </div>
+          <!-- <app-media-item-collection-row [collection]="sortItems(compilations, sortCompilations)"></app-media-item-collection-row> -->
+          <app-media-item-collection-row [collection]="compilations"></app-media-item-collection-row>
+        </div>
+
+        <div *ngIf="appearsOn && appearsOn.length">
+          <div class="row">
+            <div class="col-6"><h3>Appears On Albums</h3></div>
+            <div *ngIf="appearsOn.length > 1" class="col-6">
+              <select class="float-right" [(ngModel)]="sortAppearsOn">
+                <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
+              </select>
+            </div>
+          </div>
+          <!-- <app-media-item-collection-row [collection]="sortItems(appearsOn, sortAppearsOn)"></app-media-item-collection-row> -->
+          <app-media-item-collection-row [collection]="appearsOn"></app-media-item-collection-row>
+        </div>
+
+        <div *ngIf="playerService.playlists && playerService.playlists.length">
+          <h3>Artist Playlists</h3>
+          <app-media-item-collection-row [collection]="playerService.playlists"></app-media-item-collection-row>
+        </div>
+
+        <div *ngIf="artistData && artistData.resources.data.attributes.artistBio" class="artist-info">
+          <h3>About {{artistData.resources.data.attributes.name}}</h3>
+          <div class="row">
+            <ng-scrollbar class="col-9 artist-bio scrollbar"><div [innerHTML]="artistData.resources.data.attributes.artistBio"></div></ng-scrollbar>
+            <!-- <div class="col-9 artist-bio" [innerHTML]="artistData.resources.data.attributes.artistBio"></div> -->
+            <div class="col-3 artist-details">
+              <div *ngIf="artistData.resources.data.attributes.origin" class="row">
+                <span *ngIf="artistData.resources.data.attributes.isGroup">
+                  <b>ORIGIN</b><br />{{artistData.resources.data.attributes.origin}}
+                </span>
+                <span *ngIf="!artistData.resources.data.attributes.isGroup">
+                  <b>HOMETOWN</b><br />{{artistData.resources.data.attributes.origin}}
+                </span>
+              </div>
+              <br *ngIf="artistData.resources.data.attributes.origin" />
+              <div *ngIf="artistData.resources.data.attributes.bornOrFormedDate" class="row">
+                <span *ngIf="artistData.resources.data.attributes.isGroup">
+                  <b>FORMED</b><br />{{formatDate(artistData.resources.data.attributes.bornOrFormedDate)}}
+                </span>
+                <span *ngIf="!artistData.resources.data.attributes.isGroup && artistData.resources.data.attributes.bornOrFormedDate.length !== 4">
+                  <b>BORN</b><br />{{formatDate(artistData.resources.data.attributes.bornOrFormedDate)}}
+                </span>
+                <span *ngIf="!artistData.resources.data.attributes.isGroup && artistData.resources.data.attributes.bornOrFormedDate.length === 4">
+                  <b>FORMED</b><br />{{formatDate(artistData.resources.data.attributes.bornOrFormedDate)}}
+                </span>
+              </div>
+              <br *ngIf="artistData.resources.data.attributes.bornOrFormedDate" />
+              <div class="row">
+                <span><b>GENRE</b><br />{{playerService.artist.attributes.genreNames[0]}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br *ngIf="artistData && artistData.resources.data.attributes.artistBio" />
+
+        <div *ngIf="relatedArtists">
+          <h3>Related Artists</h3>
+          <app-media-item-collection-row [collection]="relatedArtists"></app-media-item-collection-row>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</ng-scrollbar>

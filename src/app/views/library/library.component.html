@@ -1,51 +1,53 @@
-<div class="container-fluid simplebar" data-simplebar>
-  <div class="row header">
-    <div class="col-10">
-      <h1>Library</h1>
-    </div>
-    <div class="col-2">
-      <div *ngIf="loading" class="spinner"><mat-spinner [diameter]="30"></mat-spinner></div>
-    </div>
-  </div>
-
+<ng-scrollbar>
   <div class="container-fluid">
-
-      <div *ngIf="type === 'recently-added' && recentlyAdded && recentlyAdded.length">
-        <div class="row">
-          <app-media-item-view *ngFor="let item of recentlyAdded" [item]="item" class="col-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
-        </div>
+    <div class="row header">
+      <div class="col-10">
+        <h1>Library</h1>
       </div>
-
-      <div *ngIf="type === 'artists' && artists && artists.length">
-        <div class="row">
-          <app-media-item-view *ngFor="let item of artists" [item]="item" class="col-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
-        </div>
+      <div class="col-2">
+        <div *ngIf="loading" class="spinner"><mat-spinner [diameter]="30"></mat-spinner></div>
       </div>
+    </div>
 
-      <div *ngIf="type === 'albums' && albums && albums.length">
-        <div class="row">
-          <app-media-item-view *ngFor="let item of albums" [item]="item" class="col-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
-        </div>
-      </div>
+    <div class="container-fluid">
 
-      <div *ngIf="type === 'songs'">
-        <div *ngIf="songs && songs.length">
+        <div *ngIf="type === 'recently-added' && recentlyAdded && recentlyAdded.length">
           <div class="row">
-            <!-- <app-media-item-collection-list [collection]="songs" [showArtist]=true [showAlbum]=true class="songs"></app-media-item-collection-list> -->
+            <app-media-item-view *ngFor="let item of recentlyAdded" [item]="item" class="col-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
           </div>
         </div>
-        <div *ngIf="!songs || !songs.length" class="unavailable">
-          <i class="material-icons">warning</i>
-          <h1>Temporarily unavailable</h1>
-        </div>
-      </div>
 
-      <div *ngIf="type === 'playlists' && playlists && playlists.length">
-        <div class="row">
-          <app-media-item-view *ngFor="let item of playlists" [item]="item" class="col-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
+        <div *ngIf="type === 'artists' && artists && artists.length">
+          <div class="row">
+            <app-media-item-view *ngFor="let item of artists" [item]="item" class="col-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
+          </div>
         </div>
-      </div>
+
+        <div *ngIf="type === 'albums' && albums && albums.length">
+          <div class="row">
+            <app-media-item-view *ngFor="let item of albums" [item]="item" class="col-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
+          </div>
+        </div>
+
+        <div *ngIf="type === 'songs'">
+          <div *ngIf="songs && songs.length">
+            <div class="row">
+              <!-- <app-media-item-collection-list [collection]="songs" [showArtist]=true [showAlbum]=true class="songs"></app-media-item-collection-list> -->
+            </div>
+          </div>
+          <div *ngIf="!songs || !songs.length" class="unavailable">
+            <i class="material-icons">warning</i>
+            <h1>Temporarily unavailable</h1>
+          </div>
+        </div>
+
+        <div *ngIf="type === 'playlists' && playlists && playlists.length">
+          <div class="row">
+            <app-media-item-view *ngFor="let item of playlists" [item]="item" class="col-6 col-md-4 col-lg-3 col-xl-2"></app-media-item-view>
+          </div>
+        </div>
+
+    </div>
 
   </div>
-
-</div>
+</ng-scrollbar>

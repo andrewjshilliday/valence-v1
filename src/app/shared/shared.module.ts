@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material/material.module';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MediaItemViewComponent } from './components/media-item-view/media-item-view.component';
 import { MediaItemCollectionListComponent } from './components/media-item-collection-list/media-item-collection-list.component';
 import { MediaItemCollectionRowComponent } from './components/media-item-collection-row/media-item-collection-row.component';
@@ -19,7 +20,8 @@ import { LazyLoadImageDirective } from './directives/lazy-load-image/lazy-load-i
     CommonModule,
     RouterModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    NgScrollbarModule
   ],
   declarations: [
     MediaItemViewComponent,
@@ -31,13 +33,14 @@ import { LazyLoadImageDirective } from './directives/lazy-load-image/lazy-load-i
     AlbumFilterPipe,
     PlaylistFilterPipe,
     RoundPipe,
-    LazyLoadImageDirective
+    LazyLoadImageDirective,
   ],
   exports: [
     CommonModule,
     RouterModule,
     BrowserAnimationsModule,
     MaterialModule,
+    NgScrollbarModule,
     MediaItemViewComponent,
     MediaItemCollectionListComponent,
     MediaItemCollectionRowComponent,

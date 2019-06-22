@@ -25,6 +25,7 @@ export class CuratorsComponent implements OnInit {
   mostPlayed: ChartResults;
 
   filters: string[] = [ 'All', 'Essentials', 'Next Steps', 'Deep Cuts', 'Influences', 'Inspired' ];
+  selectedFilter = 'All';
 
   nextPlaylistsUrl: string;
   getNextPlaylists = true;

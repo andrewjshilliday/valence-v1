@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlayerService } from '../../../shared/services/player.service';
 import { ApiService } from '../../../shared/services/api.service';
@@ -15,15 +15,23 @@ export class HeaderComponent implements OnInit {
 
   searchHints: SearchHints;
 
+  /* @HostListener('window:keydown.f')
+  enterSearch() {
+    $('#search-icon').click();
+    $('#search-bar').val('');
+  } */
+
   constructor(private router: Router, public playerService: PlayerService, public apiService: ApiService) { }
 
   ngOnInit() {
     const self = this;
+    let searchClicked: boolean;
+
     $('.search-control .icon').click(function() {
       if ($('#search-control').hasClass('active') && $('#search-bar').val()) {
         self.search($('#search-bar').val());
       } else {
-        $(this).parent().toggleClass('active');
+        $('#search-control').addClass('active');
         $('#search-bar').select();
 
         if (!$('#search-bar').is(':focus')) {
@@ -32,8 +40,17 @@ export class HeaderComponent implements OnInit {
       }
     });
 
+    $('#search-icon').mousedown(function() {
+      searchClicked = true;
+    });
+    $('#search-icon').mouseup(function() {
+      searchClicked = false;
+    });
+
     $('#search-control').focusout(function() {
-      /* $(this).removeClass('active'); */
+      if (!searchClicked) {
+        $('#search-control').removeClass('active');
+      }
     });
   }
 

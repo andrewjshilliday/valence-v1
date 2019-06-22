@@ -1,49 +1,51 @@
-<div class="container-fluid simplebar" data-simplebar>
-  <div class="header">
-    <h1>Settings</h1>
-  </div>
+<ng-scrollbar>
+  <div class="container-fluid">
+    <div class="header">
+      <h1>Settings</h1>
+    </div>
 
-  <div class="bitrate">
-    <h3>Set Playback Bitrate</h3>
-    <mat-form-field>
-      <mat-label>Bitrate</mat-label>
-      <mat-select [(value)]="bitrate">
-        <mat-option value="64" (click)="playerService.setBitrate(64)">Standard (64kbps)</mat-option>
-        <mat-option value="256" (click)="playerService.setBitrate(256)">High (256kbps)</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+    <div class="bitrate">
+      <h3>Set Playback Bitrate</h3>
+      <mat-form-field>
+        <mat-label>Bitrate</mat-label>
+        <mat-select [(value)]="bitrate">
+          <mat-option value="64" (click)="playerService.setBitrate(64)">Standard (64kbps)</mat-option>
+          <mat-option value="256" (click)="playerService.setBitrate(256)">High (256kbps)</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <div class="media-devices">
-    <h3>Auto Play/Pause</h3>
-    <p>This feature will automatically play or pause music when the specified device connects or disconnects.</p>
-    <mat-checkbox [(ngModel)]="enablePlayPause" (change)="changeEnablePlayPause()">Enable (experimental)</mat-checkbox>
-    <br />
-    <mat-form-field class="device-name">
-      <input matInput type="text" placeholder="Device Name" [(ngModel)]="device.name">
-      <button mat-button *ngIf="device.name" matSuffix mat-icon-button aria-label="Clear" (click)="device.name=''">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field>
-    <br />
-    <mat-form-field class="device-id">
-      <input matInput type="text" placeholder="Hardware ID" [(ngModel)]="device.id">
-      <button mat-button *ngIf="device.id" matSuffix mat-icon-button aria-label="Clear" (click)="device.id=''">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field>
-    <br />
-    <button mat-stroked-button class="save-button" (click)="saveDevice()">Save</button>
-    <button mat-stroked-button matSuffix (click)="showConnectedDevices()">Show Connected Devices</button>
-  </div>
+    <div class="media-devices">
+      <h3>Auto Play/Pause</h3>
+      <p>This feature will automatically play or pause music when the specified device connects or disconnects.</p>
+      <mat-checkbox [(ngModel)]="enablePlayPause" (change)="changeEnablePlayPause()">Enable (experimental)</mat-checkbox>
+      <br />
+      <mat-form-field class="device-name">
+        <input matInput type="text" placeholder="Device Name" [(ngModel)]="device.name">
+        <button mat-button *ngIf="device.name" matSuffix mat-icon-button aria-label="Clear" (click)="device.name=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <br />
+      <mat-form-field class="device-id">
+        <input matInput type="text" placeholder="Hardware ID" [(ngModel)]="device.id">
+        <button mat-button *ngIf="device.id" matSuffix mat-icon-button aria-label="Clear" (click)="device.id=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <br />
+      <button mat-stroked-button class="save-button" (click)="saveDevice()">Save</button>
+      <button mat-stroked-button matSuffix (click)="showConnectedDevices()">Show Connected Devices</button>
+    </div>
 
-  <div class="playback-recovery">
-    <h3>Playback Recovery</h3>
-    <p>This setting will attempt to restart playback if it is stuck loading for the set time but may cause songs to skip.</p>
-    <mat-checkbox [(ngModel)]="enablePlaybackRecovery" (change)="changeEnablePlaybackRecovery()">Enable</mat-checkbox>
-    <mat-form-field>
-      <input matInput type="text" placeholder="Timeout (ms)" [(ngModel)]="playbackTimeout" (input)="onPlaybackTimeoutChange()">
-    </mat-form-field>
-  </div>
+    <div class="playback-recovery">
+      <h3>Playback Recovery</h3>
+      <p>This setting will attempt to restart playback if it is stuck loading for the set time but may cause songs to skip.</p>
+      <mat-checkbox [(ngModel)]="enablePlaybackRecovery" (change)="changeEnablePlaybackRecovery()">Enable</mat-checkbox>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Timeout (ms)" [(ngModel)]="playbackTimeout" (input)="onPlaybackTimeoutChange()">
+      </mat-form-field>
+    </div>
 
-</div>
+  </div>
+</ng-scrollbar>

@@ -26,6 +26,7 @@ export interface Attributes {
   artistBio: string;
   bornOrFormedDate: string;
   isAppleMusicArtist: boolean;
+  isGroup: boolean;
   kind: string;
   name: string;
   origin: string;

@@ -3,10 +3,6 @@
   margin: 0 auto;
 }
 
-.simplebar {
-  height: 100%;
-}
-
 .header {
   position: sticky;
   top: 0;
@@ -43,8 +39,7 @@
 }
 
 .artist-bio {
-  max-height: 250px;
-  overflow-y: auto;
+  height: 250px;
   padding-left: 30px;
   white-space: pre-wrap;
   font-size: 9pt;
@@ -54,24 +49,10 @@
   padding-left: 50px;
 }
 
-.scrollbar::-webkit-scrollbar
-{
-  height: 5px;
-	width: 5px;
-	border-radius: 5px;
-	background-color: #F5F5F5;
-}
-
-.scrollbar::-webkit-scrollbar-track
-{
-	border-radius: 5px;
-	background-color: #F5F5F5;
-}
-
-.scrollbar::-webkit-scrollbar-thumb
-{
-	border-radius: 5px;
-	background-color: #ff6666;
+.scrollbar {
+  --scrollbar-thumb-color: #ff6666;
+  --scrollbar-thumb-hover-color: #ff6666;
+  --scrollbar-size: 4px;
 }
 
 h3 {

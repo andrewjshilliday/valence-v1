@@ -1,32 +1,26 @@
 .media-item-group {
-  padding-bottom: 20px;
+  margin-bottom: -10px;
+  /* padding-bottom: 10px; */
 }
 
 .media-item-group > .row {
   position: relative;
   left: 15px;
-  overflow-x: auto;
+  overflow-x: visible;
   white-space: nowrap;
   flex-wrap: nowrap;
   padding: 0;
 }
 
-.scrollbar::-webkit-scrollbar
-{
-  height: 5px;
-  width: 5px;
-  border-radius: 5px;
-	background-color: #F5F5F5;
+.scrollbar {
+  --scrollbar-thumb-color: #ff6666;
+  --scrollbar-thumb-hover-color: #ff6666;
+  /* --scrollbar-padding: 0; */
 }
 
-.scrollbar::-webkit-scrollbar-track
-{
-	border-radius: 5px;
-	background-color: #F5F5F5;
-}
-
-.scrollbar::-webkit-scrollbar-thumb
-{
-	border-radius: 5px;
-	background-color: #ff6666;
+::ng-deep {
+  ng-scrollbar-x {
+    padding-top: 0px !important;
+    padding-bottom: 5px !important;
+  }
 }

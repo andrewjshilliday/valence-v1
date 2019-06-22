@@ -8,18 +8,16 @@
   min-width: 150px!important;
 }
 
-.simplebar {
-  height: 100%;
-}
-
 .queue {
   overflow: auto;
   height: 0;
+  padding-top: 5px;
 }
 
 .history {
   overflow: auto;
   height: 0;
+  padding-top: 5px;
 }
 
 table {
@@ -87,6 +85,7 @@ table {
   overflow-x: hidden;
   overflow-y: auto;
   height: 0;
+  padding-top: 5px;
   white-space: pre-wrap;
 
   h6 {

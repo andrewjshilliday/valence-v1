@@ -1,55 +1,57 @@
-<div class="container-fluid simplebar" data-simplebar>
-  <div class="header">
-    <h1>Search</h1>
-  </div>
+<ng-scrollbar>
+  <div class="container-fluid">
+    <div class="header">
+      <h1>Search - {{searchTerm}}</h1>
+    </div>
 
-  <div *ngIf="loading">
-    <mat-spinner class="loading-spinner"></mat-spinner>
-  </div>
+    <div *ngIf="loading">
+      <mat-spinner class="loading-spinner"></mat-spinner>
+    </div>
 
-  <div *ngIf="!loading">
+    <div *ngIf="!loading">
 
-    <div *ngIf="searchTerm === ''">
-      <div class="input-group">
-        <input type="text" list="searchHints" class="form-control" placeholder="Search" #searchbar (keyup.enter)="search(searchbar.value); searchbar.blur()" (keyup)="getSearchHints(searchbar.value)">
-        <datalist *ngIf="searchHints && searchHints.terms" id="searchHints">
-          <option *ngFor="let searchHint of searchHints.terms" [value]="searchHint">{{searchHint}}</option>
-        </datalist>
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" #searchbutton (click)="search(searchbar.value)">
-            <span class="fas fa-search"></span>
-          </button>
+      <div *ngIf="searchTerm === ''">
+        <div class="input-group">
+          <input type="text" list="searchHints" class="form-control" placeholder="Search" #searchbar (keyup.enter)="search(searchbar.value); searchbar.blur()" (keyup)="getSearchHints(searchbar.value)">
+          <datalist *ngIf="searchHints && searchHints.terms" id="searchHints">
+            <option *ngFor="let searchHint of searchHints.terms" [value]="searchHint">{{searchHint}}</option>
+          </datalist>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" #searchbutton (click)="search(searchbar.value)">
+              <span class="fas fa-search"></span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div *ngIf="searchTerm !== '' && playerService.searchResults">
-      <div *ngIf="playerService.searchResults.artists">
-        <h3>Artists</h3>
-        <app-media-item-collection-row [collection]="playerService.searchResults.artists.data"></app-media-item-collection-row>
+      <div *ngIf="searchTerm !== '' && playerService.searchResults">
+        <div *ngIf="playerService.searchResults.artists">
+          <h3>Artists</h3>
+          <app-media-item-collection-row [collection]="playerService.searchResults.artists.data"></app-media-item-collection-row>
+        </div>
+
+        <div *ngIf="playerService.searchResults.albums">
+          <h3>Albums</h3>
+          <app-media-item-collection-row [collection]="playerService.searchResults.albums.data"></app-media-item-collection-row>
+        </div>
+
+        <div *ngIf="playerService.searchResults.songs">
+          <h3>Songs</h3>
+          <app-media-item-collection-grid [collection]="playerService.searchResults.songs.data" [numRows]=3 [showArtist]=true></app-media-item-collection-grid>
+        </div>
+
+        <div *ngIf="playerService.searchResults.playlists">
+          <h3>Playlists</h3>
+          <app-media-item-collection-row [collection]="playerService.searchResults.playlists.data"></app-media-item-collection-row>
+        </div>
+
+        <div *ngIf="playerService.searchResults.curators">
+          <h3>Curators</h3>
+          <app-media-item-collection-row [collection]="playerService.searchResults.curators.data"></app-media-item-collection-row>
+        </div>
       </div>
 
-      <div *ngIf="playerService.searchResults.albums">
-        <h3>Albums</h3>
-        <app-media-item-collection-row [collection]="playerService.searchResults.albums.data"></app-media-item-collection-row>
-      </div>
-
-      <div *ngIf="playerService.searchResults.songs">
-        <h3>Songs</h3>
-        <app-media-item-collection-grid [collection]="playerService.searchResults.songs.data" [numRows]=3 [showArtist]=true></app-media-item-collection-grid>
-      </div>
-
-      <div *ngIf="playerService.searchResults.playlists">
-        <h3>Playlists</h3>
-        <app-media-item-collection-row [collection]="playerService.searchResults.playlists.data"></app-media-item-collection-row>
-      </div>
-
-      <div *ngIf="playerService.searchResults.curators">
-        <h3>Curators</h3>
-        <app-media-item-collection-row [collection]="playerService.searchResults.curators.data"></app-media-item-collection-row>
-      </div>
     </div>
 
   </div>
-
-</div>
+</ng-scrollbar>

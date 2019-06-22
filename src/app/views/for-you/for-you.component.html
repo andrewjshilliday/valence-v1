@@ -1,40 +1,42 @@
-<div class="container-fluid simplebar" data-simplebar>
-  <div class="header">
-    <h1>For You</h1>
-  </div>
-
-  <div *ngIf="loading">
-    <mat-spinner class="loading-spinner"></mat-spinner>
-  </div>
-
-  <div *ngIf='!loading'>
-
-    <div *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[0]">
-      <h3>{{playerService.recommendations[0].attributes.title.stringForDisplay}}</h3> <!-- Personalized Mixes -->
-      <app-media-item-collection-row [collection]="playerService.recommendations[0].relationships.contents.data" [size]="2"></app-media-item-collection-row>
+<ng-scrollbar>
+  <div class="container-fluid">
+    <div class="header">
+      <h1>For You</h1>
     </div>
 
-    <div *ngIf="playerService.recentPlayed && playerService.recentPlayed.length">
-      <h3>Recently Played</h3> <!-- Recently Played -->
-      <app-media-item-collection-row [collection]="playerService.recentPlayed"></app-media-item-collection-row>
+    <div *ngIf="loading">
+      <mat-spinner class="loading-spinner"></mat-spinner>
     </div>
 
-    <div *ngIf="playerService.heavyRotation && playerService.heavyRotation.length">
-      <h3>Heavy Rotation</h3> <!-- Heavy Rotation -->
-      <app-media-item-collection-row [collection]="playerService.heavyRotation"></app-media-item-collection-row>
-    </div>
+    <div *ngIf='!loading'>
 
-    <section *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[1]">
-      <div *ngFor="let recommendation of playerService.recommendations[1].relationships.recommendations.data">
-        <h3>{{recommendation.attributes.title.stringForDisplay}}</h3>
-      <app-media-item-collection-row [collection]="recommendation.relationships.contents.data"></app-media-item-collection-row>
+      <div *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[0]">
+        <h3>{{playerService.recommendations[0].attributes.title.stringForDisplay}}</h3> <!-- Personalized Mixes -->
+        <app-media-item-collection-row [collection]="playerService.recommendations[0].relationships.contents.data" [size]="2"></app-media-item-collection-row>
       </div>
-    </section>
 
-    <div *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[2]">
-      <h3>{{playerService.recommendations[2].attributes.title.stringForDisplay}}</h3> <!-- New Releases -->
-      <app-media-item-collection-row [collection]="playerService.recommendations[2].relationships.contents.data"></app-media-item-collection-row>
+      <div *ngIf="playerService.recentPlayed && playerService.recentPlayed.length">
+        <h3>Recently Played</h3> <!-- Recently Played -->
+        <app-media-item-collection-row [collection]="playerService.recentPlayed"></app-media-item-collection-row>
+      </div>
+
+      <div *ngIf="playerService.heavyRotation && playerService.heavyRotation.length">
+        <h3>Heavy Rotation</h3> <!-- Heavy Rotation -->
+        <app-media-item-collection-row [collection]="playerService.heavyRotation"></app-media-item-collection-row>
+      </div>
+
+      <section *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[1]">
+        <div *ngFor="let recommendation of playerService.recommendations[1].relationships.recommendations.data">
+          <h3>{{recommendation.attributes.title.stringForDisplay}}</h3>
+        <app-media-item-collection-row [collection]="recommendation.relationships.contents.data"></app-media-item-collection-row>
+        </div>
+      </section>
+
+      <div *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[2]">
+        <h3>{{playerService.recommendations[2].attributes.title.stringForDisplay}}</h3> <!-- New Releases -->
+        <app-media-item-collection-row [collection]="playerService.recommendations[2].relationships.contents.data"></app-media-item-collection-row>
+      </div>
+
     </div>
-
   </div>
-</div>
+</ng-scrollbar>

@@ -93,10 +93,10 @@
 
 <div *ngIf="item.type.includes('stations')" appLazyLoadImage>
   <div *ngIf="item.attributes.artwork" class="row media-artwork">
-    <img class="img-fluid rounded" src="././assets/images/placeholder.jpeg" />
-    <div class="media-control-button">
+    <img class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 400)" src="././assets/images/placeholder.jpeg" />
+    <!-- <div class="media-control-button">
       <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="playerService.playItem(item)"></i>
-    </div>
+    </div> -->
   </div>
   <div class="row media-artist">
     <span class="text-truncate" title="{{item.attributes.name}}">{{item.attributes.name}}</span>
