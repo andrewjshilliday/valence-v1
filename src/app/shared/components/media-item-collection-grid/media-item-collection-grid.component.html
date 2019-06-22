@@ -3,7 +3,7 @@
     <div class="container-fluid row" appLazyLoadImage>
       <div *ngFor="let column of columns" class="col-12 col-sm-6 col-md-4 column">
         <div *ngFor="let row of rows" class="media-item rounded">
-          <div *ngIf="collection[(column * numRows) + row]; let item" class="row" [ngStyle]="{'padding-bottom': row === rows[rows.length - 1] || !collection[(column * numRows) + row] || collection[(column * numRows) + row] === collection[collection.length - 1] ? '4px' : ''}">
+          <div *ngIf="collection[(column * numRows) + row]; let item" class="row">
             <div class="media-artwork" (click)="playerService.playItem(item)">
               <img class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 100)" src="././assets/images/placeholder.jpeg" />
               <div class="media-control-button">
@@ -22,7 +22,6 @@
               </div>
             </div>
           </div>
-          <hr *ngIf="row !== rows[rows.length - 1] && collection[(column * numRows) + row] && collection[(column * numRows) + row] !== collection[collection.length - 1]" />
         </div>
       </div>
     </div>

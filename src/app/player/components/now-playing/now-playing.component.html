@@ -32,10 +32,10 @@
         </div>
       </div>
       <div class="col-4 media-controls">
-        <div class="shuffle"><i class="material-icons" (click)="playerService.toggleShuffle()" [ngStyle]="{'color': playerService.musicKit.player.shuffleMode === 0 ? 'black' : 'red'}">shuffle</i></div>
-        <div *ngIf="playerService.musicKit.player.repeatMode === 0" class="repeat"><i class="material-icons" (click)="playerService.toggleRepeat()" style="color: black">repeat</i></div>
-        <div *ngIf="playerService.musicKit.player.repeatMode === 1" class="repeat"><i class="material-icons" (click)="playerService.toggleRepeat()" style="color: red">repeat_one</i></div>
-        <div *ngIf="playerService.musicKit.player.repeatMode === 2" class="repeat"><i class="material-icons" (click)="playerService.toggleRepeat()" style="color: red">repeat</i></div>
+        <div class="shuffle"><i class="material-icons" (click)="playerService.toggleShuffle()" [ngStyle]="{'color': playerService.musicKit.player.shuffleMode === 0 ? 'var(--on-background)' : 'var(--primary)'}">shuffle</i></div>
+        <div *ngIf="playerService.musicKit.player.repeatMode === 0" class="repeat"><i class="material-icons" (click)="playerService.toggleRepeat()" style="color: var(--on-background)">repeat</i></div>
+        <div *ngIf="playerService.musicKit.player.repeatMode === 1" class="repeat"><i class="material-icons" (click)="playerService.toggleRepeat()" style="color: var(--primary)">repeat_one</i></div>
+        <div *ngIf="playerService.musicKit.player.repeatMode === 2" class="repeat"><i class="material-icons" (click)="playerService.toggleRepeat()" style="color: var(--primary)">repeat</i></div>
         <div class="previous"><i class="material-icons" (click)="playerService.playPrevious()">skip_previous</i></div>
         <div class="play"><i *ngIf="!playerService.playing && !playerService.playbackLoading" class="material-icons" (click)="playerService.play()">play_arrow</i></div>
         <div class="play"><i *ngIf="playerService.playing && !playerService.playbackLoading" class="material-icons" (click)="playerService.pause()">pause</i></div>

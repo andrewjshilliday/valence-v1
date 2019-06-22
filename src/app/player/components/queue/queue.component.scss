@@ -2,6 +2,7 @@
 
 /deep/ .mat-dialog-container {
   overflow: hidden!important;
+  color: var(--background);
 }
 
 /deep/ .mat-tab-label {
@@ -66,7 +67,7 @@ table {
   }
 
   th {
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: 1px solid var(--accent); // #dee2e6;
   }
   tr {
     max-height: 60px;
@@ -103,7 +104,7 @@ table {
   }
 
   .refresh-lyrics:hover {
-    color: #f40000;
+    color: var(--primary);
   }
 
   .loading-spinner {

@@ -17,8 +17,8 @@
   width: 100%;
   height: 100px;
   margin-left: 0px;
-  background-color: white;
-  border-top: 1px solid lightgrey;
+  background-color: var(--background);
+  border-top: 1px solid var(--accent);
   z-index: 1000;
   /* opacity: 0.95; */
 }
@@ -27,7 +27,7 @@
   width: 100%;
   padding: 20px;
   margin: 0;
-  color: black;
+  color: var(--on-background);
 }
 
 .now-playing-bar {
@@ -45,7 +45,7 @@
   top: -1px;
   width: 100%;
   height: 5px;
-  background-color: #ff6666;
+  background-color: var(--scrollbar);
 
   mat-slider {
     width: calc(100% + 10px);
@@ -59,7 +59,7 @@
     .mat-slider-thumb {
       bottom: -9px!important;
       height: 15px!important;
-      background-color: #f40000!important;
+      background-color: var(--primary)!important;
     }
 
     .mat-slider-track-wrapper {
@@ -68,12 +68,12 @@
 
     .mat-slider-track-fill {
       height: 5px;
-      background-color: #f40000!important;/* #f40000!important; */
+      background-color: var(--primary)!important;/* #f40000!important; */
     }
 
     .mat-slider-track-background {
       height: 5px;
-      background-color: #ff8888!important;// #ff9393!important;
+      background-color: var(--scrollbar)!important; // #ff8888!important;  -----CHECK THIS
     }
   }
 }
@@ -108,14 +108,15 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 11pt;
+    color: var(--on-background);
 
     a {
-      color: black;
       text-decoration: none;
+      color: var(--on-background);
     }
 
     a:hover {
-      color: #f40000;
+      color: var(--primary);
     }
   }
 }
@@ -128,39 +129,39 @@
   .shuffle {
     padding-top: 25px;
     i {
-      color: black;
+      color: var(--on-background);
       font-size: 14pt;
     }
   }
   .repeat {
     padding: 25px 10px;
     i {
-      color: black;
+      color: var(--on-background);
       font-size: 14pt;
     }
   }
   .previous {
     padding-top: 12px;
     i {
-      color: black;
+      color: var(--on-background);
       font-size: 32pt;
     }
-    i:hover { color: #f40000; }
+    i:hover { color: var(--primary); }
   }
   .play {
     i {
-      color: black;
+      color: var(--on-background);
       font-size: 50pt;
     }
-    i:hover { color: #f40000; }
+    i:hover { color: var(--primary); }
   }
   .next {
     padding-top: 12px;
     i {
-      color: black;
+      color: var(--on-background);
       font-size: 32pt;
     }
-    i:hover { color: #f40000; }
+    i:hover { color: var(--primary); }
   }
 
   i {
@@ -174,7 +175,7 @@
   .playback-time {
     padding: 22px 10px;
     font-size: 11pt;
-    color: black;
+    color: var(--on-background);
   }
 }
 
@@ -186,15 +187,15 @@
     right: 250px;
     padding: 21px 10px;
     i {
-      color: black;
+      color: var(--on-background);
       font-size: 20pt;
       cursor: pointer;
     }
-    i:hover:not(.liked) { color: #f40000; }
+    i:hover:not(.liked) { color: var(--primary); }
   }
 
   .liked i {
-    color: #f40000;
+    color: var(--primary);
   }
 
   .queue-icon {
@@ -204,12 +205,12 @@
 
     i {
       font-size: 25pt;
-      color: black;
+      color: var(--on-background);
       cursor: pointer;
     }
     
     i:hover {
-      color: #f40000;
+      color: var(--primary);
     }
   }
 
@@ -227,15 +228,15 @@
 
     /deep/ .mat-accent {
       .mat-slider-thumb {
-        background-color: #f40000!important;
+        background-color: var(--primary)!important;
       }
   
       .mat-slider-track-fill {
-        background-color: #f40000!important;
+        background-color: var(--primary)!important;
       }
   
       .mat-slider-track-background {
-        background-color: #ff8888!important;
+        background-color: var(--scrollbar); // #ff8888!important;  ---- CHECK THIS
       }
     }
   }
@@ -266,4 +267,5 @@
 .material-icons {
   cursor: default;
   user-select: none;
+  color: var(--on-background);
 }

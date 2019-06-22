@@ -1,6 +1,5 @@
 .media-item-group {
   margin-bottom: -10px;
-  /* padding-bottom: 10px; */
 }
 
 .media-item-group > .row {
@@ -13,9 +12,8 @@
 }
 
 .scrollbar {
-  --scrollbar-thumb-color: #ff6666;
-  --scrollbar-thumb-hover-color: #ff6666;
-  /* --scrollbar-padding: 0; */
+  --scrollbar-thumb-color:  var(--scrollbar); // #ff6666;
+  --scrollbar-thumb-hover-color:  var(--scrollbar); // #ff6666;
 }
 
 ::ng-deep {

@@ -43,7 +43,7 @@
           <div class="row">
             <div class="col-6"><h3>Playlists</h3></div>
             <div class="col-6 filters">
-              <select class="float-right" [(ngModel)]="selectedFilter">
+              <select class="float-right dropdown" [(ngModel)]="selectedFilter">
                 <option *ngFor="let filter of filters" [ngValue]="filter">{{filter}}</option>
               </select>
               <span class="float-right">Filter Playlists:</span>

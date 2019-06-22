@@ -30,7 +30,7 @@
 .media-control-button {
   display: none;
   position: absolute;
-	color: lightgray;
+	color: var(--accent);
   bottom: 5%;
   left: 5%;
 }
@@ -43,6 +43,7 @@
   overflow-y: auto;
   white-space: pre-wrap;
   font-size: 9pt;
+  color: var(--on-background);
 }
 
 .side-sticky {
@@ -60,12 +61,16 @@ span {
 }
 
 a {
-  color: black!important;
+  color: var(--on-background)!important;
   text-decoration: none;
 }
 
 a:hover {
-  color: #f40000!important;
+  color: var(--primary)!important;
+}
+
+h4 {
+  color: var(--on-background);
 }
 
 .track-list {
@@ -73,9 +78,14 @@ a:hover {
   overflow-y: auto;
 }
 
+.album-duration {
+  color: var(--on-background);
+}
+
 .shuffle-label {
   padding-top: 3px;
-  float: right!important
+  float: right!important;
+  color: var(--on-background);
 }
 
 .shuffle-label :hover {
@@ -84,10 +94,11 @@ a:hover {
 
 .release-date {
   font-size: 9pt;
+  color: var(--accent);
 }
 
 .scrollbar {
-  --scrollbar-thumb-color: #ff6666;
-  --scrollbar-thumb-hover-color: #ff6666;
+  --scrollbar-thumb-color: var(--scrollbar);
+  --scrollbar-thumb-hover-color: var(--scrollbar);
   --scrollbar-size: 4px;
 }

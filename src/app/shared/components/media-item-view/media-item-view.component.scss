@@ -17,7 +17,7 @@
 .media-control-button {
   display: none;
   position: absolute;
-	color: lightgray;
+	color: var(--accent);
   bottom: 5%;
   left: 10%;
 }
@@ -40,12 +40,20 @@
 }
 
 a {
-  color: black;
+  color: var(--on-background);
   text-decoration: none;
 }
 
 a:hover {
-  color: #f40000;
+  color: var(--primary);
+}
+
+span {
+  color: var(--on-background);
+}
+
+i {
+  color: var(--on-background);
 }
 
 .material-icons {

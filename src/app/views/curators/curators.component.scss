@@ -10,7 +10,8 @@
   margin-bottom: -4px;
   z-index: 10;
   opacity: 0.95;
-  background: linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,1) 15%)
+  color: var(--on-background);
+  background: linear-gradient(to top, var(--background-opacity), var(--background) 15%);
 }
 
 .curator-image {
@@ -23,6 +24,7 @@
 .editorial-notes-short {
   position: absolute;
   bottom: 20px;
+  color: var(--on-background);
 }
 
 .editorial-notes {
@@ -35,6 +37,7 @@
 .load-more {
   display: block;
   text-align: center;
+  color: var(--on-background);
 }
 
 .load-more a:hover {
@@ -48,9 +51,21 @@
 
 .filters span {
   padding-right: 5px;
+  color: var(--on-background);
+}
+
+.dropdown {
+  background: var(--background);
+  color: var(--on-background);
+  border: none;
 }
 
 h3 {
   padding-left: 15px;
   padding-right: 15px;
+  color: var(--on-background);
+}
+
+h5 {
+  color: var(--on-background);
 }

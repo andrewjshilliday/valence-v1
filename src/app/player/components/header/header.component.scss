@@ -5,8 +5,8 @@
   grid-template-areas:
     "logo options";
   height: 100%;
-  background-color: white;
-  border-bottom: 1px solid lightgray;
+  background-color: var(--background);
+  border-bottom: 1px solid var(--accent);
   z-index: 1000;
 
   .logo {
@@ -34,9 +34,8 @@
 .search-control.active .input-text {
   max-width: 100%;
   left: 0%;
-  border: 1px solid #ccc;
+  border: 1px solid var(--accent);
   padding: 5px 30px 6px 6px;
-  background: white;
 }
 
 .search-control .icon {
@@ -45,10 +44,11 @@
   top: 50%;
   right: 20px;
   transform: translateY(-50%);
+  color: var(--on-background);
 }
 
 .search-control .icon:hover {
-  color: #f40000;
+  color: var(--primary);
 }
 
 .search-control .input-text {
@@ -63,6 +63,8 @@
   font-size: 11pt;
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
+  background: var(--background);
+  color: var(--on-background);
 }
 
 .settings {
@@ -70,14 +72,14 @@
 }
 
 .settings a {
-  color: black;
+  color: var(--on-background);
   cursor: pointer;
   outline: 0;
   i {
     font-size: 16pt;
   }
   i:hover {
-    color: #f40000;
+    color: var(--primary);
   }
 }
 
@@ -87,10 +89,11 @@
   span {
     cursor: pointer;
     outline: 0;
+    color: var(--on-background);
   }
 
   span:hover {
-    color: #f40000;
+    color: var(--primary);
   }
 }
 

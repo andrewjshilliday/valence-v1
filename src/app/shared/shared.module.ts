@@ -14,9 +14,14 @@ import { AlbumFilterPipe } from './pipes/album-filter.pipe';
 import { PlaylistFilterPipe } from './pipes/playlist-filter.pipe';
 import { RoundPipe } from './pipes/round.pipe';
 import { LazyLoadImageDirective } from './directives/lazy-load-image/lazy-load-image.directive';
+import { ThemeModule, lightTheme, darkTheme } from './themes';
 
 @NgModule({
   imports: [
+    ThemeModule.forRoot({
+      themes: [lightTheme, darkTheme],
+      active: 'dark'
+    }),
     CommonModule,
     RouterModule,
     BrowserAnimationsModule,
@@ -41,6 +46,7 @@ import { LazyLoadImageDirective } from './directives/lazy-load-image/lazy-load-i
     BrowserAnimationsModule,
     MaterialModule,
     NgScrollbarModule,
+    ThemeModule,
     MediaItemViewComponent,
     MediaItemCollectionListComponent,
     MediaItemCollectionRowComponent,
