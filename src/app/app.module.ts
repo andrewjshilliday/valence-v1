@@ -4,7 +4,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { SentryErrorHandler } from './app.sentry';
+// import { SentryErrorHandler } from './app.sentry';
 import { ApiCache } from './shared/cache/api/api-cache.service';
 import { ApiCacheInterceptor } from './shared/cache/api/api-cache.interceptor';
 import { PlayerModule } from './player/player.module';
@@ -57,10 +57,10 @@ import { environment } from '../environments/environment';
       { path: '', redirectTo: 'browse', pathMatch: 'full' },
       { path: '**', redirectTo: 'browse', pathMatch: 'full' }
     ]),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
-    { provide: ErrorHandler, useClass: SentryErrorHandler },
+    // { provide: ErrorHandler, useClass: SentryErrorHandler },
     ApiCache,
     { provide: HTTP_INTERCEPTORS, useClass: ApiCacheInterceptor, multi: true }
   ],
