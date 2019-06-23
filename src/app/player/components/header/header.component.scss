@@ -14,8 +14,25 @@
     justify-self: start;
     padding: 5px 0 0 45px;
 
-    img {
-      height: 37px;
+    a:hover {
+      text-decoration: none;
+    }
+
+    span {
+      font-size: 20pt;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--on-background);
+
+      i {
+        position: relative;
+        top: 1px;
+        padding-right: 5px;
+      }
+    }
+
+    span:hover {
+      color: var(--primary);
     }
   }
   .nav-extras {

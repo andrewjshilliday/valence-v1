@@ -41,7 +41,8 @@
 }
 
 .artist-bio {
-  height: 250px;
+  max-height: 250px;
+  max-width: 100%;
   padding-left: 30px;
   white-space: pre-wrap;
   font-size: 9pt;
@@ -55,12 +56,7 @@
   background: var(--background);
   color: var(--on-background);
   border: none;
-}
-
-.scrollbar {
-  --scrollbar-thumb-color: var(--scrollbar);
-  --scrollbar-thumb-hover-color: var(--scrollbar);
-  --scrollbar-size: 4px;
+  outline: none;
 }
 
 h3 {
@@ -71,4 +67,9 @@ h3 {
 
 h5 {
   color: var(--on-background);
+}
+
+::ng-deep {
+  .ps__thumb-y { background-color: var(--on-background)!important; }
+  .ps__rail-y { opacity: 1!important; background-color: rgba(0,0,0,0)!important; z-index: 100; }
 }

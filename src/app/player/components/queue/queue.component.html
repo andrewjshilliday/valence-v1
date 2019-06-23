@@ -2,7 +2,7 @@
 
   <mat-tab label="Queue">
     <div class="queue">
-      <ng-scrollbar>
+      <perfect-scrollbar>
         <table *ngIf="playerService && playerService.queue" class="table table-hover">
           <thead>
             <tr>
@@ -51,13 +51,13 @@
             </tr>
           </tbody>
         </table>
-      </ng-scrollbar>
+      </perfect-scrollbar>
     </div>
   </mat-tab>
 
   <mat-tab label="History">
     <div class="history">
-      <ng-scrollbar>
+      <perfect-scrollbar>
         <table *ngIf="playerService && playerService.history && playerService.history.length" class="table table-hover">
           <tbody>
             <tr *ngFor="let item of playerService.history.slice().reverse()">
@@ -83,13 +83,13 @@
             </tr>
           </tbody>
         </table>
-      </ng-scrollbar>
+      </perfect-scrollbar>
     </div>
   </mat-tab>
 
   <mat-tab label="Lyrics">
     <div class="lyrics">
-      <ng-scrollbar>
+      <perfect-scrollbar>
         <div *ngIf="lyricsLoading">
           <mat-spinner class="loading-spinner"></mat-spinner>
         </div>
@@ -110,7 +110,7 @@
           <p *ngIf="playerService.nowPlayingItemGenius && playerService.nowPlayingItemGenius.lyrics">{{playerService.nowPlayingItemGenius.lyrics}}</p>
           <p *ngIf="!playerService.nowPlayingItemGenius || !playerService.nowPlayingItemGenius.lyrics">Lyrics unavailable</p>
         </div>
-      </ng-scrollbar>
+      </perfect-scrollbar>
     </div>
   </mat-tab>
 

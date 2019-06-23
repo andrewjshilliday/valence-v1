@@ -12,7 +12,7 @@
 }
 
 .media-item-grid {
-  margin-bottom: -12px;
+  padding-bottom: 15px;
 }
 
 .media-item {
@@ -82,4 +82,9 @@ a:hover {
 .scrollbar {
   --scrollbar-thumb-color: var(--scrollbar);
   --scrollbar-thumb-hover-color: var(--scrollbar);
+}
+
+::ng-deep {
+  .ps__thumb-x { background-color: var(--primary)!important; }
+  .ps__rail-x { opacity: 1!important; background-color: rgba(0,0,0,0)!important; }
 }

@@ -27,6 +27,7 @@
   width: 100%;
   padding: 20px;
   margin: 0;
+  transform: scaleX(1.1);
   color: var(--on-background);
 }
 
@@ -68,12 +69,12 @@
 
     .mat-slider-track-fill {
       height: 5px;
-      background-color: var(--primary)!important;/* #f40000!important; */
+      background-color: var(--primary)!important;
     }
 
     .mat-slider-track-background {
       height: 5px;
-      background-color: var(--scrollbar)!important; // #ff8888!important;  -----CHECK THIS
+      background-color: var(--scrollbar)!important; // #ff8888!important;
     }
   }
 }
@@ -236,7 +237,7 @@
       }
   
       .mat-slider-track-background {
-        background-color: var(--scrollbar); // #ff8888!important;  ---- CHECK THIS
+        background-color: var(--scrollbar); // #ff8888!important;
       }
     }
   }

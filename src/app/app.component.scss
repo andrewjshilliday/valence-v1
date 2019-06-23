@@ -53,8 +53,13 @@
   }
   .main-content {
     grid-area: main-content;
+    overflow: auto;
   }
   .player-bar {
     grid-area: player-bar;
   }
+}
+
+::ng-deep {
+  .mat-spinner circle { stroke: var(--primary); }
 }

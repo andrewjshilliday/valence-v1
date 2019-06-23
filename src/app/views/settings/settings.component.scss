@@ -9,48 +9,62 @@
   background: linear-gradient(to top, var(--background-opacity), var(--background) 15%);
 }
 
+.theme {
+  padding: 0 15px 15px;
+  color: var(--on-background);
+}
+
 .bitrate {
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-bottom: 15px;
+  padding: 0 15px 15px;
+  color: var(--on-background);
 }
 
 .media-devices {
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-bottom: 35px;
-}
-
-.media-devices p {
+  padding: 0 15px 30px;
+  color: var(--on-background);
+  
+  p {
   font-size: 10pt;
-}
+  }
 
-.device-name {
-  width: 400px;
-}
+  .device-name {
+    width: 400px;
+  }
 
-.device-id {
-  width: 590px;
-}
+  .device-id {
+    width: 590px;
+  }
 
-.save-button {
-  margin-right: 15px;
+  .save-button {
+    margin-right: 15px;
+  }
 }
 
 .playback-recovery {
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-bottom: 15px;
-}
-
-.playback-recovery p {
+  padding: 0 15px 15px;
+  color: var(--on-background);
+  
+  p {
   font-size: 10pt;
+  }
+
+  mat-checkbox {
+    padding-right: 30px;
+  }
+
+  mat-form-field {
+    width: 100px;
+  }
 }
 
-.playback-recovery mat-checkbox {
-  padding-right: 30px;
-}
+::ng-deep {
+  .ps__thumb-y { background-color: var(--on-background)!important; }
+  .ps__rail-y { opacity: 1!important; background-color: rgba(0,0,0,0)!important; z-index: 100; }
 
-.playback-recovery mat-form-field {
-  width: 100px;
+  .mat-select-value { color: var(--on-background); }
+  .mat-select-arrow { color: var(--on-background); }
+  .mat-form-field-label { color: var(--on-background)!important; }
+  .mat-form-field-underline { background-color: var(--on-background)!important; }
+  .mat-checkbox-frame { border-color: var(--on-background); }
+  .mat-ripple-element { background-color: var(--on-background); }
 }

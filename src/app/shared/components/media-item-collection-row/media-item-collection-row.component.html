@@ -1,4 +1,4 @@
-<ng-scrollbar class="scrollbar" [trackX]="true">
+<perfect-scrollbar #ps class="scrollbar">
   <div class="media-item-group">
     <div class="container-fluid row">
       <app-media-item-view *ngFor="let item of collection" [item]="item" 
@@ -6,7 +6,7 @@
       </app-media-item-view>
     </div>
   </div>
-</ng-scrollbar>
+</perfect-scrollbar>
 
 <!-- <div *ngIf="todaysAlbums" class="media-item-group">
   <div class="container-fluid row scrollbar">

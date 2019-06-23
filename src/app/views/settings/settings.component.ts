@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService } from '../../shared/services/player.service';
+import { ThemeService } from '../../shared/themes';
 
 @Component({
   selector: 'app-settings',
@@ -8,15 +9,17 @@ import { PlayerService } from '../../shared/services/player.service';
 })
 export class SettingsComponent implements OnInit {
 
+  theme: string;
   bitrate: string;
   enablePlayPause: boolean;
   device: any;
   enablePlaybackRecovery: boolean;
   playbackTimeout: string;
 
-  constructor(public playerService: PlayerService) { }
+  constructor(public playerService: PlayerService, private themeService: ThemeService) { }
 
   ngOnInit() {
+    this.theme = localStorage.getItem('theme');
     this.bitrate = this.playerService.musicKit.bitrate.toString();
     this.enablePlaybackRecovery = Boolean(JSON.parse(localStorage.getItem('enablePlaybackRecovery')));
     this.playbackTimeout = localStorage.getItem('playbackTimeout');
@@ -29,6 +32,22 @@ export class SettingsComponent implements OnInit {
         id: ''
       };
     }
+  }
+
+  setTheme(theme: string) {
+    switch (theme) {
+      case 'light': {
+        this.theme = theme;
+        this.themeService.setTheme('light');
+        break;
+      }
+      case 'dark': {
+        this.theme = theme;
+        this.themeService.setTheme('dark');
+        break;
+      }
+    }
+    localStorage.setItem('theme', theme);
   }
 
   changeEnablePlayPause() {

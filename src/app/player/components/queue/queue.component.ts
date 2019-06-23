@@ -5,6 +5,9 @@ import { PlayerService } from '../../../shared/services/player.service';
 import { ApiService } from '../../../shared/services/api.service';
 import * as $ from 'jquery';
 
+import * as darkTheme from '../../../shared/themes/dark-theme';
+import { ThemeService } from 'src/app/shared/themes';
+
 declare var MusicKit: any;
 
 @Component({
@@ -20,13 +23,14 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
   canRefreshLyrics: boolean;
 
   constructor(public playerService: PlayerService, public apiService: ApiService, public dialogRef: MatDialogRef<QueueComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Inject(MAT_DIALOG_DATA) public data: any, private themeService: ThemeService) {
     this.playerService.musicKit.addEventListener(MusicKit.Events.mediaItemDidChange, this.mediaItemDidChange.bind(this));
     this.selectedTab = data.selectedTab;
     this.canRefreshLyrics = data.canRefreshLyrics;
   }
 
   ngOnInit() {
+    this.setBackground();
     this.lyricsSubscription = this.apiService.lyricsSubject.subscribe(lyricsResponse => this.lyricsLoading = lyricsResponse.loading);
 
     const self = this;
@@ -62,6 +66,21 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
 
   mediaItemDidChange() {
     this.canRefreshLyrics = true;
+  }
+
+  setBackground() {
+    switch (this.themeService.getActiveTheme().name) {
+      case 'dark': {
+        const html = document.getElementsByTagName('mat-dialog-container')[0] as HTMLElement;
+        html.style.cssText = '--background: rgba(51,51,51,1)';
+        break;
+      }
+      case 'light': {
+        const html = document.getElementsByTagName('mat-dialog-container')[0] as HTMLElement;
+        html.style.cssText = '--background: rgba(255,255,255,1)';
+        break;
+      }
+    }
   }
 
 }

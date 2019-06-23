@@ -2,11 +2,12 @@
 
 /deep/ .mat-dialog-container {
   overflow: hidden!important;
-  color: var(--background);
+  background: var(--background);
 }
 
 /deep/ .mat-tab-label {
   min-width: 150px!important;
+  color: var(--on-background)!important;
 }
 
 .queue {
@@ -22,7 +23,8 @@
 }
 
 table {
-  margin: 8px 0;
+  margin: 0 0;
+  color: var(--on-background)!important;
 
   .queue-artwork {
     img {
@@ -34,8 +36,8 @@ table {
   }
 
   .queue-text {
-    width: 330px;
-    max-width: 330px;
+    width: 315px;
+    max-width: 315px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -55,7 +57,7 @@ table {
 
   .queue-options {
     i {
-      padding: 15px 0;
+      padding: 15px 15px 15px 0;
     }
   }
 
@@ -67,6 +69,7 @@ table {
   }
 
   th {
+    border-top: none;
     border-bottom: 1px solid var(--accent); // #dee2e6;
   }
   tr {
@@ -74,6 +77,7 @@ table {
   }
   tr:hover {
     cursor: pointer;
+    color: var(--on-background)!important;
   }
   td {
     padding-top: 5px;
@@ -88,6 +92,7 @@ table {
   height: 0;
   padding-top: 5px;
   white-space: pre-wrap;
+  color: var(--on-background)!important;
 
   h6 {
     font-size: 11pt;
@@ -115,4 +120,9 @@ table {
   .row {
     margin: 0;
   }
+}
+
+::ng-deep {
+  .ps__thumb-y { background-color: var(--on-background)!important; }
+  .ps__rail-y { opacity: 1!important; background-color: rgba(0,0,0,0)!important; z-index: 100; }
 }

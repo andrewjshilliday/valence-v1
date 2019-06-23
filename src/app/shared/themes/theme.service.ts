@@ -6,10 +6,11 @@ export class ThemeService {
 
   themeChange = new EventEmitter<Theme>();
 
-  constructor(
-    @Inject(THEMES) public themes: Theme[],
-    @Inject(ACTIVE_THEME) public theme: string
-  ) {
+  constructor( @Inject(THEMES) public themes: Theme[], @Inject(ACTIVE_THEME) public theme: string) {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      this.setTheme(savedTheme);
+    }
   }
 
   getTheme(name: string) {

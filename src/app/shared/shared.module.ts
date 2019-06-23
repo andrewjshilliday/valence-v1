@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material/material.module';
-import { NgScrollbarModule } from 'ngx-scrollbar';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { ThemeModule, lightTheme, darkTheme } from './themes';
 import { MediaItemViewComponent } from './components/media-item-view/media-item-view.component';
 import { MediaItemCollectionListComponent } from './components/media-item-collection-list/media-item-collection-list.component';
 import { MediaItemCollectionRowComponent } from './components/media-item-collection-row/media-item-collection-row.component';
@@ -14,19 +15,18 @@ import { AlbumFilterPipe } from './pipes/album-filter.pipe';
 import { PlaylistFilterPipe } from './pipes/playlist-filter.pipe';
 import { RoundPipe } from './pipes/round.pipe';
 import { LazyLoadImageDirective } from './directives/lazy-load-image/lazy-load-image.directive';
-import { ThemeModule, lightTheme, darkTheme } from './themes';
 
 @NgModule({
   imports: [
-    ThemeModule.forRoot({
-      themes: [lightTheme, darkTheme],
-      active: 'dark'
-    }),
     CommonModule,
     RouterModule,
     BrowserAnimationsModule,
     MaterialModule,
-    NgScrollbarModule
+    PerfectScrollbarModule,
+    ThemeModule.forRoot({
+      themes: [lightTheme, darkTheme],
+      active: 'light'
+    })
   ],
   declarations: [
     MediaItemViewComponent,
@@ -45,7 +45,7 @@ import { ThemeModule, lightTheme, darkTheme } from './themes';
     RouterModule,
     BrowserAnimationsModule,
     MaterialModule,
-    NgScrollbarModule,
+    PerfectScrollbarModule,
     ThemeModule,
     MediaItemViewComponent,
     MediaItemCollectionListComponent,

@@ -48,8 +48,11 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
 
   mediaItemDidChange() {
     this.getLyrics();
-    this.getRating();
     this.canRefreshLyrics = true;
+
+    if (this.playerService.authorized) {
+      this.getRating();
+    }
   }
 
   async getLyrics() {

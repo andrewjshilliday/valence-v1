@@ -1,4 +1,4 @@
-<ng-scrollbar>
+<perfect-scrollbar>
   <div class="container-fluid">
 
     <div *ngIf="loading">
@@ -43,8 +43,7 @@
               </select>
             </div>
           </div>
-          <!-- <app-media-item-collection-row [collection]="sortItems(albums, sortAlbums)"></app-media-item-collection-row> -->
-          <app-media-item-collection-row [collection]="albums"></app-media-item-collection-row>
+          <app-media-item-collection-row [collection]="sortItems(albums, sortAlbums)"></app-media-item-collection-row>
         </div>
 
         <div *ngIf="singles && singles.length">
@@ -56,8 +55,7 @@
               </select>
             </div>
           </div>
-          <!-- <app-media-item-collection-row [collection]="sortItems(singles, sortSingles)"></app-media-item-collection-row> -->
-          <app-media-item-collection-row [collection]="singles"></app-media-item-collection-row>
+          <app-media-item-collection-row [collection]="sortItems(singles, sortSingles)"></app-media-item-collection-row>
         </div>
 
         <div *ngIf="liveAlbums && liveAlbums.length">
@@ -69,8 +67,7 @@
               </select>
             </div>
           </div>
-          <!-- <app-media-item-collection-row [collection]="sortItems(liveAlbums, sortLiveAlbums)"></app-media-item-collection-row> -->
-          <app-media-item-collection-row [collection]="liveAlbums"></app-media-item-collection-row>
+          <app-media-item-collection-row [collection]="sortItems(liveAlbums, sortLiveAlbums)"></app-media-item-collection-row>
         </div>
 
         <div *ngIf="compilations && compilations.length">
@@ -82,8 +79,7 @@
               </select>
             </div>
           </div>
-          <!-- <app-media-item-collection-row [collection]="sortItems(compilations, sortCompilations)"></app-media-item-collection-row> -->
-          <app-media-item-collection-row [collection]="compilations"></app-media-item-collection-row>
+          <app-media-item-collection-row [collection]="sortItems(compilations, sortCompilations)"></app-media-item-collection-row>
         </div>
 
         <div *ngIf="appearsOn && appearsOn.length">
@@ -95,8 +91,7 @@
               </select>
             </div>
           </div>
-          <!-- <app-media-item-collection-row [collection]="sortItems(appearsOn, sortAppearsOn)"></app-media-item-collection-row> -->
-          <app-media-item-collection-row [collection]="appearsOn"></app-media-item-collection-row>
+          <app-media-item-collection-row [collection]="sortItems(appearsOn, sortAppearsOn)"></app-media-item-collection-row>
         </div>
 
         <div *ngIf="playerService.playlists && playerService.playlists.length">
@@ -107,8 +102,7 @@
         <div *ngIf="artistData && artistData.resources.data.attributes.artistBio" class="artist-info">
           <h3>About {{artistData.resources.data.attributes.name}}</h3>
           <div class="row">
-            <ng-scrollbar class="col-9 artist-bio scrollbar"><div [innerHTML]="artistData.resources.data.attributes.artistBio"></div></ng-scrollbar>
-            <!-- <div class="col-9 artist-bio" [innerHTML]="artistData.resources.data.attributes.artistBio"></div> -->
+            <perfect-scrollbar class="col-9 artist-bio"><div [innerHTML]="artistData.resources.data.attributes.artistBio"></div></perfect-scrollbar>
             <div class="col-3 artist-details">
               <div *ngIf="artistData.resources.data.attributes.origin" class="row">
                 <span *ngIf="artistData.resources.data.attributes.isGroup">
@@ -148,4 +142,4 @@
     </div>
 
   </div>
-</ng-scrollbar>
+</perfect-scrollbar>

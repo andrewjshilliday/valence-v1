@@ -8,7 +8,7 @@ export const darkTheme: Theme = {
     '--background-opacity': 'rgba(51, 51, 51, 0)',
     '--primary': '#f40000',
     '--on-primary': '#ffffff',
-    '--secondary': '#666666',
+    '--secondary': '#404040',
     '--on-secondary': '#f2f2f2',
     '--scrollbar': '#ff6666',
     '--accent': '#4d4d4d',

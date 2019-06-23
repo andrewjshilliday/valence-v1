@@ -1,6 +1,11 @@
 <div id="header-wrapper" class="header">
   <div class="logo">
-    <a [routerLink]="['/browse']"><img src="./assets/images/apple-music.svg" /></a>
+    <a [routerLink]="['/browse']">
+      <span>
+        <i class="fab fa-itunes-note"></i>
+        Valence
+      </span>
+    </a>
   </div>
   <div class="nav-extras">
     <div id="search-control" class="search-control">
@@ -11,7 +16,7 @@
       </datalist>
       <i id="search-icon" class="icon fa fa-search"></i>
     </div>
-    <div *ngIf="playerService.authorized" class="settings">
+    <div class="settings">
       <a [routerLink]="['/settings']"><i class="material-icons">settings</i></a>
     </div>
     <div class="authenticaion">

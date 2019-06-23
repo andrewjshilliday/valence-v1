@@ -1,4 +1,4 @@
-<ng-scrollbar>
+<perfect-scrollbar>
   <div class="container-fluid">
 
     <div *ngIf="loading">
@@ -28,10 +28,10 @@
                   </div>
                 </div>
                 <hr *ngIf="playerService.playlist.attributes.description" />
-                <ng-scrollbar id="notes" class="editorial-notes scrollbar">
+                <div id="notes" class="editorial-notes scrollbar">
                   <div *ngIf="playerService.playlist.attributes.description && playerService.playlist.attributes.description.standard" [innerHTML]="playerService.playlist.attributes.description.standard"></div>
                   <div *ngIf="playerService.playlist.attributes.description && !playerService.playlist.attributes.description.standard" [innerHTML]="playerService.playlist.attributes.description.short"></div>
-                </ng-scrollbar>
+                </div>
               </div>
             </div>
 
@@ -59,4 +59,4 @@
     </div>
 
   </div>
-</ng-scrollbar>
+</perfect-scrollbar>

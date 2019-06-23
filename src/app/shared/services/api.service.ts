@@ -35,6 +35,8 @@ export class ApiService {
 
   constructor(public playerService: PlayerService, public notificationService: NotificationService, private http: HttpClient) {
     this.storefront = this.playerService.musicKit.storefrontId;
+    this.playerService.musicKit.addEventListener(
+      MusicKit.Events.authorizationStatusDidChange, this.authorizationStatusDidChange.bind(this));
   }
 
   /* async addToLibrary(item: any) {
@@ -561,6 +563,10 @@ export class ApiService {
     })).subscribe(res => {
       this.playerService.nowPlayingItemGenius = res;
     });
+  }
+
+  authorizationStatusDidChange() {
+    this.storefront = this.playerService.musicKit.storefrontId;
   }
 
 }

@@ -1,7 +1,7 @@
 <div id="now-playing-wrapper">
 
   <div *ngIf='!playerService.nowPlayingItem' class="row logo justify-content-center">
-    <i class="fab fa-apple fa-3x"></i>
+    <i class="fab fa-itunes-note fa-3x"></i>
   </div>
 
   <div *ngIf="playerService.nowPlayingItem" class="now-playing-bar">
@@ -15,7 +15,7 @@
             <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/albums', playerService.nowPlayingItem.assets[0].metadata.playlistId]">
               <img class="img-fluid album-artwork rounded"  [src]="playerService.formatArtwork(playerService.nowPlayingItem.attributes.artwork, 100)" />
             </a>
-            <img *ngIf="!playerService.nowPlayingItem.assets[0]" class="img-fluid rounded" [src]='playerService.formatArtwork(playerService.nowPlayingItem.attributes.artwork, 100)' />
+            <img *ngIf="!playerService.nowPlayingItem.assets[0]" class="img-fluid album-artwork rounded" [src]='playerService.formatArtwork(playerService.nowPlayingItem.attributes.artwork, 100)' />
             <a *ngIf="playerService.nowPlayingPlaylist" [routerLink]="['/playlists', playerService.nowPlayingPlaylist.id]">
               <img class="img-fluid playlist-artwork rounded" [src]='playerService.formatArtwork(playerService.nowPlayingPlaylist.attributes.artwork, 100)' />
             </a>
@@ -44,8 +44,8 @@
         <span class="playback-time">{{formatTime(playerService.musicKit.player.currentPlaybackTime) | minutesSeconds}} / {{formatTime(playerService.musicKit.player.currentPlaybackDuration) | minutesSeconds}}</span>
       </div>
       <div class="col-4 extra-media-controls">
-        <div *ngIf="nowPlayingRating && nowPlayingRating.attributes.value === 1" class="favorite liked"><i class="material-icons" (click)="changeRating(0)">favorite</i></div>
-        <div *ngIf="!nowPlayingRating || nowPlayingRating.attributes.value !== 1" class="favorite"><i class="material-icons" (click)="changeRating(1)">favorite_border</i></div>
+        <div *ngIf="playerService.authorized && (nowPlayingRating && nowPlayingRating.attributes.value === 1)" class="favorite liked"><i class="material-icons" (click)="changeRating(0)">favorite</i></div>
+        <div *ngIf="playerService.authorized && (!nowPlayingRating || nowPlayingRating.attributes.value !== 1)" class="favorite"><i class="material-icons" (click)="changeRating(1)">favorite_border</i></div>
         <div class="queue-icon"><i class="material-icons" (click)="openDialog()">queue_music</i></div>
         <div class="volume-slider">
           <i class="material-icons">volume_down</i>

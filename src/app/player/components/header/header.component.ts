@@ -15,12 +15,6 @@ export class HeaderComponent implements OnInit {
 
   searchHints: SearchHints;
 
-  /* @HostListener('window:keydown.f')
-  enterSearch() {
-    $('#search-icon').click();
-    $('#search-bar').val('');
-  } */
-
   constructor(private router: Router, public playerService: PlayerService, public apiService: ApiService) { }
 
   ngOnInit() {
