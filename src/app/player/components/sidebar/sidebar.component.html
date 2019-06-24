@@ -1,18 +1,56 @@
 <div id="sidebar-wrapper">
-  
-  <div class="nav-box">
-    <span class="nav-header">Apple Music</span>
-    <a class="nav-item" [routerLink]="['/browse']" [routerLinkActive]="'route-active'"><i class="material-icons">format_list_bulleted</i>Browse</a>
-    <a *ngIf="playerService.authorized" class="nav-item" [routerLink]="['/foryou']" [routerLinkActive]="'route-active'"><i class="material-icons">favorite</i>For You</a>
+
+  <div class="expanded">
+    <div class="nav-box">
+      <span class="nav-header">Apple Music</span>
+      <a class="nav-item" [routerLink]="['/browse']" [routerLinkActive]="'route-active'"><i class="material-icons">format_list_bulleted</i>Browse</a>
+      <a *ngIf="playerService.authorized" class="nav-item" [routerLink]="['/foryou']" [routerLinkActive]="'route-active'"><i class="material-icons">favorite</i>For You</a>
+    </div>
+
+    <div *ngIf="playerService.authorized" class="nav-box">
+      <span class="nav-header">Library</span>
+      <a class="nav-item" [routerLink]="['/library/recently-added']" [routerLinkActive]="'route-active'"><i class="material-icons">person_add</i>Recently Added</a>
+      <a class="nav-item" [routerLink]="['/library/artists']" [routerLinkActive]="'route-active'"><i class="material-icons">person</i>Artists</a>
+      <a class="nav-item" [routerLink]="['/library/albums']" [routerLinkActive]="'route-active'"><i class="material-icons">album</i>Albums</a>
+      <a class="nav-item" [routerLink]="['/library/playlists']" [routerLinkActive]="'route-active'"><i class="material-icons">playlist_play</i>Playlists</a>
+      <a class="nav-item" [routerLink]="['/library/songs']" [routerLinkActive]="'route-active'"><i class="material-icons">music_note</i>Songs</a>
+    </div>
   </div>
 
-  <div *ngIf="playerService.authorized" class="nav-box">
-    <span class="nav-header">Library</span>
-    <a class="nav-item" [routerLink]="['/library/recently-added']" [routerLinkActive]="'route-active'"><i class="material-icons">person_add</i>Recently Added</a>
-    <a class="nav-item" [routerLink]="['/library/artists']" [routerLinkActive]="'route-active'"><i class="material-icons">person</i>Artists</a>
-    <a class="nav-item" [routerLink]="['/library/albums']" [routerLinkActive]="'route-active'"><i class="material-icons">album</i>Albums</a>
-    <a class="nav-item" [routerLink]="['/library/playlists']" [routerLinkActive]="'route-active'"><i class="material-icons">playlist_play</i>Playlists</a>
-    <a class="nav-item" [routerLink]="['/library/songs']" [routerLinkActive]="'route-active'"><i class="material-icons">music_note</i>Songs</a>
+  <div class="minimised">
+    <div class="nav-box">
+      <a class="nav-item" [routerLink]="['/browse']" [routerLinkActive]="'route-active'"><i class="material-icons">format_list_bulleted</i></a>
+      <a *ngIf="playerService.authorized" class="nav-item" [routerLink]="['/foryou']" [routerLinkActive]="'route-active'"><i class="material-icons">favorite</i></a>
+    </div>
+
+    <div *ngIf="playerService.authorized" class="nav-box">
+      <a class="nav-item" [routerLink]="['/library/recently-added']" [routerLinkActive]="'route-active'"><i class="material-icons">person_add</i></a>
+      <a class="nav-item" [routerLink]="['/library/artists']" [routerLinkActive]="'route-active'"><i class="material-icons">person</i></a>
+      <a class="nav-item" [routerLink]="['/library/albums']" [routerLinkActive]="'route-active'"><i class="material-icons">album</i></a>
+      <a class="nav-item" [routerLink]="['/library/playlists']" [routerLinkActive]="'route-active'"><i class="material-icons">playlist_play</i></a>
+      <a class="nav-item" [routerLink]="['/library/songs']" [routerLinkActive]="'route-active'"><i class="material-icons">music_note</i></a>
+    </div>
+  </div>
+
+  <div class="mobile">
+    <div class="for-you">
+      <a class="nav-item" [routerLink]="['/browse']" [routerLinkActive]="'route-active'"><i class="material-icons">format_list_bulleted</i></a>
+    </div>
+    <div class="browse">
+      <a *ngIf="playerService.authorized" class="nav-item" [routerLink]="['/foryou']" [routerLinkActive]="'route-active'"><i class="material-icons">favorite</i></a>
+    </div>
+    <div class="recent-added">
+      <a class="nav-item" [routerLink]="['/library/recently-added']" [routerLinkActive]="'route-active'"><i class="material-icons">person_add</i></a>
+    </div>
+    <div class="artists">
+      <a class="nav-item" [routerLink]="['/library/artists']" [routerLinkActive]="'route-active'"><i class="material-icons">person</i></a>
+    </div>
+    <div class="albums">
+      <a class="nav-item" [routerLink]="['/library/albums']" [routerLinkActive]="'route-active'"><i class="material-icons">album</i></a>
+    </div>
+    <div class="playlists">
+      <a class="nav-item" [routerLink]="['/library/playlists']" [routerLinkActive]="'route-active'"><i class="material-icons">playlist_play</i></a>
+    </div>
   </div>
     
 </div>

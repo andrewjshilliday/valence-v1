@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  // musicServiceApi: 'http://localhost:3000',
-  musicServiceApi: 'https://ut8obu95ge.execute-api.eu-west-1.amazonaws.com/dev',
+  musicServiceApi: 'http://localhost:3000',
   appleMusicApi: 'https://api.music.apple.com',
 };
 

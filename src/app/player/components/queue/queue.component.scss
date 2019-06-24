@@ -1,15 +1,5 @@
 @import '../../../../theme.scss';
 
-/deep/ .mat-dialog-container {
-  overflow: hidden!important;
-  background: var(--background);
-}
-
-/deep/ .mat-tab-label {
-  min-width: 150px!important;
-  color: var(--on-background)!important;
-}
-
 .queue {
   overflow: auto;
   height: 0;
@@ -125,4 +115,8 @@ table {
 ::ng-deep {
   .ps__thumb-y { background-color: var(--on-background)!important; }
   .ps__rail-y { opacity: 1!important; background-color: rgba(0,0,0,0)!important; z-index: 100; }
+
+  .mat-dialog-container { overflow: hidden!important; background: var(--background); }
+  .mat-tab-label { min-width: 150px!important; color: var(--on-background)!important; background-color: rgba(0,0,0,0)!important; }
+  .mat-ink-bar { background-color: var(--accent)!important; }
 }
