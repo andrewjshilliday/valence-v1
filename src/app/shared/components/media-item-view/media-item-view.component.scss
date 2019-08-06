@@ -17,7 +17,7 @@
 .media-control-button {
   display: none;
   position: absolute;
-	color: var(--accent);
+	color: var(--light);
   bottom: 5%;
   left: 10%;
 }
@@ -32,11 +32,12 @@
 
 .explicit {
   padding-right: 8px;
-}
 
-.explicit-icon {
-  transform: scale(0.7);
-  margin-bottom: -5px;
+  i {
+    color: var(--on-background);
+    transform: scale(0.7);
+    margin-bottom: -5px;
+  }
 }
 
 a {
@@ -49,10 +50,6 @@ a:hover {
 }
 
 span {
-  color: var(--on-background);
-}
-
-i {
   color: var(--on-background);
 }
 

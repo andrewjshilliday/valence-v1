@@ -33,9 +33,7 @@ export class ForYouComponent implements OnInit {
       this.apiService.getRelationships(this.playerService.heavyRotation, 'playlists');
     }
     if (this.playerService.recommendations) {
-      this.apiService.getRelationships(this.playerService.recommendations[2].relationships.contents.data, 'albums');
-
-      for (const recommendation of this.playerService.recommendations[1].relationships.recommendations.data) {
+      for (const recommendation of this.playerService.recommendations) {
         this.apiService.getRelationships(recommendation.relationships.contents.data, 'albums');
         this.apiService.getRelationships(recommendation.relationships.contents.data, 'playlists');
       }

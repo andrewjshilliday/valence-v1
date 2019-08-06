@@ -28,10 +28,10 @@
                   </div>
                 </div>
                 <hr *ngIf="playerService.playlist.attributes.description" />
-                <div id="notes" class="editorial-notes scrollbar">
+                <perfect-scrollbar id="notes" class="editorial-notes">
                   <div *ngIf="playerService.playlist.attributes.description && playerService.playlist.attributes.description.standard" [innerHTML]="playerService.playlist.attributes.description.standard"></div>
                   <div *ngIf="playerService.playlist.attributes.description && !playerService.playlist.attributes.description.standard" [innerHTML]="playerService.playlist.attributes.description.short"></div>
-                </div>
+                </perfect-scrollbar>
               </div>
             </div>
 

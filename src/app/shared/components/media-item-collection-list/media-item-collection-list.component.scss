@@ -220,6 +220,11 @@
   overflow-y: scroll;
 }
 
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 a {
   color: var(--on-background);
   text-decoration: none;

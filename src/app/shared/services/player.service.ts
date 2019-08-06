@@ -59,8 +59,8 @@ export class PlayerService {
     MusicKit.configure({
       developerToken: Secrets.appleMusicDevToken,
       app: {
-        name: 'Apple Music Web Player',
-        build: '0.1'
+        name: 'Valence',
+        build: '1.0'
       }
     });
 
@@ -93,35 +93,41 @@ export class PlayerService {
   }
 
   async playItem(item: any, startIndex: number = 0, shuffle: boolean = false) {
-    const playParams = item.attributes.playParams;
-    this.musicKit.player.shuffleMode = 0;
+    try {
+      const playParams = item.attributes.playParams;
+      this.musicKit.player.shuffleMode = 0;
 
-    if (!this.playing && this.nowPlayingItem && item.type !== 'songs' && item.relationships.tracks.data[startIndex]) {
-      if (item.relationships.tracks.data[startIndex].id === this.nowPlayingItem.id) {
-        this.play();
-        return;
+      if (!this.playing && this.nowPlayingItem && item.type !== 'songs') {
+        if (item.relationships && item.relationships.tracks.data[startIndex] &&
+          item.relationships.tracks.data[startIndex].id === this.nowPlayingItem.id) {
+          this.play();
+          return;
+        }
       }
+
+      await this.musicKit.setQueue({
+        [playParams.kind]: playParams.id
+      });
+
+      if (startIndex !== 0) {
+        await this.musicKit.changeToMediaAtIndex(startIndex);
+      }
+
+      if (shuffle) {
+        this.musicKit.player.shuffleMode = 1;
+      }
+
+      if (item.type.includes('playlists')) {
+        this.nowPlayingPlaylist = item;
+      } else {
+        this.nowPlayingPlaylist = null;
+      }
+
+      this.play();
+    } catch (ex) {
+      await this.stop();
+      this.notificationService.open(`Error trying to play ${item.attributes.name}`);
     }
-
-    await this.musicKit.setQueue({
-      [playParams.kind]: playParams.id
-    });
-
-    if (startIndex !== 0) {
-      await this.musicKit.changeToMediaAtIndex(startIndex);
-    }
-
-    if (shuffle) {
-      this.musicKit.player.shuffleMode = 1;
-    }
-
-    if (item.type.includes('playlists')) {
-      this.nowPlayingPlaylist = item;
-    } else {
-      this.nowPlayingPlaylist = null;
-    }
-
-    this.play();
   }
 
   queueNext (item: any) {

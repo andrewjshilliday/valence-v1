@@ -62,4 +62,5 @@
 
 ::ng-deep {
   .mat-spinner circle { stroke: var(--primary); }
+  .text-truncate { color: var(--on-background); }
 }

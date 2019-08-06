@@ -46,6 +46,11 @@ export class SettingsComponent implements OnInit {
         this.themeService.setTheme('dark');
         break;
       }
+      case 'midnight': {
+        this.theme = theme;
+        this.themeService.setTheme('midnight');
+        break;
+      }
     }
     localStorage.setItem('theme', theme);
   }

@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material/material.module';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { ThemeModule, lightTheme, darkTheme } from './themes';
+import { ThemeModule, lightTheme, darkTheme, midnightTheme } from './themes/index';
 import { MediaItemViewComponent } from './components/media-item-view/media-item-view.component';
 import { MediaItemCollectionListComponent } from './components/media-item-collection-list/media-item-collection-list.component';
 import { MediaItemCollectionRowComponent } from './components/media-item-collection-row/media-item-collection-row.component';
@@ -24,7 +24,7 @@ import { LazyLoadImageDirective } from './directives/lazy-load-image/lazy-load-i
     MaterialModule,
     PerfectScrollbarModule,
     ThemeModule.forRoot({
-      themes: [lightTheme, darkTheme],
+      themes: [lightTheme, darkTheme, midnightTheme],
       active: 'light'
     })
   ],

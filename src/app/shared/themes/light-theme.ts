@@ -4,6 +4,7 @@ export const lightTheme: Theme = {
   name: 'light',
   properties: {
     '--background': 'rgba(255, 255, 255, 1)',
+    '--background-darker': 'rgba(250, 250, 250, 1)',
     '--on-background': '#000000',
     '--background-opacity': 'rgba(255, 255, 255, 0)',
     '--primary': '#f40000',
@@ -12,6 +13,7 @@ export const lightTheme: Theme = {
     '--on-secondary': '#000000',
     '--scrollbar': '#ff6666',
     '--accent': 'lightgray',
+    '--light': '#f2f2f2',
     // '--surface': '#fff',
     // '--on-surface': '#000',
     // '--error': '#E74E3C',

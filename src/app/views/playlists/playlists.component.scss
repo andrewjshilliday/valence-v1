@@ -30,7 +30,7 @@
 .media-control-button {
   display: none;
   position: absolute;
-	color: var(--accent);
+	color: var(--light);
   bottom: 5%;
   left: 5%;
 }
@@ -40,7 +40,7 @@
 }
 
 .editorial-notes {
-  overflow-y: auto;
+  padding-right: 15px;
   white-space: pre-wrap;
   font-size: 9pt;
   color: var(--on-background);

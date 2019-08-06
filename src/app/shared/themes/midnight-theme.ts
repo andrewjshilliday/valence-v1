@@ -1,18 +1,18 @@
 import { Theme } from './symbols';
 
-export const darkTheme: Theme = {
-  name: 'dark',
+export const midnightTheme: Theme = {
+  name: 'midnight',
   properties: {
-    '--background': 'rgba(51, 51, 51, 1)',
-    '--background-darker': 'rgba(41, 41, 41, 1)',
+    '--background': 'rgba(10, 31, 51, 1)',
+    '--background-darker': 'rgba(0, 15, 31, 1)',
     '--on-background': '#f2f2f2',
-    '--background-opacity': 'rgba(51, 51, 51, 0)',
+    '--background-opacity': 'rgba(10, 31, 51, 0)',
     '--primary': '#f40000',
     '--on-primary': '#ffffff',
-    '--secondary': '#404040',
+    '--secondary': 'rgba(35, 51, 71, 1)',
     '--on-secondary': '#f2f2f2',
     '--scrollbar': '#ff6666',
-    '--accent': '#4d4d4d',
+    '--accent': 'rgba(25, 41, 61, 1)',
     '--light': '#f2f2f2',
     // '--surface': '#fff',
     // '--on-surface': '#000',

@@ -9,7 +9,7 @@
   </div>
   <div class="nav-extras">
     <div id="search-control" class="search-control">
-      <input id="search-bar" class="input-text" type="search" placeholder="Search" list="searchHints" #searchbar
+      <input id="search-bar" class="input-text" type="search" placeholder="Search" list="searchHints" #searchbar autocomplete="off"
         (keyup.enter)="search(searchbar.value)" (keyup)="getSearchHints(searchbar.value)">
       <datalist *ngIf="searchHints && searchHints.terms" id="searchHints">
         <option *ngFor="let searchHint of searchHints.terms" [value]="searchHint">{{searchHint}}</option>

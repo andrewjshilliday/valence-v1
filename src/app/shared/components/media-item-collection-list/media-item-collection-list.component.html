@@ -2,17 +2,17 @@
 
   <div class="expanded">
     <div *ngIf="collection.type === 'albums'" class="col-11">
-      <h4 class="text-truncate collection-title">{{collection.attributes.name}}</h4>
+      <h4 class="text-truncate collection-title" title="{{collection.attributes.name}}">{{collection.attributes.name}}</h4>
       <h5 *ngIf="collection.relationships.artists.data && collection.relationships.artists.data.length"><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a> | {{collection.attributes.genreNames[0]}}</h5>
       <h5 *ngIf="collection.relationships.artists.data && !collection.relationships.artists.data.length">{{collection.attributes.artistName}} | {{collection.attributes.genreNames[0]}}</h5>
     </div>
     <div *ngIf="collection.type === 'library-albums'" class="col-11">
-      <h4 class="text-truncate collection-title">{{collection.attributes.name}}</h4>
+      <h4 class="text-truncate collection-title" title="{{collection.attributes.name}}">{{collection.attributes.name}}</h4>
       <h5 *ngIf="collection.relationships.artists.data && collection.relationships.artists.data.length"><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a></h5>
       <h5 *ngIf="collection.relationships.artists.data && !collection.relationships.artists.data.length">{{collection.attributes.artistName}}</h5>
     </div>
     <div *ngIf="collection.type.includes('playlists')" class='col-11'>
-      <h4 class="text-truncate collection-title">{{collection.attributes.name}}</h4>
+      <h4 class="text-truncate collection-title" title="{{collection.attributes.name}}">{{collection.attributes.name}}</h4>
       <h5 *ngIf="collection.relationships.curator && collection.relationships.curator.data && collection.relationships.curator.data.length && collection.relationships.curator.data[0].type === 'apple-curators'"><a [routerLink]="['/curators', 'apple', collection.relationships.curator.data[0].id]">{{collection.attributes.curatorName}}</a> | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
       <h5 *ngIf="collection.relationships.curator && collection.relationships.curator.data && collection.relationships.curator.data.length && collection.relationships.curator.data[0].type === 'curators'"><a [routerLink]="['/curators', 'user', collection.relationships.curator.data[0].id]">{{collection.attributes.curatorName}}</a> | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
       <h5 *ngIf="collection.relationships.curator && collection.relationships.curator.data && collection.relationships.curator.data.length && collection.relationships.curator.data[0].type === 'artists'"><a [routerLink]="['/artists', collection.relationships.curator.data[0].id]">{{collection.attributes.curatorName}}</a> | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
@@ -87,7 +87,7 @@
 <table class="table table-hover collection-text" appLazyLoadImage>
 
   <tbody>
-    <tr *ngFor="let item of tracks" class="mediarow">
+    <tr *ngFor="let item of tracks" class="mediarow" [ngClass]="{'disabled': !item.attributes.playParams}">
       <td class="media-status" (click)="!playerService.isItemCurrentlyPlaying(item.id) ? playerService.playItem(collection, tracks.indexOf(item)) : playerService.pause()">
         <span *ngIf="!playerService.isItemCurrentlyPlaying(item.id) && !playerService.isItemCurrentlyPaused(item.id) && !showArtwork && !getPopularity(item.id) && collection.relationships" class="item-number">{{tracks.indexOf(item) + 1}}</span>
         <i *ngIf="!playerService.isItemCurrentlyPlaying(item.id) && !playerService.isItemCurrentlyPaused(item.id) && !showArtwork && getPopularity(item.id)" class="material-icons item-popularity">star</i>
