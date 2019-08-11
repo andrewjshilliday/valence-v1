@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSlider } from '@angular/material/slider';
 import { QueueComponent } from '../queue/queue.component';
 import { PlayerService } from '../../../shared/services/player.service';
 import { ApiService } from '../../../shared/services/api.service';
@@ -23,13 +24,15 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   canRefreshLyrics: boolean;
   ratingSubscription: Subscription;
 
+  @ViewChild(MatSlider, {static: false}) slider: MatSlider;
+
   constructor(public playerService: PlayerService, public apiService: ApiService, public dialog: MatDialog) {
     this.playerService.musicKit.addEventListener(MusicKit.Events.mediaItemDidChange, this.mediaItemDidChange.bind(this));
   }
 
   ngOnInit() {
     this.ratingSubscription = this.apiService.ratingSubject.subscribe(ratingResponse => {
-      if (ratingResponse.id === this.playerService.nowPlayingItem.id) {
+      if (this.playerService.nowPlayingItem && ratingResponse.id === this.playerService.nowPlayingItem.id) {
         this.nowPlayingRating = {
           id: ratingResponse.id,
           type: 'ratings',
@@ -87,6 +90,23 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
 
   formatTime(ms: number) {
     return Utils.formatTime(ms);
+  }
+
+  formatLabel(value: number | null) {
+    if (!value) {
+      return 0;
+    }
+
+    const minutes: number = Math.floor(value / 60);
+    return minutes + ':' + (value - minutes * 60).toString().padStart(2, '0');
+  }
+
+  showLabel(show: boolean) {
+    if (show) {
+      this.slider._elementRef.nativeElement.focus();
+    } else {
+      this.slider._elementRef.nativeElement.blur();
+    }
   }
 
 }
