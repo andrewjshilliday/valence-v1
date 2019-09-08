@@ -7,10 +7,14 @@
 
     <div *ngIf="!loading">
       <div *ngIf="playerService.artist">
-        <div class="header">
+        <div class="header row" id="header" appLazyLoadImage>
+          <!-- <div class="test" id="test"> -->
+          <img *ngIf="artistImage" class="artist-image-small img-fluid rounded-circle" [attr.data-src]="playerService.formatArtwork(artistImage, 500)" src="././assets/images/placeholder.jpeg" />
+          <img *ngIf="!artistImage" class="artist-image-small img-fluid rounded-circle" src="./assets/images/placeholder.jpeg" />
           <h1 class="text-truncate">{{playerService.artist.attributes.name}}</h1>
+          <!-- </div> -->
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" id="image">
           <div class="row container-fluid">
             <div class="artist-image col-6 col-sm-3 col-md-4" appLazyLoadImage>
               <img *ngIf="artistImage" class="artist-image img-fluid rounded-circle" [attr.data-src]="playerService.formatArtwork(artistImage, 500)" src="././assets/images/placeholder.jpeg" />

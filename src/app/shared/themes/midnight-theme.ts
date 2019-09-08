@@ -4,6 +4,7 @@ export const midnightTheme: Theme = {
   name: 'midnight',
   properties: {
     '--background': 'rgba(10, 31, 51, 1)',
+    '--background-lighter': 'rgba(0, 21, 117, 1)',
     '--background-darker': 'rgba(0, 15, 31, 1)',
     '--on-background': '#f2f2f2',
     '--background-opacity': 'rgba(10, 31, 51, 0)',
@@ -14,6 +15,7 @@ export const midnightTheme: Theme = {
     '--scrollbar': '#ff6666',
     '--accent': 'rgba(25, 41, 61, 1)',
     '--light': '#f2f2f2',
+    '--dark': 'rgba(51, 51, 51, 1)',
     // '--surface': '#fff',
     // '--on-surface': '#000',
     // '--error': '#E74E3C',

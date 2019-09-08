@@ -51,6 +51,23 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
+
+    window.addEventListener('scroll', function() {
+      const header = document.getElementById('header');
+      const image = document.getElementById('image');
+
+      if (!image) {
+        return;
+      }
+
+      const divposition = image.getBoundingClientRect();
+
+      if (divposition.top + divposition.height < 0) {
+        header.classList.add('header-expanded');
+      } else {
+        header.classList.remove('header-expanded');
+      }
+    }, true);
   }
 
   ngOnDestroy(): void {

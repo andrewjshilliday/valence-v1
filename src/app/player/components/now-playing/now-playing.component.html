@@ -6,7 +6,10 @@
 
   <div *ngIf="playerService.nowPlayingItem" class="now-playing-bar">
     <div class="now-playing-progress-bar">
-      <mat-slider class='track-progress' [max]="playerService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="playerService.musicKit.player.currentPlaybackTime" thumbLabel [displayWith]="formatLabel" (change)="playerService.seekToTime($event.value)" (mouseenter)="showLabel(true)" (mouseleave)="showLabel(false)"></mat-slider>
+      <mat-slider class='track-progress'
+        [max]="playerService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="playerService.musicKit.player.currentPlaybackTime" thumbLabel [displayWith]="formatLabel"
+        (change)="playerService.seekToTime($event.value)" (mouseenter)="showLabel(true)" (mouseleave)="showLabel(false)" (mousedown)="setScrubbingProgress(true)" (mouseup)="setScrubbingProgress(false)" (dragend)="setScrubbingProgress(false)">
+      </mat-slider>
     </div>
     <div class="media">
       <div class="col-4 now-playing-info">

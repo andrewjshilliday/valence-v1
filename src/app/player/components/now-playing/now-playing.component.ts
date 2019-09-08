@@ -25,6 +25,7 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   ratingSubscription: Subscription;
 
   @ViewChild(MatSlider, {static: false}) slider: MatSlider;
+  scrubbingProgress: boolean;
 
   constructor(public playerService: PlayerService, public apiService: ApiService, public dialog: MatDialog) {
     this.playerService.musicKit.addEventListener(MusicKit.Events.mediaItemDidChange, this.mediaItemDidChange.bind(this));
@@ -102,11 +103,16 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   }
 
   showLabel(show: boolean) {
-    if (show) {
+    if (show || this.scrubbingProgress) {
       this.slider._elementRef.nativeElement.focus();
     } else {
       this.slider._elementRef.nativeElement.blur();
     }
+  }
+
+  setScrubbingProgress(value: boolean) {
+    this.scrubbingProgress = value;
+    this.showLabel(value);
   }
 
 }
