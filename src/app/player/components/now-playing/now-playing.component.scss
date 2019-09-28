@@ -1,87 +1,38 @@
 @import '../../../../theme.scss';
 
-@media (min-width: 607px) {
-  #now-playing-wrapper {
-    bottom: 0px;
-  }
-}
-
-@media (max-width: 606px) {
-  #now-playing-wrapper {
-    bottom: 50px;
-  }
-}
-
 #now-playing-wrapper { 
   position: fixed;
   width: 100%;
   height: 100px;
-  margin-left: 0px;
   background-color: var(--background-darker);
   border-top: 1px solid var(--accent);
   z-index: 1000;
-  /* opacity: 0.95; */
 }
 
 .logo {
-  width: 100%;
-  padding: 20px;
-  margin: 0;
-  transform: scaleX(1.1);
+  display: flex;
   color: var(--on-background);
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%) scaleX(1.1);
+  transform: translateY(-50%) scaleX(1.1);
 }
 
 .now-playing-bar {
-  width: 100%;
-}
-
-.media {
-  position: relative;
-  width: 100%;
-  padding: 6px 5px 0 20px;
-}
-
-.now-playing-progress-bar {
-  position: relative;
-  top: -1px;
-  width: 100%;
-  height: 5px;
-  background-color: var(--scrollbar);
-
-  mat-slider {
-    width: calc(100% + 10px);
-    top: -13px;
-    left: -7px;
-    height: 2px!important;
-    padding: 0;
-  }
-
-  /deep/ .mat-accent {
-    .mat-slider-thumb {
-      bottom: -9px!important;
-      right: -3px!important;
-      height: 15px!important;
-      background-color: var(--primary)!important;
-    }
-
-    .mat-slider-track-wrapper {
-      height: 5px;
-    }
-
-    .mat-slider-track-fill {
-      height: 5px;
-      background-color: var(--primary)!important;
-    }
-
-    .mat-slider-track-background {
-      height: 5px;
-      background-color: var(--scrollbar)!important; // #ff8888!important;
-    }
-  }
+  height: 100%;
+  padding: 10px 20px;
+  display: grid;
+  grid-template-columns: minmax(270px, 25%) auto minmax(270px, 25%);
+  grid-template-rows: auto;
+  grid-template-areas:
+    "now-playing-info media-controls extra-media-controls";
 }
 
 .now-playing-info {
-  padding: 0 0 0 25px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 0 0 5px;
+  grid-area: now-playing-info;
 
   .album-artwork {
     position: relative;
@@ -94,8 +45,8 @@
     position: absolute;
     height: 70px;
     width: 70px;
-    top: 5px;
-    left: 0px;
+    top: 15px;
+    left: 15px;
     z-index: 0;
   }
 
@@ -124,75 +75,134 @@
 }
 
 .media-controls {
-  display: flex;
-  justify-content: center;
-  padding: 5px 0 0 10px;
+  grid-area: media-controls;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: calc(100% - 30px) auto;
+  grid-template-areas:
+    "media-control-buttons"
+    "media-progress-bar";
 
-  .shuffle {
-    padding-top: 25px;
-    i {
-      color: var(--on-background);
-      font-size: 14pt;
+  .media-control-buttons {
+    grid-area: media-control-buttons;
+    display: flex;
+    justify-content: center;
+
+    .repeat {
+      padding: 22px 10px;
+      i {
+        color: var(--on-background);
+        font-size: 14pt;
+      }
     }
-  }
-  .repeat {
-    padding: 25px 10px;
-    i {
-      color: var(--on-background);
-      font-size: 14pt;
+    .previous {
+      padding-top: 10px;
+      i {
+        color: var(--on-background);
+        font-size: 30pt;
+      }
+      i:hover { color: var(--primary); }
     }
-  }
-  .previous {
-    padding-top: 12px;
-    i {
-      color: var(--on-background);
-      font-size: 32pt;
+    .play {
+      i {
+        color: var(--on-background);
+        font-size: 44pt;
+      }
+      i:hover { color: var(--primary); }
     }
-    i:hover { color: var(--primary); }
-  }
-  .play {
-    i {
-      color: var(--on-background);
-      font-size: 50pt;
+    .next {
+      padding-top: 10px;
+      i {
+        color: var(--on-background);
+        font-size: 30pt;
+      }
+      i:hover { color: var(--primary); }
     }
-    i:hover { color: var(--primary); }
-  }
-  .next {
-    padding-top: 12px;
-    i {
-      color: var(--on-background);
-      font-size: 32pt;
+    .shuffle {
+      padding: 22px 10px;
+      i {
+        color: var(--on-background);
+        font-size: 14pt;
+      }
     }
-    i:hover { color: var(--primary); }
+
+    i {
+      cursor: pointer;
+    }
+
+    .spinner {
+      margin: 7px 7px 0 7px;
+    }
   }
 
-  i {
-    cursor: pointer;
-  }
+  .media-progress-bar {
+    grid-area: media-progress-bar;
+    display: flex;
+    padding: 0 20px;
 
-  .spinner {
-    margin: 11px 11px 0 11px;
-  }
+    .current-playback-time, .current-playback-duration {
+      position: relative;
+      top: -9px;
+      color: white;
+      width: 40px;
+      font-size: 11pt;
+    }
 
-  .playback-time {
-    padding: 22px 10px;
-    font-size: 11pt;
-    color: var(--on-background);
+    .current-playback-duration {
+      text-align: end;
+    }
+  
+    mat-slider {
+      width: calc(100% - 80px);
+      height: 4px;
+    }
+  
+    /deep/ .mat-accent {
+      .mat-slider-wrapper {
+        top: 1px !important;
+      }
+
+      .mat-slider-thumb {
+        bottom: -8px!important;
+        right: -1px!important;
+        height: 14px!important;
+        background-color: var(--primary)!important;
+      }
+  
+      .mat-slider-track-wrapper {
+        height: 4px;
+        border-radius: 2px;
+      }
+  
+      .mat-slider-track-fill {
+        height: 4px;
+        background-color: var(--primary)!important;
+      }
+  
+      .mat-slider-track-background {
+        height: 4px;
+        background-color: var(--scrollbar)!important; // #ff8888!important;
+      }
+    }
   }
 }
 
 .extra-media-controls {
-  padding-top: 5px;
+  grid-area: extra-media-controls;
+  margin-left: auto;
+  margin-right: 0;
 
   .favorite {
-    position: absolute;
-    right: 250px;
-    padding: 21px 10px;
+    display: inline-block;
+    position: relative;
+    top: 19px;
+    
     i {
       color: var(--on-background);
       font-size: 20pt;
       cursor: pointer;
     }
+
     i:hover:not(.liked) { color: var(--primary); }
   }
 
@@ -201,9 +211,10 @@
   }
 
   .queue-icon {
-    position: absolute;
-    padding-top: 17px;
-    right: 210px;
+    display: inline-block;
+    position: relative;
+    top: 22px;
+    padding: 0 15px;
 
     i {
       font-size: 25pt;
@@ -217,18 +228,23 @@
   }
 
   .volume-slider {
+    display: inline-block;
     position: relative;
-    top: -5px;
-    width: 180px;
-    padding-top: 30px;
-    margin: 0 auto;
-    margin-right: 0;
+    top: 16px;
 
     i {
       font-size: 14pt;
     }
 
+    mat-slider {
+      min-width: 115px;
+    }
+
     /deep/ .mat-accent {
+      .mat-slider-horizontal {
+        min-width: 100px;
+      }
+      
       .mat-slider-thumb {
         background-color: var(--primary)!important;
       }

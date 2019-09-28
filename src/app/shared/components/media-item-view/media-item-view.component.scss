@@ -11,7 +11,8 @@
 .media-artwork {
   position: relative;
   display: inline-block;
-  padding: 0px 10px;
+  left: 10px;
+  margin-right: 0px;
 
   &:hover {
     cursor: pointer;
@@ -35,8 +36,8 @@
   display: none;
   position: absolute;
 	color: var(--light);
-  bottom: 5%;
-  left: 10%;
+  bottom: 10px;
+  left: 10px;
 
   &:hover {
     color: var(--primary);
@@ -46,8 +47,9 @@
 .hover-gradient {
   position: absolute;
   top: 0;
-  height: 100%;
-  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
   border-radius: .25rem;
 }
 

@@ -14,6 +14,7 @@
               <div class="side-sticky">
                 <div class="media-artwork">
                   <img class="img-fluid card-img-top rounded" [attr.data-src]="playerService.formatArtwork(playerService.album.attributes.artwork, 800)" src="./assets/images/placeholder.jpeg" />
+                  <div class="hover-gradient"></div>
                   <div class="media-control-button">
                     <i class="fas fa-play-circle fa-3x" aria-hidden="true" (click)="playerService.playItem(playerService.album)"></i>
                   </div>

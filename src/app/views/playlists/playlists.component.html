@@ -15,6 +15,7 @@
                 <div class="media-artwork">
                   <img *ngIf="playerService.playlist.attributes.artwork" class="img-fluid card-img-top rounded" [attr.data-src]="playerService.formatArtwork(playerService.playlist.attributes.artwork, 800)" src="././assets/images/placeholder.jpeg" />
                   <img *ngIf="!playerService.playlist.attributes.artwork" class="img-fluid card-img-top rounded" src="././assets/images/placeholder.jpeg" />
+                  <div class="hover-gradient"></div>
                   <div class="media-control-button">
                     <i class="fas fa-play-circle fa-3x" aria-hidden="true" (click)="playerService.playItem(playerService.playlist)"></i>
                   </div>

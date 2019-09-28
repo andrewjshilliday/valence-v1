@@ -5,7 +5,7 @@
         <div *ngFor="let row of rows" class="media-item rounded">
           <div *ngIf="collection[(column * numRows) + row]; let item" class="row">
             <div class="media-artwork" (click)="playerService.playItem(item)">
-              <img class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 100)" src="././assets/images/placeholder.jpeg" />
+              <img class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 100)" src="././assets/images/placeholder-transparent.png" [ngStyle]="{'background-color': '#' + item.attributes.artwork.bgColor}" />
               <div class="media-control-button">
                 <i class="fas fa-play-circle fa-2x" aria-hidden="true"></i>
               </div>

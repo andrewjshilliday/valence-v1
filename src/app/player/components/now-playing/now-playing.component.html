@@ -5,37 +5,24 @@
   </div>
 
   <div *ngIf="playerService.nowPlayingItem" class="now-playing-bar">
-    <div class="now-playing-progress-bar">
-      <mat-slider class='track-progress'
-        [max]="playerService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="playerService.musicKit.player.currentPlaybackTime" thumbLabel [displayWith]="formatLabel"
-        (change)="playerService.seekToTime($event.value)" (mouseenter)="showLabel(true)" (mouseleave)="showLabel(false)" (mousedown)="setScrubbingProgress(true)" (mouseup)="setScrubbingProgress(false)" (dragend)="setScrubbingProgress(false)">
-      </mat-slider>
+    <div class="now-playing-info">
+      <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/albums', playerService.nowPlayingItem.assets[0].metadata.playlistId]">
+        <img class="img-fluid album-artwork rounded"  [src]="playerService.formatArtwork(playerService.nowPlayingItem.attributes.artwork, 100)" />
+      </a>
+      <img *ngIf="!playerService.nowPlayingItem.assets[0]" class="img-fluid album-artwork rounded" [src]='playerService.formatArtwork(playerService.nowPlayingItem.attributes.artwork, 100)' />
+      <a *ngIf="playerService.nowPlayingPlaylist" [routerLink]="['/playlists', playerService.nowPlayingPlaylist.id]">
+        <img class="img-fluid playlist-artwork rounded" [src]='playerService.formatArtwork(playerService.nowPlayingPlaylist.attributes.artwork, 100)' />
+      </a>
+      <span class="now-playing-text">
+        {{playerService.nowPlayingItem.attributes.name}}<br />
+        <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/albums', playerService.nowPlayingItem.assets[0].metadata.playlistId]">{{playerService.nowPlayingItem.albumName}}</a>
+        <span *ngIf="!playerService.nowPlayingItem.assets[0]">{{playerService.nowPlayingItem.albumName}}</span><br />
+        <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/artists', playerService.nowPlayingItem.assets[0].metadata.artistId]">{{playerService.nowPlayingItem.artistName}}</a>
+        <span *ngIf="!playerService.nowPlayingItem.assets[0]">{{playerService.nowPlayingItem.artistName}}</span>
+      </span>
     </div>
-    <div class="media">
-      <div class="col-4 now-playing-info">
-        <div class="row">
-          <div>
-            <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/albums', playerService.nowPlayingItem.assets[0].metadata.playlistId]">
-              <img class="img-fluid album-artwork rounded"  [src]="playerService.formatArtwork(playerService.nowPlayingItem.attributes.artwork, 100)" />
-            </a>
-            <img *ngIf="!playerService.nowPlayingItem.assets[0]" class="img-fluid album-artwork rounded" [src]='playerService.formatArtwork(playerService.nowPlayingItem.attributes.artwork, 100)' />
-            <a *ngIf="playerService.nowPlayingPlaylist" [routerLink]="['/playlists', playerService.nowPlayingPlaylist.id]">
-              <img class="img-fluid playlist-artwork rounded" [src]='playerService.formatArtwork(playerService.nowPlayingPlaylist.attributes.artwork, 100)' />
-            </a>
-          </div>
-          <div class="now-playing-text">
-            <span>
-              {{playerService.nowPlayingItem.attributes.name}}<br />
-              <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/albums', playerService.nowPlayingItem.assets[0].metadata.playlistId]">{{playerService.nowPlayingItem.albumName}}</a>
-              <span *ngIf="!playerService.nowPlayingItem.assets[0]">{{playerService.nowPlayingItem.albumName}}</span><br />
-              <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/artists', playerService.nowPlayingItem.assets[0].metadata.artistId]">{{playerService.nowPlayingItem.artistName}}</a>
-              <span *ngIf="!playerService.nowPlayingItem.assets[0]">{{playerService.nowPlayingItem.artistName}}</span>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="col-4 media-controls">
-        <div class="shuffle"><i class="material-icons" (click)="playerService.toggleShuffle()" [ngStyle]="{'color': playerService.musicKit.player.shuffleMode === 0 ? 'var(--on-background)' : 'var(--primary)'}">shuffle</i></div>
+    <div class="media-controls">
+      <div class="media-control-buttons">
         <div *ngIf="playerService.musicKit.player.repeatMode === 0" class="repeat"><i class="material-icons" (click)="playerService.toggleRepeat()" style="color: var(--on-background)">repeat</i></div>
         <div *ngIf="playerService.musicKit.player.repeatMode === 1" class="repeat"><i class="material-icons" (click)="playerService.toggleRepeat()" style="color: var(--primary)">repeat_one</i></div>
         <div *ngIf="playerService.musicKit.player.repeatMode === 2" class="repeat"><i class="material-icons" (click)="playerService.toggleRepeat()" style="color: var(--primary)">repeat</i></div>
@@ -44,19 +31,32 @@
         <div class="play"><i *ngIf="playerService.playing && !playerService.playbackLoading" class="material-icons" (click)="playerService.pause()">pause</i></div>
         <mat-spinner *ngIf="playerService.playbackLoading" class="spinner" [diameter]="45" (click)='playerService.stop()'></mat-spinner>
         <div class="next"><i class="material-icons" (click)="playerService.playNext()">skip_next</i></div>
-        <span class="playback-time">{{formatTime(playerService.musicKit.player.currentPlaybackTime) | minutesSeconds}} / {{formatTime(playerService.musicKit.player.currentPlaybackDuration) | minutesSeconds}}</span>
+        <div class="shuffle"><i class="material-icons" (click)="playerService.toggleShuffle()" [ngStyle]="{'color': playerService.musicKit.player.shuffleMode === 0 ? 'var(--on-background)' : 'var(--primary)'}">shuffle</i></div>
       </div>
-      <div class="col-4 extra-media-controls">
-        <div *ngIf="playerService.authorized && (nowPlayingRating && nowPlayingRating.attributes.value === 1)" class="favorite liked"><i class="material-icons" (click)="changeRating(0)">favorite</i></div>
-        <div *ngIf="playerService.authorized && (!nowPlayingRating || nowPlayingRating.attributes.value !== 1)" class="favorite"><i class="material-icons" (click)="changeRating(1)">favorite_border</i></div>
-        <div class="queue-icon"><i class="material-icons" (click)="openDialog()">queue_music</i></div>
-        <div class="volume-slider">
-          <i class="material-icons">volume_down</i>
-          <mat-slider class='volume-slider' [max]="1.0" [min]="0.0" [step]="0.01" [value]="playerService.musicKit.player.volume" (input)="playerService.setVolume($event.value)"></mat-slider>
-          <i class="material-icons">volume_up</i>
-        </div>
+      <div class="media-progress-bar">
+        <span class="current-playback-time">{{formatTime(playerService.musicKit.player.currentPlaybackTime) | minutesSeconds}}</span>
+        <mat-slider class='track-progress' thumbLabel [displayWith]="formatLabel"
+          [max]="playerService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="playerService.musicKit.player.currentPlaybackTime"
+          (change)="playerService.seekToTime($event.value)" (mouseenter)="showLabel(true)" (mouseleave)="showLabel(false)"
+          (mousedown)="setScrubbingProgress(true)" (mouseup)="setScrubbingProgress(false)" (dragend)="setScrubbingProgress(false)">
+        </mat-slider>
+        <span class="current-playback-duration">{{formatTime(playerService.musicKit.player.currentPlaybackDuration) | minutesSeconds}}</span>
+      </div>
+    </div>
+    <div class="extra-media-controls">
+      <div *ngIf="playerService.authorized && (nowPlayingRating && nowPlayingRating.attributes.value === 1)" class="favorite liked">
+        <i class="material-icons" (click)="changeRating(0)">favorite</i>
+      </div>
+      <div *ngIf="playerService.authorized && (!nowPlayingRating || nowPlayingRating.attributes.value !== 1)" class="favorite">
+        <i class="material-icons" (click)="changeRating(1)">favorite_border</i>
+      </div>
+      <div class="queue-icon"><i class="material-icons" (click)="openDialog()">queue_music</i></div>
+      <div class="volume-slider">
+        <i class="material-icons">volume_down</i>
+        <mat-slider [max]="1.0" [min]="0.0" [step]="0.01" [value]="playerService.musicKit.player.volume" (input)="playerService.setVolume($event.value)"></mat-slider>
+        <i class="material-icons">volume_up</i>
       </div>
     </div>
   </div>
-  
+
 </div>
