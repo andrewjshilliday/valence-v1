@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod --base-href \"https://andrewjshilliday.github.io/musicplayer/\"",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "ngh --dir dist/musicplayer"
   },
   "private": true,
   "dependencies": {
@@ -21,11 +22,10 @@
     "@angular/material": "^8.1.4",
     "@angular/platform-browser": "^8.2.5",
     "@angular/platform-browser-dynamic": "^8.2.5",
-    "@angular/pwa": "^0.803.3",
+    "@angular/pwa": "^0.803.6",
     "@angular/router": "^8.2.5",
     "@angular/service-worker": "^8.2.5",
     "@sentry/browser": "^5.6.3",
-    "angular-font-awesome": "^3.1.2",
     "bootstrap": "^4.3.1",
     "core-js": "^3.2.1",
     "font-awesome": "^4.7.0",
@@ -40,16 +40,16 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.803.3",
-    "@angular/cli": "^8.3.3",
+    "@angular-devkit/build-angular": "^0.803.6",
+    "@angular/cli": "^8.3.6",
     "@angular/compiler-cli": "^8.2.5",
-    "@angular/language-service": "^8.2.5",
-    "@fortawesome/fontawesome-free": "^5.10.2",
+    "@angular/language-service": "^8.2.8",
+    "@fortawesome/fontawesome-free": "^5.11.2",
     "@types/jasmine": "^3.4.0",
     "@types/jasminewd2": "^2.0.6",
-    "@types/node": "^12.7.4",
-    "codelyzer": "~5.1.0",
-    "jasmine-core": "~3.4.0",
+    "@types/node": "^12.7.8",
+    "codelyzer": "^5.1.2",
+    "jasmine-core": "^3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^4.3.0",
     "karma-chrome-launcher": "~3.1.0",
@@ -58,8 +58,8 @@
     "karma-jasmine-html-reporter": "^1.4.2",
     "node-sass": "^4.12.0",
     "protractor": "^5.4.2",
-    "ts-node": "^8.3.0",
-    "tslint": "~5.19.0",
+    "ts-node": "^8.4.1",
+    "tslint": "^5.20.0",
     "typescript": "~3.5.3",
     "ws": "7.1.2"
   }
