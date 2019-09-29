@@ -31,7 +31,7 @@
   -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.5);
   box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.5);
   
-  @media (min-width: 1086px) { margin: 18px 20px; padding: 15px; }
+  @media (min-width: 1086px) { margin: 1em 20px; padding: 15px; }
   @media (min-width: 607px) and (max-width: 1085px) { margin: 10px 10px; padding: 5px 15px 15px; }
   @media (max-width: 606px) { display: none; }
 }

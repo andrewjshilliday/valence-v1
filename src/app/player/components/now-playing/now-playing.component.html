@@ -14,11 +14,11 @@
         <img class="img-fluid playlist-artwork rounded" [src]='playerService.formatArtwork(playerService.nowPlayingPlaylist.attributes.artwork, 100)' />
       </a>
       <span class="now-playing-text">
-        {{playerService.nowPlayingItem.attributes.name}}<br />
-        <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/albums', playerService.nowPlayingItem.assets[0].metadata.playlistId]">{{playerService.nowPlayingItem.albumName}}</a>
-        <span *ngIf="!playerService.nowPlayingItem.assets[0]">{{playerService.nowPlayingItem.albumName}}</span><br />
-        <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/artists', playerService.nowPlayingItem.assets[0].metadata.artistId]">{{playerService.nowPlayingItem.artistName}}</a>
-        <span *ngIf="!playerService.nowPlayingItem.assets[0]">{{playerService.nowPlayingItem.artistName}}</span>
+        <span title="{{playerService.nowPlayingItem.attributes.name}}">{{playerService.nowPlayingItem.attributes.name}}</span><br />
+        <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/albums', playerService.nowPlayingItem.assets[0].metadata.playlistId]" title="{{playerService.nowPlayingItem.albumName}}">{{playerService.nowPlayingItem.albumName}}</a>
+        <span *ngIf="!playerService.nowPlayingItem.assets[0]" title="{{playerService.nowPlayingItem.albumName}}">{{playerService.nowPlayingItem.albumName}}</span><br />
+        <a *ngIf="playerService.nowPlayingItem.assets[0]" [routerLink]="['/artists', playerService.nowPlayingItem.assets[0].metadata.artistId]" title="{{playerService.nowPlayingItem.artistName}}">{{playerService.nowPlayingItem.artistName}}</a>
+        <span *ngIf="!playerService.nowPlayingItem.assets[0]" title="{{playerService.nowPlayingItem.artistName}}">{{playerService.nowPlayingItem.artistName}}</span>
       </span>
     </div>
     <div class="media-controls">

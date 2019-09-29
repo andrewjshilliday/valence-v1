@@ -9,7 +9,10 @@
       <div class="hover-gradient"></div>
     </a>
     <div class="media-control-button">
-      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="playerService.playItem(item)"></i>
+      <span class="fa-stack" (click)="playerService.playItem(item)">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fas fa-play fa-stack-1x"></i>
+      </span>
     </div>
   </div>
   <div class="row">
@@ -37,7 +40,10 @@
       <div class="hover-gradient"></div>
     </a>
     <div class="media-control-button">
-      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="playerService.playItem(item)"></i>
+      <span class="fa-stack" (click)="playerService.playItem(item)">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fas fa-play fa-stack-1x"></i>
+      </span>
     </div>
   </div>
   <div *ngIf="!item.attributes.artwork" class="row media-artwork">
@@ -75,7 +81,10 @@
     <img *ngIf="!item.relationships || !item.relationships.albums" class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 400)" src="././assets/images/placeholder-transparent.png" [ngStyle]="{'background-color': '#' + item.attributes.artwork.bgColor}" />
     <a *ngIf="item.relationships && item.relationships.albums" [routerLink]="['/albums', item.relationships.albums.data[0].id]"><img class="img-fluid rounded" [src]="playerService.formatArtwork(item.attributes.artwork, 300)" src="././assets/images/placeholder-transparent.png" [ngStyle]="{'background-color': '#' + item.attributes.artwork.bgColor}" /></a>
     <div class="media-control-button">
-      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="playerService.playItem(item)"></i>
+      <span class="fa-stack" (click)="playerService.playItem(item)">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fas fa-play fa-stack-1x"></i>
+      </span>
     </div>
   </div>
   <div class="row media-album">
@@ -107,7 +116,10 @@
   <div *ngIf="item.attributes.artwork" class="row media-artwork" style="pointer-events: none">
     <img class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 400)" src="././assets/images/placeholder-transparent.png" [ngStyle]="{'background-color': '#' + item.attributes.artwork.bgColor}" />
     <div class="media-control-button">
-      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="playerService.playItem(item)"></i>
+      <span class="fa-stack" (click)="playerService.playItem(item)">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fas fa-play fa-stack-1x"></i>
+      </span>
     </div>
   </div>
   <div class="row media-artist">

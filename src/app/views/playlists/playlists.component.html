@@ -13,11 +13,22 @@
             <div class="col-4">
               <div class="side-sticky">
                 <div class="media-artwork">
-                  <img *ngIf="playerService.playlist.attributes.artwork" class="img-fluid card-img-top rounded" [attr.data-src]="playerService.formatArtwork(playerService.playlist.attributes.artwork, 800)" src="././assets/images/placeholder.jpeg" />
+                  <img *ngIf="playerService.playlist.attributes.artwork" class="img-fluid card-img-top rounded" [attr.data-src]="playerService.formatArtwork(playerService.playlist.attributes.artwork, 800)" src="././assets/images/placeholder-transparent.png" [ngStyle]="{'background-color': '#' + playerService.playlist.attributes.artwork.bgColor}" />
                   <img *ngIf="!playerService.playlist.attributes.artwork" class="img-fluid card-img-top rounded" src="././assets/images/placeholder.jpeg" />
                   <div class="hover-gradient"></div>
                   <div class="media-control-button">
-                    <i class="fas fa-play-circle fa-3x" aria-hidden="true" (click)="playerService.playItem(playerService.playlist)"></i>
+                    <span class="fa-stack" (click)="playerService.playItem(playerService.playlist)">
+                      <i class="fas fa-circle fa-stack-2x"></i>
+                      <i class="fas fa-play fa-stack-1x"></i>
+                    </span>
+                  </div>
+                  <div class="media-options-button">
+                    <app-dropdown [item]="playerService.playlist" [playOption]="true" [shuffleOption]="true" [libraryOption]="true">
+                      <span class="fa-stack">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fas fa-ellipsis-h fa-stack-1x"></i>
+                      </span>
+                    </app-dropdown>
                   </div>
                 </div>
                 <div class="row">

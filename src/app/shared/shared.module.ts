@@ -9,6 +9,7 @@ import { MediaItemViewComponent } from './components/media-item-view/media-item-
 import { MediaItemCollectionListComponent } from './components/media-item-collection-list/media-item-collection-list.component';
 import { MediaItemCollectionRowComponent } from './components/media-item-collection-row/media-item-collection-row.component';
 import { MediaItemCollectionGridComponent } from './components/media-item-collection-grid/media-item-collection-grid.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { MinutesSecondsPipe } from './pipes/minutes-seconds.pipe';
 import { HoursMinutesPipe } from './pipes/hours-minutes.pipe';
 import { AlbumFilterPipe } from './pipes/album-filter.pipe';
@@ -33,6 +34,7 @@ import { LazyLoadImageDirective } from './directives/lazy-load-image/lazy-load-i
     MediaItemCollectionListComponent,
     MediaItemCollectionRowComponent,
     MediaItemCollectionGridComponent,
+    DropdownComponent,
     MinutesSecondsPipe,
     HoursMinutesPipe,
     AlbumFilterPipe,
@@ -51,6 +53,7 @@ import { LazyLoadImageDirective } from './directives/lazy-load-image/lazy-load-i
     MediaItemCollectionListComponent,
     MediaItemCollectionRowComponent,
     MediaItemCollectionGridComponent,
+    DropdownComponent,
     MinutesSecondsPipe,
     HoursMinutesPipe,
     AlbumFilterPipe,

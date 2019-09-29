@@ -21,20 +21,16 @@
   -o-transition: all .1s ease-in;
   -webkit-transition: all .1s ease-in;
   transition: all .1s ease-in;
-}
 
-.media-item:hover {
-  cursor: pointer;
-  background-color: var(--accent);
-}
-
-.media-item > hr {
-  margin: 3px 15px 0 15px;
-}
-
-.media-item .row {
-  overflow-y: hidden;
-  width: 100%;
+  &:hover {
+    cursor: pointer;
+    background-color: var(--accent);
+  }
+  
+  .row {
+    overflow-y: hidden;
+    width: 100%;
+  }
 }
 
 .media-artwork {
@@ -47,6 +43,8 @@
     height: 50px;
     width: 50px;
   }
+
+  &:hover .media-control-button { display: block; }
 }
 
 .media-control-button {
@@ -55,10 +53,6 @@
 	color: var(--on-background);
   bottom: 10px;
   left: 9px;
-}
-
-.media-artwork:hover .media-control-button {
-	display: block;
 }
 
 .media-item-info {
@@ -73,10 +67,7 @@
 a {
   color: var(--on-background);
   text-decoration: none;
-}
-
-a:hover {
-  color: var(--primary);
+  &:hover { color: var(--primary); }
 }
 
 .scrollbar {

@@ -1,0 +1,29 @@
+.media-options-dropdown-menu {
+  position: relative;
+  z-index: 1000;
+  background: transparent;
+  backdrop-filter: blur(5px);
+  box-shadow: inset 0 0 0 200px rgba(255, 255, 255, 0.15);
+
+  i {
+    position: relative;
+    line-height: 26px;
+    width: 35px;
+    font-size: 18px;
+    top: 1px;
+    
+    &.material-icons {
+      line-height: 21px;
+      font-size: 20px;
+      top: 3px;
+    }
+  }
+  .dropdown-item:hover {
+    background: transparent;
+    backdrop-filter: blur(6px);
+    box-shadow: inset 0 0 0 200px rgba(255, 255, 255, 0.3);
+  }
+  .dropdown-divider {
+    border-top: 1px solid rgba(0,0,0,.15);
+  }
+}

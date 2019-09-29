@@ -17,9 +17,7 @@
   &:hover {
     cursor: pointer;
     
-    .media-control-button {
-      display: block;
-    }
+    .media-control-button { display: block; }
 
     .hover-gradient {
       background: linear-gradient(to bottom,
@@ -36,13 +34,19 @@
   display: none;
   position: absolute;
 	color: var(--light);
-  bottom: 10px;
-  left: 10px;
+  bottom: 5%;
+  left: 5%;
 
-  &:hover {
-    color: var(--primary);
+  .fa-play {
+    color: var(--dark);
+    position: relative;
+    left: 1px;
+    &:hover { color: var(--primary); }
   }
-} 
+
+  span { width: 2em; }
+  &:hover { cursor: pointer; }
+}
 
 .hover-gradient {
   position: absolute;
@@ -70,10 +74,7 @@
 a {
   color: var(--on-background);
   text-decoration: none;
-}
-
-a:hover {
-  color: var(--primary);
+  &:hover { color: var(--primary); }
 }
 
 span {

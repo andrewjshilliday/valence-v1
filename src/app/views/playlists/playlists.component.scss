@@ -27,7 +27,7 @@
   position: relative;
 
   &:hover {
-    .media-control-button {
+    .media-control-button, .media-options-button {
       display: block;
     }
 
@@ -48,7 +48,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  border-radius: .25rem;
+  border-radius: .25em;
 }
 
 .media-control-button {
@@ -58,10 +58,37 @@
   bottom: 5%;
   left: 5%;
 
-  &:hover {
-    cursor: pointer;
-    color: var(--primary);
+  .fa-play {
+    color: var(--dark);
+    position: relative;
+    left: 2px;
+    &:hover { color: var(--primary); }
   }
+
+  span {
+    font-size: 1.5em;
+    width: 2em;
+  }
+  &:hover { cursor: pointer; }
+}
+
+.media-options-button {
+  display: none;
+  position: absolute;
+  color: var(--light);
+  bottom: 5%;
+  right: 5%;
+
+  .fa-ellipsis-h {
+    color: var(--dark);
+    &:hover { color: var(--primary); }
+  }
+
+  span {
+    font-size: 1.5em;
+    width: 2em;
+  }
+  &:hover { cursor: pointer; }
 }
 
 .editorial-notes {
@@ -74,7 +101,8 @@
 .side-sticky {
   position: sticky;
   top: 0;
-  padding-top: 1rem;
+  padding-top: 1em;
+  z-index: 10;
 }
 
 p {
