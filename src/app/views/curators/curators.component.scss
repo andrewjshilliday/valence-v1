@@ -8,30 +8,76 @@
   top: 0;
   height: 60px;
   margin-bottom: -4px;
+  padding: 0 15px;
   z-index: 10;
   opacity: 0.95;
   color: var(--on-background);
   background: linear-gradient(to top, var(--background-opacity), var(--background) 15%);
+
+  img { display: none; }
+}
+
+#image {
+  display: flex;
+}
+
+.header-expanded {
+  height: 95px;
+
+  img {
+    display: block;
+  }
+
+  h1 {
+    position: relative;
+    top: 12px;
+    left: 15px;
+    font-size: 3em;
+  }
 }
 
 .curator-image {
-  display: inherit;
+  flex: 0 0 25%;
+  max-width: 250px;
+  min-width: 200px;
+  margin: 30px 25px 0;
+  @media (max-width: 767px) { display: none; }
+}
+
+.curator-image-small {
   position: relative;
   top: 10px;
-  height: 220px;
+  height: 65px;
+}
+
+.featured {
+  flex: 0 0 25%;
+  max-width: 250px;
+  min-width: 200px;
+  margin-left: auto;
+  @media (max-width: 767px) { flex: 0 0 50%; max-width: 350px; margin-left: 0; }
+}
+
+.editorial-notes {
+  flex: 0 0 25%;
+  max-width: 250px;
+  min-width: 200px;
+  font-size: 10pt;
+  max-height: 250px;
+  color: var(--on-background);
+  @media (max-width: 767px) { flex: 0 0 50%; max-width: 350px; }
+
+  perfect-scrollbar {
+    height: 100%;
+    width: 100%;
+    padding: 0 10px;
+  }
 }
 
 .editorial-notes-short {
   position: absolute;
   bottom: 20px;
   color: var(--on-background);
-}
-
-.editorial-notes {
-  overflow: auto;
-  height: 0;
-  padding: 0 15px 15%;
-  font-size: 10pt;
 }
 
 .load-more {
@@ -61,8 +107,36 @@
   outline: none;
 }
 
+.playlists {
+  padding: 0 43px;
+
+  h3 {
+    color: var(--on-background);
+    padding: 0 45px;
+  }
+}
+
 h5 {
   color: var(--on-background);
+  padding: 0 10px;
+}
+
+.media-item {
+  @media (min-width: 1200px) {
+    flex: 0 0 16.666667%; max-width: 16.666667%;
+  }
+  @media (min-width: 992px) and (max-width: 1199px) {
+    flex: 0 0 20%; max-width: 20%;
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    flex: 0 0 25%; max-width: 25%;
+  }
+  @media (min-width: 607px) and  (max-width: 767px) {
+    flex: 0 0 33.333333%; max-width: 33.333333%;
+  }
+  @media (max-width: 606px) {
+    flex: 0 0 50%; max-width: 50%;
+  }
 }
 
 ::ng-deep {

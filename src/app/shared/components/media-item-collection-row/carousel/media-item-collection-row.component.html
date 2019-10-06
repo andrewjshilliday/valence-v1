@@ -2,9 +2,7 @@
 <div class="media-item-group-container" id="container-{{collection[0].id}}-{{collection[collection.length-1].id}}">
   <div class="left" id="left-{{collection[0].id}}-{{collection[collection.length-1].id}}" (click)="scroll(false)"><div></div></div>
   <div class="media-item-group" id="row-{{collection[0].id}}-{{collection[collection.length-1].id}}">
-    <app-media-item-view *ngFor="let item of collection" [item]="item" class="media-item"
-      [ngClass]="size === 2 ? 'col-6 col-md-4 col-lg-3' : 'col-6 col-md-4 col-lg-3 col-xl-2'">
-    </app-media-item-view>
+    <app-media-item-view *ngFor="let item of collection" [item]="item" class="media-item" [ngClass]="{'large': size === 2}"></app-media-item-view>
   </div>
   <div class="right" id="right-{{collection[0].id}}-{{collection[collection.length-1].id}}" (click)="scroll(true)"><div></div></div>
 </div>

@@ -53,6 +53,11 @@ export class MediaItemCollectionGridCarouselComponent implements OnInit, AfterVi
     this.router.navigate(['/albums', item.relationships.albums.data[0].id]);
   }
 
+  play(item: any, event: Event) {
+    event.stopPropagation();
+    this.playerService.playItem(item);
+  }
+
   scroll(right: boolean) {
     if (right) {
       this.rightIcon.classList.add('disabled');

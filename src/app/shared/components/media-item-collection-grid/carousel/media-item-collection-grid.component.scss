@@ -50,6 +50,16 @@
 
 .column {
   padding: 0;
+
+  @media (min-width: 1350px) {
+    flex: 0 0 25%; max-width: 25%;
+  }
+  @media (min-width: 992px) and (max-width: 1349px) {
+    flex: 0 0 33.333333%; max-width: 33.333333%;
+  }
+  @media (max-width: 991px) {
+    flex: 0 0 50%; max-width: 50%;
+  }
 }
 
 .media-item-grid {
@@ -73,6 +83,8 @@
   &:hover {
     cursor: pointer;
     background-color: var(--accent);
+    .media-control-button { display: block; }
+    .hover-gradient { display: block; }
   }
   
   .row {
@@ -89,23 +101,35 @@
   padding-bottom: 50px;
   border-radius: .25rem;
   background-repeat: round;
-
-  img {
-    height: 50px;
-    width: 50px;
-  }
-
-  &:hover .media-control-button { display: block; }
 }
 
 .media-control-button {
   display: none;
   position: absolute;
-  color: var(--on-background);
+	color: var(--light);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
+
+  .fa-play {
+    color: var(--dark);
+    position: relative;
+    left: 1px;
+    &:hover { color: var(--primary); }
+  }
+
+  span { width: 2em; }
+  &:hover { cursor: pointer; }
+}
+
+.hover-gradient {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  border-radius: 0.25rem;
 }
 
 .media-item-info {
@@ -121,11 +145,6 @@ a {
   color: var(--on-background);
   text-decoration: none;
   &:hover { color: var(--primary); }
-}
-
-.scrollbar {
-  --scrollbar-thumb-color: var(--scrollbar);
-  --scrollbar-thumb-hover-color: var(--scrollbar);
 }
 
 ::ng-deep {

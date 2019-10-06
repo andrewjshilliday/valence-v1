@@ -3,18 +3,20 @@
   <div class="left" id="left-{{collection[0].id}}-{{collection[collection.length-1].id}}" (click)="scroll(false)"><div></div></div>
   <div class="media-item-grid" id="row-{{collection[0].id}}-{{collection[collection.length-1].id}}">
     <div class="container-fluid row" appLazyLoadImage>
-      <div *ngFor="let column of columns" class="col-12 col-sm-6 col-md-4 column">
+      <div *ngFor="let column of columns" class="column">
         <div *ngFor="let row of rows" class="media-item rounded">
-          <div *ngIf="collection[(column * numRows) + row]; let item" class="row">
-            <div class="media-artwork" (click)="playerService.playItem(item)"
-            [attr.data-background-src]="playerService.formatArtwork(item.attributes.artwork, 100)"
+          <div *ngIf="collection[(column * numRows) + row]; let item" class="row" (click)="goToAlbum(item)">
+            <div class="media-artwork" [attr.data-background-src]="playerService.formatArtwork(item.attributes.artwork, 100)"
             [ngStyle]="{'background-image': 'url(././assets/images/placeholder-transparent.png)', 'background-color': '#' + item.attributes.artwork.bgColor}">
               <div class="hover-gradient"></div>
               <div class="media-control-button">
-                <i class="fas fa-play-circle fa-2x" aria-hidden="true"></i>
+                <span class="fa-stack" (click)="play(item, $event)">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-play fa-stack-1x"></i>
+                </span>
               </div>
             </div>
-            <div class="text-truncate media-item-info" (click)="goToAlbum(item)">
+            <div class="text-truncate media-item-info">
               <span title="{{item.attributes.name}}">{{item.attributes.name}}</span><br />
               <span class="text-muted" *ngIf="showArtist && !item.relationships || !item.relationships.artists" title="{{item.attributes.artistName}} • {{item.attributes.albumName}}">{{item.attributes.artistName}} • {{item.attributes.albumName}}</span>
               <span *ngIf="!showArtist && !item.relationships.albums" title="{{item.attributes.albumName}}">{{item.attributes.albumName}}</span>

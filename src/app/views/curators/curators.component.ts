@@ -37,6 +37,23 @@ export class CuratorsComponent implements OnInit {
     this.curatorSubscription = this.route.params.subscribe(params => {
       this.loadCurator(params['type'], params['id']);
     });
+
+    window.addEventListener('scroll', function() {
+      const header = document.getElementById('header');
+      const image = document.getElementById('image');
+
+      if (!image) {
+        return;
+      }
+
+      const divposition = image.getBoundingClientRect();
+
+      if (divposition.top + divposition.height < 0) {
+        header.classList.add('header-expanded');
+      } else {
+        header.classList.remove('header-expanded');
+      }
+    }, true);
   }
 
   async loadCurator(type: string, id: string) {
