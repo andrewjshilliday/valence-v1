@@ -1,11 +1,15 @@
-<perfect-scrollbar>
-  <div class="media-item-grid">
+<div class="header"><ng-content></ng-content></div>
+<div class="media-item-grid-container">
+  <div class="left" id="left-{{collection[0].id}}-{{collection[collection.length-1].id}}" (click)="scroll(false)"><div></div></div>
+  <div class="media-item-grid" id="row-{{collection[0].id}}-{{collection[collection.length-1].id}}">
     <div class="container-fluid row" appLazyLoadImage>
       <div *ngFor="let column of columns" class="col-12 col-sm-6 col-md-4 column">
         <div *ngFor="let row of rows" class="media-item rounded">
           <div *ngIf="collection[(column * numRows) + row]; let item" class="row">
-            <div class="media-artwork" (click)="playerService.playItem(item)">
-              <img class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 100)" src="././assets/images/placeholder-transparent.png" [ngStyle]="{'background-color': '#' + item.attributes.artwork.bgColor}" />
+            <div class="media-artwork" (click)="playerService.playItem(item)"
+            [attr.data-background-src]="playerService.formatArtwork(item.attributes.artwork, 100)"
+            [ngStyle]="{'background-image': 'url(././assets/images/placeholder-transparent.png)', 'background-color': '#' + item.attributes.artwork.bgColor}">
+              <div class="hover-gradient"></div>
               <div class="media-control-button">
                 <i class="fas fa-play-circle fa-2x" aria-hidden="true"></i>
               </div>
@@ -26,4 +30,5 @@
       </div>
     </div>
   </div>
-</perfect-scrollbar>
+  <div class="right" id="right-{{collection[0].id}}-{{collection[collection.length-1].id}}" (click)="scroll(true)"><div></div></div>
+</div>

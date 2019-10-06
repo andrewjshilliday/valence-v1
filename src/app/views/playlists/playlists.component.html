@@ -53,8 +53,9 @@
           </div>
           <div *ngIf="artists && artists.length">
             <hr />
-            <h4>Featured Artists</h4>
-            <app-media-item-collection-row [collection]="artists"></app-media-item-collection-row>
+            <app-media-item-collection-carousel [collection]="artists">
+              <h4>Featured Artists</h4>
+            </app-media-item-collection-carousel>
           </div>
         </div>
 
@@ -62,8 +63,9 @@
           <app-media-item-collection-list [collection]="playerService.playlist" [ratings]="ratings"[showHeader]=true ></app-media-item-collection-list>
           <div *ngIf="artists && artists.length">
             <hr />
-            <h4>Featured Artists</h4>
-            <app-media-item-collection-row [collection]="artists"></app-media-item-collection-row>
+            <app-media-item-collection-carousel [collection]="artists">
+              <h4>Featured Artists</h4>
+            </app-media-item-collection-carousel>
           </div>
         </div>
 

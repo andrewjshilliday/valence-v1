@@ -29,13 +29,14 @@
 
         <div *ngIf="mostPlayed">
           <div *ngIf="mostPlayed.albums && mostPlayed.albums.length">
-            <h3>Top Albums</h3>
-            <app-media-item-collection-row [collection]="mostPlayed.albums[0].data"></app-media-item-collection-row>
+            <app-media-item-collection-carousel [collection]="mostPlayed.albums[0].data">
+              <h3>Top Albums</h3>
+            </app-media-item-collection-carousel>
           </div>
       
           <div *ngIf="mostPlayed.songs && mostPlayed.songs.length">
             <h3>Top Songs</h3>
-            <app-media-item-collection-grid [collection]="mostPlayed.songs[0].data" [numRows]=3 [showArtist]=true></app-media-item-collection-grid>
+            <app-media-item-collection-grid-carousel [collection]="mostPlayed.songs[0].data" [numRows]=3 [showArtist]=true></app-media-item-collection-grid-carousel>
           </div>
         </div>
 

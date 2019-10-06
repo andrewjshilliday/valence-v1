@@ -8,11 +8,9 @@
     <div *ngIf="!loading">
       <div *ngIf="playerService.artist">
         <div class="header row" id="header" appLazyLoadImage>
-          <!-- <div class="test" id="test"> -->
           <img *ngIf="artistImage" class="artist-image-small img-fluid rounded-circle" [attr.data-src]="playerService.formatArtwork(artistImage, 500)" src="././assets/images/placeholder.jpeg" />
           <img *ngIf="!artistImage" class="artist-image-small img-fluid rounded-circle" src="./assets/images/placeholder.jpeg" />
           <h1 class="text-truncate">{{playerService.artist.attributes.name}}</h1>
-          <!-- </div> -->
         </div>
         <div class="container-fluid" id="image">
           <div class="row container-fluid">
@@ -34,73 +32,80 @@
         <hr />
 
         <div *ngIf="topSongs">
-          <h3>Top Songs</h3>
-          <app-media-item-collection-grid [collection]="topSongs" [numRows]=3></app-media-item-collection-grid>
+          <app-media-item-collection-grid-carousel [collection]="topSongs" [numRows]=3>
+            <h3>Top Songs</h3>
+          </app-media-item-collection-grid-carousel>
         </div>
 
         <div *ngIf="albums && albums.length">
-          <div class="row">
-            <div class="col-6"><h3>Albums</h3></div>
-            <div *ngIf="albums.length > 1" class="col-6">
-              <select class="float-right dropdown" [(ngModel)]="sortAlbums">
-                <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
-              </select>
+          <app-media-item-collection-carousel [collection]="sortItems(albums, sortAlbums)">
+            <div class="row">
+              <div class="col-6"><h3>Albums</h3></div>
+              <div *ngIf="albums.length > 1" class="col-6">
+                <select class="float-right dropdown" [(ngModel)]="sortAlbums">
+                  <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <app-media-item-collection-row [collection]="sortItems(albums, sortAlbums)"></app-media-item-collection-row>
+          </app-media-item-collection-carousel>
         </div>
 
         <div *ngIf="singles && singles.length">
-          <div class="row">
-            <div class="col-6"><h3>EPs & Singles</h3></div>
-            <div *ngIf="singles.length > 1" class="col-6">
-              <select class="float-right dropdown" [(ngModel)]="sortSingles">
-                <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
-              </select>
+          <app-media-item-collection-carousel [collection]="sortItems(singles, sortSingles)">
+            <div class="row">
+              <div class="col-6"><h3>EPs & Singles</h3></div>
+              <div *ngIf="singles.length > 1" class="col-6">
+                <select class="float-right dropdown" [(ngModel)]="sortSingles">
+                  <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <app-media-item-collection-row [collection]="sortItems(singles, sortSingles)"></app-media-item-collection-row>
+          </app-media-item-collection-carousel>
         </div>
 
         <div *ngIf="liveAlbums && liveAlbums.length">
-          <div class="row">
-            <div class="col-6"><h3>Live Albums</h3></div>
-            <div *ngIf="liveAlbums.length > 1" class="col-6">
-              <select class="float-right dropdown" [(ngModel)]="sortLiveAlbums">
-                <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
-              </select>
+          <app-media-item-collection-carousel [collection]="sortItems(liveAlbums, sortLiveAlbums)">
+            <div class="row">
+              <div class="col-6"><h3>Live Albums</h3></div>
+              <div *ngIf="liveAlbums.length > 1" class="col-6">
+                <select class="float-right dropdown" [(ngModel)]="sortLiveAlbums">
+                  <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <app-media-item-collection-row [collection]="sortItems(liveAlbums, sortLiveAlbums)"></app-media-item-collection-row>
+          </app-media-item-collection-carousel>
         </div>
 
         <div *ngIf="compilations && compilations.length">
-          <div class="row">
-            <div class="col-6"><h3>Compilation Albums</h3></div>
-            <div *ngIf="compilations.length > 1" class="col-6">
-              <select class="float-right dropdown" [(ngModel)]="sortCompilations">
-                <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
-              </select>
+          <app-media-item-collection-carousel [collection]="sortItems(compilations, sortCompilations)">
+            <div class="row">
+              <div class="col-6"><h3>Compilation Albums</h3></div>
+              <div *ngIf="compilations.length > 1" class="col-6">
+                <select class="float-right dropdown" [(ngModel)]="sortCompilations">
+                  <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <app-media-item-collection-row [collection]="sortItems(compilations, sortCompilations)"></app-media-item-collection-row>
+          </app-media-item-collection-carousel>
         </div>
 
         <div *ngIf="appearsOn && appearsOn.length">
-          <div class="row">
-            <div class="col-6"><h3>Appears On Albums</h3></div>
-            <div *ngIf="appearsOn.length > 1" class="col-6">
-              <select class="float-right dropdown" [(ngModel)]="sortAppearsOn">
-                <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
-              </select>
+          <app-media-item-collection-carousel [collection]="sortItems(appearsOn, sortAppearsOn)">
+            <div class="row">
+              <div class="col-6"><h3>Appears On Albums</h3></div>
+              <div *ngIf="appearsOn.length > 1" class="col-6">
+                <select class="float-right dropdown" [(ngModel)]="sortAppearsOn">
+                  <option *ngFor="let option of sortOptions" [ngValue]="option[0]" selected>{{option[1]}}</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <app-media-item-collection-row [collection]="sortItems(appearsOn, sortAppearsOn)"></app-media-item-collection-row>
+          </app-media-item-collection-carousel>
         </div>
 
         <div *ngIf="playerService.playlists && playerService.playlists.length">
-          <h3>Artist Playlists</h3>
-          <app-media-item-collection-row [collection]="playerService.playlists"></app-media-item-collection-row>
+          <app-media-item-collection-carousel [collection]="playerService.playlists">
+            <h3>Artist Playlists</h3>
+          </app-media-item-collection-carousel>
         </div>
 
         <div *ngIf="artistData && artistData.resources.data.attributes.artistBio" class="artist-info">
@@ -138,8 +143,9 @@
         <br *ngIf="artistData && artistData.resources.data.attributes.artistBio" />
 
         <div *ngIf="relatedArtists">
-          <h3>Related Artists</h3>
-          <app-media-item-collection-row [collection]="relatedArtists"></app-media-item-collection-row>
+          <app-media-item-collection-carousel [collection]="relatedArtists">
+            <h3>Related Artists</h3>
+          </app-media-item-collection-carousel>
         </div>
 
       </div>

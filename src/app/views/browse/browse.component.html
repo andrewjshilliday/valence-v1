@@ -11,43 +11,51 @@
     <div *ngIf='!loading'>
 
       <div *ngIf="playerService.mostPlayed && playerService.mostPlayed.albums && playerService.mostPlayed.albums.length">
-        <h3>Top Albums</h3>
-        <app-media-item-collection-row [collection]="playerService.mostPlayed.albums[0].data"></app-media-item-collection-row>
+        <app-media-item-collection-carousel [collection]="playerService.mostPlayed.albums[0].data">
+          <h3>Top Albums</h3>
+        </app-media-item-collection-carousel>
       </div>
 
       <div *ngIf="playerService.mostPlayed && playerService.mostPlayed.songs && playerService.mostPlayed.songs.length">
-        <h3>Top Songs</h3>
-        <app-media-item-collection-grid [collection]="playerService.mostPlayed.songs[0].data" [numRows]=3 [showArtist]=true></app-media-item-collection-grid>
+        <app-media-item-collection-grid-carousel [collection]="playerService.mostPlayed.songs[0].data" [numRows]=3 [showArtist]=true>
+          <h3>Top Songs</h3>
+        </app-media-item-collection-grid-carousel>
       </div>
 
       <div *ngIf="playerService.mostPlayed && playerService.mostPlayed.playlists && playerService.mostPlayed.playlists.length">
-        <h3>Top Playlists</h3>
-        <app-media-item-collection-row [collection]="playerService.mostPlayed.playlists[0].data"></app-media-item-collection-row>
+        <app-media-item-collection-carousel [collection]="playerService.mostPlayed.playlists[0].data">
+          <h3>Top Playlists</h3>
+        </app-media-item-collection-carousel>
       </div>
 
       <div *ngIf="playerService.appleCurators">
-        <h3>Apple Curators</h3>
-        <app-media-item-collection-row [collection]="playerService.appleCurators" [size]="2"></app-media-item-collection-row>
+        <app-media-item-collection-carousel [collection]="playerService.appleCurators" [size]="2">
+          <h3>Apple Curators</h3>
+        </app-media-item-collection-carousel>
       </div>
 
       <div *ngIf="playerService.featuredPlaylists">
-        <h3>Featured Playlists</h3>
-        <app-media-item-collection-row [collection]="playerService.featuredPlaylists"></app-media-item-collection-row>
+        <app-media-item-collection-carousel [collection]="playerService.featuredPlaylists">
+          <h3>Featured Playlists</h3>
+        </app-media-item-collection-carousel>
       </div>
 
       <div *ngIf="playerService.top100">
-        <h3>Top 100</h3>
-        <app-media-item-collection-row [collection]="playerService.top100"></app-media-item-collection-row>
+        <app-media-item-collection-carousel [collection]="playerService.top100">
+          <h3>Top 100</h3>
+        </app-media-item-collection-carousel>
       </div>
 
       <div *ngIf="playerService.aListPlaylists">
-        <h3>The A-List</h3>
-        <app-media-item-collection-row [collection]="playerService.aListPlaylists" [size]="2"></app-media-item-collection-row>
+        <app-media-item-collection-carousel [collection]="playerService.aListPlaylists" [size]="2">
+          <h3>The A-List</h3>
+        </app-media-item-collection-carousel>
       </div>
 
       <div *ngIf="playerService.curators">
-        <h3>Curators</h3>
-        <app-media-item-collection-row [collection]="playerService.curators"></app-media-item-collection-row>
+        <app-media-item-collection-carousel [collection]="playerService.curators">
+          <h3>Curators</h3>
+        </app-media-item-collection-carousel>
       </div>
 
     </div>

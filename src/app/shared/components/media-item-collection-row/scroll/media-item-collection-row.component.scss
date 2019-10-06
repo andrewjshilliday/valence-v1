@@ -1,3 +1,8 @@
+.header {
+  color: var(--on-background);
+  padding: 0 15px;
+}
+
 .media-item-group {
   padding-bottom: 15px;
 }
@@ -9,6 +14,10 @@
   white-space: nowrap;
   flex-wrap: nowrap;
   padding: 0;
+}
+
+app-media-item-view {
+  padding: 0 7px;
 }
 
 ::ng-deep {

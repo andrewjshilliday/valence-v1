@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { PlayerService } from '../../services/player.service';
+import { PlayerService } from '../../../services/player.service';
 
 @Component({
   selector: 'app-media-item-collection-grid',

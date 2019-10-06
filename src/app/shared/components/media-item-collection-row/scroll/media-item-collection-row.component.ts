@@ -1,6 +1,6 @@
 import { Component, OnInit, DoCheck, Input, IterableDiffers, ViewChild } from '@angular/core';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
-import { PlayerService } from '../../services/player.service';
+import { PlayerService } from '../../../services/player.service';
 
 @Component({
   selector: 'app-media-item-collection-row',

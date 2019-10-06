@@ -1,0 +1,86 @@
+.header {
+  color: var(--on-background);
+  padding: 0 15px;
+}
+
+.row {
+  position: relative;
+  left: 15px;
+  overflow-x: visible;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+  padding: 0;
+}
+
+.column {
+  padding: 0;
+}
+
+.media-item-grid {
+  padding-bottom: 15px;
+}
+
+.media-item {
+  padding: 3px 10px;
+  -moz-transition: all .1s ease-in;
+  -o-transition: all .1s ease-in;
+  -webkit-transition: all .1s ease-in;
+  transition: all .1s ease-in;
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--accent);
+  }
+  
+  .row {
+    overflow-y: hidden;
+    width: 100%;
+  }
+}
+
+.media-artwork {
+  position: relative;
+  display: inline-block;
+  height: 51px;
+  width: 50px;
+
+  img {
+    height: 50px;
+    width: 50px;
+  }
+
+  &:hover .media-control-button { display: block; }
+}
+
+.media-control-button {
+  display: none;
+  position: absolute;
+	color: var(--on-background);
+  bottom: 10px;
+  left: 9px;
+}
+
+.media-item-info {
+  width: calc(100% - 50px);
+  width: -moz-calc(100% - 50px);
+  width: -webkit-calc(100% - 50px);
+  padding: 5px 25px 0 10px;
+  font-size: 10pt;
+  color: var(--on-background);
+}
+
+a {
+  color: var(--on-background);
+  text-decoration: none;
+  &:hover { color: var(--primary); }
+}
+
+.scrollbar {
+  --scrollbar-thumb-color: var(--scrollbar);
+  --scrollbar-thumb-hover-color: var(--scrollbar);
+}
+
+::ng-deep {
+  .ps__thumb-x { background-color: var(--primary)!important; }
+  .ps__rail-x { opacity: 1!important; background-color: rgba(0,0,0,0)!important; }
+}

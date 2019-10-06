@@ -1,3 +1,44 @@
+.header {
+  color: var(--on-background);
+  padding: 0 45px;
+}
+
+.media-item-grid-container {
+  display: flex;
+  width: 100%;
+}
+
+.left, .right {
+  display: inline-block;
+  width: 35px;
+  div {
+    width: 25px;
+    height: 56px;
+    position: relative;
+    background-color: var(--on-background);
+    -webkit-mask: url(../../../../../assets/images/arrow.svg) no-repeat center;
+    mask: url(../../../../../assets/images/arrow.svg) no-repeat center;
+  }
+
+  &:hover {
+    cursor: pointer;
+    div { background-color: var(--primary); }
+  }
+}
+
+.right {
+  div {
+    float: right;
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.1;
+}
+
 .row {
   position: relative;
   left: 15px;
@@ -12,6 +53,13 @@
 }
 
 .media-item-grid {
+  padding-bottom: 15px;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  width: calc(100% - 10px);
+  margin: 0;
   padding-bottom: 15px;
 }
 
@@ -36,8 +84,11 @@
 .media-artwork {
   position: relative;
   display: inline-block;
-  height: 51px;
   width: 50px;
+  height: 0;
+  padding-bottom: 50px;
+  border-radius: .25rem;
+  background-repeat: round;
 
   img {
     height: 50px;
@@ -50,9 +101,11 @@
 .media-control-button {
   display: none;
   position: absolute;
-	color: var(--on-background);
-  bottom: 10px;
-  left: 9px;
+  color: var(--on-background);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
 
 .media-item-info {

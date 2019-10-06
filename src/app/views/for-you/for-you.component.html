@@ -11,32 +11,38 @@
     <div *ngIf='!loading'>
 
       <div *ngIf="playerService.recommendations && playerService.recommendations.length && playerService.recommendations[0]">
-        <h3>{{playerService.recommendations[0].attributes.title.stringForDisplay}}</h3>
-        <app-media-item-collection-row [collection]="playerService.recommendations[0].relationships.contents.data" [size]="2"></app-media-item-collection-row>
+        <app-media-item-collection-carousel [collection]="playerService.recommendations[0].relationships.contents.data" [size]="2">
+          <h3>{{playerService.recommendations[0].attributes.title.stringForDisplay}}</h3>
+        </app-media-item-collection-carousel>
       </div>
 
       <div *ngIf="playerService.recentPlayed && playerService.recentPlayed.length">
-        <h3>Recently Played</h3> <!-- Recently Played -->
-        <app-media-item-collection-row [collection]="playerService.recentPlayed"></app-media-item-collection-row>
+        <app-media-item-collection-carousel [collection]="playerService.recentPlayed">
+          <h3>Recently Played</h3>
+        </app-media-item-collection-carousel>
       </div>
 
       <div *ngIf="playerService.heavyRotation && playerService.heavyRotation.length">
-        <h3>Heavy Rotation</h3> <!-- Heavy Rotation -->
-        <app-media-item-collection-row [collection]="playerService.heavyRotation"></app-media-item-collection-row>
+        
+        <app-media-item-collection-carousel [collection]="playerService.heavyRotation">
+          <h3>Heavy Rotation</h3>
+        </app-media-item-collection-carousel>
       </div>
 
       <ng-container *ngIf="playerService.recommendations && playerService.recommendations.length">
         <div *ngFor="let recommendation of playerService.recommendations; let i=index">
           <ng-container *ngIf="!recommendation.attributes.isGroupRecommendation">
             <ng-container *ngIf="i != 0">
-              <h3>{{recommendation.attributes.title.stringForDisplay}}</h3>
-              <app-media-item-collection-row [collection]="recommendation.relationships.contents.data"></app-media-item-collection-row>
+              <app-media-item-collection-carousel [collection]="recommendation.relationships.contents.data">
+                <h3>{{recommendation.attributes.title.stringForDisplay}}</h3>
+              </app-media-item-collection-carousel>
             </ng-container>
           </ng-container>
           <ng-container *ngIf="recommendation.attributes.isGroupRecommendation">
             <div *ngFor="let subRecommendation of recommendation.relationships.contents.data">
-              <h3>{{subRecommendation.attributes.title.stringForDisplay}}</h3>
-              <app-media-item-collection-row [collection]="subRecommendation.relationships.contents.data"></app-media-item-collection-row>
+              <app-media-item-collection-carousel [collection]="subRecommendation.relationships.contents.data">
+                <h3>{{subRecommendation.attributes.title.stringForDisplay}}</h3>
+              </app-media-item-collection-carousel>
             </div>
           </ng-container>
         </div>

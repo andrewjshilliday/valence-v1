@@ -37,8 +37,7 @@
         <span class="current-playback-time">{{formatTime(playerService.musicKit.player.currentPlaybackTime) | minutesSeconds}}</span>
         <mat-slider class='track-progress' thumbLabel [displayWith]="formatLabel"
           [max]="playerService.musicKit.player.currentPlaybackDuration" [min]="0" [step]="1" [value]="playerService.musicKit.player.currentPlaybackTime"
-          (change)="playerService.seekToTime($event.value)" (mouseenter)="showLabel(true)" (mouseleave)="showLabel(false)"
-          (mousedown)="setScrubbingProgress(true)" (mouseup)="setScrubbingProgress(false)" (dragend)="setScrubbingProgress(false)">
+          (change)="playerService.seekToTime($event.value)" (mousedown)="setScrubbingProgress(true)" (mouseup)="setScrubbingProgress(false)" (dragend)="setScrubbingProgress(false)">
         </mat-slider>
         <span class="current-playback-duration">{{formatTime(playerService.musicKit.player.currentPlaybackDuration) | minutesSeconds}}</span>
       </div>

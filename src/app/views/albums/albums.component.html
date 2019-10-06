@@ -60,12 +60,14 @@
           </div>
           <div *ngIf="artistAlbums && artistAlbums.relationships && (artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : playerService.album.id).length">
             <hr />
-            <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{playerService.album.attributes.artistName}}</a></h4>
-            <app-media-item-collection-row [collection]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : playerService.album.id"></app-media-item-collection-row>
+            <app-media-item-collection-carousel [collection]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : playerService.album.id">
+              <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{playerService.album.attributes.artistName}}</a></h4>
+            </app-media-item-collection-carousel>
           </div>
           <div *ngIf="relatedAlbums && relatedAlbums.length">
-            <h4>You Might Also Like</h4>
-            <app-media-item-collection-row [collection]="relatedAlbums"></app-media-item-collection-row>
+            <app-media-item-collection-carousel [collection]="relatedAlbums">
+              <h4>You Might Also Like</h4>
+            </app-media-item-collection-carousel>
           </div>
         </div>
 
@@ -78,12 +80,14 @@
             </span>
           </div>
           <div *ngIf="artistAlbums && artistAlbums.relationships && (artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : playerService.album.id).length">
-            <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{playerService.album.attributes.artistName}}</a></h4>
-            <app-media-item-collection-row [collection]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : playerService.album.id"></app-media-item-collection-row>
+            <app-media-item-collection-carousel [collection]="artistAlbums.relationships.albums.data | albumFilter : 'removeAlbum' : playerService.album.id">
+              <h4>More by <a [routerLink]="['/artists', artistAlbums.id]">{{playerService.album.attributes.artistName}}</a></h4>
+            </app-media-item-collection-carousel>
           </div>
           <div *ngIf="relatedAlbums && relatedAlbums.length">
-            <h4>You May Also Like</h4>
-            <app-media-item-collection-row [collection]="relatedAlbums"></app-media-item-collection-row>
+            <app-media-item-collection-carousel [collection]="relatedAlbums">
+              <h4>You May Also Like</h4>
+            </app-media-item-collection-carousel>
           </div>
         </div>
         

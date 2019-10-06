@@ -1,128 +1,102 @@
 <div *ngIf="item.type.includes('albums') && item.attributes" appLazyLoadImage>
-  <div *ngIf="item.attributes.artwork" class="row media-artwork">
-    <a *ngIf="!item.type.includes('library')" [routerLink]="['/albums', item.id]">
-      <img class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 400)" src="././assets/images/placeholder-transparent.png" [ngStyle]="{'background-color': '#' + item.attributes.artwork.bgColor}" />
-      <div class="hover-gradient"></div>
-    </a>
-    <a *ngIf="item.type.includes('library')" [routerLink]="['/library/albums', item.id]">
-      <img class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 400)" src="././assets/images/placeholder.jpeg" /> 
-      <div class="hover-gradient"></div>
-    </a>
-    <div class="media-control-button">
-      <span class="fa-stack" (click)="playerService.playItem(item)">
-        <i class="fas fa-circle fa-stack-2x"></i>
-        <i class="fas fa-play fa-stack-1x"></i>
-      </span>
-    </div>
+  <div class="media-artwork" (click)="navigate(item, $event)" id="artwork-{{item.id}}"
+  [attr.data-background-src]="item.attributes && item.attributes.artwork ? playerService.formatArtwork(item.attributes.artwork, 400) : ''"
+  [ngStyle]="{'background-image': 'url(././assets/images/' + (item.type.includes('library') ? 'placeholder.jpeg' : 'placeholder-transparent.png' +')'), 'background-color': item.attributes && item.attributes.artwork ? '#' + item.attributes.artwork.bgColor : 'none'}">
+    <ng-container *ngTemplateOutlet="controls"></ng-container>
   </div>
-  <div class="row">
-    <div class="col media-album text-truncate">
-      <a [routerLink]="['/albums', item.id]" [ngClass]="{'link-text-light': light}" title="{{item.attributes.name}}">{{item.attributes.name}}</a>
-    </div>
-    <div *ngIf="item.attributes.contentRating && item.attributes.contentRating === 'explicit'" class="col-2 explicit">
-      <i class="material-icons float-right" [ngClass]="{'text-light': light}">explicit</i>
-    </div>
+  <div class="media-album">
+    <a [routerLink]="['/albums', item.id]" class="text-truncate" [ngStyle]="{'width': item.attributes.contentRating && item.attributes.contentRating === 'explicit' ? 'calc(100% - 20px)' : '100%'}" title="{{item.attributes.name}}">{{item.attributes.name}}</a>
+    <i *ngIf="item.attributes.contentRating && item.attributes.contentRating === 'explicit'" class="material-icons float-right">explicit</i>
   </div>
-  <div class="row media-artist">
-    <span *ngIf="!item.relationships || !item.relationships.artists.data[0]" class="text-truncate" [ngClass]="{'text-light': light}" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</span>
-    <a *ngIf="item.relationships && item.relationships.artists.data[0]" [routerLink]="['/artists', item.relationships.artists.data[0].id]" class="text-truncate" [ngClass]="{'link-text-light': light}" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</a>
+  <div class="media-artist">
+    <span *ngIf="!item.relationships || !item.relationships.artists.data[0]" class="text-truncate" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</span>
+    <a *ngIf="item.relationships && item.relationships.artists.data[0]" [routerLink]="['/artists', item.relationships.artists.data[0].id]" class="text-truncate" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</a>
   </div>
 </div>
 
 <div *ngIf="item.type.includes('playlists')" appLazyLoadImage>
-  <div *ngIf="item.attributes.artwork" class="row media-artwork">
-    <a *ngIf="!item.type.includes('library')" [routerLink]="['/playlists', item.id]">
-      <img class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 400)" src="././assets/images/placeholder-transparent.png" [ngStyle]="{'background-color': '#' + item.attributes.artwork.bgColor}" />
-      <div class="hover-gradient"></div>
-    </a>
-    <a *ngIf="item.type.includes('library')" [routerLink]="['/library/playlists', item.id]">
-      <img class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 400)" src="././assets/images/placeholder.jpeg" />
-      <div class="hover-gradient"></div>
-    </a>
-    <div class="media-control-button">
-      <span class="fa-stack" (click)="playerService.playItem(item)">
-        <i class="fas fa-circle fa-stack-2x"></i>
-        <i class="fas fa-play fa-stack-1x"></i>
-      </span>
-    </div>
+  <div class="media-artwork" (click)="navigate(item, $event)" id="artwork-{{item.id}}"
+  [attr.data-background-src]="item.attributes && item.attributes.artwork ? playerService.formatArtwork(item.attributes.artwork, 400) : ''"
+  [ngStyle]="{'background-image': 'url(././assets/images/' + (item.type.includes('library') ? 'placeholder.jpeg' : 'placeholder-transparent.png' +')'), 'background-color': item.attributes && item.attributes.artwork ? '#' + item.attributes.artwork.bgColor : 'none'}">
+  <ng-container *ngTemplateOutlet="controls"></ng-container>
+</div>
+  <div class='media-album'>
+    <a [routerLink]="['/playlists', item.id]" class="text-truncate" title="{{item.attributes.name}}">{{item.attributes.name}}</a>
   </div>
-  <div *ngIf="!item.attributes.artwork" class="row media-artwork">
-    <a *ngIf="!item.type.includes('library')" [routerLink]="['/playlists', item.id]"><img class="img-fluid rounded" src="././assets/images/placeholder.jpeg" /></a>
-    <a *ngIf="item.type.includes('library')" [routerLink]="['/library/playlists', item.id]"><img class="img-fluid rounded" src="././assets/images/placeholder.jpeg" /></a>
-    <div class="media-control-button">
-      <i class="fas fa-play-circle fa-2x" aria-hidden="true" (click)="playerService.playItem(item)"></i>
-    </div>
+  <div *ngIf="item.relationships && item.relationships.curator && item.relationships.curator.data[0]" class="media-album">
+    <a *ngIf="item.relationships.curator.data[0].type === 'apple-curators'" [routerLink]="['/curators', 'apple', item.relationships.curator.data[0].id]" class="text-truncate" title="{{item.attributes.curatorName}}">{{item.attributes.curatorName}}</a>
+    <a *ngIf="item.relationships.curator.data[0].type === 'curators'" [routerLink]="['/curators', 'user', item.relationships.curator.data[0].id]" class="text-truncate" title="{{item.attributes.curatorName}}">{{item.attributes.curatorName}}</a>
   </div>
-  <div class='row media-album'>
-    <a [routerLink]="['/playlists', item.id]" class="text-truncate" [ngClass]="{'link-text-light': light}" title="{{item.attributes.name}}">{{item.attributes.name}}</a>
-  </div>
-  <div *ngIf="item.relationships && item.relationships.curator && item.relationships.curator.data[0]" class="row media-album">
-    <a *ngIf="item.relationships.curator.data[0].type === 'apple-curators'" [routerLink]="['/curators', 'apple', item.relationships.curator.data[0].id]" class="text-truncate" [ngClass]="{'link-text-light': light}" title="{{item.attributes.curatorName}}">{{item.attributes.curatorName}}</a>
-    <a *ngIf="item.relationships.curator.data[0].type === 'curators'" [routerLink]="['/curators', 'user', item.relationships.curator.data[0].id]" class="text-truncate" [ngClass]="{'link-text-light': light}" title="{{item.attributes.curatorName}}">{{item.attributes.curatorName}}</a>
-  </div>
-  <div *ngIf="!item.relationships || !item.relationships.curator || !item.relationships.curator.data[0]" class="row media-album">
-    <span class="text-truncate" [ngClass]="{'link-text-light': light}" title="{{item.attributes.curatorName}}">{{item.attributes.curatorName}}</span>
+  <div *ngIf="!item.relationships || !item.relationships.curator || !item.relationships.curator.data[0]" class="media-album">
+    <span class="text-truncate" title="{{item.attributes.curatorName}}">{{item.attributes.curatorName}}</span>
   </div>
 </div>
 
 <div *ngIf="item.type.includes('artists')" appLazyLoadImage>
-  <div class="row media-artwork">
-    <a *ngIf="!item.type.includes('library') && item.attributes.artwork" [routerLink]="['/artists', item.id]"><img class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 400)" src="././assets/images/placeholder.jpeg" id="image-{{item.id}}" /></a>
-    <a *ngIf="!item.type.includes('library') && !item.attributes.artwork" [routerLink]="['/artists', item.id]"><img class="img-fluid rounded" src="././assets/images/placeholder.jpeg" id="image-{{item.id}}" /></a>
-    <a *ngIf="item.type.includes('library')" [routerLink]="['/artists', item.id]"><img class="img-fluid rounded" src="././assets/images/placeholder.jpeg" /></a>
+  <div class="media-artwork" (click)="navigate(item, $event)" id="artwork-{{item.id}}" style="background-image: url(././assets/images/placeholder.jpeg)"
+    [attr.data-background-src]="item.attributes && item.attributes.artwork ? playerService.formatArtwork(item.attributes.artwork, 400) : ''">
   </div>
-  <div class="row media-artist">
+  <div class="media-artist">
     <a [routerLink]="['/artists', item.id]" class="text-truncate" title="{{item.attributes.name}}">{{item.attributes.name}}</a>
   </div>
 </div>
 
 <div *ngIf="item.type.includes('songs')" appLazyLoadImage>
-  <div *ngIf="item.attributes.artwork" class="row media-artwork">
-    <img *ngIf="!item.relationships || !item.relationships.albums" class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 400)" src="././assets/images/placeholder-transparent.png" [ngStyle]="{'background-color': '#' + item.attributes.artwork.bgColor}" />
-    <a *ngIf="item.relationships && item.relationships.albums" [routerLink]="['/albums', item.relationships.albums.data[0].id]"><img class="img-fluid rounded" [src]="playerService.formatArtwork(item.attributes.artwork, 300)" src="././assets/images/placeholder-transparent.png" [ngStyle]="{'background-color': '#' + item.attributes.artwork.bgColor}" /></a>
-    <div class="media-control-button">
-      <span class="fa-stack" (click)="playerService.playItem(item)">
-        <i class="fas fa-circle fa-stack-2x"></i>
-        <i class="fas fa-play fa-stack-1x"></i>
-      </span>
-    </div>
+  <div class="media-artwork" (click)="navigate(item, $event)" id="artwork-{{item.id}}"
+  [attr.data-background-src]="item.attributes && item.attributes.artwork ? playerService.formatArtwork(item.attributes.artwork, 400) : ''"
+  [ngStyle]="{'background-image': 'url(././assets/images/' + (item.type.includes('library') ? 'placeholder.jpeg' : 'placeholder-transparent.png' +')'), 'background-color': item.attributes && item.attributes.artwork ? '#' + item.attributes.artwork.bgColor : 'none'}">
+    <ng-container *ngTemplateOutlet="controls"></ng-container>
   </div>
-  <div class="row media-album">
+  <div class="media-album">
     <span *ngIf="!item.relationships || !item.relationships.albums" class="text-truncate" title="{{item.attributes.name}}">{{item.attributes.name}}</span>
     <a *ngIf="item.relationships && item.relationships.albums" class="text-truncate" [routerLink]="['/albums', item.relationships.albums.data[0].id]" title="{{item.attributes.name}}">{{item.attributes.name}}</a>
   </div>
-  <div class="row media-album">
+  <div class="media-album">
     <span *ngIf="!item.relationships || !item.relationships.albums" class="text-truncate" title="{{item.attributes.albumName}}">{{item.attributes.albumName}}</span>
     <a *ngIf="item.relationships && item.relationships.albums" class="text-truncate" [routerLink]="['/albums', item.relationships.albums.data[0].id]" title="{{item.attributes.albumName}}">{{item.attributes.albumName}}</a>
   </div>
-  <div class="row media-artist">
+  <div class="media-artist">
     <span *ngIf="!item.relationships || !item.relationships.artists" class="text-truncate" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</span>
     <a *ngIf="item.relationships && item.relationships.artists" class="text-truncate" [routerLink]="['/artists', item.relationships.artists.data[0].id]" title="{{item.attributes.artistName}}">{{item.attributes.artistName}}</a>
   </div>
 </div>
 
 <div *ngIf="item.type.includes('curators')" appLazyLoadImage>
-  <div *ngIf="item.attributes.artwork" class="row media-artwork">
-    <a *ngIf="item.type === 'apple-curators'" [routerLink]="['/curators', 'apple', item.id]"><img class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 400)" src="././assets/images/placeholder-transparent.png" [ngStyle]="{'background-color': '#' + item.attributes.artwork.bgColor}" /></a>
-    <a *ngIf="item.type === 'curators'" [routerLink]="['/curators', 'user', item.id]"><img class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 400)" src="././assets/images/placeholder-transparent.png" [ngStyle]="{'background-color': '#' + item.attributes.artwork.bgColor}" /></a>
+  <div class="media-artwork" (click)="navigate(item, $event)" id="artwork-{{item.id}}"
+  [attr.data-background-src]="playerService.formatArtwork(item.attributes.artwork, 400)"
+  [ngStyle]="{'background-image': 'placeholder-transparent.png', 'background-color': '#' + item.attributes.artwork.bgColor}">
   </div>
-  <div class="row media-artist">
+  <div class="media-artist">
     <a *ngIf="item.type === 'apple-curators'" class="text-truncate" [routerLink]="['/curators', 'apple', item.id]" title="{{item.attributes.name}}">{{item.attributes.name}}</a>
     <a *ngIf="item.type === 'curators'" class="text-truncate" [routerLink]="['/curators', 'user', item.id]" title="{{item.attributes.name}}">{{item.attributes.name}}</a>
   </div>
 </div>
 
 <div *ngIf="item.type.includes('stations')" appLazyLoadImage>
-  <div *ngIf="item.attributes.artwork" class="row media-artwork" style="pointer-events: none">
-    <img class="img-fluid rounded" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 400)" src="././assets/images/placeholder-transparent.png" [ngStyle]="{'background-color': '#' + item.attributes.artwork.bgColor}" />
-    <div class="media-control-button">
-      <span class="fa-stack" (click)="playerService.playItem(item)">
-        <i class="fas fa-circle fa-stack-2x"></i>
-        <i class="fas fa-play fa-stack-1x"></i>
-      </span>
-    </div>
+  <div class="media-artwork" (click)="navigate(item, $event)" id="artwork-{{item.id}}" style="pointer-events: none"
+  [attr.data-background-src]="playerService.formatArtwork(item.attributes.artwork, 400)"
+  [ngStyle]="{'background-image': 'placeholder-transparent.png', 'background-color': '#' + item.attributes.artwork.bgColor}">
+    <ng-container *ngTemplateOutlet="controls"></ng-container>
   </div>
-  <div class="row media-artist">
+  <div class="media-artist">
     <span class="text-truncate" title="{{item.attributes.name}}">{{item.attributes.name}}</span>
   </div>
 </div>
+
+<ng-template #controls>
+  <div class="hover-gradient"></div>
+  <div class="media-control-button">
+    <span class="fa-stack" (click)="play(item, $event)">
+      <i class="fas fa-circle fa-stack-2x"></i>
+      <i class="fas fa-play fa-stack-1x"></i>
+    </span>
+  </div>
+  <div *ngIf="showOptions" class="media-options-button">
+    <app-dropdown [item]="item" [playOption]="true" [shuffleOption]="true" [libraryOption]="true" (click)="$event.stopPropagation()">
+      <span class="fa-stack">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fas fa-ellipsis-h fa-stack-1x"></i>
+      </span>
+    </app-dropdown>
+  </div>
+</ng-template>

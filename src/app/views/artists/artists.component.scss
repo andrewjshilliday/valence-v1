@@ -19,15 +19,6 @@
   }
 }
 
-.test {
-  height: 60px;
-  transition: all .5s linear;
-}
-
-.test1 {
-  height: 90px;
-}
-
 .header-expanded {
   height: 95px;
 
@@ -63,22 +54,16 @@
 }
 
 .artist-info {
-  padding: 5px 5px 15px 5px;
+  padding: 5px 0 15px 0;
   color: var(--on-background);
-}
-
-.artist-info h2 {
-  padding-left: 15px;
-}
-
-.artist-info p {
-  font-size: 9pt;
+  h3 { padding-left: 45px; }
+  p { font-size: 9pt; }
 }
 
 .artist-bio {
   max-height: 250px;
   max-width: 100%;
-  padding-left: 30px;
+  padding-left: 56px;
   white-space: pre-wrap;
   font-size: 9pt;
 }
@@ -92,12 +77,6 @@
   color: var(--on-background);
   border: none;
   outline: none;
-}
-
-h3 {
-  padding-left: 15px;
-  padding-right: 15px;
-  color: var(--on-background);
 }
 
 h5 {
