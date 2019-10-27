@@ -10,12 +10,15 @@
 }
 
 .logo {
-  display: flex;
-  color: var(--on-background);
+  mask: url(../../../../assets/images/music.svg);
+  background: var(--on-background);
+  margin: auto;
   position: relative;
   top: 50%;
-  -ms-transform: translateY(-50%) scaleX(1.1);
-  transform: translateY(-50%) scaleX(1.1);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  height: 55px;
+  width: 55px;
 }
 
 .now-playing-bar {

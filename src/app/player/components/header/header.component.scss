@@ -11,30 +11,36 @@
 
   .logo {
     grid-area: logo;
-    justify-self: start;
-    padding: 2px 0 0 45px;
+    padding-left: 45px;
 
     a:hover {
       text-decoration: none;
     }
 
     span {
+      display: inline-flex;
+      position: relative;
+      top: 2px;
       font-size: 20pt;
       font-weight: 500;
-      text-decoration: none;
       color: var(--on-background);
-
-      i {
+      
+      &::before {
+        content: '';
         position: relative;
-        top: 1px;
-        padding-right: 5px;
+        top: 7px;
+        mask: url(../../../../assets/images/music.svg);
+        background: var(--on-background);
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
       }
-    }
 
-    span:hover {
-      color: var(--primary);
+      &:hover { color: var(--primary); }
+      &:hover::before { background: var(--primary); }
     }
   }
+
   .nav-extras {
     grid-area: options;
     justify-self: end;

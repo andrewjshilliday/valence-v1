@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
 import { Utils } from '../../shared/utils';
-import * as $ from 'jquery';
 
 import { Artist } from '../../shared/models/musicKit/artist.model';
 import { Album } from '../../shared/models/musicKit/album.model';
@@ -39,9 +38,9 @@ export class AlbumsComponent implements OnInit, OnDestroy {
       return false;
     };
 
-    $(window).on('resize', function() {
+    window.onresize = () => {
       this.setEditorialNotesStyle();
-    }.bind(this));
+    };
   }
 
   ngOnDestroy(): void {
@@ -53,7 +52,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
 
     this.isLibraryAlbum = id.startsWith('l.');
     this.playerService.album = await this.apiService.album(id, 'artists,tracks').toPromise();
-    this.setEditorialNotesStyle();
+    setTimeout(() => { this.setEditorialNotesStyle(); }, 500);
 
     this.loading = false;
 
@@ -142,14 +141,12 @@ export class AlbumsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    $(document).ready(function() {
-      if ($('#notes') && $('#notes').offset()) {
-        const height = $(window).height();
-        const notesOffset = $('#notes').offset().top;
-        const notesParentOffset = $('#notes').parent().offset().top;
-        $('#notes').css('max-height', height  - notesOffset + notesParentOffset - 160);
-      }
-    });
+    const notesElement = document.getElementById('notes');
+    if (notesElement) {
+      const height = window.innerHeight;
+      const notesOffsetTop = notesElement.getBoundingClientRect().top;
+      notesElement.style.maxHeight = `${height - notesOffsetTop - 110}px`;
+    }
   }
 
   formatTime(ms: number) {

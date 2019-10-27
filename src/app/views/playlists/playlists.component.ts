@@ -34,9 +34,9 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
       return false;
     };
 
-    $(window).on('resize', function() {
+    window.onresize = () => {
       this.setEditorialNotesStyle();
-    }.bind(this));
+    };
   }
 
   ngOnDestroy(): void {
@@ -55,7 +55,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.setEditorialNotesStyle();
+    setTimeout(() => { this.setEditorialNotesStyle(); }, 500);
 
     this.loading = false;
 
@@ -139,14 +139,12 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    $(document).ready(function() {
-      if ($('#notes') && $('#notes').offset()) {
-        const height = $(window).height();
-        const notesOffset = $('#notes').offset().top;
-        const notesParentOffset = $('#notes').parent().offset().top;
-        $('#notes').css('max-height', height  - notesOffset + notesParentOffset - 160);
-      }
-    });
+    const notesElement = document.getElementById('notes');
+    if (notesElement) {
+      const height = window.innerHeight;
+      const notesOffsetTop = notesElement.getBoundingClientRect().top;
+      notesElement.style.maxHeight = `${height - notesOffsetTop - 110}px`;
+    }
   }
 
   formatTime(ms: number) {
