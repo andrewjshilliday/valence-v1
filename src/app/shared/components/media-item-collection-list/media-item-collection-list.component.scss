@@ -30,7 +30,10 @@
 .header-sticky {
   @media (min-width: 1086px) { position: sticky; padding: 1em 0 0 2em; }
   @media (max-width: 1085px) { position: relative; padding: 10px; }
+  display: block;
   top: 0;
+  width: 100%;
+  overflow: hidden;
   padding: 1em 0 0 2em;
   background: var(--background);
   color: var(--on-background);
@@ -126,7 +129,10 @@
   i:hover { color: var(--primary); }
 }
 
-.collection-title { padding-bottom: 2px; }
+.collection-title {
+  margin-right: 30px;
+  padding-bottom: 2px;
+}
 
 .collection-text { font-size: 10pt; }
 

@@ -1,23 +1,23 @@
 <div *ngIf="showHeader" class="row header-sticky">
 
   <div class="expanded">
-    <div *ngIf="collection.type === 'albums'">
+    <ng-container *ngIf="collection.type === 'albums'">
       <h4 class="text-truncate collection-title" title="{{collection.attributes.name}}">{{collection.attributes.name}}</h4>
       <h5 *ngIf="collection.relationships.artists.data && collection.relationships.artists.data.length"><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a> | {{collection.attributes.genreNames[0]}}</h5>
       <h5 *ngIf="collection.relationships.artists.data && !collection.relationships.artists.data.length">{{collection.attributes.artistName}} | {{collection.attributes.genreNames[0]}}</h5>
-    </div>
-    <div *ngIf="collection.type === 'library-albums'">
+    </ng-container>
+    <ng-container *ngIf="collection.type === 'library-albums'">
       <h4 class="text-truncate collection-title" title="{{collection.attributes.name}}">{{collection.attributes.name}}</h4>
       <h5 *ngIf="collection.relationships.artists.data && collection.relationships.artists.data.length"><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a></h5>
       <h5 *ngIf="collection.relationships.artists.data && !collection.relationships.artists.data.length">{{collection.attributes.artistName}}</h5>
-    </div>
-    <div *ngIf="collection.type.includes('playlists')">
+    </ng-container>
+    <ng-container *ngIf="collection.type.includes('playlists')">
       <h4 class="text-truncate collection-title" title="{{collection.attributes.name}}">{{collection.attributes.name}}</h4>
       <h5 *ngIf="collection.relationships.curator && collection.relationships.curator.data && collection.relationships.curator.data.length && collection.relationships.curator.data[0].type === 'apple-curators'"><a [routerLink]="['/curators', 'apple', collection.relationships.curator.data[0].id]">{{collection.attributes.curatorName}}</a> | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
       <h5 *ngIf="collection.relationships.curator && collection.relationships.curator.data && collection.relationships.curator.data.length && collection.relationships.curator.data[0].type === 'curators'"><a [routerLink]="['/curators', 'user', collection.relationships.curator.data[0].id]">{{collection.attributes.curatorName}}</a> | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
       <h5 *ngIf="collection.relationships.curator && collection.relationships.curator.data && collection.relationships.curator.data.length && collection.relationships.curator.data[0].type === 'artists'"><a [routerLink]="['/artists', collection.relationships.curator.data[0].id]">{{collection.attributes.curatorName}}</a> | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
       <h5 *ngIf="collection.relationships.curator && collection.relationships.curator.data && !collection.relationships.curator.data.length">{{collection.attributes.curatorName}} | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
-    </div>
+    </ng-container>
   </div>
   
   <div class="minimised">
@@ -29,20 +29,20 @@
         <span><a (click)='playerService.playItem(collection, 0, true)'><i class="fas fa-random fa-xs"></i>Shuffle</a></span>
       </div>
       <div class="col-8">
-        <div *ngIf="collection.type === 'albums'">
+        <ng-container *ngIf="collection.type === 'albums'">
           <h4 class="text-truncate collection-title">{{collection.attributes.name}}</h4>
           <h5 *ngIf="collection.relationships.artists.data && collection.relationships.artists.data.length" class="text-truncate"><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a> | {{collection.attributes.genreNames[0]}}</h5>
           <h5 *ngIf="collection.relationships.artists.data && !collection.relationships.artists.data.length" class="text-truncate">{{collection.attributes.artistName}} | {{collection.attributes.genreNames[0]}}</h5>
-        </div>
-        <div *ngIf="collection.type === 'library-albums'">
+        </ng-container>
+        <ng-container *ngIf="collection.type === 'library-albums'">
           <h4 class="text-truncate collection-title">{{collection.attributes.name}}</h4>
           <h5 *ngIf="collection.relationships.artists.data && collection.relationships.artists.data.length" class="text-truncate"><a [routerLink]="['/artists', collection.relationships.artists.data[0].id]">{{collection.attributes.artistName}}</a></h5>
           <h5 *ngIf="collection.relationships.artists.data && !collection.relationships.artists.data.length" class="text-truncate">{{collection.attributes.artistName}}</h5>
-        </div>
-        <div *ngIf="collection.type.includes('playlists')">
+        </ng-container>
+        <ng-container *ngIf="collection.type.includes('playlists')">
           <h4 class="text-truncate collection-title">{{collection.attributes.name}}</h4>
           <h5 class="text-truncate">{{collection.attributes.curatorName}} | Updated {{collection.attributes.lastModifiedDate | date : 'd MMMM' }}</h5>
-        </div>
+        </ng-container>
         <span *ngIf="collection.type.includes('albums')">{{collection.attributes.trackCount}} Songs, {{(collectionDuration / 1000 / 60) | hoursMinutes}}</span>
         <span *ngIf="collection.type.includes('playlists')">{{collection.relationships.tracks.data.length}} Songs, {{(collectionDuration / 1000 / 60) | hoursMinutes}}</span>
         <div *ngIf="collection.type.includes('albums')">
