@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { PlayerService } from '../../../services/player.service';
-declare const ResizeObserver;
+import ResizeObserver from 'resize-observer-polyfill';
 
 @Component({
   selector: 'app-media-item-collection-carousel',
