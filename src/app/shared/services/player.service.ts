@@ -338,6 +338,10 @@ export class PlayerService {
   initializeMediaDevices() {
     this.device = JSON.parse(localStorage.getItem('device'));
 
+    if (!navigator.mediaDevices) {
+      return;
+    }
+
     navigator.mediaDevices.addEventListener('devicechange', () => {
       if (Boolean(JSON.parse(localStorage.getItem('enablePlayPause')))) {
         navigator.mediaDevices.enumerateDevices().then(audioDevices => {
