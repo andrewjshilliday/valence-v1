@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/core';
 import { PlayerService } from '../../../services/player.service';
+import { MediaItemViewComponent } from '../../media-item-view/media-item-view.component';
 import ResizeObserver from 'resize-observer-polyfill';
 
 @Component({
@@ -15,6 +16,7 @@ export class MediaItemCollectionRowCarouselComponent implements OnInit, AfterVie
   leftIcon: HTMLElement;
   rightIcon: HTMLElement;
   artwork: HTMLElement;
+  @ViewChild(MediaItemViewComponent, {static: false}) mediaItemComponent: MediaItemViewComponent;
 
   constructor(public playerService: PlayerService) {
   }
@@ -26,7 +28,7 @@ export class MediaItemCollectionRowCarouselComponent implements OnInit, AfterVie
     this.row = document.getElementById(`row-${this.collection[0].id}-${this.collection[this.collection.length - 1].id}`);
     this.leftIcon = document.getElementById(`left-${this.collection[0].id}-${this.collection[this.collection.length - 1].id}`);
     this.rightIcon = document.getElementById(`right-${this.collection[0].id}-${this.collection[this.collection.length - 1].id}`);
-    this.artwork = document.getElementById(`artwork-${this.collection[0].id}`);
+    this.artwork = this.mediaItemComponent.element.nativeElement.children[0].children[0].children[0];
     this.positionScrollButtons();
 
     if (this.leftDisabled()) {
