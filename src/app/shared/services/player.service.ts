@@ -218,6 +218,10 @@ export class PlayerService {
       artwork = this.generateArtwork(String(artwork));
     }
 
+    if (!artwork) {
+      return;
+    }
+
     return MusicKit.formatArtworkURL(artwork, size, size);
   }
 
