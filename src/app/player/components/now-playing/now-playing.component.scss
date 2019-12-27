@@ -160,7 +160,7 @@
       height: 4px;
     }
   
-    /deep/ .mat-accent {
+    ::ng-deep .mat-accent {
       .mat-slider-wrapper {
         top: 1px !important;
       }
@@ -243,7 +243,7 @@
       min-width: 115px;
     }
 
-    /deep/ .mat-accent {
+    ::ng-deep .mat-accent {
       .mat-slider-horizontal {
         min-width: 100px;
       }
@@ -257,7 +257,7 @@
       }
   
       .mat-slider-track-background {
-        background-color: var(--scrollbar); // #ff8888!important;
+        background-color: var(--scrollbar);
       }
     }
   }
@@ -270,12 +270,12 @@
   }
 }
 
-/deep/ .mat-slider-wrapper {
+::ng-deep .mat-slider-wrapper {
   top: 0!important;
   cursor: pointer;
 }
 
-/deep/ .mat-slider-thumb {
+::ng-deep .mat-slider-thumb {
   transform: scale(1)!important;
   right: -5px!important;
   bottom: -7px!important;
