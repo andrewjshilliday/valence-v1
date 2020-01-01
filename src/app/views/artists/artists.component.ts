@@ -65,6 +65,12 @@ export class ArtistsComponent implements OnInit, OnDestroy {
         header.classList.remove('header-expanded');
       }
     }, true);
+
+    this.sortAlbums = sessionStorage.getItem('albumsSortOrder') || 'recommended';
+    this.sortSingles = sessionStorage.getItem('singlesSortOrder') || 'recommended';
+    this.sortLiveAlbums = sessionStorage.getItem('liveAlbumsSortOrder') || 'recommended';
+    this.sortCompilations = sessionStorage.getItem('compilationsSortOrder') || 'recommended';
+    this.sortAppearsOn = sessionStorage.getItem('appearsOnSortOrder') || 'recommended';
   }
 
   ngOnDestroy(): void {
@@ -89,8 +95,9 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.getRelatedArtists();
   }
 
-  sortItems(items: any, sort: string) {
+  sortItems(items: any, sort: string, type: string) {
     const sortItems = Object.assign([], items);
+    sessionStorage.setItem(`${type}SortOrder`, sort);
 
     switch (sort) {
       case 'recommended': {

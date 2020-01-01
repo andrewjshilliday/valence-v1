@@ -37,7 +37,7 @@
         </div>
 
         <div *ngIf="albums && albums.length">
-          <app-media-item-collection-carousel [collection]="sortItems(albums, sortAlbums)">
+          <app-media-item-collection-carousel [collection]="sortItems(albums, sortAlbums, 'albums')">
             <div class="row">
               <div class="col-6"><h3>Albums</h3></div>
               <div *ngIf="albums.length > 1" class="col-6">
@@ -50,7 +50,7 @@
         </div>
 
         <div *ngIf="singles && singles.length">
-          <app-media-item-collection-carousel [collection]="sortItems(singles, sortSingles)">
+          <app-media-item-collection-carousel [collection]="sortItems(singles, sortSingles, 'singles')">
             <div class="row">
               <div class="col-6"><h3>EPs & Singles</h3></div>
               <div *ngIf="singles.length > 1" class="col-6">
@@ -63,7 +63,7 @@
         </div>
 
         <div *ngIf="liveAlbums && liveAlbums.length">
-          <app-media-item-collection-carousel [collection]="sortItems(liveAlbums, sortLiveAlbums)">
+          <app-media-item-collection-carousel [collection]="sortItems(liveAlbums, sortLiveAlbums, 'liveAlbums')">
             <div class="row">
               <div class="col-6"><h3>Live Albums</h3></div>
               <div *ngIf="liveAlbums.length > 1" class="col-6">
@@ -76,7 +76,7 @@
         </div>
 
         <div *ngIf="compilations && compilations.length">
-          <app-media-item-collection-carousel [collection]="sortItems(compilations, sortCompilations)">
+          <app-media-item-collection-carousel [collection]="sortItems(compilations, sortCompilations, 'compilations')">
             <div class="row">
               <div class="col-6"><h3>Compilation Albums</h3></div>
               <div *ngIf="compilations.length > 1" class="col-6">
@@ -89,7 +89,7 @@
         </div>
 
         <div *ngIf="appearsOn && appearsOn.length">
-          <app-media-item-collection-carousel [collection]="sortItems(appearsOn, sortAppearsOn)">
+          <app-media-item-collection-carousel [collection]="sortItems(appearsOn, sortAppearsOn, 'appearsOn')">
             <div class="row">
               <div class="col-6"><h3>Appears On Albums</h3></div>
               <div *ngIf="appearsOn.length > 1" class="col-6">
