@@ -7,7 +7,7 @@ import { PlayerService } from '../../../shared/services/player.service';
 import { ApiService } from '../../../shared/services/api.service';
 import { Utils } from '../../../shared/utils';
 
-import { Rating } from '../../../shared/models/musicKit/rating.model';
+import { Rating } from '../../../shared/models';
 
 declare var MusicKit: any;
 

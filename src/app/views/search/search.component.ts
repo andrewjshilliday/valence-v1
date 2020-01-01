@@ -4,8 +4,7 @@ import { Subscription, forkJoin } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
 
-import { Artist } from '../../shared/models/musicKit/artist.model';
-import { SearchHints } from '../../shared/models/musicKit/search-hints.model';
+import { Artist, SearchHints } from '../../shared/models';
 
 @Component({
   selector: 'app-search',

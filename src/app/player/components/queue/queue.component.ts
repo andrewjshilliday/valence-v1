@@ -5,7 +5,6 @@ import { PlayerService } from '../../../shared/services/player.service';
 import { ApiService } from '../../../shared/services/api.service';
 import * as $ from 'jquery';
 
-import * as darkTheme from '../../../shared/themes/dark-theme';
 import { ThemeService } from 'src/app/shared/themes';
 
 declare var MusicKit: any;

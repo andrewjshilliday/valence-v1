@@ -5,10 +5,7 @@ import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
 import { Utils } from '../../shared/utils';
 
-import { Artist } from '../../shared/models/musicKit/artist.model';
-import { Album } from '../../shared/models/musicKit/album.model';
-import { Song } from '../../shared/models/musicKit/song.model';
-import { ArtistData } from 'src/app/shared/models/artist-data.model';
+import { Artist, Album, Song, ArtistData } from '../../shared/models';
 
 @Component({
   selector: 'app-artists',

@@ -4,9 +4,7 @@ import { Subscription } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
 import { ApiService } from '../../shared/services/api.service';
 
-import { Curator } from '../../shared/models/musicKit/curator.model';
-import { Playlist } from '../../shared/models/musicKit/playlist.model';
-import { ChartResults } from '../../shared/models/musicKit/chart.model';
+import { Curator, Playlist, ChartResults } from '../../shared/models';
 
 @Component({
   selector: 'app-curators',

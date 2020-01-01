@@ -1,6 +1,3 @@
-import { Albums } from './album.model';
-import { Playlists } from './playlist.model';
-import { Songs } from './song.model';
 import { Resource } from './common/resource.model';
 
 export interface Chart {

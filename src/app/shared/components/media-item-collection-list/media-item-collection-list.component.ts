@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PlayerService } from '../../services/player.service';
 import { ApiService } from '../../services/api.service';
-import { Rating } from '../../models/musicKit/rating.model';
+import { Rating } from '../../models';
 
 @Component({
   selector: 'app-media-item-collection-list',

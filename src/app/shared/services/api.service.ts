@@ -6,20 +6,12 @@ import { PlayerService } from './player.service';
 import { NotificationService } from './notification.service';
 import { environment } from '../../../environments/environment';
 
-import { Artist, ArtistResponse } from '../models/musicKit/artist.model';
-import { Album, AlbumResponse } from '../models/musicKit/album.model';
-import { Playlist, PlaylistResponse } from '../models/musicKit/playlist.model';
-import { Song, SongResponse } from '../models/musicKit/song.model';
-import { Curator, CuratorResponse } from '../models/musicKit/curator.model';
-import { Recommendation, RecommendationResponse } from '../models/musicKit/recommendation.model';
-import { Rating, RatingResponse } from '../models/musicKit/rating.model';
-import { ChartResults, ChartResponse } from '../models/musicKit/chart.model';
-import { SearchResults, SearchResponse } from '../models/musicKit/search.model';
-import { SearchHints, SearchHintsResponse } from '../models/musicKit/search-hints.model';
-import { Resource, ResourceResponse } from '../models/musicKit/common/resource.model';
-import { ArtistData, ArtistDataResponse } from '../models/artist-data.model';
-import { AlbumData, AlbumDataResponse } from '../models/album-data.model';
-import { GeniusSong, GeniusSongResponse } from '../models/genius-song.model';
+import {
+  Artist, ArtistResponse, Album, AlbumResponse, Playlist, PlaylistResponse, Song, SongResponse, Curator, CuratorResponse,
+  Recommendation, RecommendationResponse, Rating, RatingResponse, ChartResults, ChartResponse, SearchResults, SearchResponse,
+  SearchHints, SearchHintsResponse, Resource, ResourceResponse, ArtistData, ArtistDataResponse, AlbumData, AlbumDataResponse,
+  GeniusSong, GeniusSongResponse
+} from '../models';
 
 declare var MusicKit: any;
 

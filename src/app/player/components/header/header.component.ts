@@ -4,7 +4,7 @@ import { PlayerService } from '../../../shared/services/player.service';
 import { ApiService } from '../../../shared/services/api.service';
 import * as $ from 'jquery';
 
-import { SearchHints } from '../../../shared/models/musicKit/search-hints.model';
+import { SearchHints } from '../../../shared/models';
 
 @Component({
   selector: 'app-header',
