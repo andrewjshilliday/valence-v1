@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  musicServiceApi: 'http://localhost:3000',
+  valenceApi: 'http://localhost:3000',
   appleMusicApi: 'https://api.music.apple.com',
 };
 

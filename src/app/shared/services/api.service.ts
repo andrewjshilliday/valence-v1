@@ -492,7 +492,7 @@ export class ApiService {
   }
 
   artistData(id: string, imageOnly?: boolean): Observable<ArtistData> {
-    const url = `${environment.musicServiceApi}/artists`;
+    const url = `${environment.valenceApi}/artists`;
     let params = new HttpParams()
       .set('ids', id)
       .set('storefront', this.storefront);
@@ -505,7 +505,7 @@ export class ApiService {
   }
 
   artistsData(ids: string[], imageOnly?: boolean): Observable<ArtistData[]> {
-    const url = `${environment.musicServiceApi}/artists`;
+    const url = `${environment.valenceApi}/artists`;
     let params = new HttpParams()
       .set('ids', ids.join(','))
       .set('storefront', this.storefront);
@@ -518,7 +518,7 @@ export class ApiService {
   }
 
   albumData(id: string): Observable<AlbumData> {
-    const url = `${environment.musicServiceApi}/albums`;
+    const url = `${environment.valenceApi}/albums`;
     const params = new HttpParams()
       .set('ids', id)
       .set('storefront', this.storefront);
@@ -527,7 +527,7 @@ export class ApiService {
   }
 
   geniusSong(id: string, artist: string, song: string, includeLyrics?: boolean, refreshLyrics?: boolean): Observable<GeniusSong> {
-    const url = `${environment.musicServiceApi}/genius/song`;
+    const url = `${environment.valenceApi}/genius/song`;
     let params = new HttpParams()
       .set('id', id)
       .set('artist', artist)

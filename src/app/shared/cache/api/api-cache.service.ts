@@ -12,7 +12,7 @@ export enum Endpoints {
   CuratorCharts = 6,
   Library = 7,
   LibrarySongs = 8,
-  MusicService = 9,
+  ValenceApi = 9,
 }
 
 @Injectable()
@@ -28,7 +28,7 @@ export class ApiCache  {
   curatorChartCache = new Map();
   libraryCache = new Map();
   librarySongCache = new Map();
-  musicServiceCache = new Map();
+  valenceApiCache = new Map();
 
   constructor() {
     const musicKit = MusicKit.getInstance();
@@ -43,7 +43,7 @@ export class ApiCache  {
       this.curatorChartCache = new Map();
       this.libraryCache = new Map();
       this.librarySongCache = new Map();
-      this.musicServiceCache = new Map();
+      this.valenceApiCache = new Map();
     }, 1000 * 60 * 60 * 20);
   }
 
@@ -76,8 +76,8 @@ export class ApiCache  {
       case Endpoints.LibrarySongs:
         cached = this.librarySongCache.get(url);
         break;
-      case Endpoints.MusicService:
-        cached = this.musicServiceCache.get(url);
+      case Endpoints.ValenceApi:
+        cached = this.valenceApiCache.get(url);
         break;
     }
 
@@ -117,8 +117,8 @@ export class ApiCache  {
       case Endpoints.LibrarySongs:
         this.librarySongCache.set(url, entry);
         break;
-      case Endpoints.MusicService:
-        this.musicServiceCache.set(url, entry);
+      case Endpoints.ValenceApi:
+        this.valenceApiCache.set(url, entry);
         break;
     }
 

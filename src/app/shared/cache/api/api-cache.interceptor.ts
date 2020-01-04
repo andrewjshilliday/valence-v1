@@ -37,7 +37,7 @@ export class ApiCacheInterceptor implements HttpInterceptor {
     } else if (req.url.indexOf(`library`) > -1) {
       endpoint = Endpoints.Library;
     } else if (req.url.indexOf(`artist`) > -1 || req.url.indexOf(`album`) > -1 || req.url.indexOf(`genius`) > -1) {
-      endpoint = Endpoints.MusicService;
+      endpoint = Endpoints.ValenceApi;
     }
 
     const cachedResponse = this.cache.get(req, endpoint);

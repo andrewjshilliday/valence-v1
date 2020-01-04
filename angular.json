@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "musicplayer": {
+    "valence": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/musicplayer",
+            "outputPath": "dist/valence",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "musicplayer:build"
+            "browserTarget": "valence:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "musicplayer:build:production"
+              "browserTarget": "valence:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "musicplayer:build"
+            "browserTarget": "valence:build"
           }
         },
         "test": {
@@ -112,7 +112,7 @@
         }
       }
     },
-    "musicplayer-e2e": {
+    "valence-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "targets": {
@@ -120,11 +120,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "musicplayer:serve"
+            "devServerTarget": "valence:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "musicplayer:serve:production"
+              "devServerTarget": "valence:serve:production"
             }
           }
         },
@@ -140,5 +140,5 @@
       }
     }
   },
-  "defaultProject": "musicplayer"
+  "defaultProject": "valence"
 }

@@ -1,14 +1,14 @@
 {
-  "name": "musicplayer",
+  "name": "valence",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 192.168.1.93",
-    "build": "ng build --prod --base-href \"https://andrewjshilliday.github.io/musicplayer/\"",
+    "build": "ng build --prod --base-href \"https://andrewjshilliday.github.io/valence/\"",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ngh --dir dist/musicplayer"
+    "deploy": "ngh --dir dist/valence"
   },
   "private": true,
   "dependencies": {
