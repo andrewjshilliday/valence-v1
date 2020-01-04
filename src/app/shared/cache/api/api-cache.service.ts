@@ -33,6 +33,18 @@ export class ApiCache  {
   constructor() {
     const musicKit = MusicKit.getInstance();
     this.storefront = musicKit.storefrontId;
+
+    setInterval(() => {
+      this.artistCache = new Map();
+      this.albumCache = new Map();
+      this.playlistCache = new Map();
+      this.songCache = new Map();
+      this.recommendationCache = new Map();
+      this.curatorChartCache = new Map();
+      this.libraryCache = new Map();
+      this.librarySongCache = new Map();
+      this.musicServiceCache = new Map();
+    }, 1000 * 60 * 60 * 20);
   }
 
   get(req: HttpRequest<any>, endpoint: Endpoints): HttpResponse<any> | undefined {
