@@ -27,7 +27,7 @@
     "@angular/service-worker": "^8.2.13",
     "@sentry/browser": "^5.10.2",
     "bootstrap": "^4.4.1",
-    "core-js": "^3.6.1",
+    "core-js": "^3.6.3",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
     "intersection-observer": "^0.7.0",
