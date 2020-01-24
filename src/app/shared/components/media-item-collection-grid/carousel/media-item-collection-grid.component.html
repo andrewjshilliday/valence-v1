@@ -1,13 +1,13 @@
 <div class="header"><ng-content></ng-content></div>
 <div class="media-item-grid-container">
-  <div class="left" id="left-{{collection[0].id}}-{{collection[collection.length-1].id}}" (click)="scroll(false)"><div></div></div>
-  <div class="media-item-grid" id="row-{{collection[0].id}}-{{collection[collection.length-1].id}}">
+  <div #leftIcon class="left" (click)="scroll(false)"><div></div></div>
+  <div #row class="media-item-grid">
     <div class="container-fluid row" appLazyLoadImage>
       <div *ngFor="let column of columns" class="column">
         <div *ngFor="let row of rows" class="media-item rounded">
           <div *ngIf="collection[(column * numRows) + row]; let item" class="row" (click)="goToAlbum(item)">
-            <div class="media-artwork" [attr.data-background-src]="playerService.formatArtwork(item.attributes.artwork, 100)"
-            [ngStyle]="{'background-image': 'url(././assets/images/placeholder-transparent.png)', 'background-color': '#' + item.attributes.artwork.bgColor}">
+            <div class="media-artwork" [ngStyle]="{'background-color': '#' + item.attributes.artwork.bgColor}">
+              <img class="img-fluid rounded" src="../../../../assets/images/placeholder-transparent.png" [attr.data-src]="playerService.formatArtwork(item.attributes.artwork, 100)" />
               <div class="hover-gradient"></div>
               <div class="media-control-button">
                 <span class="fa-stack" (click)="play(item, $event)">
@@ -32,5 +32,5 @@
       </div>
     </div>
   </div>
-  <div class="right" id="right-{{collection[0].id}}-{{collection[collection.length-1].id}}" (click)="scroll(true)"><div></div></div>
+  <div #rightIcon class="right" (click)="scroll(true)"><div></div></div>
 </div>

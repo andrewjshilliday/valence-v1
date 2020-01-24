@@ -53,11 +53,11 @@ export class LazyLoadImageDirective implements OnInit, OnDestroy {
 
     if (image.dataset.backgroundSrc && image.dataset.backgroundSrc !== '') {
       const img = new Image();
-      img.onload = function() {
+      img.onload = () => {
         if (!image.dataset.backgroundSrc) { return; }
         this.renderer.setStyle(image, 'background-image', `url(${image.dataset.backgroundSrc})`);
         this.renderer.removeAttribute(image, 'data-background-src');
-      }.bind(this);
+      };
       img.src = image.dataset.backgroundSrc;
     }
 

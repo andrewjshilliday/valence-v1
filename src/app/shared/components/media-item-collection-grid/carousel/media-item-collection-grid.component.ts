@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlayerService } from '../../../services/player.service';
 import ResizeObserver from 'resize-observer-polyfill';
@@ -13,12 +13,12 @@ export class MediaItemCollectionGridCarouselComponent implements OnInit, AfterVi
   @Input() collection: any;
   @Input() numRows: number;
   @Input() showArtist: boolean;
+  @ViewChild('row', { static: false }) row: ElementRef;
+  @ViewChild('leftIcon', { static: false }) leftIcon: ElementRef;
+  @ViewChild('rightIcon', { static: false }) rightIcon: ElementRef;
+  firstElement: HTMLElement;
   columns: number[];
   rows: number[];
-  row: HTMLElement;
-  leftIcon: HTMLElement;
-  rightIcon: HTMLElement;
-  firstElement: HTMLElement;
 
   constructor(private router: Router, public playerService: PlayerService) { }
 
@@ -28,17 +28,14 @@ export class MediaItemCollectionGridCarouselComponent implements OnInit, AfterVi
   }
 
   ngAfterViewInit() {
-    this.row = document.getElementById(`row-${this.collection[0].id}-${this.collection[this.collection.length - 1].id}`);
-    this.leftIcon = document.getElementById(`left-${this.collection[0].id}-${this.collection[this.collection.length - 1].id}`);
-    this.rightIcon = document.getElementById(`right-${this.collection[0].id}-${this.collection[this.collection.length - 1].id}`);
-    this.firstElement = this.row.firstElementChild as HTMLElement;
+    this.firstElement = this.row.nativeElement.firstElementChild as HTMLElement;
     this.positionScrollButtons();
 
     if (this.leftDisabled()) {
-      this.leftIcon.classList.add('disabled');
+      this.leftIcon.nativeElement.classList.add('disabled');
     }
     if (this.rightDisabled()) {
-      this.rightIcon.classList.add('disabled');
+      this.rightIcon.nativeElement.classList.add('disabled');
     }
 
     const resizeObserver = new ResizeObserver(entries => {
@@ -46,7 +43,7 @@ export class MediaItemCollectionGridCarouselComponent implements OnInit, AfterVi
         this.positionScrollButtons();
       });
     });
-    resizeObserver.observe(this.row);
+    resizeObserver.observe(this.row.nativeElement);
   }
 
   goToAlbum(item: any) {
@@ -60,36 +57,36 @@ export class MediaItemCollectionGridCarouselComponent implements OnInit, AfterVi
 
   scroll(right: boolean) {
     if (right) {
-      this.rightIcon.classList.add('disabled');
-      this.leftIcon.classList.remove('disabled');
-      this.row.scrollLeft += this.row.offsetWidth;
+      this.rightIcon.nativeElement.classList.add('disabled');
+      this.leftIcon.nativeElement.classList.remove('disabled');
+      this.row.nativeElement.scrollLeft += this.row.nativeElement.offsetWidth;
     } else {
-      this.leftIcon.classList.add('disabled');
-      this.rightIcon.classList.remove('disabled');
-      this.row.scrollLeft -= this.row.offsetWidth;
+      this.leftIcon.nativeElement.classList.add('disabled');
+      this.rightIcon.nativeElement.classList.remove('disabled');
+      this.row.nativeElement.scrollLeft -= this.row.nativeElement.offsetWidth;
     }
 
     setTimeout(() => {
       if (right && !this.rightDisabled()) {
-        this.rightIcon.classList.remove('disabled');
+        this.rightIcon.nativeElement.classList.remove('disabled');
       } else if (!right && !this.leftDisabled()) {
-        this.leftIcon.classList.remove('disabled');
+        this.leftIcon.nativeElement.classList.remove('disabled');
       }
     }, 600);
   }
 
   leftDisabled(): boolean {
-    return this.row.scrollLeft === 0;
+    return this.row.nativeElement.scrollLeft === 0;
   }
 
   rightDisabled(): boolean {
-    const element = this.row.lastChild.lastChild as HTMLElement;
-    return element.offsetLeft <= this.row.scrollLeft + this.row.offsetWidth - 10;
+    const element = this.row.nativeElement.lastElementChild.lastElementChild as HTMLElement;
+    return element.offsetLeft <= this.row.nativeElement.scrollLeft + this.row.nativeElement.offsetWidth - 10;
   }
 
   positionScrollButtons() {
-    (this.leftIcon.firstChild as HTMLElement).style.top = `${this.firstElement.offsetHeight / 2 - 28}px`;
-    (this.rightIcon.firstChild as HTMLElement).style.top = `${this.firstElement.offsetHeight / 2 - 28}px`;
+    this.leftIcon.nativeElement.firstChild.style.top = `${this.firstElement.offsetHeight / 2 - 28}px`;
+    this.rightIcon.nativeElement.firstChild.style.top = `${this.firstElement.offsetHeight / 2 - 28}px`;
   }
 
 }

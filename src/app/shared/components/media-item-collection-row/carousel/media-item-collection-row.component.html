@@ -1,8 +1,8 @@
 <div class="header"><ng-content></ng-content></div>
 <div class="media-item-group-container" id="container-{{collection[0].id}}-{{collection[collection.length-1].id}}">
-  <div class="left" id="left-{{collection[0].id}}-{{collection[collection.length-1].id}}" (click)="scroll(false)"><div></div></div>
-  <div class="media-item-group" id="row-{{collection[0].id}}-{{collection[collection.length-1].id}}">
-    <app-media-item-view *ngFor="let item of collection" [item]="item" class="media-item" [ngClass]="{'large': size === 2}"></app-media-item-view>
+  <div #leftIcon class="left" (click)="scroll(false)"><div></div></div>
+  <div #row class="media-item-group">
+    <app-media-item-view *ngFor="let item of collection" class="media-item" [item]="item" [ngClass]="{'large': size === 2}" [showOptions]="false"></app-media-item-view>
   </div>
-  <div class="right" id="right-{{collection[0].id}}-{{collection[collection.length-1].id}}" (click)="scroll(true)"><div></div></div>
+  <div #rightIcon class="right" (click)="scroll(true)"><div></div></div>
 </div>

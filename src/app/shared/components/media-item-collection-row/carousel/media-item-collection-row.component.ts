@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { PlayerService } from '../../../services/player.service';
-import { MediaItemViewComponent } from '../../media-item-view/media-item-view.component';
 import ResizeObserver from 'resize-observer-polyfill';
 
 @Component({
@@ -12,11 +11,10 @@ export class MediaItemCollectionRowCarouselComponent implements OnInit, AfterVie
 
   @Input() collection: any;
   @Input() size: number;
-  row: HTMLElement;
-  leftIcon: HTMLElement;
-  rightIcon: HTMLElement;
+  @ViewChild('row', { static: false }) row: ElementRef;
+  @ViewChild('leftIcon', { static: false }) leftIcon: ElementRef;
+  @ViewChild('rightIcon', { static: false }) rightIcon: ElementRef;
   artwork: HTMLElement;
-  @ViewChild(MediaItemViewComponent, {static: false}) mediaItemComponent: MediaItemViewComponent;
 
   constructor(public playerService: PlayerService) {
   }
@@ -25,17 +23,14 @@ export class MediaItemCollectionRowCarouselComponent implements OnInit, AfterVie
   }
 
   ngAfterViewInit() {
-    this.row = document.getElementById(`row-${this.collection[0].id}-${this.collection[this.collection.length - 1].id}`);
-    this.leftIcon = document.getElementById(`left-${this.collection[0].id}-${this.collection[this.collection.length - 1].id}`);
-    this.rightIcon = document.getElementById(`right-${this.collection[0].id}-${this.collection[this.collection.length - 1].id}`);
-    this.artwork = this.mediaItemComponent.element.nativeElement.children[0].children[0].children[0];
+    this.artwork = document.getElementById(`artwork-${this.collection[0].id}`);
     this.positionScrollButtons();
 
     if (this.leftDisabled()) {
-      this.leftIcon.classList.add('disabled');
+      this.leftIcon.nativeElement.classList.add('disabled');
     }
     if (this.rightDisabled()) {
-      this.rightIcon.classList.add('disabled');
+      this.rightIcon.nativeElement.classList.add('disabled');
     }
 
     const resizeObserver = new ResizeObserver(entries => {
@@ -43,40 +38,41 @@ export class MediaItemCollectionRowCarouselComponent implements OnInit, AfterVie
         this.positionScrollButtons();
       });
     });
-    resizeObserver.observe(this.row);
+    resizeObserver.observe(this.row.nativeElement);
   }
 
   scroll(right: boolean) {
     if (right) {
-      this.rightIcon.classList.add('disabled');
-      this.leftIcon.classList.remove('disabled');
-      this.row.scrollLeft += this.row.offsetWidth;
+      this.rightIcon.nativeElement.classList.add('disabled');
+      this.leftIcon.nativeElement.classList.remove('disabled');
+      this.row.nativeElement.scrollLeft += this.row.nativeElement.offsetWidth;
     } else {
-      this.leftIcon.classList.add('disabled');
-      this.rightIcon.classList.remove('disabled');
-      this.row.scrollLeft -= this.row.offsetWidth;
+      this.leftIcon.nativeElement.classList.add('disabled');
+      this.rightIcon.nativeElement.classList.remove('disabled');
+      this.row.nativeElement.scrollLeft -= this.row.nativeElement.offsetWidth;
     }
 
     setTimeout(() => {
       if (right && !this.rightDisabled()) {
-        this.rightIcon.classList.remove('disabled');
+        this.rightIcon.nativeElement.classList.remove('disabled');
       } else if (!right && !this.leftDisabled()) {
-        this.leftIcon.classList.remove('disabled');
+        this.leftIcon.nativeElement.classList.remove('disabled');
       }
     }, 600);
   }
 
   leftDisabled(): boolean {
-    return this.row.scrollLeft === 0;
+    return this.row.nativeElement.scrollLeft === 0;
   }
 
   rightDisabled(): boolean {
-    return (this.row.lastChild as HTMLElement).offsetLeft < this.row.scrollLeft + this.row.offsetWidth;
+    return this.row.nativeElement.lastElementChild.offsetLeft < this.row.nativeElement.scrollLeft + this.row.nativeElement.offsetWidth;
   }
 
   positionScrollButtons() {
-    (this.leftIcon.firstChild as HTMLElement).style.top = `${this.artwork.offsetHeight / 2 - 28}px`;
-    (this.rightIcon.firstChild as HTMLElement).style.top = `${this.artwork.offsetHeight / 2 - 28}px`;
+    if (!this.leftIcon || !this.rightIcon) { return; }
+    this.leftIcon.nativeElement.firstChild.style.top = `${this.artwork.offsetHeight / 2 - 28}px`;
+    this.rightIcon.nativeElement.firstChild.style.top = `${this.artwork.offsetHeight / 2 - 28}px`;
   }
 
 }
