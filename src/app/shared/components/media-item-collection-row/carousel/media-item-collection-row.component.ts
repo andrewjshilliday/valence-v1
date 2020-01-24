@@ -11,9 +11,9 @@ export class MediaItemCollectionRowCarouselComponent implements OnInit, AfterVie
 
   @Input() collection: any;
   @Input() size: number;
-  @ViewChild('row', { static: false }) row: ElementRef;
-  @ViewChild('leftIcon', { static: false }) leftIcon: ElementRef;
-  @ViewChild('rightIcon', { static: false }) rightIcon: ElementRef;
+  @ViewChild('row') row: ElementRef;
+  @ViewChild('leftIcon') leftIcon: ElementRef;
+  @ViewChild('rightIcon') rightIcon: ElementRef;
   artwork: HTMLElement;
 
   constructor(public playerService: PlayerService) {

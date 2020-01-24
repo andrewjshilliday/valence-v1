@@ -24,7 +24,7 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   canRefreshLyrics: boolean;
   ratingSubscription: Subscription;
 
-  @ViewChild(MatSlider, {static: false}) slider: MatSlider;
+  @ViewChild(MatSlider) slider: MatSlider;
   scrubbingProgress: boolean;
 
   constructor(public playerService: PlayerService, public apiService: ApiService, public dialog: MatDialog) {

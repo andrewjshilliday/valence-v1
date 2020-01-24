@@ -9,7 +9,7 @@ import { PlayerService } from '../../../services/player.service';
 })
 export class MediaItemCollectionRowComponent implements OnInit, DoCheck {
 
-  @ViewChild('ps', {static: false}) ps: PerfectScrollbarComponent;
+  @ViewChild('ps') ps: PerfectScrollbarComponent;
   @Input() collection: any;
   @Input() size: number;
   @Input() todaysAlbums: boolean;

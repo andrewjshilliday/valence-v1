@@ -13,9 +13,9 @@ export class MediaItemCollectionGridCarouselComponent implements OnInit, AfterVi
   @Input() collection: any;
   @Input() numRows: number;
   @Input() showArtist: boolean;
-  @ViewChild('row', { static: false }) row: ElementRef;
-  @ViewChild('leftIcon', { static: false }) leftIcon: ElementRef;
-  @ViewChild('rightIcon', { static: false }) rightIcon: ElementRef;
+  @ViewChild('row') row: ElementRef;
+  @ViewChild('leftIcon') leftIcon: ElementRef;
+  @ViewChild('rightIcon') rightIcon: ElementRef;
   firstElement: HTMLElement;
   columns: number[];
   rows: number[];
