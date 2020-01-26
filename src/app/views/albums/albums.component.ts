@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PlayerService } from '../../shared/services/player.service';
@@ -33,10 +33,6 @@ export class AlbumsComponent implements OnInit, OnDestroy {
 
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
-    };
-
-    window.onresize = () => {
-      this.setEditorialNotesStyle();
     };
   }
 
@@ -148,6 +144,11 @@ export class AlbumsComponent implements OnInit, OnDestroy {
 
   formatTime(ms: number) {
     return Utils.formatTime(ms);
+  }
+
+  @HostListener('window:resize')
+  onresize() {
+    this.setEditorialNotesStyle();
   }
 
 }
