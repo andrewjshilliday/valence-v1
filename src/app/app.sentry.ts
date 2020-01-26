@@ -1,10 +1,9 @@
 import { Injectable, ErrorHandler } from '@angular/core';
 import * as Sentry from '@sentry/browser';
 import { environment } from '../environments/environment';
-import { Secrets } from './secrets';
 
 Sentry.init({
-  dsn: Secrets.sentryDsn
+  dsn: environment.sentryDsn
 });
 
 @Injectable()

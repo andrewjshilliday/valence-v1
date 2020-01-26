@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   valenceApi: 'http://localhost:3000',
   appleMusicApi: 'https://api.music.apple.com',
+  appleMusicDevToken: '',
+  sentryDsn: ''
 };
 
 /*

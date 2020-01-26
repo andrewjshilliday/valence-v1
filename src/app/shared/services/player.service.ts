@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Secrets } from '../../secrets';
+import { environment } from '../../../environments/environment';
 import { NotificationService } from './notification.service';
 
 import { Artist, Album, Playlist, Curator, Recommendation, ChartResults, SearchResults, GeniusSong } from '../models';
@@ -50,7 +50,7 @@ export class PlayerService {
 
   constructor(private notificationService: NotificationService) {
     MusicKit.configure({
-      developerToken: Secrets.appleMusicDevToken,
+      developerToken: environment.appleMusicDevToken,
       app: {
         name: 'Valence',
         build: '1.0'
