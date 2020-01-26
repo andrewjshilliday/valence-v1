@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, APP_INITIALIZER } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -19,7 +19,12 @@ import { AlbumsComponent } from './views/albums/albums.component';
 import { PlaylistsComponent } from './views/playlists/playlists.component';
 import { CuratorsComponent } from './views/curators/curators.component';
 import { SettingsComponent } from './views/settings/settings.component';
+import { StartupService } from './startup.service';
 import { environment } from '../environments/environment';
+
+export function startupServiceFactory(startupService: StartupService): Function {
+  return () => startupService.load();
+}
 
 @NgModule({
   declarations: [
@@ -62,7 +67,15 @@ import { environment } from '../environments/environment';
   providers: [
     // { provide: ErrorHandler, useClass: SentryErrorHandler },
     ApiCache,
-    { provide: HTTP_INTERCEPTORS, useClass: ApiCacheInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ApiCacheInterceptor, multi: true },
+    StartupService,
+    {
+        // Provider for APP_INITIALIZER
+        provide: APP_INITIALIZER,
+        useFactory: startupServiceFactory,
+        deps: [StartupService],
+        multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
