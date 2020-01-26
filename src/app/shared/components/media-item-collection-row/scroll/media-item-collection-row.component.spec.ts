@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { MediaItemCollectionRowComponent } from './media-item-collection-row.component';
 
 describe('MediaItemCollectionRowComponent', () => {
@@ -8,6 +9,7 @@ describe('MediaItemCollectionRowComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ PerfectScrollbarModule ],
       declarations: [ MediaItemCollectionRowComponent ],
       providers: [ { provide: MatSnackBar, useValue: {} } ]
     })

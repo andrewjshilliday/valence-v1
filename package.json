@@ -6,7 +6,7 @@
     "clean": "rimraf ./dist",
     "start": "ng serve --host 192.168.1.93",
     "build:prod": "ng build --prod --base-href \"https://andrewjshilliday.github.io/valence/\"",
-    "build:ci": "npm run clean && npm run test:ci && npm run build:prod",
+    "build:ci": "npm run clean && npm run test && npm run build:prod",
     "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
     "test:watch": "ng test",
     "lint": "ng lint",
