@@ -71,17 +71,23 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
     switch (this.themeService.getActiveTheme().name) {
       case 'dark': {
         const html = document.getElementsByTagName('mat-dialog-container')[0] as HTMLElement;
-        html.style.cssText = '--background: rgba(51,51,51,1)';
+        if (html) {
+          html.style.cssText = '--background: rgba(51,51,51,1)';
+        }
         break;
       }
       case 'light': {
         const html = document.getElementsByTagName('mat-dialog-container')[0] as HTMLElement;
-        html.style.cssText = '--background: rgba(255,255,255,1)';
+        if (html) {
+          html.style.cssText = '--background: rgba(255,255,255,1)';
+        }
         break;
       }
       case 'midnight': {
         const html = document.getElementsByTagName('mat-dialog-container')[0] as HTMLElement;
-        html.style.cssText = '--background: rgba(10, 31, 51, 1)';
+        if (html) {
+          html.style.cssText = '--background: rgba(10, 31, 51, 1)';
+        }
         break;
       }
     }

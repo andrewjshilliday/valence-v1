@@ -1,4 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ArtistsComponent } from './artists.component';
 
 describe('ArtistsComponent', () => {
@@ -7,7 +10,9 @@ describe('ArtistsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ArtistsComponent ]
+      imports: [ RouterTestingModule, HttpClientTestingModule ],
+      declarations: [ ArtistsComponent ],
+      providers: [ { provide: MatSnackBar, useValue: {} } ]
     })
     .compileComponents();
   }));

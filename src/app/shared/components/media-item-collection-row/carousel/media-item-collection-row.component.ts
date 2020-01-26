@@ -70,7 +70,7 @@ export class MediaItemCollectionRowCarouselComponent implements OnInit, AfterVie
   }
 
   positionScrollButtons() {
-    if (!this.leftIcon || !this.rightIcon) { return; }
+    if (!this.leftIcon || !this.rightIcon || !this.artwork) { return; }
     this.leftIcon.nativeElement.firstChild.style.top = `${this.artwork.offsetHeight / 2 - 28}px`;
     this.rightIcon.nativeElement.firstChild.style.top = `${this.artwork.offsetHeight / 2 - 28}px`;
   }

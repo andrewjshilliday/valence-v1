@@ -1,4 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CuratorsComponent } from './curators.component';
 
 describe('CuratorsComponent', () => {
@@ -7,7 +10,9 @@ describe('CuratorsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CuratorsComponent ]
+      imports: [ RouterTestingModule, HttpClientTestingModule ],
+      declarations: [ CuratorsComponent ],
+      providers: [ { provide: MatSnackBar, useValue: {} } ]
     })
     .compileComponents();
   }));

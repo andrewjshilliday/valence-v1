@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogRef } from '@angular/material/dialog';
 import { BrowseComponent } from './browse.component';
 
 describe('BrowseComponent', () => {
@@ -8,7 +10,12 @@ describe('BrowseComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BrowseComponent ]
+      imports: [ HttpClientTestingModule ],
+      declarations: [ BrowseComponent ],
+      providers: [
+        { provide: MatSnackBar, useValue: {} },
+        { provide: MatDialogRef, useValue: {} }
+      ]
     })
     .compileComponents();
   }));

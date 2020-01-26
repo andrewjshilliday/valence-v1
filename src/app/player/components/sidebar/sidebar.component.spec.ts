@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SidebarComponent } from './sidebar.component';
 
 describe('SidebarComponent', () => {
@@ -7,7 +9,9 @@ describe('SidebarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SidebarComponent ]
+      imports: [ HttpClientTestingModule ],
+      declarations: [ SidebarComponent ],
+      providers: [ { provide: MatSnackBar, useValue: {} } ]
     })
     .compileComponents();
   }));

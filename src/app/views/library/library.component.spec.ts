@@ -1,4 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { LibraryComponent } from './library.component';
 
 describe('LibraryComponent', () => {
@@ -7,7 +10,9 @@ describe('LibraryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LibraryComponent ]
+      imports: [ RouterTestingModule, HttpClientTestingModule ],
+      declarations: [ LibraryComponent ],
+      providers: [ { provide: MatSnackBar, useValue: {} } ]
     })
     .compileComponents();
   }));
