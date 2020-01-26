@@ -3,9 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "clean": "rimraf ./dist",
     "start": "ng serve --host 192.168.1.93",
-    "build": "ng build --prod --base-href \"https://andrewjshilliday.github.io/valence/\"",
-    "test": "ng test",
+    "build:prod": "ng build --prod --base-href \"https://andrewjshilliday.github.io/valence/\"",
+    "build:ci": "npm run clean && npm run test:ci && npm run build:prod",
+    "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
+    "test:watch": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "deploy": "ngh --dir dist/valence"
@@ -35,6 +38,7 @@
     "ngx-perfect-scrollbar": "^8.0.0",
     "popper": "^1.0.1",
     "popper.js": "^1.16.1",
+    "puppeteer": "^2.0.0",
     "rxjs": "^6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

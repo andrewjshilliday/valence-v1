@@ -29,6 +29,12 @@ module.exports = function (config) {
     singleRun: false,
     files: [
       'https://js-cdn.music.apple.com/musickit/v1/musickit.js'
-    ]
+    ],
+    customLaunchers: {
+      ChromeHeadlessCustom: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox', '--disable-gpu']
+      }
+    }
   });
 };
