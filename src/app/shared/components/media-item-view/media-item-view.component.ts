@@ -15,7 +15,7 @@ export class MediaItemViewComponent implements OnInit {
   isLibraryResource: boolean;
   backgroundColor = 'none';
   artworkImage = 'placeholder.jpeg';
-  artworkPlaceholderImage = '../../../../assets/images/placeholder-transparent.png';
+  artworkPlaceholderImage = './assets/images/placeholder-transparent.png';
   isExplicit: boolean;
 
   constructor(public playerService: PlayerService, private router: Router, public element: ElementRef) { }
@@ -34,7 +34,7 @@ export class MediaItemViewComponent implements OnInit {
     }
 
     if (this.isLibraryResource || this.item.type.includes('artist')) {
-      this.artworkPlaceholderImage = '../../../../assets/images/placeholder.jpeg';
+      this.artworkPlaceholderImage = './assets/images/placeholder.jpeg';
     }
   }
 
