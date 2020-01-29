@@ -23,7 +23,7 @@ export class MediaItemCollectionRowCarouselComponent implements OnInit, AfterVie
   }
 
   ngAfterViewInit() {
-    this.artwork = document.getElementById(`artwork-${this.collection[0].id}`);
+    this.artwork = this.row.nativeElement.getElementsByTagName(`img`)[0]?.parentElement;
     this.positionScrollButtons();
 
     if (this.leftDisabled()) {
