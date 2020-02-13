@@ -28,7 +28,7 @@
     "@angular/platform-browser-dynamic": "^9.0.0-rc.13",
     "@angular/router": "^9.0.0-rc.13",
     "@angular/service-worker": "^9.0.0-rc.13",
-    "@schematics/angular": "^9.0.0-rc.12",
+    "@schematics/angular": "^9.0.2",
     "@sentry/browser": "^5.11.2",
     "bootstrap": "^4.4.1",
     "core-js": "^3.6.4",
