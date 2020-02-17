@@ -35,7 +35,7 @@
     "font-awesome": "^4.7.0",
     "intersection-observer": "^0.7.0",
     "jquery": "^3.4.1",
-    "ngx-perfect-scrollbar": "^8.0.0",
+    "ngx-perfect-scrollbar": "^9.0.0",
     "popper": "^1.0.1",
     "popper.js": "^1.16.1",
     "puppeteer": "^2.1.1",
