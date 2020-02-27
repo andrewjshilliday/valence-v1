@@ -29,7 +29,7 @@
     "@angular/router": "^9.0.1",
     "@angular/service-worker": "^9.0.1",
     "@schematics/angular": "^9.0.2",
-    "@sentry/browser": "^5.12.1",
+    "@sentry/browser": "^5.12.5",
     "bootstrap": "^4.4.1",
     "core-js": "^3.6.4",
     "font-awesome": "^4.7.0",
