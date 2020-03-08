@@ -1,24 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse } from '@angular/common/http';
 
-declare var MusicKit: any;
-
-export enum Endpoints {
-  Artists = 1,
-  Albums = 2,
-  Playlists = 3,
-  Songs = 4,
-  Recommendations = 5,
-  CuratorCharts = 6,
-  Library = 7,
-  LibrarySongs = 8,
-  ValenceApi = 9,
-}
+export type Endpoints =
+  'Artists' |
+  'Albums' |
+  'Playlists' |
+  'Songs' |
+  'Recommendations' |
+  'CuratorCharts' |
+  'Library' |
+  'LibrarySongs' |
+  'ValenceApi';
 
 @Injectable()
 export class ApiCache  {
 
-  storefront: string;
 
   artistCache = new Map();
   albumCache = new Map();
@@ -31,9 +27,6 @@ export class ApiCache  {
   valenceApiCache = new Map();
 
   constructor() {
-    const musicKit = MusicKit.getInstance();
-    this.storefront = musicKit.storefrontId;
-
     setInterval(() => {
       this.artistCache = new Map();
       this.albumCache = new Map();
@@ -52,31 +45,31 @@ export class ApiCache  {
     let cached: any;
 
     switch (endpoint) {
-      case Endpoints.Artists:
+      case 'Artists':
         cached = this.artistCache.get(url);
         break;
-      case Endpoints.Albums:
+      case 'Albums':
         cached = this.albumCache.get(url);
         break;
-      case Endpoints.Playlists:
+      case 'Playlists':
         cached = this.playlistCache.get(url);
         break;
-      case Endpoints.Songs:
+      case 'Songs':
         cached = this.songCache.get(url);
         break;
-      case Endpoints.Recommendations:
+      case 'Recommendations':
         cached = this.recommendationCache.get(url);
         break;
-      case Endpoints.CuratorCharts:
+      case 'CuratorCharts':
         cached = this.curatorChartCache.get(url);
         break;
-      case Endpoints.Library:
+      case 'Library':
         cached = this.libraryCache.get(url);
         break;
-      case Endpoints.LibrarySongs:
+      case 'LibrarySongs':
         cached = this.librarySongCache.get(url);
         break;
-      case Endpoints.ValenceApi:
+      case 'ValenceApi':
         cached = this.valenceApiCache.get(url);
         break;
     }
@@ -93,31 +86,31 @@ export class ApiCache  {
     const entry = { url, response, lastRead: Date.now() };
 
     switch (endpoint) {
-      case Endpoints.Artists:
+      case 'Artists':
         this.artistCache.set(url, entry);
         break;
-      case Endpoints.Albums:
+      case 'Albums':
         this.albumCache.set(url, entry);
         break;
-      case Endpoints.Playlists:
+      case 'Playlists':
         this.playlistCache.set(url, entry);
         break;
-      case Endpoints.Songs:
+      case 'Songs':
         this.songCache.set(url, entry);
         break;
-      case Endpoints.Recommendations:
+      case 'Recommendations':
         this.recommendationCache.set(url, entry);
         break;
-      case Endpoints.CuratorCharts:
+      case 'CuratorCharts':
         this.curatorChartCache.set(url, entry);
         break;
-      case Endpoints.Library:
+      case 'Library':
         this.libraryCache.set(url, entry);
         break;
-      case Endpoints.LibrarySongs:
+      case 'LibrarySongs':
         this.librarySongCache.set(url, entry);
         break;
-      case Endpoints.ValenceApi:
+      case 'ValenceApi':
         this.valenceApiCache.set(url, entry);
         break;
     }

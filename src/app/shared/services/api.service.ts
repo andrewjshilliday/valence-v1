@@ -20,13 +20,15 @@ declare var MusicKit: any;
 })
 export class ApiService {
 
-  storefront: string;
+  /* storefront: string; */
 
   ratingSubject = new Subject<any>();
   lyricsSubject = new BehaviorSubject<any>(null);
+  storefront = new BehaviorSubject<string>(null);
 
   constructor(public playerService: PlayerService, public notificationService: NotificationService, private http: HttpClient) {
-    this.storefront = this.playerService.musicKit.storefrontId;
+    this.storefront.next(this.playerService.musicKit.storefrontId);
+    /* this.storefront = this.playerService.musicKit.storefrontId; */
     this.playerService.musicKit.addEventListener(
       MusicKit.Events.authorizationStatusDidChange, this.authorizationStatusDidChange.bind(this));
   }
@@ -57,7 +59,7 @@ export class ApiService {
   artist(id: string, include?: string): Observable<Artist> {
     const isLibraryArtist = id.startsWith('r.');
     let url = `${environment.appleMusicApi}/v1/`;
-    url += isLibraryArtist ? `me/library/artists/${id}` : `catalog/${this.storefront}/artists/${id}`;
+    url += isLibraryArtist ? `me/library/artists/${id}` : `catalog/${this.storefront.value}/artists/${id}`;
     const headers = this.appleApiHeaders();
     let params = new HttpParams();
 
@@ -69,7 +71,7 @@ export class ApiService {
   }
 
   artists(ids: string[], include?: string): Observable<Artist[]> {
-    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront}/artists`;
+    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront.value}/artists`;
     const headers = this.appleApiHeaders();
     let params = new HttpParams()
       .set('ids', ids.join(','));
@@ -103,7 +105,7 @@ export class ApiService {
   album(id: string, include?: string): Observable<Album> {
     const isLibraryAlbum = id.startsWith('l.');
     let url = `${environment.appleMusicApi}/v1/`;
-    url += isLibraryAlbum ? `me/library/albums/${id}` : `catalog/${this.storefront}/albums/${id}`;
+    url += isLibraryAlbum ? `me/library/albums/${id}` : `catalog/${this.storefront.value}/albums/${id}`;
     const headers = this.appleApiHeaders();
     let params = new HttpParams();
 
@@ -115,7 +117,7 @@ export class ApiService {
   }
 
   albums(ids: string[], include?: string): Observable<Album[]> {
-    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront}/albums`;
+    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront.value}/albums`;
     const headers = this.appleApiHeaders();
     let params = new HttpParams()
       .set('ids', ids.join(','));
@@ -149,7 +151,7 @@ export class ApiService {
   playlist(id: string, include?: string): Observable<Playlist> {
     const isLibraryPlaylist = id.startsWith('p.');
     let url = `${environment.appleMusicApi}/v1/`;
-    url += isLibraryPlaylist ? `me/library/playlists/${id}` : `catalog/${this.storefront}/playlists/${id}`;
+    url += isLibraryPlaylist ? `me/library/playlists/${id}` : `catalog/${this.storefront.value}/playlists/${id}`;
     const headers = this.appleApiHeaders();
     let params = new HttpParams();
 
@@ -161,7 +163,7 @@ export class ApiService {
   }
 
   playlists(ids: string[], include?: string): Observable<Playlist[]> {
-    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront}/playlists`;
+    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront.value}/playlists`;
     const headers = this.appleApiHeaders();
     let params = new HttpParams()
       .set('ids', ids.join(','));
@@ -190,7 +192,7 @@ export class ApiService {
   }
 
   songs(ids: string[], include?: string): Observable<Song[]> {
-    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront}/songs`;
+    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront.value}/songs`;
     const headers = this.appleApiHeaders();
     let params = new HttpParams()
       .set('ids', ids.join(','));
@@ -222,7 +224,7 @@ export class ApiService {
   }
 
   appleCurator(id: string, include?: string): Observable<Curator> {
-    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront}/apple-curators`;
+    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront.value}/apple-curators`;
     const headers = this.appleApiHeaders();
     let params = new HttpParams()
       .set('ids', id);
@@ -235,7 +237,7 @@ export class ApiService {
   }
 
   appleCurators(ids: string[], include?: string): Observable<Curator[]> {
-    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront}/apple-curators`;
+    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront.value}/apple-curators`;
     const headers = this.appleApiHeaders();
     let params = new HttpParams()
       .set('ids', ids.join(','));
@@ -248,7 +250,7 @@ export class ApiService {
   }
 
   curator(id: string, include?: string): Observable<Curator> {
-    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront}/curators`;
+    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront.value}/curators`;
     const headers = this.appleApiHeaders();
     let params = new HttpParams()
       .set('ids', id);
@@ -261,7 +263,7 @@ export class ApiService {
   }
 
   curators(ids: string[], include?: string): Observable<Curator[]> {
-    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront}/curators`;
+    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront.value}/curators`;
     const headers = this.appleApiHeaders();
     let params = new HttpParams()
       .set('ids', ids.join(','));
@@ -274,7 +276,7 @@ export class ApiService {
   }
 
   charts(types: string, genre?: string): Observable<ChartResults> {
-    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront}/charts`;
+    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront.value}/charts`;
     const headers = this.appleApiHeaders();
     let params = new HttpParams()
       .set('types', types);
@@ -331,7 +333,7 @@ export class ApiService {
   }
 
   search(term: string, types?: string, limit?: number): Observable<SearchResults> {
-    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront}/search`;
+    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront.value}/search`;
     const headers = this.appleApiHeaders();
     let params = new HttpParams()
       .set('term', term);
@@ -347,7 +349,7 @@ export class ApiService {
   }
 
   searchHints(term: string, limit?: number): Observable<SearchHints> {
-    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront}/search/hints`;
+    const url = `${environment.appleMusicApi}/v1/catalog/${this.storefront.value}/search/hints`;
     const headers = this.appleApiHeaders();
     let params = new HttpParams()
       .set('term', term);
@@ -495,7 +497,7 @@ export class ApiService {
     const url = `${environment.valenceApi}/artists`;
     let params = new HttpParams()
       .set('ids', id)
-      .set('storefront', this.storefront);
+      .set('storefront', this.storefront.value);
 
     if (imageOnly) {
       params = params.append('imageOnly', 'true');
@@ -508,7 +510,7 @@ export class ApiService {
     const url = `${environment.valenceApi}/artists`;
     let params = new HttpParams()
       .set('ids', ids.join(','))
-      .set('storefront', this.storefront);
+      .set('storefront', this.storefront.value);
 
     if (imageOnly) {
       params = params.append('imageOnly', 'true');
@@ -521,7 +523,7 @@ export class ApiService {
     const url = `${environment.valenceApi}/albums`;
     const params = new HttpParams()
       .set('ids', id)
-      .set('storefront', this.storefront);
+      .set('storefront', this.storefront.value);
 
     return this.http.get<AlbumDataResponse>(url, { params: params }).pipe(map(res => res.albums[0]));
   }
@@ -558,7 +560,7 @@ export class ApiService {
   }
 
   authorizationStatusDidChange() {
-    this.storefront = this.playerService.musicKit.storefrontId;
+    this.storefront.next(this.playerService.musicKit.storefrontId);
   }
 
 }

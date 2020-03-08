@@ -5,39 +5,32 @@ import { tap } from 'rxjs/operators';
 import { ApiCache } from './api-cache.service';
 import { Endpoints } from './api-cache.service';
 
-declare var MusicKit: any;
-
 @Injectable()
 export class ApiCacheInterceptor implements HttpInterceptor {
 
-  storefront: string;
-
-  constructor(private cache: ApiCache) {
-    const musicKit = MusicKit.getInstance();
-    this.storefront = musicKit.storefrontId;
-  }
+  constructor(private cache: ApiCache) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     let endpoint: Endpoints;
 
-    if (req.url.indexOf(`${this.storefront}/artists`) > -1) {
-      endpoint = Endpoints.Artists;
-    } else if (req.url.indexOf(`${this.storefront}/albums`) > -1) {
-      endpoint = Endpoints.Albums;
-    } else if (req.url.indexOf(`${this.storefront}/playlists`) > -1) {
-      endpoint = Endpoints.Playlists;
-    } else if (req.url.indexOf(`${this.storefront}/songs`) > -1) {
-      endpoint = Endpoints.Songs;
+    if (req.url.indexOf(`/artists`) > -1) {
+      endpoint = 'Artists';
+    } else if (req.url.indexOf(`/albums`) > -1) {
+      endpoint = 'Albums';
+    } else if (req.url.indexOf(`/playlists`) > -1) {
+      endpoint = 'Playlists';
+    } else if (req.url.indexOf(`/songs`) > -1) {
+      endpoint = 'Songs';
     } else if (req.url.indexOf(`recommendation`) > -1 || req.url.indexOf(`recent`) > -1 || req.url.indexOf(`history`) > -1) {
-      endpoint = Endpoints.Recommendations;
+      endpoint = 'Recommendations';
     } else if (req.url.indexOf('curator') > -1 || req.url.indexOf('chart') > -1) {
-      endpoint = Endpoints.CuratorCharts;
+      endpoint = 'CuratorCharts';
     } else if (req.url.indexOf(`library/songs`) > -1) {
-      endpoint = Endpoints.LibrarySongs;
+      endpoint = 'LibrarySongs';
     } else if (req.url.indexOf(`library`) > -1) {
-      endpoint = Endpoints.Library;
+      endpoint = 'Library';
     } else if (req.url.indexOf(`artist`) > -1 || req.url.indexOf(`album`) > -1 || req.url.indexOf(`genius`) > -1) {
-      endpoint = Endpoints.ValenceApi;
+      endpoint = 'ValenceApi';
     }
 
     const cachedResponse = this.cache.get(req, endpoint);

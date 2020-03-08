@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { fadeAnimation } from './shared/animations/fade.animation';
 
 @Component({
@@ -7,12 +7,9 @@ import { fadeAnimation } from './shared/animations/fade.animation';
   styleUrls: ['./app.component.scss'],
   animations: [fadeAnimation]
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   public getRouterOutletState(outlet) {
     return outlet.isActivated ? outlet.activatedRoute : '';

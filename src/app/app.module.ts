@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule, ErrorHandler, APP_INITIALIZER } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 // import { SentryErrorHandler } from './app.sentry';
 import { ApiCache } from './shared/cache/api/api-cache.service';
@@ -19,11 +19,13 @@ import { AlbumsComponent } from './views/albums/albums.component';
 import { PlaylistsComponent } from './views/playlists/playlists.component';
 import { CuratorsComponent } from './views/curators/curators.component';
 import { SettingsComponent } from './views/settings/settings.component';
-import { StartupService } from './startup.service';
 import { environment } from '../environments/environment';
 
-export function startupServiceFactory(startupService: StartupService): Function {
-  return () => startupService.load();
+export function initApp(http: HttpClient) {
+  return async () => {
+    const resp = await http.get<any>(`${environment.valenceApi}/auth?service=apple-music`).toPromise();
+    environment.appleMusicDevToken = resp.access_token;
+  };
 }
 
 @NgModule({
@@ -68,14 +70,7 @@ export function startupServiceFactory(startupService: StartupService): Function 
     // { provide: ErrorHandler, useClass: SentryErrorHandler },
     ApiCache,
     { provide: HTTP_INTERCEPTORS, useClass: ApiCacheInterceptor, multi: true },
-    StartupService,
-    {
-        // Provider for APP_INITIALIZER
-        provide: APP_INITIALIZER,
-        useFactory: startupServiceFactory,
-        deps: [StartupService],
-        multi: true
-    }
+    { provide: APP_INITIALIZER, useFactory: initApp, multi: true, deps: [HttpClient] }
   ],
   bootstrap: [AppComponent]
 })
