@@ -33,7 +33,7 @@
     "bootstrap": "^4.5.0",
     "core-js": "^3.6.5",
     "font-awesome": "^4.7.0",
-    "intersection-observer": "^0.7.0",
+    "intersection-observer": "^0.10.0",
     "jquery": "^3.5.1",
     "ngx-perfect-scrollbar": "^9.0.0",
     "popper": "^1.0.1",
