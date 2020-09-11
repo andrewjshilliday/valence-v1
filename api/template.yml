@@ -1,0 +1,105 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: music-service
+Resources:
+  Artists:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: bin/artists
+      Runtime: go1.x
+      Timeout: 60
+      Environment:
+        Variables:
+          TABLE_NAME: Artists
+      Events:
+        SampleEvent:
+          Type: Api
+          Properties:
+            Path: /artists
+            Method: get
+  Albums:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: bin/albums
+      Runtime: go1.x
+      Timeout: 60
+      Environment:
+        Variables:
+          TABLE_NAME: Albums
+      Events:
+        SampleEvent:
+          Type: Api
+          Properties:
+            Path: /albums
+            Method: get
+  Genius:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: bin/genius
+      Runtime: go1.x
+      Timeout: 60
+      Environment:
+        Variables:
+          TABLE_NAME: GeniusSongs
+      Events:
+        SampleEvent:
+          Type: Api
+          Properties:
+            Path: /genius/song
+            Method: get
+  Auth:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: bin/auth
+      Runtime: go1.x
+      Timeout: 60
+      Events:
+        SampleEvent:
+          Type: Api
+          Properties:
+            Path: /auth
+            Method: get
+  ArtistsTable:
+    Type: 'AWS::DynamoDB::Table'
+    DeletionPolicy: Retain
+    Properties:
+      TableName: Artists
+      AttributeDefinitions:
+        AttributeName: id
+        AttributeType: S
+        AttributeName: storefront
+        AttributeType: S
+      KeySchema:
+        AttributeName: id
+        KeyType: HASH
+        AttributeName: storefront
+        KeyType: RANGE
+      ProvisionedThroughput: {ReadCapacityUnits: 15, WriteCapacityUnits: 15}
+  AlbumsTable:
+    Type: 'AWS::DynamoDB::Table'
+    DeletionPolicy: Retain
+    Properties:
+      TableName: Albums
+      AttributeDefinitions:
+        AttributeName: id
+        AttributeType: S
+        AttributeName: storefront
+        AttributeType: S
+      KeySchema:
+        AttributeName: id
+        KeyType: HASH
+        AttributeName: storefront
+        KeyType: RANGE
+      ProvisionedThroughput: {ReadCapacityUnits: 5, WriteCapacityUnits: 5}
+  GeniusSongsTable:
+    Type: 'AWS::DynamoDB::Table'
+    DeletionPolicy: Retain
+    Properties:
+      TableName: GeniusSongs
+      AttributeDefinitions:
+        AttributeName: id
+        AttributeType: S
+      KeySchema:
+        AttributeName: id
+        KeyType: HASH
+      ProvisionedThroughput: {ReadCapacityUnits: 5, WriteCapacityUnits: 5}

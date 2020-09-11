@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  valenceApi: 'http://localhost:3000',
+  // valenceApi: 'http://localhost:3000',
+  valenceApi: 'https://ut8obu95ge.execute-api.eu-west-1.amazonaws.com/dev',
   appleMusicApi: 'https://api.music.apple.com',
   appleMusicDevToken: '',
   sentryDsn: ''

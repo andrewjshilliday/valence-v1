@@ -23,7 +23,7 @@ import { environment } from '../environments/environment';
 
 export function initApp(http: HttpClient) {
   return async () => {
-    const resp = await http.get<any>(`${environment.valenceApi}/auth?service=apple-music`).toPromise();
+    const resp = await http.get<any>(`https://ut8obu95ge.execute-api.eu-west-1.amazonaws.com/dev/auth?service=apple-music`).toPromise();
     environment.appleMusicDevToken = resp.access_token;
   };
 }

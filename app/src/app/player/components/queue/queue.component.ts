@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, OnDestroy, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PlayerService } from '../../../shared/services/player.service';
@@ -31,9 +31,6 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.setBackground();
     this.lyricsSubscription = this.apiService.lyricsSubject.subscribe(lyricsResponse => this.lyricsLoading = lyricsResponse.loading);
-
-    const self = this;
-    $(window).on('resize', function() { self.setContentSize(); });
   }
 
   ngAfterViewInit() {
@@ -91,6 +88,11 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
       }
     }
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.setContentSize()
   }
 
 }

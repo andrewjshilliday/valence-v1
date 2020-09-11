@@ -7,6 +7,18 @@
       "name": "Launch localhost",
       "url": "http://localhost:4200/",
       "webRoot": "${workspaceFolder}"
+    },
+    {
+        "name": "Connect to Lambda container",
+        "type": "go",
+        "request": "launch",
+        "mode": "remote",
+        "remotePath": "",
+        "port": 3000,
+        "host": "127.0.0.1",
+        "program": "${workspaceRoot}",
+        "env": {},
+        "args": []
     }
   ]
 }
