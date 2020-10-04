@@ -20,9 +20,6 @@ import { QueueComponent } from './components/queue/queue.component';
     SidebarComponent,
     NowPlayingComponent,
     QueueComponent,
-  ],
-  entryComponents: [
-    QueueComponent
-  ],
+  ]
 })
 export class PlayerModule { }
