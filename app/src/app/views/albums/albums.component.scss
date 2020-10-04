@@ -79,6 +79,10 @@
   bottom: 5%;
   right: 5%;
 
+  .fa-circle {
+    color: var(--light);
+  }
+
   .fa-ellipsis-h {
     color: var(--dark);
     &:hover { color: var(--primary); }

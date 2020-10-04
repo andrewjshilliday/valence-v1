@@ -45,7 +45,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
 
     this.isLibraryAlbum = id.startsWith('l.');
     this.playerService.album = await this.apiService.album(id, 'artists,tracks').toPromise();
-    setTimeout(() => { this.setEditorialNotesStyle(); }, 500);
+    setTimeout(() => { this.setEditorialNotesStyle(); }, 50);
 
     this.loading = false;
 
@@ -130,7 +130,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   }
 
   setEditorialNotesStyle() {
-    if (!this.playerService.album.attributes.editorialNotes) {
+    if (!this.playerService.album?.attributes.editorialNotes) {
       return;
     }
 
@@ -138,7 +138,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     if (notesElement) {
       const height = window.innerHeight;
       const notesOffsetTop = notesElement.getBoundingClientRect().top;
-      notesElement.style.maxHeight = `${height - notesOffsetTop - 110}px`;
+      notesElement.style.height = `${height - notesOffsetTop - 110}px`;
     }
   }
 

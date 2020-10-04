@@ -39,10 +39,12 @@
                   </div>
                 </div>
                 <hr *ngIf="playerService.album.attributes.editorialNotes" />
-                <perfect-scrollbar id="notes" class="editorial-notes">
-                  <div *ngIf="playerService.album.attributes.editorialNotes && playerService.album.attributes.editorialNotes.standard" [innerHTML]="playerService.album.attributes.editorialNotes.standard"></div>
-                  <div *ngIf="playerService.album.attributes.editorialNotes && !playerService.album.attributes.editorialNotes.standard" [innerHTML]="playerService.album.attributes.editorialNotes.short"></div>
-                </perfect-scrollbar>
+                <div id="notes">
+                  <perfect-scrollbar class="editorial-notes">
+                    <div *ngIf="playerService.album.attributes.editorialNotes && playerService.album.attributes.editorialNotes.standard" [innerHTML]="playerService.album.attributes.editorialNotes.standard"></div>
+                    <div *ngIf="playerService.album.attributes.editorialNotes && !playerService.album.attributes.editorialNotes.standard" [innerHTML]="playerService.album.attributes.editorialNotes.short"></div>
+                  </perfect-scrollbar>
+                </div>
               </div>
             </div>
 

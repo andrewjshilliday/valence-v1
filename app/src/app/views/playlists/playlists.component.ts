@@ -49,7 +49,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
       });
     }
 
-    setTimeout(() => { this.setEditorialNotesStyle(); }, 500);
+    setTimeout(() => { this.setEditorialNotesStyle(); }, 50);
 
     this.loading = false;
 
@@ -129,7 +129,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   }
 
   setEditorialNotesStyle() {
-    if (!this.playerService.playlist.attributes.description) {
+    if (!this.playerService?.playlist.attributes.description) {
       return;
     }
 
@@ -137,7 +137,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     if (notesElement) {
       const height = window.innerHeight;
       const notesOffsetTop = notesElement.getBoundingClientRect().top;
-      notesElement.style.maxHeight = `${height - notesOffsetTop - 110}px`;
+      notesElement.style.height = `${height - notesOffsetTop - 110}px`;
     }
   }
 
