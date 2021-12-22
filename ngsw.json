@@ -1,0 +1,136 @@
+{
+  "configVersion": 1,
+  "timestamp": 1640181038653,
+  "index": "https://andrewjshilliday.github.io/valence-v1/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "https://andrewjshilliday.github.io/valence-v1/favicon.ico",
+        "https://andrewjshilliday.github.io/valence-v1/index.html",
+        "https://andrewjshilliday.github.io/valence-v1/main-es2015.50a19bfac22a102e5e2f.js",
+        "https://andrewjshilliday.github.io/valence-v1/main-es5.50a19bfac22a102e5e2f.js",
+        "https://andrewjshilliday.github.io/valence-v1/polyfills-es2015.789d3c6f048515eb2053.js",
+        "https://andrewjshilliday.github.io/valence-v1/polyfills-es5.3342ecef10c2869e8523.js",
+        "https://andrewjshilliday.github.io/valence-v1/runtime-es2015.66c79b9d36e7169e27b0.js",
+        "https://andrewjshilliday.github.io/valence-v1/runtime-es5.66c79b9d36e7169e27b0.js",
+        "https://andrewjshilliday.github.io/valence-v1/scripts.d9453a9d7119bb39de3f.js",
+        "https://andrewjshilliday.github.io/valence-v1/styles.6527f58c753935a82652.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "https://andrewjshilliday.github.io/valence-v1/arrow.b9a0f4e7d7902764c5bc.svg",
+        "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-128x128.png",
+        "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-144x144.png",
+        "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-152x152.png",
+        "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-192x192.png",
+        "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-384x384.png",
+        "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-512x512.png",
+        "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-72x72.png",
+        "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-96x96.png",
+        "https://andrewjshilliday.github.io/valence-v1/assets/images/apple-music.svg",
+        "https://andrewjshilliday.github.io/valence-v1/assets/images/apple_music_logo.png",
+        "https://andrewjshilliday.github.io/valence-v1/assets/images/arrow.svg",
+        "https://andrewjshilliday.github.io/valence-v1/assets/images/artist_background_placeholder.jpg",
+        "https://andrewjshilliday.github.io/valence-v1/assets/images/music.svg",
+        "https://andrewjshilliday.github.io/valence-v1/assets/images/placeholder-transparent.png",
+        "https://andrewjshilliday.github.io/valence-v1/assets/images/placeholder.jpeg",
+        "https://andrewjshilliday.github.io/valence-v1/assets/images/placeholder.png",
+        "https://andrewjshilliday.github.io/valence-v1/fa-brands-400.131054e1a15e8c1a2be9.ttf",
+        "https://andrewjshilliday.github.io/valence-v1/fa-brands-400.2ffc1f5b1909c172f239.woff2",
+        "https://andrewjshilliday.github.io/valence-v1/fa-brands-400.46c13076acbc82aac893.eot",
+        "https://andrewjshilliday.github.io/valence-v1/fa-brands-400.85ca58b3dfb55c08f9cf.svg",
+        "https://andrewjshilliday.github.io/valence-v1/fa-brands-400.d87ca79c4938f3ca66cb.woff",
+        "https://andrewjshilliday.github.io/valence-v1/fa-regular-400.4d5e84b7703fc47f5b87.svg",
+        "https://andrewjshilliday.github.io/valence-v1/fa-regular-400.59f4a1ec50a2e39950ae.eot",
+        "https://andrewjshilliday.github.io/valence-v1/fa-regular-400.6462b09d97cb0149ec02.woff2",
+        "https://andrewjshilliday.github.io/valence-v1/fa-regular-400.8ce738c3de1f5af6f0db.ttf",
+        "https://andrewjshilliday.github.io/valence-v1/fa-regular-400.aee72cf0a11239dba36c.woff",
+        "https://andrewjshilliday.github.io/valence-v1/fa-solid-900.1bdf103cf1d2f4875cb4.woff",
+        "https://andrewjshilliday.github.io/valence-v1/fa-solid-900.6e617fd4bfae0ebd495b.ttf",
+        "https://andrewjshilliday.github.io/valence-v1/fa-solid-900.ab3ef4abdaedeced5219.eot",
+        "https://andrewjshilliday.github.io/valence-v1/fa-solid-900.dad3d991c79c6ec9e284.svg",
+        "https://andrewjshilliday.github.io/valence-v1/fa-solid-900.f2d8806e4ac0d7a6e72f.woff2",
+        "https://andrewjshilliday.github.io/valence-v1/music.029084a31736dcf59ef3.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "https://andrewjshilliday.github.io/valence-v1/arrow.b9a0f4e7d7902764c5bc.svg": "8be9a6e87502fcc25fcf7d71a833503fa7fa10c7",
+    "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-128x128.png": "5295b007daf94b4941f3dc5002707a4d669e07f4",
+    "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-144x144.png": "eb20f01c1e7e361f2d662c3e51e1827b3a84fd52",
+    "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-152x152.png": "50d9f40405d81052b87deb6291ce8c1bab59250f",
+    "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-192x192.png": "8243555465da080dbbd13e03873c642949210ead",
+    "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-384x384.png": "20a9b4a435d711e42af275199d0aebb7bed8a152",
+    "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-512x512.png": "f2f2cc49654924b0aa69ab640c22d0eaed99bafe",
+    "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-72x72.png": "7751efebfe05ace2209ce241652f1883c43210a6",
+    "https://andrewjshilliday.github.io/valence-v1/assets/icons/icon-96x96.png": "708f981a3f66120a5986f5e9bf88c871acfe8925",
+    "https://andrewjshilliday.github.io/valence-v1/assets/images/apple-music.svg": "cc0c5288134f771cd7541f9b0af1b6c6f93ce107",
+    "https://andrewjshilliday.github.io/valence-v1/assets/images/apple_music_logo.png": "4f7ad5eeb0b9332f9345644a07fd1389320dba92",
+    "https://andrewjshilliday.github.io/valence-v1/assets/images/arrow.svg": "8be9a6e87502fcc25fcf7d71a833503fa7fa10c7",
+    "https://andrewjshilliday.github.io/valence-v1/assets/images/artist_background_placeholder.jpg": "4b9ebf7262676c60026476285d3d388131b6aa29",
+    "https://andrewjshilliday.github.io/valence-v1/assets/images/music.svg": "74d263fdb6c9c5ee71edc0c56f1c6619a9f3441b",
+    "https://andrewjshilliday.github.io/valence-v1/assets/images/placeholder-transparent.png": "c55c6d790cbb3e82c314e2772434a470fd51330e",
+    "https://andrewjshilliday.github.io/valence-v1/assets/images/placeholder.jpeg": "2f59bad7a85b15f8def0a3c527b53f4a7459995c",
+    "https://andrewjshilliday.github.io/valence-v1/assets/images/placeholder.png": "35edd59eac472912b6bdd987bfeaa468ce702e10",
+    "https://andrewjshilliday.github.io/valence-v1/fa-brands-400.131054e1a15e8c1a2be9.ttf": "8be0b3f0632de7332fee1e5c2d8c154bceb020ce",
+    "https://andrewjshilliday.github.io/valence-v1/fa-brands-400.2ffc1f5b1909c172f239.woff2": "bcc709eec2bf2d00fcdd5bdf1ffbec5a8b7eec89",
+    "https://andrewjshilliday.github.io/valence-v1/fa-brands-400.46c13076acbc82aac893.eot": "a2ea1f78ab2d3d5acdcff8d781b9555b653e5ad0",
+    "https://andrewjshilliday.github.io/valence-v1/fa-brands-400.85ca58b3dfb55c08f9cf.svg": "b49d1c678101eba6b17e1b1292f78f4cdc5a4365",
+    "https://andrewjshilliday.github.io/valence-v1/fa-brands-400.d87ca79c4938f3ca66cb.woff": "a26c86418618cf4ddede817b79de8282e9a85bd6",
+    "https://andrewjshilliday.github.io/valence-v1/fa-regular-400.4d5e84b7703fc47f5b87.svg": "c889d0f7dae7d4932766ac42f2c2ecca7013f5ec",
+    "https://andrewjshilliday.github.io/valence-v1/fa-regular-400.59f4a1ec50a2e39950ae.eot": "0ff9a330c3de3b7a9d5e1b59a1020e946e5b2a6c",
+    "https://andrewjshilliday.github.io/valence-v1/fa-regular-400.6462b09d97cb0149ec02.woff2": "d0b9db0b86e186debcd2526fe9facd9fc57c9e6c",
+    "https://andrewjshilliday.github.io/valence-v1/fa-regular-400.8ce738c3de1f5af6f0db.ttf": "88695596b784412b9fb86f89cb5f3fba2ffb9630",
+    "https://andrewjshilliday.github.io/valence-v1/fa-regular-400.aee72cf0a11239dba36c.woff": "c7469350dbda3ea7a17704c224a3c4c714b0a268",
+    "https://andrewjshilliday.github.io/valence-v1/fa-solid-900.1bdf103cf1d2f4875cb4.woff": "3459a628655a798c81b8359f5e2e1d6a7c117576",
+    "https://andrewjshilliday.github.io/valence-v1/fa-solid-900.6e617fd4bfae0ebd495b.ttf": "1fdeaeff02d4dddc49ed46bae6c8dc90e40057f8",
+    "https://andrewjshilliday.github.io/valence-v1/fa-solid-900.ab3ef4abdaedeced5219.eot": "a381d7a42bf4d4d033388d720c07a9922e4a25ed",
+    "https://andrewjshilliday.github.io/valence-v1/fa-solid-900.dad3d991c79c6ec9e284.svg": "c316bb413bbfa49435b0e8176f90e46fbf96a5c8",
+    "https://andrewjshilliday.github.io/valence-v1/fa-solid-900.f2d8806e4ac0d7a6e72f.woff2": "6de203af57e5be1a565bce963703d96b0bf1c156",
+    "https://andrewjshilliday.github.io/valence-v1/favicon.ico": "03056bd434a640f734fadc84c672cfd1e04c0736",
+    "https://andrewjshilliday.github.io/valence-v1/index.html": "1bd06285f8eb2d76f8429594c6ddf6c56ed7bc02",
+    "https://andrewjshilliday.github.io/valence-v1/main-es2015.50a19bfac22a102e5e2f.js": "e36a2a38aab4e1c5c144a718dcdaa5109d23878d",
+    "https://andrewjshilliday.github.io/valence-v1/main-es5.50a19bfac22a102e5e2f.js": "9338b90742114c4b4d80205ee00012edf8d02c20",
+    "https://andrewjshilliday.github.io/valence-v1/music.029084a31736dcf59ef3.svg": "74d263fdb6c9c5ee71edc0c56f1c6619a9f3441b",
+    "https://andrewjshilliday.github.io/valence-v1/polyfills-es2015.789d3c6f048515eb2053.js": "cb92e53148328f13cbda815f064df54fb0f201ce",
+    "https://andrewjshilliday.github.io/valence-v1/polyfills-es5.3342ecef10c2869e8523.js": "f1d0c077599f911c3247551349e179f0c65e17fc",
+    "https://andrewjshilliday.github.io/valence-v1/runtime-es2015.66c79b9d36e7169e27b0.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "https://andrewjshilliday.github.io/valence-v1/runtime-es5.66c79b9d36e7169e27b0.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "https://andrewjshilliday.github.io/valence-v1/scripts.d9453a9d7119bb39de3f.js": "b6c6329cc22238bc7f9636a43da281acd229e125",
+    "https://andrewjshilliday.github.io/valence-v1/styles.6527f58c753935a82652.css": "f8a151e4d774dca611d9bd62fb8ee22fd251feea"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}
